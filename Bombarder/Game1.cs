@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace Bombarder
@@ -19,6 +20,11 @@ namespace Bombarder
         UIPage UIPage_Current;
         string GameState;
         string UIState;
+
+        List<Keys> Keys_BeingPressed = new List<Keys>();
+        bool Mouse_isClickingLeft;
+        bool Mouse_isClickingRight;
+        bool Mouse_isClickingMiddle;
 
         #endregion
 
@@ -41,6 +47,10 @@ namespace Bombarder
             UIPage_Current = UIPages[0];
             GameState = "Start";
             UIState = "Default";
+
+            Mouse_isClickingLeft = false;
+            Mouse_isClickingRight = false;
+            Mouse_isClickingMiddle = false;
 
             base.Initialize();
         }
@@ -249,12 +259,72 @@ namespace Bombarder
 
         /////////////////////////////////////////
 
+        #region UserInput
+
+        #region Mouse
+
+        private void MouseHandler()
+        {
+            //Left Click
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+
+
+                Mouse_isClickingLeft = true;
+            }
+            else
+            {
+                Mouse_isClickingLeft = false;
+            }
+
+            //Right Click
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+
+
+                Mouse_isClickingRight = true;
+            }
+            else
+            {
+                Mouse_isClickingRight = false;
+            }
+
+            //Middle Click
+            if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
+            {
+
+
+                Mouse_isClickingMiddle = true;
+            }
+            else
+            {
+                Mouse_isClickingMiddle = false;
+            }
+        }
+
+        #endregion
+
+        #region Keyboard
+
+        private void KeyboardHandler()
+        {
+            List<Keys> Keys_NewlyPressed = Keyboard.GetState().GetPressedKeys().ToList();
+
+
+
+            Keys_BeingPressed = Keys_NewlyPressed;
+        }
+
+        #endregion
+
+        #endregion
+
         #region Fundamentals
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            KeyboardHandler();
+            MouseHandler();
 
             base.Update(gameTime);
         }
