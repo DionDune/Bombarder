@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 
 namespace Bombarder
 {
@@ -25,6 +24,9 @@ namespace Bombarder
         bool Mouse_isClickingLeft;
         bool Mouse_isClickingRight;
         bool Mouse_isClickingMiddle;
+
+
+        Player Player;
 
         #endregion
 
@@ -51,6 +53,13 @@ namespace Bombarder
             Mouse_isClickingLeft = false;
             Mouse_isClickingRight = false;
             Mouse_isClickingMiddle = false;
+
+
+            Player = new Player()
+            {
+                Position = new Vector2(0, 0),
+                Momentum = new Vector2(0, 0)
+            };
 
             base.Initialize();
         }
