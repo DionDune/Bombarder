@@ -296,6 +296,16 @@ namespace Bombarder
 
         private void MouseHandler()
         {
+            CheckMouseMove();
+            CheckMouseClick();
+        }
+
+        private void CheckMouseMove()
+        {
+
+        }
+        private void CheckMouseClick()
+        {
             //Left Click
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
