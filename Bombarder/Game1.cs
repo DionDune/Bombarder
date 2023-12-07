@@ -255,6 +255,37 @@ namespace Bombarder
             _spriteBatch.Draw(Color_White, new Rectangle(X, Y + BorderWidth, BorderWidth, Height - (BorderWidth * 2)), color * BorderTransparency);
         }
 
+        private void UI_ChangePage(string PageType)
+        {
+            GameState = PageType;
+
+            if (UIPage_Current != null)
+            {
+                foreach (UIPage page in UIPages)
+                {
+                    if (page.Type == GameState)
+                    {
+                        UIPage_Current = page;
+                    }
+                }
+            }
+        }
+        private void UserControl_ButtonPress(List<string> Data)
+        {
+            if (Data.Contains("Start New"))
+            {
+                UI_ChangePage("Play");
+            }
+            else if (Data.Contains("Resume"))
+            {
+                UI_ChangePage("Play");
+            }
+            else if (Data.Contains("Quit"))
+            {
+                System.Environment.Exit(0);
+            }
+        }
+
         #endregion
 
         /////////////////////////////////////////
@@ -268,7 +299,26 @@ namespace Bombarder
             //Left Click
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                if (!Mouse_isClickingLeft)
+                {
+                    if (UIPage_Current != null)
+                    {
+                        foreach (UIItem Item in UIPage_Current.UIItems)
+                        {
+                            int X = _graphics.PreferredBackBufferWidth / 2 + Item.X;
+                            int Y = _graphics.PreferredBackBufferHeight / 2 + Item.Y;
 
+                            if (Item.Type == "Button")
+                            {
+                                if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
+                                    Mouse.GetState().Y > Y && Mouse.GetState().Y < Y + Item.Height)
+                                {
+                                    UserControl_ButtonPress(Item.Data);
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Mouse_isClickingLeft = true;
             }
