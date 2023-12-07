@@ -88,15 +88,15 @@ namespace Bombarder
                     {
                         Type = "Text",
                         X = 0,
-                        Y = -200,
+                        Y = 0,
                         CentreX = 0,
-                        CentreY = -200,
+                        CentreY = -250,
 
                         Text = new TextElement()
                         {
                             Elements = TextElement.GetString("BOMBARDER"),
-                            ElementSize = 12,
-                            Color = Color.Red
+                            ElementSize = 16,
+                            Color = Color.White
                         }
                     }
                 }
