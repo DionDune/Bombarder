@@ -302,7 +302,27 @@ namespace Bombarder
 
         private void CheckMouseMove()
         {
+            if (UIPage_Current != null)
+            {
+                foreach (UIItem Item in UIPage_Current.UIItems)
+                {
+                    int X = _graphics.PreferredBackBufferWidth / 2 + Item.X;
+                    int Y = _graphics.PreferredBackBufferHeight / 2 + Item.Y;
 
+                    if (Item.Type == "Button")
+                    {
+                        if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
+                                    Mouse.GetState().Y > Y && Mouse.GetState().Y < Y + Item.Height)
+                        {
+                            Item.SetHighlight(true);
+                        }
+                        else
+                        {
+                            Item.SetHighlight(false);
+                        }
+                    }
+                }
+            }
         }
         private void CheckMouseClick()
         {

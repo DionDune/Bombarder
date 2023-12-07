@@ -95,5 +95,10 @@ namespace Bombarder
             uIItems = new List<UIItem>();
             Visible = true;
         }
+
+        public void SetHighlight(bool State)
+        {
+            Highlighted = State;
+        }
     }
 }
