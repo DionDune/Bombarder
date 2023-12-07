@@ -295,6 +295,18 @@ namespace Bombarder
                 }
             }
         }
+        private void TogglePause()
+        {
+            if (GameState == "Play")
+            {
+                UI_ChangePage("Pause");
+            }
+            else if (GameState == "Pause")
+            {
+                UI_ChangePage("Play");
+            }
+        }
+
         private void UserControl_ButtonPress(List<string> Data)
         {
             if (Data.Contains("Start New"))
@@ -416,9 +428,15 @@ namespace Bombarder
             List<Keys> Keys_NewlyPressed = Keyboard.GetState().GetPressedKeys().ToList();
 
 
+            //Toggle Fullscreen
             if (Keys_NewlyPressed.Contains(Keys.F) && !Keys_BeingPressed.Contains(Keys.F))
             {
                 Window_ToggleFullscreen();
+            }
+            //Toggle Pause
+            if (Keys_NewlyPressed.Contains(Keys.Escape) && !Keys_BeingPressed.Contains(Keys.Escape))
+            {
+                TogglePause();
             }
 
 
