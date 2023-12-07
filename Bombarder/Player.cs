@@ -14,5 +14,14 @@ namespace Bombarder
 
         public int Width { get; set; }
         public int Height { get; set; }
+
+        public Player()
+        {
+            Position = new Vector2(0, 0);
+            Momentum = new Vector2(0, 0);
+
+            Width = 50;
+            Height = 120;
+        }
     }
 }

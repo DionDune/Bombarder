@@ -55,14 +55,7 @@ namespace Bombarder
             Mouse_isClickingMiddle = false;
 
 
-            Player = new Player()
-            {
-                Position = new Vector2(0, 0),
-                Momentum = new Vector2(0, 0),
-
-                Width = 50,
-                Height = 120,
-            };
+            Player = new Player();
 
             base.Initialize();
         }
