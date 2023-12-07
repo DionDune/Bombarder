@@ -10,6 +10,9 @@ namespace Bombarder
     internal class Player
     {
         public Vector2 Position { get; set; }
-        public Vector2 Momentum { get; set; } 
+        public Vector2 Momentum { get; set; }
+
+        public int Width { get; set; }
+        public int Height { get; set; }
     }
 }

@@ -58,7 +58,10 @@ namespace Bombarder
             Player = new Player()
             {
                 Position = new Vector2(0, 0),
-                Momentum = new Vector2(0, 0)
+                Momentum = new Vector2(0, 0),
+
+                Width = 50,
+                Height = 120,
             };
 
             base.Initialize();
