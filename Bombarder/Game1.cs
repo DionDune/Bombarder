@@ -481,7 +481,10 @@ namespace Bombarder
             //Ingame
             if (GameState == "Play")
             {
-
+                //Player
+                _spriteBatch.Draw(Color_White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
+                                                             _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
+                                                             Player.Width, Player.Height), Color.Red);
             }
 
             //UI
