@@ -70,6 +70,24 @@ namespace Bombarder
 
         #region UI
 
+        private void Window_ToggleFullscreen()
+        {
+            if (!_graphics.IsFullScreen)
+            {
+                _graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width;
+                _graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height;
+                _graphics.ApplyChanges();
+            }
+            else
+            {
+                _graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width / 3 * 2;
+                _graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height / 3 * 2;
+                _graphics.ApplyChanges();
+            }
+
+            _graphics.ToggleFullScreen();
+        }
+
         private void UI_RenderElements(List<UIItem> UIItems)
         {
             foreach (UIItem Item in UIItems)
@@ -390,6 +408,11 @@ namespace Bombarder
         {
             List<Keys> Keys_NewlyPressed = Keyboard.GetState().GetPressedKeys().ToList();
 
+
+            if (Keys_NewlyPressed.Contains(Keys.F) && !Keys_BeingPressed.Contains(Keys.F))
+            {
+                Window_ToggleFullscreen();
+            }
 
 
             Keys_BeingPressed = Keys_NewlyPressed;
