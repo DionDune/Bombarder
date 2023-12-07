@@ -131,6 +131,13 @@ namespace Bombarder
                 int CentreX = OrientatePosX + Item.CentreX;
                 int CentreY = OrientatePosY + Item.CentreY;
 
+                if (Item.Type == "Text")
+                {
+                    if (Item.Text != null)
+                    {
+                        UI_RenderTextElements(Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
+                    }
+                }
                 if (Item.Type == "Button")
                 {
                     _spriteBatch.Draw(Color_White, new Rectangle(X, Y, Item.Width, Item.Height), Item.BorderColor);
