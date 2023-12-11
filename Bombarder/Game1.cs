@@ -510,8 +510,9 @@ namespace Bombarder
                 }
                 else if (SpawnDirection == 1)//Down
                 {
-                    SpawnLocation = new Point(random.Next((int)Player.X - ScreenHalf_X, (int)Player.X + ScreenHalf_X),
-                                              random.Next((int)Player.Y + (ScreenHalf_Y * 2), (int)Player.Y + ScreenHalf_Y));
+                    //SpawnLocation = new Point(random.Next((int)Player.X - ScreenHalf_X, (int)Player.X + ScreenHalf_X),
+                    //                          random.Next((int)Player.Y + (ScreenHalf_Y * 2), (int)Player.Y + ScreenHalf_Y));
+                    SpawnLocation = new Point((int)Player.X + 100, (int)Player.Y + 100);
                 }
                 else if (SpawnDirection == 1)//Left
                 {
@@ -738,6 +739,18 @@ namespace Bombarder
                 _spriteBatch.Draw(Color_White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
                                                              _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
                                                              Player.Width, Player.Height), Color.Red);
+
+                //Entities
+                foreach (Entity Entity in Entities)
+                {
+                    foreach (EntityBlock Block in Entity.Peices)
+                    {
+                        float OffsetX = ((Entity.X + Block.Offset.X) - (Block.Width / 2)) - Player.X;
+                        float OffsetY = ((Entity.Y + Block.Offset.Y) - (Block.Height / 2)) - Player.Y;
+
+                        _spriteBatch.Draw(Color_White, new Rectangle(_graphics.PreferredBackBufferWidth + (int)OffsetX, _graphics.PreferredBackBufferHeight + (int)OffsetY, Block.Width, Block.Height), Block.Color);
+                    }
+                }
             }
 
             //UI
