@@ -490,6 +490,54 @@ namespace Bombarder
 
         #endregion
 
+        #region Entity Interaction
+
+        private void CreateEntity(bool OnFringe, bool IsEnemy)
+        {
+            if (OnFringe)
+                //Spawns randomly from edges of screen
+            {
+                int ScreenHalf_X = _graphics.PreferredBackBufferWidth / 2;
+                int ScreenHalf_Y = _graphics.PreferredBackBufferWidth / 2;
+
+                //Calculating random offscreen location
+                int SpawnDirection = random.Next(0, 4);
+                Point SpawnLocation = new Point();
+                if (SpawnDirection == 0)//Up
+                {
+                    SpawnLocation = new Point(random.Next((int)Player.X - ScreenHalf_X, (int)Player.X + ScreenHalf_X),
+                                              random.Next((int)Player.Y - (ScreenHalf_Y * 2), (int)Player.Y - ScreenHalf_Y));
+                }
+                else if (SpawnDirection == 1)//Down
+                {
+                    SpawnLocation = new Point(random.Next((int)Player.X - ScreenHalf_X, (int)Player.X + ScreenHalf_X),
+                                              random.Next((int)Player.Y + (ScreenHalf_Y * 2), (int)Player.Y + ScreenHalf_Y));
+                }
+                else if (SpawnDirection == 1)//Left
+                {
+                    SpawnLocation = new Point(random.Next((int)Player.X - (ScreenHalf_X * 2), (int)Player.X - ScreenHalf_X),
+                                              random.Next((int)Player.Y - ScreenHalf_Y, (int)Player.Y + ScreenHalf_Y));
+                }
+                else if (SpawnDirection == 1)//Right
+                {
+                    SpawnLocation = new Point(random.Next((int)Player.X + ScreenHalf_X, (int)Player.X + (ScreenHalf_X * 2)),
+                                              random.Next((int)Player.Y - ScreenHalf_Y, (int)Player.Y + ScreenHalf_Y));
+                }
+
+
+                if (IsEnemy)
+                {
+                    Entities.Add(new Entity()
+                    {
+                        X = SpawnLocation.X,
+                        Y = SpawnLocation.Y,
+                    });
+                }
+            }
+        }
+
+        #endregion
+
         /////////////////////////////////////////
 
         #region UserInput
