@@ -33,6 +33,7 @@ namespace Bombarder
         Player Player;
 
         List<Entity> Entities = new List<Entity>();
+        List<MagicEffect> MagicEffects = new List<MagicEffect>();
 
         #endregion
 
