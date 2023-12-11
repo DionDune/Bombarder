@@ -29,6 +29,8 @@ namespace Bombarder
 
         Player Player;
 
+        List<EntityBlock> Entities = new List<EntityBlock>();
+
         #endregion
 
         #region Initialization
