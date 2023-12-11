@@ -335,6 +335,8 @@ namespace Bombarder
 
         private void PlayerMovement_InputHandler(List<Keys> NewPresses)
         {
+            const int UnBoostDivider = 3;
+
             float Speed = Player.BaseSpeed;
             if (NewPresses.Contains(Keys.LeftShift))
             {
@@ -353,6 +355,10 @@ namespace Bombarder
                         Player.Momentum_Y = -Speed;
                     }
                 }
+                if (Player.Momentum_Y < -Speed)
+                {
+                    Player.Momentum_Y += Player.Acceleration / UnBoostDivider;
+                }
             }
             //Downward
             if (NewPresses.Contains(Keys.S) && !Keys_BeingPressed.Contains(Keys.W))
@@ -365,6 +371,10 @@ namespace Bombarder
                     {
                         Player.Momentum_Y = Speed;
                     }
+                }
+                if (Player.Momentum_Y > Speed)
+                {
+                    Player.Momentum_Y -= Player.Acceleration / UnBoostDivider;
                 }
             }
             //Left
@@ -379,6 +389,10 @@ namespace Bombarder
                         Player.Momentum_X = -Speed;
                     }
                 }
+                if (Player.Momentum_X < -Speed)
+                {
+                    Player.Momentum_X += Player.Acceleration / UnBoostDivider;
+                }
             }
             //Right
             if (NewPresses.Contains(Keys.D) && !Keys_BeingPressed.Contains(Keys.A))
@@ -391,6 +405,10 @@ namespace Bombarder
                     {
                         Player.Momentum_X = Speed;
                     }
+                }
+                if (Player.Momentum_X > -Speed)
+                {
+                    Player.Momentum_X -= Player.Acceleration / UnBoostDivider;
                 }
             }
 
