@@ -439,6 +439,12 @@ namespace Bombarder
             }
         }
 
+        private void PlayerMovement_EnactMomentum()
+        {
+            Player.X += Player.Momentum_X;
+            Player.Y += Player.Momentum_Y;
+        }
+
         #endregion
 
         /////////////////////////////////////////
@@ -605,6 +611,8 @@ namespace Bombarder
         {
             KeyboardHandler();
             MouseHandler();
+
+            PlayerMovement_EnactMomentum();
 
             base.Update(gameTime);
         }
