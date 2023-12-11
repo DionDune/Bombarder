@@ -16,6 +16,8 @@ namespace Bombarder
         public float Momentum_Y { get; set; }
         public float BaseSpeed { get; set; }
         public float BoostMultiplier { get; set; }
+        public float Acceleration { get; set; }
+        public float Slowdown { get; set; }
 
         public int Width { get; set; }
         public int Height { get; set; }
@@ -29,6 +31,9 @@ namespace Bombarder
             Momentum_Y = 0;
             BaseSpeed = 5;
             BoostMultiplier = 1.5F;
+
+            Acceleration = 0.85F;
+            Slowdown = 1F;
 
             Width = 50;
             Height = 120;
