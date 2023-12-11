@@ -48,6 +48,17 @@ namespace Bombarder
             X -= BaseSpeed * (float)Math.Cos(Angle);
             Y -= BaseSpeed * (float)Math.Sin(Angle);
         }
+
+        public bool GiveDamage(int Damage)
+        {
+            Health -= Damage;
+
+            if (Health <= 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     internal class EntityBlock
