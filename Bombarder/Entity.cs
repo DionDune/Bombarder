@@ -12,7 +12,7 @@ namespace Bombarder
     {
         public int Health { get; set; }
         public int HealthMax { get; set; }
-        bool IsDead { get; set; }
+        public bool IsDead { get; set; }
 
         public float X {  get; set; }
         public float Y { get; set; }
@@ -28,6 +28,7 @@ namespace Bombarder
         {
             Health = 80;
             HealthMax = 100;
+            IsDead = false;
 
             X = 0;
             Y = 0;
