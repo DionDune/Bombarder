@@ -30,13 +30,13 @@ namespace Bombarder
             Momentum_X = 0;
             Momentum_Y = 0;
             BaseSpeed = 5;
-            BoostMultiplier = 1.5F;
+            BoostMultiplier = 1.85F;
 
             Acceleration = 0.85F;
-            Slowdown = 1F;
+            Slowdown = 0.75F;
 
             Width = 50;
-            Height = 120;
+            Height = 100;
         }
     }
 }
