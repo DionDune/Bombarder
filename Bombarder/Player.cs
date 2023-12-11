@@ -13,6 +13,8 @@ namespace Bombarder
         public float Y { get; set; }
 
         public Vector2 Momentum { get; set; }
+        public float BaseSpeed { get; set; }
+        public float BoostMultiplier { get; set; }
 
         public int Width { get; set; }
         public int Height { get; set; }
@@ -21,7 +23,10 @@ namespace Bombarder
         {
             X = 0;
             Y = 0;
+
             Momentum = new Vector2(0, 0);
+            BaseSpeed = 5;
+            BoostMultiplier = 1.5F;
 
             Width = 50;
             Height = 120;
