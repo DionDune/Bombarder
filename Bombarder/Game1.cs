@@ -656,6 +656,11 @@ namespace Bombarder
             {
                 //Movement
                 PlayerMovement_InputHandler(Keys_NewlyPressed);
+
+                if (Keys_NewlyPressed.Contains(Keys.V) && !Keys_BeingPressed.Contains(Keys.V))
+                {
+                    CreateEntity(true, true);
+                }
             }
 
 
