@@ -499,7 +499,6 @@ namespace Bombarder
             {
                 float SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
                 int SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
-                SpawnDistance = 200;
                 Vector2 SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
                                                  Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
 
@@ -734,8 +733,8 @@ namespace Bombarder
                 {
                     foreach (EntityBlock Block in Entity.Peices)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                     (int)(Entity.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y), 
+                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                     (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y), 
                                                                     Block.Width, Block.Height), Block.Color);
                     }
                 }
