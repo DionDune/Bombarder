@@ -548,6 +548,21 @@ namespace Bombarder
 
         /////////////////////////////////////////
 
+        #region Magic Interaction
+
+        private void CreateMagic(int X, int Y)
+        {
+            MagicEffects.Add(new MagicEffect()
+            {
+                X = X,
+                Y = Y
+            });
+        }
+
+        #endregion
+
+        /////////////////////////////////////////
+
         #region UserInput
 
         #region Mouse
