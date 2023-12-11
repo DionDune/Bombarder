@@ -784,6 +784,13 @@ namespace Bombarder
                                                                     Block.Width, Block.Height), Block.Color);
                     }
                 }
+                //Magic
+                foreach (MagicEffect Effect in MagicEffects)
+                {
+                    _spriteBatch.Draw(Color_White, new Rectangle(Effect.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                 Effect.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                 10, 10), Effect.Color);
+                }
             }
 
             //UI
