@@ -12,6 +12,7 @@ namespace Bombarder
     {
         public int Health { get; set; }
         public int HealthMax { get; set; }
+        bool IsDead { get; set; }
 
         public float X {  get; set; }
         public float Y { get; set; }
@@ -49,15 +50,14 @@ namespace Bombarder
             Y -= BaseSpeed * (float)Math.Sin(Angle);
         }
 
-        public bool GiveDamage(int Damage)
+        public void GiveDamage(int Damage)
         {
             Health -= Damage;
 
             if (Health <= 0)
             {
-                return true;
+                IsDead = true;
             }
-            return false;
         }
     }
 
