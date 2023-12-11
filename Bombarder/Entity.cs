@@ -25,6 +25,9 @@ namespace Bombarder
 
         public Entity()
         {
+            Health = 80;
+            HealthMax = 100;
+
             X = 0;
             Y = 0;
 
