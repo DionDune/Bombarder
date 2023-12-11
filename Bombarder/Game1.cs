@@ -604,6 +604,8 @@ namespace Bombarder
             {
                 if (!Mouse_isClickingLeft)
                 {
+                    bool UIClicked = false;
+
                     if (UIPage_Current != null)
                     {
                         foreach (UIItem Item in UIPage_Current.UIItems)
@@ -611,10 +613,10 @@ namespace Bombarder
                             int X = _graphics.PreferredBackBufferWidth / 2 + Item.X;
                             int Y = _graphics.PreferredBackBufferHeight / 2 + Item.Y;
 
-                            if (Item.Type == "Button")
-                            {
-                                if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
+                            if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
                                     Mouse.GetState().Y > Y && Mouse.GetState().Y < Y + Item.Height)
+                            {
+                                if (Item.Type == "Button")
                                 {
                                     UserControl_ButtonPress(Item.Data);
                                 }
