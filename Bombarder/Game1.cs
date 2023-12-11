@@ -513,6 +513,17 @@ namespace Bombarder
             }
         }
 
+        private void EnactEnemyChase()
+        {
+            foreach (Entity Entity in Entities)
+            {
+                if (Entity.ChasesPlayer)
+                {
+                    Entity.MoveTowards(new Vector2(Player.X, Player.Y));
+                }
+            }
+        }
+
         #endregion
 
         /////////////////////////////////////////
@@ -690,6 +701,7 @@ namespace Bombarder
             if (GameState == "Play")
             {
                 PlayerMovement_EnactMomentum();
+                EnactEnemyChase();
             }
 
 
