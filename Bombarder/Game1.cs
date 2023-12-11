@@ -29,7 +29,7 @@ namespace Bombarder
 
         Player Player;
 
-        List<EntityBlock> Entities = new List<EntityBlock>();
+        List<Entity> Entities = new List<Entity>();
 
         #endregion
 
