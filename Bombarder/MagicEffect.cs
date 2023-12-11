@@ -17,9 +17,9 @@ namespace Bombarder
         public float DamageRadius { get; set; }
 
         public bool Continuous { get; set; }
-        public int LifeSpan { get; set; }
 
-        public Color Color { get; set; }
+        public List<MagicEffectPeice> Peices { get; set; }
+        
 
         public MagicEffect()
         {
@@ -31,8 +31,28 @@ namespace Bombarder
             DamageRadius = 25;
 
             Continuous = false;
-            LifeSpan = 100;
+
+            Peices = new List<MagicEffectPeice>() { new MagicEffectPeice ()};
+        }
+    }
+
+    internal class MagicEffectPeice
+    {
+        public int LifeSpan { get; set; }
+        public Color Color { get; set; }
+
+        public Point Offset { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        public MagicEffectPeice()
+        {
+            LifeSpan = 150;
             Color = Color.Turquoise;
+
+            Offset = new Point(-25, -25);
+            Width = 50;
+            Height = 50;
         }
     }
 }
