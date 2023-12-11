@@ -561,9 +561,11 @@ namespace Bombarder
                 TogglePause();
             }
 
-            //Movement
-            PlayerMovement_InputHandler(Keys_NewlyPressed);
-
+            if (GameState == "Play")
+            {
+                //Movement
+                PlayerMovement_InputHandler(Keys_NewlyPressed);
+            }
 
 
             Keys_BeingPressed = Keys_NewlyPressed;
@@ -612,7 +614,11 @@ namespace Bombarder
             KeyboardHandler();
             MouseHandler();
 
-            PlayerMovement_EnactMomentum();
+            if (GameState == "Play")
+            {
+                PlayerMovement_EnactMomentum();
+            }
+
 
             base.Update(gameTime);
         }
