@@ -722,10 +722,9 @@ namespace Bombarder
                 {
                     foreach (EntityBlock Block in Entity.Peices)
                     {
-                        float OffsetX = ((Entity.X + Block.Offset.X) - (Block.Width / 2)) - Player.X;
-                        float OffsetY = ((Entity.Y + Block.Offset.Y) - (Block.Height / 2)) - Player.Y;
-
-                        _spriteBatch.Draw(Color_White, new Rectangle(_graphics.PreferredBackBufferWidth + (int)OffsetX, _graphics.PreferredBackBufferHeight + (int)OffsetY, Block.Width, Block.Height), Block.Color);
+                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                     (int)(Entity.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y), 
+                                                                    Block.Width, Block.Height), Block.Color);
                     }
                 }
             }
