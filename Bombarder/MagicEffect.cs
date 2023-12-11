@@ -34,6 +34,25 @@ namespace Bombarder
 
             Peices = new List<MagicEffectPeice>() { new MagicEffectPeice ()};
         }
+
+        public void EnactLifespan()
+        {
+            List<MagicEffectPeice> DeadPieces = new List<MagicEffectPeice>();
+            foreach (MagicEffectPeice Piece in Peices)
+            {
+                Piece.LifeSpan--;
+
+                if (Piece.LifeSpan <= 0)
+                {
+                    DeadPieces.Add(Piece);
+                }
+            }
+
+            foreach(MagicEffectPeice Piece in DeadPieces)
+            {
+                Peices.Remove(Piece);
+            }
+        }
     }
 
     internal class MagicEffectPeice
