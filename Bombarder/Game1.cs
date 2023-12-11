@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 
 namespace Bombarder
 {
@@ -452,6 +453,38 @@ namespace Bombarder
 
         #endregion
 
+        #region General Rendering Functions
+
+        private void DrawGrid()
+        {
+            Point ScreenStart = new Point((int)Player.Position.X - (_graphics.PreferredBackBufferWidth / 2),
+                                              (int)Player.Position.Y - (_graphics.PreferredBackBufferHeight / 2));
+            for (int y = 0; y < _graphics.PreferredBackBufferHeight; y++)
+            {
+                if ((y + ScreenStart.Y) % 300 == 0)
+                {
+                    _spriteBatch.Draw(Color_White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, 2), Color.White * 0.7F);
+                }
+                if ((y + ScreenStart.Y) % 50 == 0)
+                {
+                    _spriteBatch.Draw(Color_White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, 1), Color.White * 0.45F);
+                }
+            }
+            for (int x = 0; x < _graphics.PreferredBackBufferWidth; x++)
+            {
+                if ((x + ScreenStart.X) % 300 == 0)
+                {
+                    _spriteBatch.Draw(Color_White, new Rectangle(x - 1, 0, 2, _graphics.PreferredBackBufferWidth), Color.White * 0.7F);
+                }
+                if ((x + ScreenStart.X) % 50 == 0)
+                {
+                    _spriteBatch.Draw(Color_White, new Rectangle(x, 0, 1, _graphics.PreferredBackBufferWidth), Color.White * 0.45F);
+                }
+            }
+        }
+
+        #endregion
+
         #region Fundamentals
 
         protected override void Update(GameTime gameTime)
@@ -474,6 +507,9 @@ namespace Bombarder
             //Ingame
             if (GameState == "Play")
             {
+                //Grid
+                DrawGrid();
+
                 //Player
                 _spriteBatch.Draw(Color_White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
                                                              _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
@@ -489,7 +525,7 @@ namespace Bombarder
                 }
             }
 
-
+            
 
             _spriteBatch.End();
             // END Draw ------
