@@ -31,6 +31,17 @@ namespace Bombarder
 
             Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-33, -33), Color = Color.Red } };
         }
+
+        public void MoveTowards(Vector2 Goal)
+        {
+            float XDifference = X - Goal.X;
+            float YDifference = Y - Goal.Y;
+            float Angle = (float)(Math.Atan2(XDifference, YDifference) * 180F / Math.PI);
+            float AngleR = Angle * (float)(Math.PI / 180);
+
+            X += BaseSpeed * (float)Math.Cos(AngleR);
+            Y += BaseSpeed * (float)Math.Sin(AngleR);
+        }
     }
 
     internal class EntityBlock
