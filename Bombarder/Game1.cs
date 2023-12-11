@@ -558,6 +558,24 @@ namespace Bombarder
                 Y = Y
             });
         }
+        private void EnactMagic()
+        {
+
+            //Enact Lifespan
+            List<MagicEffect> DeadEffects = new List<MagicEffect>();
+            foreach (MagicEffect Effect in MagicEffects)
+            {
+                Effect.EnactLifespan();
+                if (Effect.Peices.Count == 0)
+                {
+                    DeadEffects.Add(Effect);
+                }
+            }
+            foreach(MagicEffect Effect in DeadEffects)
+            {
+                MagicEffects.Remove(Effect);
+            }
+        }
 
         #endregion
 
@@ -748,6 +766,7 @@ namespace Bombarder
                 PlayerMovement_EnactMomentum();
                 EnactEnemyChase();
                 PurgeDeadEntities();
+                EnactMagic();
             }
 
 
