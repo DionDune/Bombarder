@@ -43,11 +43,11 @@ namespace Bombarder
 
         public EntityBlock()
         {
-            Width = 16;
-            Height = 16;
-            Offset = new Vector2(-8, -8);
+            Width = 32;
+            Height = 32;
+            Offset = new Vector2(-16, -16);
 
-            Color = Color.Purple;
+            Color = Color.Red;
         }
     }
 }
