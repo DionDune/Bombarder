@@ -9,7 +9,9 @@ namespace Bombarder
 {
     internal class Player
     {
-        public Vector2 Position { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+
         public Vector2 Momentum { get; set; }
 
         public int Width { get; set; }
@@ -17,7 +19,8 @@ namespace Bombarder
 
         public Player()
         {
-            Position = new Vector2(0, 0);
+            X = 0;
+            Y = 0;
             Momentum = new Vector2(0, 0);
 
             Width = 50;

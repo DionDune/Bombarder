@@ -457,8 +457,8 @@ namespace Bombarder
 
         private void DrawGrid()
         {
-            Point ScreenStart = new Point((int)Player.Position.X - (_graphics.PreferredBackBufferWidth / 2),
-                                              (int)Player.Position.Y - (_graphics.PreferredBackBufferHeight / 2));
+            Point ScreenStart = new Point((int)Player.X - (_graphics.PreferredBackBufferWidth / 2),
+                                              (int)Player.Y - (_graphics.PreferredBackBufferHeight / 2));
             for (int y = 0; y < _graphics.PreferredBackBufferHeight; y++)
             {
                 if ((y + ScreenStart.Y) % 300 == 0)
