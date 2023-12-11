@@ -331,6 +331,116 @@ namespace Bombarder
 
         #endregion
 
+        #region Player Movement
+
+        private void PlayerMovement_InputHandler(List<Keys> NewPresses)
+        {
+            float Speed = Player.BaseSpeed;
+            if (NewPresses.Contains(Keys.LeftShift))
+            {
+                Speed = Player.BaseSpeed * Player.BoostMultiplier;
+            }
+
+            //Upward
+            if (NewPresses.Contains(Keys.W) && !Keys_BeingPressed.Contains(Keys.S))
+            {
+                if (Player.Momentum_Y > -Speed)
+                {
+                    Player.Momentum_Y -= Player.Acceleration;
+
+                    if (Player.Momentum_Y < -Speed)
+                    {
+                        Player.Momentum_Y = -Speed;
+                    }
+                }
+            }
+            //Downward
+            if (NewPresses.Contains(Keys.S) && !Keys_BeingPressed.Contains(Keys.W))
+            {
+                if (Player.Momentum_Y < Speed)
+                {
+                    Player.Momentum_Y += Player.Acceleration;
+
+                    if (Player.Momentum_Y > Speed)
+                    {
+                        Player.Momentum_Y = Speed;
+                    }
+                }
+            }
+            //Left
+            if (NewPresses.Contains(Keys.A) && !Keys_BeingPressed.Contains(Keys.D))
+            {
+                if (Player.Momentum_X < Speed)
+                {
+                    Player.Momentum_X += Player.Acceleration;
+
+                    if (Player.Momentum_X > Speed)
+                    {
+                        Player.Momentum_X = Speed;
+                    }
+                }
+            }
+            //Right
+            if (NewPresses.Contains(Keys.D) && !Keys_BeingPressed.Contains(Keys.A))
+            {
+                if (Player.Momentum_X > -Speed)
+                {
+                    Player.Momentum_X -= Player.Acceleration;
+
+                    if (Player.Momentum_X < -Speed)
+                    {
+                        Player.Momentum_X = -Speed;
+                    }
+                }
+            }
+
+            //Slowdown
+            if (!NewPresses.Contains(Keys.W) && !NewPresses.Contains(Keys.S))
+            {
+                if (Player.Momentum_Y > 0)
+                {
+                    Player.Momentum_Y -= Player.Slowdown;
+
+                    if (Player.Momentum_Y < 0)
+                    {
+                        Player.Momentum_Y = 0;
+                    }
+                }
+                else if (Player.Momentum_Y < 0)
+                {
+                    Player.Momentum_Y += Player.Slowdown;
+
+                    if (Player.Momentum_Y > 0)
+                    {
+                        Player.Momentum_Y = 0;
+                    }
+                }
+            }
+            if (!NewPresses.Contains(Keys.A) && !NewPresses.Contains(Keys.D))
+            {
+                if (Player.Momentum_X > 0)
+                {
+                    Player.Momentum_X -= Player.Slowdown;
+
+                    if (Player.Momentum_X < 0)
+                    {
+                        Player.Momentum_X = 0;
+                    }
+                }
+                else if (Player.Momentum_X < 0)
+                {
+                    Player.Momentum_X += Player.Slowdown;
+
+                    if (Player.Momentum_X > 0)
+                    {
+                        Player.Momentum_X = 0;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         /////////////////////////////////////////
 
         #region UserInput
@@ -445,6 +555,8 @@ namespace Bombarder
                 TogglePause();
             }
 
+            //Movement
+            PlayerMovement_InputHandler(Keys_NewlyPressed);
 
 
 
