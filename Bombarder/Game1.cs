@@ -336,6 +336,7 @@ namespace Bombarder
         private void PlayerMovement_InputHandler(List<Keys> NewPresses)
         {
             const int UnBoostDivider = 3;
+            const float SwitchDirectionMult = 1F;
 
             float Speed = Player.BaseSpeed;
             if (NewPresses.Contains(Keys.LeftShift))
@@ -349,6 +350,11 @@ namespace Bombarder
                 if (Player.Momentum_Y > -Speed)
                 {
                     Player.Momentum_Y -= Player.Acceleration;
+                    if (Player.Momentum_Y > 0)
+                    {
+                        Player.Momentum_Y -= Player.Acceleration * SwitchDirectionMult;
+                    }
+
 
                     if (Player.Momentum_Y < -Speed)
                     {
@@ -366,6 +372,11 @@ namespace Bombarder
                 if (Player.Momentum_Y < Speed)
                 {
                     Player.Momentum_Y += Player.Acceleration;
+                    if (Player.Momentum_Y < 0)
+                    {
+                        Player.Momentum_Y += Player.Acceleration * SwitchDirectionMult;
+                    }
+
 
                     if (Player.Momentum_Y > Speed)
                     {
@@ -383,6 +394,11 @@ namespace Bombarder
                 if (Player.Momentum_X > -Speed)
                 {
                     Player.Momentum_X -= Player.Acceleration;
+                    if (Player.Momentum_X > 0)
+                    {
+                        Player.Momentum_X -= Player.Acceleration * SwitchDirectionMult;
+                    }
+
 
                     if (Player.Momentum_X < -Speed)
                     {
@@ -400,6 +416,10 @@ namespace Bombarder
                 if (Player.Momentum_X < Speed)
                 {
                     Player.Momentum_X += Player.Acceleration;
+                    if (Player.Momentum_X < 0)
+                    {
+                        Player.Momentum_X += Player.Acceleration * SwitchDirectionMult;
+                    }
 
                     if (Player.Momentum_X > Speed)
                     {
