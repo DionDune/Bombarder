@@ -15,7 +15,7 @@ namespace Bombarder
         public float Direction { get; set; }
         public float BaseSpeed { get; set; }
 
-        bool ChasesPlayer;
+        public bool ChasesPlayer;
 
         public List<EntityBlock> Peices { get; set; }
 
