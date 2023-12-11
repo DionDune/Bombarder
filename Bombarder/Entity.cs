@@ -10,13 +10,16 @@ namespace Bombarder
 {
     internal class Entity
     {
+        public int Health { get; set; }
+        public int HealthMax { get; set; }
+
         public float X {  get; set; }
         public float Y { get; set; }
 
         public float Direction { get; set; }
         public float BaseSpeed { get; set; }
 
-        public bool ChasesPlayer;
+        public bool ChasesPlayer { get; set; }
 
         public List<EntityBlock> Peices { get; set; }
 
@@ -30,7 +33,7 @@ namespace Bombarder
 
             ChasesPlayer = true;
 
-            Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-33, -33), Color = Color.Red } };
+            Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-28, -28), Color = Color.Red } };
         }
 
         public void MoveTowards(Vector2 Goal)
