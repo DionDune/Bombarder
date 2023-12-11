@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,11 +37,10 @@ namespace Bombarder
         {
             float XDifference = X - Goal.X;
             float YDifference = Y - Goal.Y;
-            float Angle = (float)(Math.Atan2(XDifference, YDifference) * 180F / Math.PI);
-            float AngleR = Angle * (float)(Math.PI / 180);
+            float Angle = (float)(Math.Atan2(YDifference, XDifference));
 
-            X += BaseSpeed * (float)Math.Cos(AngleR);
-            Y += BaseSpeed * (float)Math.Sin(AngleR);
+            X -= BaseSpeed * (float)Math.Cos(Angle);
+            Y -= BaseSpeed * (float)Math.Sin(Angle);
         }
     }
 
