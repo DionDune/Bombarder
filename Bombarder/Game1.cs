@@ -498,8 +498,7 @@ namespace Bombarder
             //Spawns randomly from edges of screen
             {
                 float SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
-                int SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 1.2F), _graphics.PreferredBackBufferWidth * 2);
-                SpawnDistance = 200;
+                int SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
                 Vector2 SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
                                                  Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
 
