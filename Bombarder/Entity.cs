@@ -29,7 +29,7 @@ namespace Bombarder
 
             ChasesPlayer = true;
 
-            Peices = new List<EntityBlock>() { new EntityBlock() };
+            Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-33, -33), Color = Color.Red } };
         }
     }
 
@@ -43,11 +43,11 @@ namespace Bombarder
 
         public EntityBlock()
         {
-            Width = 32;
-            Height = 32;
-            Offset = new Vector2(-16, -16);
+            Width = 66;
+            Height = 66;
+            Offset = new Vector2(-33, -33);
 
-            Color = Color.Red;
+            Color = Color.DarkRed;
         }
     }
 }
