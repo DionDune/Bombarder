@@ -370,19 +370,6 @@ namespace Bombarder
             //Left
             if (NewPresses.Contains(Keys.A) && !Keys_BeingPressed.Contains(Keys.D))
             {
-                if (Player.Momentum_X < Speed)
-                {
-                    Player.Momentum_X += Player.Acceleration;
-
-                    if (Player.Momentum_X > Speed)
-                    {
-                        Player.Momentum_X = Speed;
-                    }
-                }
-            }
-            //Right
-            if (NewPresses.Contains(Keys.D) && !Keys_BeingPressed.Contains(Keys.A))
-            {
                 if (Player.Momentum_X > -Speed)
                 {
                     Player.Momentum_X -= Player.Acceleration;
@@ -390,6 +377,19 @@ namespace Bombarder
                     if (Player.Momentum_X < -Speed)
                     {
                         Player.Momentum_X = -Speed;
+                    }
+                }
+            }
+            //Right
+            if (NewPresses.Contains(Keys.D) && !Keys_BeingPressed.Contains(Keys.A))
+            {
+                if (Player.Momentum_X < Speed)
+                {
+                    Player.Momentum_X += Player.Acceleration;
+
+                    if (Player.Momentum_X > Speed)
+                    {
+                        Player.Momentum_X = Speed;
                     }
                 }
             }

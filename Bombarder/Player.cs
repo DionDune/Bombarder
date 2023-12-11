@@ -32,7 +32,7 @@ namespace Bombarder
             BaseSpeed = 5;
             BoostMultiplier = 1.85F;
 
-            Acceleration = 0.85F;
+            Acceleration = 0.45F;
             Slowdown = 0.75F;
 
             Width = 50;
