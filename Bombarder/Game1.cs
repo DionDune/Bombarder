@@ -492,7 +492,7 @@ namespace Bombarder
 
         #region Entity Interaction
 
-        private void CreateEntity(bool OnFringe, bool IsEnemy)
+        private void SpawnRandomEnemy(bool OnFringe, bool IsEnemy)
         {
             if (OnFringe)
                 //Spawns randomly from edges of screen
@@ -660,7 +660,7 @@ namespace Bombarder
 
                 if (Keys_NewlyPressed.Contains(Keys.V) && !Keys_BeingPressed.Contains(Keys.V))
                 {
-                    CreateEntity(true, true);
+                    SpawnRandomEnemy(true, true);
                 }
             }
 
