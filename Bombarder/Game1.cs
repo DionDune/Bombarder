@@ -616,12 +616,20 @@ namespace Bombarder
                             if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
                                     Mouse.GetState().Y > Y && Mouse.GetState().Y < Y + Item.Height)
                             {
+                                UIClicked = true;
+
                                 if (Item.Type == "Button")
                                 {
                                     UserControl_ButtonPress(Item.Data);
                                 }
                             }
                         }
+                    }
+
+                    if (!UIClicked)
+                    {
+                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y));
                     }
                 }
 
