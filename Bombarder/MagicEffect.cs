@@ -18,7 +18,7 @@ namespace Bombarder
 
         public bool Continuous { get; set; }
 
-        public List<MagicEffectPiece> Peices { get; set; }
+        public List<MagicEffectPiece> Pieces { get; set; }
         
 
         public MagicEffect()
@@ -32,13 +32,13 @@ namespace Bombarder
 
             Continuous = false;
 
-            Peices = new List<MagicEffectPiece>() { new MagicEffectPiece()};
+            Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece()};
         }
 
         public void EnactLifespan()
         {
             List<MagicEffectPiece> DeadPieces = new List<MagicEffectPiece>();
-            foreach (MagicEffectPiece Piece in Peices)
+            foreach (MagicEffectPiece Piece in Pieces)
             {
                 Piece.LifeSpan--;
 
@@ -50,7 +50,7 @@ namespace Bombarder
 
             foreach(MagicEffectPiece Piece in DeadPieces)
             {
-                Peices.Remove(Piece);
+                Pieces.Remove(Piece);
             }
         }
     }

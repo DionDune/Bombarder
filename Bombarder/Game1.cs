@@ -571,7 +571,7 @@ namespace Bombarder
             foreach (MagicEffect Effect in MagicEffects)
             {
                 Effect.EnactLifespan();
-                if (Effect.Peices.Count == 0)
+                if (Effect.Pieces.Count == 0)
                 {
                     DeadEffects.Add(Effect);
                 }
@@ -818,7 +818,7 @@ namespace Bombarder
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)
                 {
-                    foreach (MagicEffectPiece Peice in Effect.Peices)
+                    foreach (MagicEffectPiece Peice in Effect.Pieces)
                     {
                         Texture2D EffectTexture = Color_White;
                         if (Peice.BaseShape == "Circle")
