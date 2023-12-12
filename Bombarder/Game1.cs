@@ -29,6 +29,7 @@ namespace Bombarder
         bool Mouse_isClickingRight;
         bool Mouse_isClickingMiddle;
 
+        Settings Settings;
 
         Player Player;
 
@@ -62,6 +63,7 @@ namespace Bombarder
             Mouse_isClickingMiddle = false;
 
 
+            Settings = new Settings();
             Player = new Player();
 
             base.Initialize();
