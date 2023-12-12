@@ -861,6 +861,26 @@ namespace Bombarder
                                                                      (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     Block.Width, Block.Height), BlockColor);
                     }
+
+                    if (Settings.ShowHitBoxes)
+                    {
+                        //Top Line
+                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                    Entity.HitboxSize.X, 2), Color.White);
+                        //Bottom Line
+                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + Entity.HitboxSize.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                    Entity.HitboxSize.X, 2), Color.White);
+                        //Left Line
+                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                    2, Entity.HitboxSize.Y), Color.White);
+                        //Right Line
+                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                    2, Entity.HitboxSize.Y), Color.White);
+                    }
                 }
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)
