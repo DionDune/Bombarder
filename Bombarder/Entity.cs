@@ -163,6 +163,8 @@ namespace Bombarder
             Offset = new Vector2(-33, -33);
 
             Color = Color.DarkRed;
+
+            Textures = null;
         }
     }
 }
