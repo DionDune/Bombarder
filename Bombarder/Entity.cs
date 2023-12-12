@@ -96,7 +96,6 @@ namespace Bombarder
                 else
                 {
                     
-                    if ()
                 }
             }
         }
