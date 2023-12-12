@@ -18,7 +18,7 @@ namespace Bombarder
 
         public bool Continuous { get; set; }
 
-        public List<MagicEffectPeice> Peices { get; set; }
+        public List<MagicEffectPiece> Peices { get; set; }
         
 
         public MagicEffect()
@@ -32,13 +32,13 @@ namespace Bombarder
 
             Continuous = false;
 
-            Peices = new List<MagicEffectPeice>() { new MagicEffectPeice ()};
+            Peices = new List<MagicEffectPiece>() { new MagicEffectPiece()};
         }
 
         public void EnactLifespan()
         {
-            List<MagicEffectPeice> DeadPieces = new List<MagicEffectPeice>();
-            foreach (MagicEffectPeice Piece in Peices)
+            List<MagicEffectPiece> DeadPieces = new List<MagicEffectPiece>();
+            foreach (MagicEffectPiece Piece in Peices)
             {
                 Piece.LifeSpan--;
 
@@ -48,14 +48,14 @@ namespace Bombarder
                 }
             }
 
-            foreach(MagicEffectPeice Piece in DeadPieces)
+            foreach(MagicEffectPiece Piece in DeadPieces)
             {
                 Peices.Remove(Piece);
             }
         }
     }
 
-    internal class MagicEffectPeice
+    internal class MagicEffectPiece
     {
         public int LifeSpan { get; set; }
         public Color Color { get; set; }
@@ -66,7 +66,7 @@ namespace Bombarder
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public MagicEffectPeice()
+        public MagicEffectPiece()
         {
             LifeSpan = 150;
             Color = Color.Turquoise;

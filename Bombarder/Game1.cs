@@ -818,7 +818,7 @@ namespace Bombarder
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)
                 {
-                    foreach (MagicEffectPeice Peice in Effect.Peices)
+                    foreach (MagicEffectPiece Peice in Effect.Peices)
                     {
                         _spriteBatch.Draw(Color_White, new Rectangle(Effect.X + Peice.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                      Effect.Y + Peice.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
