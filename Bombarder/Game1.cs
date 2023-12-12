@@ -515,11 +515,26 @@ namespace Bombarder
 
                 if (IsEnemy)
                 {
-                    Entities.Add(new Entity()
+                    if (random.Next(0, 4) == 0)
                     {
-                        X = (int)SpawnPoint.X,
-                        Y = (int)SpawnPoint.Y,
-                    });
+                        //Demon Eye
+                        Entities.Add(new Entity()
+                        {
+                            X = (int)SpawnPoint.X,
+                            Y = (int)SpawnPoint.Y,
+                            
+                            Type = "DemonEye",
+                        });
+                    }
+                    else
+                    {
+                        //Default
+                        Entities.Add(new Entity()
+                        {
+                            X = (int)SpawnPoint.X,
+                            Y = (int)SpawnPoint.Y,
+                        });
+                    }
                 }
             }
         }
