@@ -820,7 +820,13 @@ namespace Bombarder
                 {
                     foreach (MagicEffectPiece Peice in Effect.Peices)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(Effect.X + Peice.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                        Texture2D EffectTexture = Color_White;
+                        if (Peice.BaseShape == "Circle")
+                        {
+                            EffectTexture = Circle_White;
+                        }
+
+                        _spriteBatch.Draw(EffectTexture, new Rectangle(Effect.X + Peice.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                      Effect.Y + Peice.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                      Peice.Width, Peice.Height), Peice.Color);
                     }
