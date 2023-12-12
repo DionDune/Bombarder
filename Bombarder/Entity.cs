@@ -14,8 +14,11 @@ namespace Bombarder
         public int HealthMax { get; set; }
         public bool IsDead { get; set; }
 
-        public float X {  get; set; }
+        public float X { get; set; }
         public float Y { get; set; }
+
+        public Point HitboxOffset { get; set; }
+        public Point HitboxSize { get; set; }
 
         public float Direction { get; set; }
         public float BaseSpeed { get; set; }
@@ -32,6 +35,8 @@ namespace Bombarder
 
             X = 0;
             Y = 0;
+            HitboxOffset = new Point(-33, -33);
+            HitboxSize = new Point(66, 66);
 
             Direction = 0;
             BaseSpeed = 5;
