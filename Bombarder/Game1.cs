@@ -19,6 +19,7 @@ namespace Bombarder
 
         Texture2D Color_White;
         Texture2D Circle_White;
+        (Texture2D, Texture2D) Texture_DemonEye;
 
         List<UIPage> UIPages = new List<UIPage>();
         UIPage UIPage_Current;
@@ -79,6 +80,10 @@ namespace Bombarder
             Color_White.SetData(new Color[1] { Color.White });
 
             Circle_White = Content.Load<Texture2D>("Circle");
+
+
+            //Demon Eye Textures
+            Texture_DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
         }
 
         #endregion
