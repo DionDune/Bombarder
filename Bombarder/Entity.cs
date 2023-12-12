@@ -97,17 +97,16 @@ namespace Bombarder
 
             //Check if any points are within the effect
             //Top Left
-            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X - Effect.X), 2) +
-                                                    Math.Pow(Math.Abs(HitboxSize.Y - Effect.Y), 2));
+            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxStart.X - Effect.X), 2) +
+                                                    Math.Pow(Math.Abs(HitboxStart.Y - Effect.Y), 2));
             if (Distance <= Effect.DamageRadius)
             {
                 GiveDamage(Effect.Damage);
                 return;
             }
-
             //Top Right
-            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X + HitboxSize.X - Effect.X), 2) +
-                                                    Math.Pow(Math.Abs(HitboxSize.Y - Effect.Y), 2));
+            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxStart.X + HitboxSize.X - Effect.X), 2) +
+                                                    Math.Pow(Math.Abs(HitboxStart.Y - Effect.Y), 2));
             if (Distance <= Effect.DamageRadius)
             {
                 GiveDamage(Effect.Damage);
@@ -115,8 +114,8 @@ namespace Bombarder
             }
 
             //Bottom Left
-            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X - Effect.X), 2) +
-                                                    Math.Pow(Math.Abs(HitboxSize.Y + HitboxSize.Y - Effect.Y), 2));
+            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxStart.X - Effect.X), 2) +
+                                                    Math.Pow(Math.Abs(HitboxStart.Y + HitboxSize.Y - Effect.Y), 2));
             if (Distance <= Effect.DamageRadius)
             {
                 GiveDamage(Effect.Damage);
@@ -124,8 +123,8 @@ namespace Bombarder
             }
 
             //Bottom Right
-            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X + HitboxSize.X - Effect.X), 2) +
-                                                    Math.Pow(Math.Abs(HitboxSize.Y + HitboxSize.Y - Effect.Y), 2));
+            Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxStart.X + HitboxSize.X - Effect.X), 2) +
+                                                    Math.Pow(Math.Abs(HitboxStart.Y + HitboxSize.Y - Effect.Y), 2));
             if (Distance <= Effect.DamageRadius)
             {
                 GiveDamage(Effect.Damage);
