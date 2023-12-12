@@ -71,8 +71,8 @@ namespace Bombarder
             Vector2 HitboxStart = new Vector2(X + HitboxOffset.X, Y + HitboxOffset.Y);
 
             //Check if the centre is within the effect
-            float Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X + (HitboxSize.X / 2) - Effect.X), 2) +
-                                                       Math.Pow(Math.Abs(HitboxSize.Y + (HitboxSize.Y / 2) - Effect.Y), 2));
+            float Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxStart.X + (HitboxSize.X / 2) - Effect.X), 2) +
+                                                       Math.Pow(Math.Abs(HitboxStart.Y + (HitboxSize.Y / 2) - Effect.Y), 2));
             if (Distance <= Effect.DamageRadius)
             {
                 GiveDamage(Effect.Damage);
