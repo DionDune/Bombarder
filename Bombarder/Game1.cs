@@ -728,28 +728,31 @@ namespace Bombarder
 
         private void DrawGrid()
         {
-            Point ScreenStart = new Point((int)Player.X - (_graphics.PreferredBackBufferWidth / 2),
-                                              (int)Player.Y - (_graphics.PreferredBackBufferHeight / 2));
-            for (int y = 0; y < _graphics.PreferredBackBufferHeight; y++)
+            if (Settings.ShowGrid)
             {
-                if ((y + ScreenStart.Y) % 300 == 0)
+                Point ScreenStart = new Point((int)Player.X - (_graphics.PreferredBackBufferWidth / 2),
+                                                              (int)Player.Y - (_graphics.PreferredBackBufferHeight / 2));
+                for (int y = 0; y < _graphics.PreferredBackBufferHeight; y++)
                 {
-                    _spriteBatch.Draw(Color_White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, 2), Color.White * 0.7F);
+                    if ((y + ScreenStart.Y) % 300 == 0)
+                    {
+                        _spriteBatch.Draw(Color_White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, 2), Color.White * 0.7F);
+                    }
+                    if ((y + ScreenStart.Y) % 50 == 0)
+                    {
+                        _spriteBatch.Draw(Color_White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, 1), Color.White * 0.45F);
+                    }
                 }
-                if ((y + ScreenStart.Y) % 50 == 0)
+                for (int x = 0; x < _graphics.PreferredBackBufferWidth; x++)
                 {
-                    _spriteBatch.Draw(Color_White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, 1), Color.White * 0.45F);
-                }
-            }
-            for (int x = 0; x < _graphics.PreferredBackBufferWidth; x++)
-            {
-                if ((x + ScreenStart.X) % 300 == 0)
-                {
-                    _spriteBatch.Draw(Color_White, new Rectangle(x - 1, 0, 2, _graphics.PreferredBackBufferWidth), Color.White * 0.7F);
-                }
-                if ((x + ScreenStart.X) % 50 == 0)
-                {
-                    _spriteBatch.Draw(Color_White, new Rectangle(x, 0, 1, _graphics.PreferredBackBufferWidth), Color.White * 0.45F);
+                    if ((x + ScreenStart.X) % 300 == 0)
+                    {
+                        _spriteBatch.Draw(Color_White, new Rectangle(x - 1, 0, 2, _graphics.PreferredBackBufferWidth), Color.White * 0.7F);
+                    }
+                    if ((x + ScreenStart.X) % 50 == 0)
+                    {
+                        _spriteBatch.Draw(Color_White, new Rectangle(x, 0, 1, _graphics.PreferredBackBufferWidth), Color.White * 0.45F);
+                    }
                 }
             }
         }
