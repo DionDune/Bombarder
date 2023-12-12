@@ -523,8 +523,11 @@ namespace Bombarder
                             X = (int)SpawnPoint.X,
                             Y = (int)SpawnPoint.Y,
                             
-                            Type = "DemonEye",
+                            Type = "DemonEye"
                         });
+                        Entities.Last().Peices[0].Textures = new List<Texture2D>() { Texture_DemonEye.Item1, Texture_DemonEye.Item2 };
+                        Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width;
+                        Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height;
                     }
                     else
                     {
