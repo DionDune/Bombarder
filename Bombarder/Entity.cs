@@ -58,6 +58,8 @@ namespace Bombarder
             float YDifference = Y - Goal.Y;
             float Angle = (float)(Math.Atan2(YDifference, XDifference));
 
+            Direction = Angle;
+
             X -= BaseSpeed * (float)Math.Cos(Angle);
             Y -= BaseSpeed * (float)Math.Sin(Angle);
         }
