@@ -523,13 +523,15 @@ namespace Bombarder
                             X = (int)SpawnPoint.X,
                             Y = (int)SpawnPoint.Y,
                             
-                            Type = "DemonEye"
+                            Type = "DemonEye",
+
+                            Peices = new List<EntityBlock>() { new EntityBlock() }
                         });
                         Entities.Last().Peices[0].Textures = new List<Texture2D>() { Texture_DemonEye.Item1, Texture_DemonEye.Item2 };
-                        Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width;
-                        Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height;
+                        Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width / 3 * 2;
+                        Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height / 3 * 2;
                         Entities.Last().Peices[0].Offset = new Vector2( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
-                        Entities.Last().HitboxOffset = new Point( (int)Entities.Last().Peices[0].Offset.X, (int)Entities.Last().Peices[0].Offset.Y );
+                        Entities.Last().HitboxOffset = new Point( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
                         Entities.Last().HitboxSize = new Point( Entities.Last().Peices[0].Width, Entities.Last().Peices[0].Height );
                     }
                     else
