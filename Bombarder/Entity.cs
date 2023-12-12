@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,9 @@ namespace Bombarder
 {
     internal class Entity
     {
+        public string Type { get; set; }
+        public List<Texture2D> Textures { get; set; }
+
         public int Health { get; set; }
         public int HealthMax { get; set; }
         public bool IsDead { get; set; }
@@ -29,6 +33,8 @@ namespace Bombarder
 
         public Entity()
         {
+            Type = "Default";
+
             Health = 80;
             HealthMax = 100;
             IsDead = false;
