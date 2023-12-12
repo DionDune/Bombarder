@@ -68,39 +68,70 @@ namespace Bombarder
 
         public void CheckMagicOverlap(MagicEffect Effect)
         {
-            foreach (EntityBlock Block in Peices)
-            {
-                Vector2 BlockCentre = new Vector2(X + Block.Offset.X, Y + Block.Offset.Y);
+            Vector2 HitboxStart = new Vector2(X + HitboxOffset.X, Y + HitboxOffset.Y);
 
-                //Check if the centre is within the effect
-                float Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(BlockCentre.X - Effect.X), 2) +
-                                                           Math.Pow(Math.Abs(BlockCentre.Y - Effect.Y), 2));
+            //Check if the centre is within the effect
+            float Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X + (HitboxSize.X / 2) - Effect.X), 2) +
+                                                       Math.Pow(Math.Abs(HitboxSize.Y + (HitboxSize.Y / 2) - Effect.Y), 2));
+            if (Distance <= Effect.DamageRadius)
+            {
+                GiveDamage(Effect.Damage);
+                return;
+            }
+
+            //If hitbox is encumpasing the effect
+            else if (HitboxSize.X > Effect.DamageRadius * 2 || HitboxSize.Y > Effect.DamageRadius * 2)
+            {
+                float XDifference = Effect.X - X;
+                float YDifference = Effect.Y - Y;
+                float Angle = (float)(Math.Atan2(YDifference, XDifference));
+                Vector2 ClosestPoint = new Vector2(Effect.DamageRadius * (float)Math.Cos(Angle), Effect.DamageRadius * (float)Math.Sin(Angle));
+
+                if (ClosestPoint.X > HitboxStart.X && ClosestPoint.X < HitboxStart.X + HitboxSize.X &&
+                    ClosestPoint.Y > HitboxStart.Y && ClosestPoint.Y < HitboxStart.Y + HitboxSize.Y)
+                {
+                    GiveDamage(Effect.Damage);
+                    return;
+                }
+            }
+
+            //Check if any points are within the effect
+            else
+            {
+                //Top Left
+                Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X - Effect.X), 2) +
+                                                       Math.Pow(Math.Abs(HitboxSize.Y - Effect.Y), 2));
                 if (Distance <= Effect.DamageRadius)
                 {
                     GiveDamage(Effect.Damage);
                     return;
                 }
 
-                //Check if block is encumpasing the effect
-                else if (Block.Width > Effect.DamageRadius * 2 || Block.Height > Effect.DamageRadius * 2)
+                //Top Right
+                Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X + HitboxSize.X - Effect.X), 2) +
+                                                       Math.Pow(Math.Abs(HitboxSize.Y - Effect.Y), 2));
+                if (Distance <= Effect.DamageRadius)
                 {
-                    float XDifference = Effect.X - BlockCentre.X;
-                    float YDifference = Effect.Y - BlockCentre.Y;
-                    float Angle = (float)(Math.Atan2(YDifference, XDifference));
-                    Vector2 ClosestPoint = new Vector2(Effect.DamageRadius * (float)Math.Cos(Angle), Effect.DamageRadius * (float)Math.Sin(Angle));
-
-                    if (ClosestPoint.X > BlockCentre.X - Block.Width / 2 && ClosestPoint.X < BlockCentre.X + Block.Width / 2 &&
-                        ClosestPoint.Y > BlockCentre.Y - Block.Width / 2 && ClosestPoint.Y < BlockCentre.Y + Block.Width / 2)
-                    {
-                        GiveDamage(Effect.Damage);
-                        return;
-                    }
+                    GiveDamage(Effect.Damage);
+                    return;
                 }
 
-                //Check if any points are within the effect
-                else
+                //Bottom Left
+                Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X - Effect.X), 2) +
+                                                       Math.Pow(Math.Abs(HitboxSize.Y + HitboxSize.Y - Effect.Y), 2));
+                if (Distance <= Effect.DamageRadius)
                 {
-                    
+                    GiveDamage(Effect.Damage);
+                    return;
+                }
+
+                //Bottom Right
+                Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(HitboxSize.X + HitboxSize.X - Effect.X), 2) +
+                                                       Math.Pow(Math.Abs(HitboxSize.Y + HitboxSize.Y - Effect.Y), 2));
+                if (Distance <= Effect.DamageRadius)
+                {
+                    GiveDamage(Effect.Damage);
+                    return;
                 }
             }
         }
