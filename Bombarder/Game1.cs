@@ -565,6 +565,17 @@ namespace Bombarder
         }
         private void EnactMagic()
         {
+            //Damage Detection
+            foreach (MagicEffect Effect in MagicEffects)
+            {
+                if (Effect.DamageTarget == "Entities")
+                {
+                    foreach (Entity Entity in Entities)
+                    {
+                        Entity.CheckMagicOverlap(Effect);
+                    }
+                }
+            }
 
             //Enact Lifespan
             List<MagicEffect> DeadEffects = new List<MagicEffect>();
