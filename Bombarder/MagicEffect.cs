@@ -28,7 +28,7 @@ namespace Bombarder
 
             DamageTarget = "Entities";
             Damage = 100;
-            DamageRadius = 50;
+            DamageRadius = 24;
 
             Continuous = false;
 
