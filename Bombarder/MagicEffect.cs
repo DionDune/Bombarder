@@ -60,6 +60,8 @@ namespace Bombarder
         public int LifeSpan { get; set; }
         public Color Color { get; set; }
 
+        public string BaseShape { get; set; }
+
         public Point Offset { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
@@ -68,6 +70,8 @@ namespace Bombarder
         {
             LifeSpan = 150;
             Color = Color.Turquoise;
+
+            BaseShape = "Circle";
 
             Offset = new Point(-25, -25);
             Width = 50;
