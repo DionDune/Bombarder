@@ -12,7 +12,6 @@ namespace Bombarder
     internal class Entity
     {
         public string Type { get; set; }
-        public List<Texture2D> Textures { get; set; }
 
         public int Health { get; set; }
         public int HealthMax { get; set; }
@@ -142,8 +141,15 @@ namespace Bombarder
         }
     }
 
+
+
+
+
+
+
     internal class EntityBlock
     {
+        public List<Texture2D> Textures { get; set; }
         public Vector2 Offset { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
