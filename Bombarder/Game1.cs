@@ -18,6 +18,7 @@ namespace Bombarder
         Random random = new Random();
 
         Texture2D Color_White;
+        Texture2D Circle_White;
 
         List<UIPage> UIPages = new List<UIPage>();
         UIPage UIPage_Current;
@@ -76,6 +77,8 @@ namespace Bombarder
             //Procedurally Creating and Assigning a 1x1 white texture to Color_White
             Color_White = new Texture2D(GraphicsDevice, 1, 1);
             Color_White.SetData(new Color[1] { Color.White });
+
+            Circle_White = Content.Load<Texture2D>("Circle");
         }
 
         #endregion
