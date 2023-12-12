@@ -60,6 +60,46 @@ namespace Bombarder
                 IsDead = true;
             }
         }
+
+        public void CheckMagicOverlap(MagicEffect Effect)
+        {
+            foreach (EntityBlock Block in Peices)
+            {
+                Vector2 BlockCentre = new Vector2(X + Block.Offset.X, Y + Block.Offset.Y);
+
+                //Check if the centre is within the effect
+                float Distance = (float)Math.Sqrt(Math.Pow(Math.Abs(BlockCentre.X - Effect.X), 2) +
+                                                           Math.Pow(Math.Abs(BlockCentre.Y - Effect.Y), 2));
+                if (Distance <= Effect.DamageRadius)
+                {
+                    GiveDamage(Effect.Damage);
+                    return;
+                }
+
+                //Check if block is encumpasing the effect
+                else if (Block.Width > Effect.DamageRadius * 2 || Block.Height > Effect.DamageRadius * 2)
+                {
+                    float XDifference = Effect.X - BlockCentre.X;
+                    float YDifference = Effect.Y - BlockCentre.Y;
+                    float Angle = (float)(Math.Atan2(YDifference, XDifference));
+                    Vector2 ClosestPoint = new Vector2(Effect.DamageRadius * (float)Math.Cos(Angle), Effect.DamageRadius * (float)Math.Sin(Angle));
+
+                    if (ClosestPoint.X > BlockCentre.X - Block.Width / 2 && ClosestPoint.X < BlockCentre.X + Block.Width / 2 &&
+                        ClosestPoint.Y > BlockCentre.Y - Block.Width / 2 && ClosestPoint.Y < BlockCentre.Y + Block.Width / 2)
+                    {
+                        GiveDamage(Effect.Damage);
+                        return;
+                    }
+                }
+
+                //Check if any points are within the effect
+                else
+                {
+                    
+                    if ()
+                }
+            }
+        }
     }
 
     internal class EntityBlock
