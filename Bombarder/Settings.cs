@@ -10,6 +10,8 @@ namespace Bombarder
     {
         public bool ShowGrid { get; set; }
         public bool ShowDamageRadii { get; set; }
+        public bool ShowHitBoxes { get; set; }
+
         public bool RunEntityAI { get; set; }
 
         public Settings()
@@ -17,6 +19,7 @@ namespace Bombarder
             ShowGrid = true;
             ShowDamageRadii = true;
             RunEntityAI = true;
+            ShowHitBoxes = true;
         }
     }
 }
