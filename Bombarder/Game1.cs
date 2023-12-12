@@ -769,8 +769,12 @@ namespace Bombarder
             if (GameState == "Play")
             {
                 PlayerMovement_EnactMomentum();
-                EnactEnemyChase();
-                PurgeDeadEntities();
+
+                if (Settings.RunEntityAI)
+                {
+                    EnactEnemyChase();
+                    PurgeDeadEntities();
+                }
                 EnactMagic();
             }
 
