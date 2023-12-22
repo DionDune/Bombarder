@@ -605,8 +605,8 @@ namespace Bombarder
 
                 MagicEffects.Add(new MagicEffect()
                 {
-                    X = X,
-                    Y = Y,
+                    X = (int)Player.X,
+                    Y = (int)Player.Y,
                     IsProjectile = true,
                     Angle = Angle,
                     Velocity = 25,
