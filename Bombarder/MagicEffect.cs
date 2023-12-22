@@ -22,7 +22,8 @@ namespace Bombarder
         public int DamageDuration { get; set; }
 
         public bool IsProjectile { get; set; }
-        public Vector2 Volocity { get; set; }
+        public float Angle { get; set; }
+        public float Velocity { get; set; }
         public float VelocityLoss { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
