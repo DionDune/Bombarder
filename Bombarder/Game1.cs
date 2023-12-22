@@ -889,7 +889,11 @@ namespace Bombarder
             GraphicsDevice.Clear(Color.Black);
 
             // BEGIN Draw ----
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.Deferred,
+                                BlendState.AlphaBlend,
+                                SamplerState.PointClamp,
+                                DepthStencilState.None,
+                                RasterizerState.CullNone, null);
 
 
 
