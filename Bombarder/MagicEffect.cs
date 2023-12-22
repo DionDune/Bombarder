@@ -16,7 +16,7 @@ namespace Bombarder
         public int Damage { get; set; }
         public float DamageRadius { get; set; }
 
-        public bool Continuous { get; set; }
+        public int DamageDuration { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
         
@@ -30,7 +30,7 @@ namespace Bombarder
             Damage = 100;
             DamageRadius = 24;
 
-            Continuous = false;
+            DamageDuration = 150;
 
             Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece()};
         }
