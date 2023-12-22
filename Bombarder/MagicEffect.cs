@@ -14,7 +14,11 @@ namespace Bombarder
 
         public string? DamageTarget { get; set; }
         public int Damage { get; set; }
+
+        public bool RadiusIsCircle { get; set; }
         public float DamageRadius { get; set; }
+        public Point RadiusOffset { get; set; }
+        public Point RadiusSize { get; set; }
 
         public int DamageDuration { get; set; }
 
@@ -28,7 +32,11 @@ namespace Bombarder
 
             DamageTarget = "Entities";
             Damage = 100;
-            DamageRadius = 24;
+            RadiusIsCircle = false;
+            DamageRadius = 0;
+            RadiusOffset = new Point(-12, -12);
+            RadiusSize = new Point(24, 24);
+
 
             DamageDuration = 150;
 
