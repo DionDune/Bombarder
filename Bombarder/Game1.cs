@@ -588,11 +588,31 @@ namespace Bombarder
 
         private void CreateMagic(int X, int Y)
         {
-            MagicEffects.Add(new MagicEffect()
+            if (Mouse_isClickingLeft)
             {
-                X = X,
-                Y = Y
-            });
+                MagicEffects.Add(new MagicEffect()
+                {
+                    X = X,
+                    Y = Y
+                });
+            }
+            else if (Mouse_isClickingRight)
+            {
+                //Calculating Angle
+                float xDiff = X - Player.X;
+                float yDiff = Y - Player.Y;
+                float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+
+                MagicEffects.Add(new MagicEffect()
+                {
+                    X = X,
+                    Y = Y,
+                    IsProjectile = true,
+                    Angle = Angle,
+                    Velocity = 200,
+                    VelocityLoss = 0.95F
+                });
+            }
         }
         private void EnactMagic()
         {
