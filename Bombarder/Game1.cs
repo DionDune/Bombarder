@@ -549,11 +549,14 @@ namespace Bombarder
 
         private void EnactEnemyChase()
         {
-            foreach (Entity Entity in Entities)
+            if (Settings.RunEntityAI)
             {
-                if (Entity.ChasesPlayer)
+                foreach (Entity Entity in Entities)
                 {
-                    Entity.MoveTowards(new Vector2(Player.X, Player.Y));
+                    if (Entity.ChasesPlayer)
+                    {
+                        Entity.MoveTowards(new Vector2(Player.X, Player.Y));
+                    }
                 }
             }
         }
