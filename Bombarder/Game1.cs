@@ -586,9 +586,9 @@ namespace Bombarder
 
         #region Magic Interaction
 
-        private void CreateMagic(int X, int Y)
+        private void CreateMagic(int X, int Y, bool IsProjectile)
         {
-            if (Mouse_isClickingLeft)
+            if (!IsProjectile)
             {
                 MagicEffects.Add(new MagicEffect()
                 {
@@ -596,7 +596,7 @@ namespace Bombarder
                     Y = Y
                 });
             }
-            else if (Mouse_isClickingRight)
+            else
             {
                 //Calculating Angle
                 float xDiff = X - Player.X;
@@ -723,7 +723,8 @@ namespace Bombarder
                     if (!UIClicked)
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y));
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
+                                    false);
                     }
                 }
 
@@ -737,7 +738,12 @@ namespace Bombarder
             //Right Click
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-
+                if (!Mouse_isClickingRight)
+                {
+                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
+                                    true);
+                }
 
                 Mouse_isClickingRight = true;
             }
