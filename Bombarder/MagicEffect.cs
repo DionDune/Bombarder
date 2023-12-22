@@ -37,6 +37,8 @@ namespace Bombarder
 
         public void EnactLifespan()
         {
+            DamageDuration--;
+
             List<MagicEffectPiece> DeadPieces = new List<MagicEffectPiece>();
             foreach (MagicEffectPiece Piece in Pieces)
             {
