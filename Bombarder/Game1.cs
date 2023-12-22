@@ -809,10 +809,17 @@ namespace Bombarder
                     SpawnRandomEnemy(true, true);
                 }
 
+
+
                 //Settings Changes
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.I))
                 {
                     Settings.RunEntityAI = !Settings.RunEntityAI;
+                }
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.O))
+                {
+                    Settings.ShowHitBoxes = !Settings.ShowHitBoxes;
+                    Settings.ShowDamageRadii = !Settings.ShowDamageRadii;
                 }
             }
 
