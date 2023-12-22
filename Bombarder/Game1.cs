@@ -828,13 +828,17 @@ namespace Bombarder
 
             if (GameState == "Play")
             {
+                //Player Interaction
                 PlayerMovement_EnactMomentum();
 
+                //Entity Functions
                 if (Settings.RunEntityAI)
                 {
                     EnactEnemyChase();
-                    PurgeDeadEntities();
                 }
+                PurgeDeadEntities();
+
+                //Magic Functions
                 EnactMagic();
             }
 
