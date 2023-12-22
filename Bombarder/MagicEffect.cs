@@ -44,7 +44,7 @@ namespace Bombarder
 
             IsProjectile = false;
 
-            Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece()};
+            Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece() { LifeSpan = DamageDuration } };
         }
 
         public void EnactLifespan()
