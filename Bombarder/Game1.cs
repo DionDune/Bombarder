@@ -19,6 +19,7 @@ namespace Bombarder
 
         Texture2D Color_White;
         Texture2D Circle_White;
+        Texture2D Texture_Cursor;
         (Texture2D, Texture2D) Texture_DemonEye;
 
         List<UIPage> UIPages = new List<UIPage>();
@@ -80,6 +81,8 @@ namespace Bombarder
             Color_White.SetData(new Color[1] { Color.White });
 
             Circle_White = Content.Load<Texture2D>("Circle");
+
+            Texture_Cursor = Content.Load<Texture2D>("Cursor");
 
 
             //Demon Eye Textures
