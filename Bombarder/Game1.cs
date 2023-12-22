@@ -893,6 +893,10 @@ namespace Bombarder
 
 
 
+            //Cursor
+            _spriteBatch.Draw(Texture_Cursor, new Rectangle(Mouse.GetState().X - Texture_Cursor.Width / 2, Mouse.GetState().Y - Texture_Cursor.Height / 2,
+                                                            Texture_Cursor.Width, Texture_Cursor.Height), Color.White);
+
             //Ingame
             if (GameState == "Play")
             {
