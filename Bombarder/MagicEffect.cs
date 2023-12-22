@@ -19,8 +19,11 @@ namespace Bombarder
         public float DamageRadius { get; set; }
         public Point RadiusOffset { get; set; }
         public Point RadiusSize { get; set; }
-
         public int DamageDuration { get; set; }
+
+        public bool IsProjectile { get; set; }
+        public Vector2 Volocity { get; set; }
+        public float VelocityLoss { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
         
@@ -32,13 +35,13 @@ namespace Bombarder
 
             DamageTarget = "Entities";
             Damage = 100;
+            DamageDuration = 150;
             RadiusIsCircle = false;
             DamageRadius = 0;
             RadiusOffset = new Point(-24, -24);
             RadiusSize = new Point(24, 24);
 
-
-            DamageDuration = 150;
+            IsProjectile = false;
 
             Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece()};
         }
