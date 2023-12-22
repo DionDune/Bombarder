@@ -899,9 +899,31 @@ namespace Bombarder
                     }
                     if (Settings.ShowDamageRadii)
                     {
-                        _spriteBatch.Draw(Circle_White, new Rectangle((int)(Effect.X - Effect.DamageRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, 
-                                                                      (int)(Effect.Y - Effect.DamageRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y, 
+                        if (Effect.RadiusIsCircle)
+                        {
+                            _spriteBatch.Draw(Circle_White, new Rectangle((int)(Effect.X - Effect.DamageRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Effect.Y - Effect.DamageRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed);
+                        }
+                        else
+                        {
+                            //Top Line
+                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        Effect.RadiusSize.X * 2, 2), Color.White);
+                            //Bottom Line
+                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        Effect.RadiusSize.X * 2, 2), Color.White);
+                            //Left Line
+                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        2, Effect.RadiusSize.Y * 2), Color.White);
+                            //Right Line
+                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        2, Effect.RadiusSize.Y * 2), Color.White);
+                        }
                     }
                 }
             }
