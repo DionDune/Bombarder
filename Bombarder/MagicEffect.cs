@@ -34,7 +34,7 @@ namespace Bombarder
             Damage = 100;
             RadiusIsCircle = false;
             DamageRadius = 0;
-            RadiusOffset = new Point(-12, -12);
+            RadiusOffset = new Point(-24, -24);
             RadiusSize = new Point(24, 24);
 
 
