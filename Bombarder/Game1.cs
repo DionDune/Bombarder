@@ -609,7 +609,7 @@ namespace Bombarder
                     Y = Y,
                     IsProjectile = true,
                     Angle = Angle,
-                    Velocity = 200,
+                    Velocity = 25,
                     VelocityLoss = 0.95F
                 });
             }
