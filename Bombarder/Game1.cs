@@ -616,6 +616,15 @@ namespace Bombarder
         }
         private void EnactMagic()
         {
+            //Enact Movement
+            foreach (MagicEffect Effect in MagicEffects)
+            {
+                if (Effect.IsProjectile)
+                {
+                    Effect.EnactVelocity();
+                }
+            }
+
             //Damage Detection
             foreach (MagicEffect Effect in MagicEffects)
             {

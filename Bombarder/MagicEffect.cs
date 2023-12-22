@@ -67,6 +67,21 @@ namespace Bombarder
                 Pieces.Remove(Piece);
             }
         }
+
+        public void EnactVelocity()
+        {
+            float AngleRadians = Angle * (float)(Math.PI / 180);
+
+            X += (int)(Velocity * (float)Math.Cos(AngleRadians));
+            Y += (int)(Velocity * (float)Math.Sin(AngleRadians));
+
+            Velocity *= VelocityLoss;
+
+            if (Velocity < 1)
+            {
+                Velocity = 0;
+            }
+        }
     }
 
     internal class MagicEffectPiece
