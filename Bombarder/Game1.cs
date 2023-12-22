@@ -733,6 +733,15 @@ namespace Bombarder
         #endregion
 
         #region Keyboard
+        
+        private bool IsNewlyPressed(List<Keys> NewPresses, Keys Key)
+        {
+            if (NewPresses.Contains(Key) && !Keys_BeingPressed.Contains(Key))
+            {
+                return true;
+            }
+            return false;
+        }
 
         private void KeyboardHandler()
         {
@@ -740,12 +749,12 @@ namespace Bombarder
 
 
             //Toggle Fullscreen
-            if (Keys_NewlyPressed.Contains(Keys.F) && !Keys_BeingPressed.Contains(Keys.F))
+            if (IsNewlyPressed(Keys_NewlyPressed, Keys.F))
             {
                 Window_ToggleFullscreen();
             }
             //Toggle Pause
-            if (Keys_NewlyPressed.Contains(Keys.Escape) && !Keys_BeingPressed.Contains(Keys.Escape))
+            if (IsNewlyPressed(Keys_NewlyPressed, Keys.Escape))
             {
                 TogglePause();
             }
@@ -755,7 +764,7 @@ namespace Bombarder
                 //Movement
                 PlayerMovement_InputHandler(Keys_NewlyPressed);
 
-                if (Keys_NewlyPressed.Contains(Keys.V) && !Keys_BeingPressed.Contains(Keys.V))
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.V))
                 {
                     SpawnRandomEnemy(true, true);
                 }
