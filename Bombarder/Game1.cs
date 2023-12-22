@@ -596,7 +596,7 @@ namespace Bombarder
             //Damage Detection
             foreach (MagicEffect Effect in MagicEffects)
             {
-                if (Effect.DamageTarget == "Entities")
+                if (Effect.DamageTarget == "Entities" && Effect.DamageDuration > 0)
                 {
                     foreach (Entity Entity in Entities)
                     {
