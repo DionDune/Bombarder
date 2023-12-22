@@ -143,22 +143,22 @@ namespace Bombarder
             else
             {
                 if (Effect.X + Effect.RadiusOffset.X >= HitboxStart.X && Effect.X + Effect.RadiusOffset.X <= HitboxStart.X + HitboxSize.X &&
-                    Effect.Y + Effect.RadiusOffset.Y >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y <= HitboxStart.X + HitboxSize.Y)
+                    Effect.Y + Effect.RadiusOffset.Y >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y <= HitboxStart.Y + HitboxSize.Y)
                 {
                     GiveDamage(Effect.Damage);
                 }
-                else if (Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X >= HitboxStart.X && Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X <= HitboxStart.X + HitboxSize.X &&
-                    Effect.Y + Effect.RadiusOffset.Y >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y <= HitboxStart.X + HitboxSize.Y)
+                else if (Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2>= HitboxStart.X && Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 <= HitboxStart.X + HitboxSize.X &&
+                    Effect.Y + Effect.RadiusOffset.Y >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y <= HitboxStart.Y + HitboxSize.Y)
                 {
                     GiveDamage(Effect.Damage);
                 }
                 else if (Effect.X + Effect.RadiusOffset.X >= HitboxStart.X && Effect.X + Effect.RadiusOffset.X <= HitboxStart.X + HitboxSize.X &&
-                    Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y <= HitboxStart.X + HitboxSize.Y)
+                    Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 <= HitboxStart.Y + HitboxSize.Y)
                 {
                     GiveDamage(Effect.Damage);
                 }
-                else if (Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X >= HitboxStart.X && Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X <= HitboxStart.X + HitboxSize.X &&
-                    Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y <= HitboxStart.X + HitboxSize.Y)
+                else if (Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 >= HitboxStart.X && Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 <= HitboxStart.X + HitboxSize.X &&
+                    Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 >= HitboxStart.Y && Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 <= HitboxStart.Y + HitboxSize.Y)
                 {
                     GiveDamage(Effect.Damage);
                 }
