@@ -69,6 +69,8 @@ namespace Bombarder
             Settings = new Settings();
             Player = new Player();
 
+
+            IsMouseVisible = false;
             base.Initialize();
         }
 
