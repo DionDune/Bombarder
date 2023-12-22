@@ -8,6 +8,7 @@ namespace Bombarder
 {
     internal class Settings
     {
+        public float CursorSizeMultiplier { get; set; }
         public bool ShowGrid { get; set; }
         public bool ShowDamageRadii { get; set; }
         public bool ShowHitBoxes { get; set; }
@@ -16,6 +17,7 @@ namespace Bombarder
 
         public Settings()
         {
+            CursorSizeMultiplier = 2;
             ShowGrid = true;
             ShowDamageRadii = true;
             RunEntityAI = true;
