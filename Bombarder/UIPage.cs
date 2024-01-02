@@ -199,7 +199,7 @@ namespace Bombarder
         }
 
 
-        private void RenderElements(SpriteBatch _spriteBatch, GraphicsDeviceManager _graphics, Textures Textures, List<UIItem> UIItems)
+        public static void RenderElements(SpriteBatch _spriteBatch, GraphicsDeviceManager _graphics, Textures Textures, List<UIItem> UIItems)
         {
             foreach (UIItem Item in UIItems)
             {
@@ -246,7 +246,7 @@ namespace Bombarder
                 {
                     if (Item.Text != null)
                     {
-                        UI_RenderTextElements(Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
+                        RenderTextElements(_spriteBatch, Textures, Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
                     }
                 }
                 if (Item.Type == "Button")
@@ -265,13 +265,13 @@ namespace Bombarder
 
                     if (Item.Text != null)
                     {
-                        UI_RenderTextElements(Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
+                        RenderTextElements(_spriteBatch, Textures, Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
                     }
                 }
                 if (Item.Type == "Fillbar")
                 {
                     //Border
-                    UI_RenderOutline(Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
+                    RenderOutline(_spriteBatch, Textures, Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
                     //Inner
                     _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
@@ -284,7 +284,7 @@ namespace Bombarder
                 if (Item.Type == "Container")
                 {
                     //Border
-                    UI_RenderOutline(Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
+                    RenderOutline(_spriteBatch, Textures, Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
                     //Inner
                     _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
@@ -345,7 +345,7 @@ namespace Bombarder
 
 
                                 //Border
-                                UI_RenderOutline(BorderColor, X, Y, InnerItem.Width, InnerItem.Height, InnerItem.BorderWidth, BorderTransparency);
+                                RenderOutline(_spriteBatch, Textures, BorderColor, X, Y, InnerItem.Width, InnerItem.Height, InnerItem.BorderWidth, BorderTransparency);
                                 //Inner
                                 _spriteBatch.Draw(Textures.White, new Rectangle(X + InnerItem.BorderWidth, Y + InnerItem.BorderWidth,
                                                                                InnerItem.Width - InnerItem.BorderWidth * 2, InnerItem.Height - InnerItem.BorderWidth * 2),
@@ -367,7 +367,7 @@ namespace Bombarder
                 }
             }
         }
-        public void RenderTextElements(SpriteBatch _spriteBatch, Textures Textures, List<List<bool>> Elements, int CentreX, int CentreY, int elementSize, Color elementColor)
+        public static void RenderTextElements(SpriteBatch _spriteBatch, Textures Textures, List<List<bool>> Elements, int CentreX, int CentreY, int elementSize, Color elementColor)
         {
             int StartX = CentreX - ((Elements[0].Count * elementSize) / 2);
             int StartY = CentreY - ((Elements.Count * elementSize) / 2);
@@ -383,7 +383,7 @@ namespace Bombarder
                 }
             }
         }
-        public void RenderOutline(SpriteBatch _spriteBatch, Textures Textures, Color color, int X, int Y, int Width, int Height, int BorderWidth, float BorderTransparency)
+        public static void RenderOutline(SpriteBatch _spriteBatch, Textures Textures, Color color, int X, int Y, int Width, int Height, int BorderWidth, float BorderTransparency)
         {
             _spriteBatch.Draw(Textures.White, new Rectangle(X, Y, Width, BorderWidth), color * BorderTransparency);
             _spriteBatch.Draw(Textures.White, new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth), color * BorderTransparency);
