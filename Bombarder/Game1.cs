@@ -27,13 +27,8 @@ namespace Bombarder
         string GameState;
         string UIState;
 
-        List<Keys> Keys_BeingPressed = new List<Keys>();
-        bool Mouse_isClickingLeft;
-        bool Mouse_isClickingRight;
-        bool Mouse_isClickingMiddle;
-
         Settings Settings;
-
+        InputStates Input;
         Player Player;
 
         List<Entity> Entities = new List<Entity>();
@@ -61,12 +56,8 @@ namespace Bombarder
             GameState = "Start";
             UIState = "Default";
 
-            Mouse_isClickingLeft = false;
-            Mouse_isClickingRight = false;
-            Mouse_isClickingMiddle = false;
-
-
             Settings = new Settings();
+            Input = new InputStates();
             Player = new Player();
 
 
@@ -366,7 +357,7 @@ namespace Bombarder
             }
 
             //Upward
-            if (NewPresses.Contains(Keys.W) && !Keys_BeingPressed.Contains(Keys.S))
+            if (NewPresses.Contains(Keys.W) && !Input.PreviouseKeys.Contains(Keys.S))
             {
                 if (Player.Momentum_Y > -Speed)
                 {
@@ -388,7 +379,7 @@ namespace Bombarder
                 }
             }
             //Downward
-            if (NewPresses.Contains(Keys.S) && !Keys_BeingPressed.Contains(Keys.W))
+            if (NewPresses.Contains(Keys.S) && !Input.PreviouseKeys.Contains(Keys.W))
             {
                 if (Player.Momentum_Y < Speed)
                 {
@@ -410,7 +401,7 @@ namespace Bombarder
                 }
             }
             //Left
-            if (NewPresses.Contains(Keys.A) && !Keys_BeingPressed.Contains(Keys.D))
+            if (NewPresses.Contains(Keys.A) && !Input.PreviouseKeys.Contains(Keys.D))
             {
                 if (Player.Momentum_X > -Speed)
                 {
@@ -432,7 +423,7 @@ namespace Bombarder
                 }
             }
             //Right
-            if (NewPresses.Contains(Keys.D) && !Keys_BeingPressed.Contains(Keys.A))
+            if (NewPresses.Contains(Keys.D) && !Input.PreviouseKeys.Contains(Keys.A))
             {
                 if (Player.Momentum_X < Speed)
                 {
@@ -701,7 +692,7 @@ namespace Bombarder
             //Left Click
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (!Mouse_isClickingLeft)
+                if (!Input.isClickingLeft)
                 {
                     bool UIClicked = false;
 
@@ -733,28 +724,28 @@ namespace Bombarder
                     }
                 }
 
-                Mouse_isClickingLeft = true;
+                Input.isClickingLeft = true;
             }
             else
             {
-                Mouse_isClickingLeft = false;
+                Input.isClickingLeft = false;
             }
 
             //Right Click
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                if (!Mouse_isClickingRight)
+                if (!Input.isClickingRight)
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
                                     true);
                 }
 
-                Mouse_isClickingRight = true;
+                Input.isClickingRight = true;
             }
             else
             {
-                Mouse_isClickingRight = false;
+                Input.isClickingRight = false;
             }
 
             //Middle Click
@@ -762,11 +753,11 @@ namespace Bombarder
             {
 
 
-                Mouse_isClickingMiddle = true;
+                Input.isClickingMiddle = true;
             }
             else
             {
-                Mouse_isClickingMiddle = false;
+                Input.isClickingMiddle = false;
             }
         }
 
@@ -776,7 +767,7 @@ namespace Bombarder
         
         private bool IsNewlyPressed(List<Keys> NewPresses, Keys Key)
         {
-            if (NewPresses.Contains(Key) && !Keys_BeingPressed.Contains(Key))
+            if (NewPresses.Contains(Key) && !Input.PreviouseKeys.Contains(Key))
             {
                 return true;
             }
@@ -824,7 +815,7 @@ namespace Bombarder
             }
 
 
-            Keys_BeingPressed = Keys_NewlyPressed;
+            Input.PreviouseKeys = Keys_NewlyPressed;
         }
 
         #endregion
