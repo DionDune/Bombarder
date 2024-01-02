@@ -760,7 +760,7 @@ namespace Bombarder
                                                                         Entity.HealthBarDimentions.X, Entity.HealthBarDimentions.Y), Color.LightGray);
                         _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X + 2),
                                                                         (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y + 2),
-                                                                        (int)((float)(Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
+                                                                        (int)((Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
                     }
                 }
                 //Magic
