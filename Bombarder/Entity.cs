@@ -49,7 +49,7 @@ namespace Bombarder
 
             HealthBarVisible = true;
             HealthBarDimentions = new Point(40, 10);
-            HealthBarOffset = new Point(-20, -HitboxOffset.Y - 5);
+            HealthBarOffset = new Point(-20, -HitboxOffset.Y + 5);
 
             Direction = 0;
             BaseSpeed = 5;
