@@ -17,6 +17,9 @@ namespace Bombarder
         public int HealthMax { get; set; }
         public bool IsDead { get; set; }
 
+        public Point HealthBarOffset { get; set; }
+        public bool HealthBarVisible { get; set; }
+
         public float X { get; set; }
         public float Y { get; set; }
 
