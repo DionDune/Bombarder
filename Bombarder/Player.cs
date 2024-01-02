@@ -12,6 +12,12 @@ namespace Bombarder
         public float X { get; set; }
         public float Y { get; set; }
 
+        public int Health { get; set; }
+        public int HealthMax { get; set; }
+        public Point HealthBarDimentions { get; set; }
+        public Point HealthBarOffset { get; set; }
+        public bool HealthBarVisible { get; set; }
+
         public float Momentum_X { get; set; }
         public float Momentum_Y { get; set; }
         public float BaseSpeed { get; set; }
@@ -26,6 +32,12 @@ namespace Bombarder
         {
             X = 0;
             Y = 0;
+
+            Health = 130;
+            HealthMax = 150;
+            HealthBarDimentions = new Point(40, 10);
+            HealthBarOffset = new Point(-20, 55);
+            HealthBarVisible = true;
 
             Momentum_X = 0;
             Momentum_Y = 0;
