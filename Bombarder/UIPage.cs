@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Bombarder
 {
@@ -197,5 +198,197 @@ namespace Bombarder
             return Pages;
         }
 
+
+        private void RenderElements(SpriteBatch _spriteBatch, GraphicsDeviceManager _graphics, Textures Textures, List<UIItem> UIItems)
+        {
+            foreach (UIItem Item in UIItems)
+            {
+                int OrientatePosX = _graphics.PreferredBackBufferWidth / 2;
+                int OrientatePosY = _graphics.PreferredBackBufferHeight / 2;
+                switch (Item.Orientation)
+                {
+                    case "Bottom Left":
+                        OrientatePosX = 0;
+                        OrientatePosY = _graphics.PreferredBackBufferHeight;
+                        break;
+                    case "Left":
+                        OrientatePosX = 0;
+                        break;
+                    case "Top Left":
+                        OrientatePosX = 0;
+                        OrientatePosY = 0;
+                        break;
+                    case "Top":
+                        OrientatePosY = 0;
+                        break;
+                    case "Top Right":
+                        OrientatePosX = _graphics.PreferredBackBufferWidth;
+                        OrientatePosY = 0;
+                        break;
+                    case "Right":
+                        OrientatePosX = _graphics.PreferredBackBufferWidth;
+                        break;
+                    case "Bottom Right":
+                        OrientatePosX = _graphics.PreferredBackBufferWidth;
+                        OrientatePosY = _graphics.PreferredBackBufferHeight;
+                        break;
+                    case "Bottom":
+                        OrientatePosY = _graphics.PreferredBackBufferHeight;
+                        break;
+                }
+
+                int X = OrientatePosX + Item.X;
+                int Y = OrientatePosY + Item.Y;
+                int CentreX = OrientatePosX + Item.CentreX;
+                int CentreY = OrientatePosY + Item.CentreY;
+
+                if (Item.Type == "Text")
+                {
+                    if (Item.Text != null)
+                    {
+                        UI_RenderTextElements(Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
+                    }
+                }
+                if (Item.Type == "Button")
+                {
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X, Y, Item.Width, Item.Height), Item.BorderColor);
+                    if (!Item.Highlighted)
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                                                                   Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2), Item.BaseColor);
+                    }
+                    else
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                                                                   Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2), Item.HighlightedColor);
+                    }
+
+                    if (Item.Text != null)
+                    {
+                        UI_RenderTextElements(Item.Text.Elements, CentreX, CentreY, Item.Text.ElementSize, Item.Text.Color);
+                    }
+                }
+                if (Item.Type == "Fillbar")
+                {
+                    //Border
+                    UI_RenderOutline(Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
+                    //Inner
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                                                                   Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
+                                                                   Item.SubBorderColor * Item.SubBorderTransparency);
+                    //Bar
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                                                                   (int)((Item.Value - Item.MinValue) / (float)Item.MaxValue * (Item.Width - Item.BorderWidth * 2)),
+                                                                   Item.Height - Item.BorderWidth * 2), Item.BaseColor * Item.BaseTransparency);
+                }
+                if (Item.Type == "Container")
+                {
+                    //Border
+                    UI_RenderOutline(Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
+                    //Inner
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                                                                   Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
+                                                                   Item.SubBorderColor * Item.SubBorderTransparency);
+                    if (Item.uIItems.Count > 0)
+                    {
+                        foreach (UIItem InnerItem in Item.uIItems)
+                        {
+                            switch (InnerItem.Orientation)
+                            {
+                                case "Bottom Left":
+                                    OrientatePosX = 0;
+                                    OrientatePosY = _graphics.PreferredBackBufferHeight;
+                                    break;
+                                case "Left":
+                                    OrientatePosX = 0;
+                                    break;
+                                case "Top Left":
+                                    OrientatePosX = 0;
+                                    OrientatePosY = 0;
+                                    break;
+                                case "Top":
+                                    OrientatePosY = 0;
+                                    break;
+                                case "Top Right":
+                                    OrientatePosX = _graphics.PreferredBackBufferWidth;
+                                    OrientatePosY = 0;
+                                    break;
+                                case "Right":
+                                    OrientatePosX = _graphics.PreferredBackBufferWidth;
+                                    break;
+                                case "Bottom Right":
+                                    OrientatePosX = _graphics.PreferredBackBufferWidth;
+                                    OrientatePosY = _graphics.PreferredBackBufferHeight;
+                                    break;
+                                case "Bottom":
+                                    OrientatePosY = _graphics.PreferredBackBufferHeight;
+                                    break;
+                            }
+                            X = OrientatePosX + InnerItem.X;
+                            Y = OrientatePosY + InnerItem.Y;
+                            CentreX = OrientatePosX + InnerItem.CentreX;
+                            CentreY = OrientatePosY + InnerItem.CentreY;
+
+                            if (InnerItem.Type == "Container Slot")
+                            {
+                                float BorderTransparency = InnerItem.BorderTransparency;
+                                float SubBorderTransparency = InnerItem.SubBorderTransparency;
+                                Color BorderColor = InnerItem.BorderColor;
+                                Color SubBorderColor = InnerItem.SubBorderColor;
+                                if (InnerItem.Highlighted)
+                                {
+                                    BorderTransparency = InnerItem.BorderHighlightedTransparency;
+                                    SubBorderTransparency = InnerItem.SubBorderHighlightedTransparency;
+                                    BorderColor = InnerItem.HighlightedBorderColor;
+                                    SubBorderColor = InnerItem.HighlightedColor;
+                                }
+
+
+                                //Border
+                                UI_RenderOutline(BorderColor, X, Y, InnerItem.Width, InnerItem.Height, InnerItem.BorderWidth, BorderTransparency);
+                                //Inner
+                                _spriteBatch.Draw(Textures.White, new Rectangle(X + InnerItem.BorderWidth, Y + InnerItem.BorderWidth,
+                                                                               InnerItem.Width - InnerItem.BorderWidth * 2, InnerItem.Height - InnerItem.BorderWidth * 2),
+                                                                               SubBorderColor * SubBorderTransparency);
+
+                                //Hotbar Item
+                                if (Item.Data.Contains("Hotbar"))
+                                {
+                                    if (InnerItem.NumericalData[0] > 0)
+                                    {
+                                        _spriteBatch.Draw(Textures.White, new Rectangle(X + InnerItem.BorderWidth * 2, Y + InnerItem.BorderWidth * 2,
+                                                                               InnerItem.Width - InnerItem.BorderWidth * 4, InnerItem.Height - InnerItem.BorderWidth * 4),
+                                                                               Color.Purple);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        public void RenderTextElements(SpriteBatch _spriteBatch, Textures Textures, List<List<bool>> Elements, int CentreX, int CentreY, int elementSize, Color elementColor)
+        {
+            int StartX = CentreX - ((Elements[0].Count * elementSize) / 2);
+            int StartY = CentreY - ((Elements.Count * elementSize) / 2);
+
+            for (int y = 0; y < Elements.Count; y++)
+            {
+                for (int x = 0; x < Elements[0].Count; x++)
+                {
+                    if (Elements[y][x])
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle(StartX + (x * elementSize), StartY + (y * elementSize), elementSize, elementSize), elementColor);
+                    }
+                }
+            }
+        }
+        public void RenderOutline(SpriteBatch _spriteBatch, Textures Textures, Color color, int X, int Y, int Width, int Height, int BorderWidth, float BorderTransparency)
+        {
+            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y, Width, BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y + Height - BorderWidth, Width - BorderWidth, BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y + BorderWidth, BorderWidth, Height - (BorderWidth * 2)), color * BorderTransparency);
+        }
     }
 }
