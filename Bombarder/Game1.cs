@@ -714,6 +714,14 @@ namespace Bombarder
                 _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
                                                              _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
                                                              Player.Width, Player.Height), Color.Red);
+                //Player Health Bar
+                _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 + Player.HealthBarOffset.X,
+                                                             _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y,
+                                                             Player.HealthBarDimentions.X, Player.HealthBarDimentions.Y), Color.LightGray);
+                //Player Health Bar
+                _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 + Player.HealthBarOffset.X + 2,
+                                                             _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y + 2,
+                                                             (int)((Player.HealthBarDimentions.X - 4) * ((float)Player.Health / Player.HealthMax)), Player.HealthBarDimentions.Y - 4), Color.Green);
 
                 //Entities
                 foreach (Entity Entity in Entities)
