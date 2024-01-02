@@ -17,16 +17,12 @@ namespace Bombarder
 
         Random random = new Random();
 
-        Texture2D Color_White;
-        Texture2D Circle_White;
-        Texture2D Texture_Cursor;
-        (Texture2D, Texture2D) Texture_DemonEye;
-
         List<UIPage> UIPages = new List<UIPage>();
         UIPage UIPage_Current;
         string GameState;
         string UIState;
 
+        Textures Textures;
         Settings Settings;
         InputStates Input;
         Player Player;
@@ -56,6 +52,7 @@ namespace Bombarder
             GameState = "Start";
             UIState = "Default";
 
+            Textures = new Textures();
             Settings = new Settings();
             Input = new InputStates();
             Player = new Player();
@@ -70,14 +67,14 @@ namespace Bombarder
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Procedurally Creating and Assigning a 1x1 white texture to Color_White
-            Color_White = new Texture2D(GraphicsDevice, 1, 1);
-            Color_White.SetData(new Color[1] { Color.White });
+            Textures.White = new Texture2D(GraphicsDevice, 1, 1);
+            Textures.White.SetData(new Color[1] { Color.White });
 
-            Circle_White = Content.Load<Texture2D>("Circle");
-            Texture_Cursor = Content.Load<Texture2D>("Cursor");
+            Textures.WhiteCircle = Content.Load<Texture2D>("Circle");
+            Textures.Cursor = Content.Load<Texture2D>("Cursor");
 
             //Demon Eye Textures
-            Texture_DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
+            Textures.DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
         }
 
         #endregion
@@ -156,15 +153,15 @@ namespace Bombarder
                 }
                 if (Item.Type == "Button")
                 {
-                    _spriteBatch.Draw(Color_White, new Rectangle(X, Y, Item.Width, Item.Height), Item.BorderColor);
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X, Y, Item.Width, Item.Height), Item.BorderColor);
                     if (!Item.Highlighted)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                        _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2), Item.BaseColor);
                     }
                     else
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                        _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2), Item.HighlightedColor);
                     }
 
@@ -178,11 +175,11 @@ namespace Bombarder
                     //Border
                     UI_RenderOutline(Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
                     //Inner
-                    _spriteBatch.Draw(Color_White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
                                                                    Item.SubBorderColor * Item.SubBorderTransparency);
                     //Bar
-                    _spriteBatch.Draw(Color_White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    (int)((Item.Value - Item.MinValue) / (float)Item.MaxValue * (Item.Width - Item.BorderWidth * 2)),
                                                                    Item.Height - Item.BorderWidth * 2), Item.BaseColor * Item.BaseTransparency);
                 }
@@ -191,7 +188,7 @@ namespace Bombarder
                     //Border
                     UI_RenderOutline(Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
                     //Inner
-                    _spriteBatch.Draw(Color_White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
+                    _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
                                                                    Item.SubBorderColor * Item.SubBorderTransparency);
                     if (Item.uIItems.Count > 0)
@@ -252,7 +249,7 @@ namespace Bombarder
                                 //Border
                                 UI_RenderOutline(BorderColor, X, Y, InnerItem.Width, InnerItem.Height, InnerItem.BorderWidth, BorderTransparency);
                                 //Inner
-                                _spriteBatch.Draw(Color_White, new Rectangle(X + InnerItem.BorderWidth, Y + InnerItem.BorderWidth,
+                                _spriteBatch.Draw(Textures.White, new Rectangle(X + InnerItem.BorderWidth, Y + InnerItem.BorderWidth,
                                                                                InnerItem.Width - InnerItem.BorderWidth * 2, InnerItem.Height - InnerItem.BorderWidth * 2),
                                                                                SubBorderColor * SubBorderTransparency);
 
@@ -261,7 +258,7 @@ namespace Bombarder
                                 {
                                     if (InnerItem.NumericalData[0] > 0)
                                     {
-                                        _spriteBatch.Draw(Color_White, new Rectangle(X + InnerItem.BorderWidth * 2, Y + InnerItem.BorderWidth * 2,
+                                        _spriteBatch.Draw(Textures.White, new Rectangle(X + InnerItem.BorderWidth * 2, Y + InnerItem.BorderWidth * 2,
                                                                                InnerItem.Width - InnerItem.BorderWidth * 4, InnerItem.Height - InnerItem.BorderWidth * 4),
                                                                                Color.Purple);
                                     }
@@ -283,17 +280,17 @@ namespace Bombarder
                 {
                     if (Elements[y][x])
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(StartX + (x * elementSize), StartY + (y * elementSize), elementSize, elementSize), elementColor);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(StartX + (x * elementSize), StartY + (y * elementSize), elementSize, elementSize), elementColor);
                     }
                 }
             }
         }
         private void UI_RenderOutline(Color color, int X, int Y, int Width, int Height, int BorderWidth, float BorderTransparency)
         {
-            _spriteBatch.Draw(Color_White, new Rectangle(X, Y, Width, BorderWidth), color * BorderTransparency);
-            _spriteBatch.Draw(Color_White, new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth), color * BorderTransparency);
-            _spriteBatch.Draw(Color_White, new Rectangle(X, Y + Height - BorderWidth, Width - BorderWidth, BorderWidth), color * BorderTransparency);
-            _spriteBatch.Draw(Color_White, new Rectangle(X, Y + BorderWidth, BorderWidth, Height - (BorderWidth * 2)), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y, Width, BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y + Height - BorderWidth, Width - BorderWidth, BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y + BorderWidth, BorderWidth, Height - (BorderWidth * 2)), color * BorderTransparency);
         }
 
         private void UI_ChangePage(string PageType)
@@ -521,7 +518,7 @@ namespace Bombarder
 
                             Peices = new List<EntityBlock>() { new EntityBlock() }
                         });
-                        Entities.Last().Peices[0].Textures = new List<Texture2D>() { Texture_DemonEye.Item1, Texture_DemonEye.Item2 };
+                        Entities.Last().Peices[0].Textures = new List<Texture2D>() { Textures.DemonEye.Item1, Textures.DemonEye.Item2 };
                         Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width / 3 * 2;
                         Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height / 3 * 2;
                         Entities.Last().Peices[0].Offset = new Vector2( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
@@ -832,22 +829,22 @@ namespace Bombarder
                 {
                     if ((y + ScreenStart.Y) % 300 == 0)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, 2), Color.White * 0.7F);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, 2), Color.White * 0.7F);
                     }
                     if ((y + ScreenStart.Y) % 50 == 0)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, 1), Color.White * 0.45F);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, 1), Color.White * 0.45F);
                     }
                 }
                 for (int x = 0; x < _graphics.PreferredBackBufferWidth; x++)
                 {
                     if ((x + ScreenStart.X) % 300 == 0)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(x - 1, 0, 2, _graphics.PreferredBackBufferWidth), Color.White * 0.7F);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(x - 1, 0, 2, _graphics.PreferredBackBufferWidth), Color.White * 0.7F);
                     }
                     if ((x + ScreenStart.X) % 50 == 0)
                     {
-                        _spriteBatch.Draw(Color_White, new Rectangle(x, 0, 1, _graphics.PreferredBackBufferWidth), Color.White * 0.45F);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(x, 0, 1, _graphics.PreferredBackBufferWidth), Color.White * 0.45F);
                     }
                 }
             }
@@ -902,7 +899,7 @@ namespace Bombarder
                 DrawGrid();
 
                 //Player
-                _spriteBatch.Draw(Color_White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
+                _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
                                                              _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
                                                              Player.Width, Player.Height), Color.Red);
 
@@ -912,7 +909,7 @@ namespace Bombarder
                     foreach (EntityBlock Block in Entity.Peices)
                     {
                         Color BlockColor = Block.Color;
-                        Texture2D BlockTexture = Color_White;
+                        Texture2D BlockTexture = Textures.White;
                         if (Block.Textures != null)
                         {
                             BlockColor = Color.White;
@@ -927,19 +924,19 @@ namespace Bombarder
                     if (Settings.ShowHitBoxes)
                     {
                         //Top Line
-                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                      (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     Entity.HitboxSize.X, 2), Color.White);
                         //Bottom Line
-                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                      (int)(Entity.Y + Entity.HitboxOffset.Y + Entity.HitboxSize.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     Entity.HitboxSize.X, 2), Color.White);
                         //Left Line
-                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                      (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                         //Right Line
-                        _spriteBatch.Draw(Color_White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                      (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                     }
@@ -949,10 +946,10 @@ namespace Bombarder
                 {
                     foreach (MagicEffectPiece Piece in Effect.Pieces)
                     {
-                        Texture2D EffectTexture = Color_White;
+                        Texture2D EffectTexture = Textures.White;
                         if (Piece.BaseShape == "Circle")
                         {
-                            EffectTexture = Circle_White;
+                            EffectTexture = Textures.WhiteCircle;
                         }
 
                         _spriteBatch.Draw(EffectTexture, new Rectangle(Effect.X + Piece.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
@@ -963,26 +960,26 @@ namespace Bombarder
                     {
                         if (Effect.RadiusIsCircle)
                         {
-                            _spriteBatch.Draw(Circle_White, new Rectangle((int)(Effect.X - Effect.DamageRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                            _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Effect.DamageRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                       (int)(Effect.Y - Effect.DamageRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed);
                         }
                         else
                         {
                             //Top Line
-                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                          (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                         Effect.RadiusSize.X * 2, 2), Color.White);
                             //Bottom Line
-                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                          (int)(Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                         Effect.RadiusSize.X * 2, 2), Color.White);
                             //Left Line
-                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                          (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                         2, Effect.RadiusSize.Y * 2), Color.White);
                             //Right Line
-                            _spriteBatch.Draw(Color_White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                          (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                         2, Effect.RadiusSize.Y * 2), Color.White);
                         }
@@ -1000,9 +997,9 @@ namespace Bombarder
             }
 
             //Cursor
-            _spriteBatch.Draw(Texture_Cursor, new Rectangle(Mouse.GetState().X - (int)((Texture_Cursor.Width / 2) * Settings.CursorSizeMultiplier),
-                                                            Mouse.GetState().Y - (int)((Texture_Cursor.Height / 2) * Settings.CursorSizeMultiplier),
-                                                            (int)(Texture_Cursor.Width * Settings.CursorSizeMultiplier), (int)(Texture_Cursor.Height * Settings.CursorSizeMultiplier)), Color.White);
+            _spriteBatch.Draw(Textures.Cursor, new Rectangle(Mouse.GetState().X - (int)((Textures.Cursor.Width / 2) * Settings.CursorSizeMultiplier),
+                                                            Mouse.GetState().Y - (int)((Textures.Cursor.Height / 2) * Settings.CursorSizeMultiplier),
+                                                            (int)(Textures.Cursor.Width * Settings.CursorSizeMultiplier), (int)(Textures.Cursor.Height * Settings.CursorSizeMultiplier)), Color.White);
 
 
 
