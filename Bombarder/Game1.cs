@@ -536,8 +536,8 @@ namespace Bombarder
                         Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width / 3 * 2;
                         Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height / 3 * 2;
                         Entities.Last().Peices[0].Offset = new Vector2( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
-                        Entities.Last().HitboxOffset = new Point( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
-                        Entities.Last().HitboxSize = new Point( Entities.Last().Peices[0].Width, Entities.Last().Peices[0].Height );
+                        Entities.Last().HitboxOffset = new Point( -(int)(Entities.Last().Peices[0].Width / 2 * 0.8), -(int)(Entities.Last().Peices[0].Height / 2 * 0.8) );
+                        Entities.Last().HitboxSize = new Point( (int)(Entities.Last().Peices[0].Width * 0.8), (int)(Entities.Last().Peices[0].Height * 0.8) );
                     }
                     else
                     {
