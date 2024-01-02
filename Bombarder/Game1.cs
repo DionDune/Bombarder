@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Authentication;
 
@@ -750,6 +751,16 @@ namespace Bombarder
                         _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
                                                                      (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
+                    }
+
+                    if (Entity.HealthBarVisible)
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        Entity.HealthBarDimentions.X, Entity.HealthBarDimentions.Y), Color.LightGray);
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X + 2),
+                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y + 2),
+                                                                        (int)((float)(Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
                     }
                 }
                 //Magic
