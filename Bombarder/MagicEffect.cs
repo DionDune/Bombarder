@@ -35,7 +35,7 @@ namespace Bombarder
             Y = 0;
 
             DamageTarget = "Entities";
-            Damage = 100;
+            Damage = 4;
             DamageDuration = 150;
             RadiusIsCircle = false;
             DamageRadius = 0;
