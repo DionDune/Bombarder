@@ -47,6 +47,10 @@ namespace Bombarder
             HitboxOffset = new Point(-33, -33);
             HitboxSize = new Point(66, 66);
 
+            HealthBarVisible = true;
+            HealthBarDimentions = new Point(40, 10);
+            HealthBarOffset = new Point(-20, -HitboxOffset.Y - 5);
+
             Direction = 0;
             BaseSpeed = 5;
 

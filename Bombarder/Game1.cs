@@ -332,6 +332,9 @@ namespace Bombarder
                         Entities.Last().Peices[0].Offset = new Vector2( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
                         Entities.Last().HitboxOffset = new Point( -(int)(Entities.Last().Peices[0].Width / 2 * 0.8), -(int)(Entities.Last().Peices[0].Height / 2 * 0.8) );
                         Entities.Last().HitboxSize = new Point( (int)(Entities.Last().Peices[0].Width * 0.8), (int)(Entities.Last().Peices[0].Height * 0.8) );
+                        Entities.Last().HealthBarVisible = true;
+                        Entities.Last().HealthBarDimentions = new Point(40, 10);
+                        Entities.Last().HealthBarOffset = new Point(-20, -Entities.Last().HitboxOffset.Y - 5);
                     }
                     else
                     {
