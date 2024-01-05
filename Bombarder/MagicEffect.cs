@@ -173,6 +173,30 @@ namespace Bombarder
                 }
             }
         }
+        internal class NonStaticOrb
+        {
+            const int Damage = 4;
+            public float Angle { get; set; }
+            public float Velocity { get; set; }
+            public const float VelocityLoss = 0.95F;
+
+            public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
+            {
+                Point EffectStart;
+                Point EffectEnd;
+
+                foreach (Entity Entity in Entites)
+                {
+                    EffectStart = new Point(Effect.X + Effect.RadiusOffset.X, Effect.Y + Effect.RadiusOffset.Y);
+                    EffectEnd = new Point(EffectStart.X + Effect.RadiusSize.X, EffectStart.Y + Effect.RadiusSize.Y);
+
+                    if (CheckCollision(EffectStart, EffectEnd, Entity))
+                    {
+                        Entity.GiveDamage(Damage);
+                    }
+                }
+            }
+        }
     }
 
     internal class MagicEffectPiece
