@@ -29,6 +29,9 @@ namespace Bombarder
         public float VelocityLoss { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
+
+        public object MagicObj { get; set; }
+
         
 
         public MagicEffect()
