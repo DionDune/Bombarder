@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Authentication;
+using static Bombarder.MagicEffect;
 
 namespace Bombarder
 {
@@ -419,24 +420,18 @@ namespace Bombarder
         }
         private void EnactMagic()
         {
-            //Enact Movement
             foreach (MagicEffect Effect in MagicEffects)
             {
+                //Enact Movement
                 if (Effect.IsProjectile)
                 {
                     Effect.EnactVelocity();
                 }
-            }
 
-            //Damage Detection
-            foreach (MagicEffect Effect in MagicEffects)
-            {
-                if (Effect.DamageTarget == "Entities" && Effect.DamageDuration > 0)
+                //Enact Inbuilt Function
+                if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+StaticOrb")
                 {
-                    foreach (Entity Entity in Entities)
-                    {
-                        Entity.CheckMagicOverlap(Effect);
-                    }
+                    MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
                 }
             }
 
