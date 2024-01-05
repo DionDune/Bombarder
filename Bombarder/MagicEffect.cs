@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,6 +83,68 @@ namespace Bombarder
             {
                 Velocity = 0;
             }
+        }
+
+
+
+        public static bool CheckCollision(Point Coord1, Point Coord2, int Damage, Entity Entity)
+        {
+            Vector2 HitboxStart = new Vector2(Entity.X + Entity.HitboxOffset.X, Entity.Y + Entity.HitboxOffset.Y);
+
+
+            // Effect Hitbox is smaller than the Entity Hitbox
+            if (Coord2.X - Coord1.X < Entity.HitboxSize.X && 
+                Coord2.Y - Coord1.Y < Entity.HitboxSize.Y)
+            {
+                if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitboxSize.X &&
+                    Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                {
+                    return true;
+                }
+                if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitboxSize.X &&
+                    Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                {
+                    return true;
+                }
+                if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitboxSize.X &&
+                    Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                {
+                    return true;
+                }
+                if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitboxSize.X &&
+                    Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                {
+                    return true;
+                }
+            }
+            // Effect Entity is smaller than the Effect Hitbox
+            else
+            {
+                if (HitboxStart.X >= Coord1.X && HitboxStart.X <= Coord2.X &&
+                    HitboxStart.Y >= Coord1.Y && HitboxStart.Y <= Coord2.Y)
+                {
+                    return true;
+                }
+                else if (HitboxStart.X + Entity.HitboxSize.X >= Coord1.X && HitboxStart.X + Entity.HitboxSize.X <= Coord2.X &&
+                         HitboxStart.Y >= Coord1.Y && HitboxStart.Y <= Coord2.Y)
+                {
+                    return true;
+                }
+                else if (HitboxStart.X + Entity.HitboxSize.X >= Coord1.X && HitboxStart.X + Entity.HitboxSize.X <= Coord2.X &&
+                         HitboxStart.Y + Entity.HitboxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitboxSize.Y <= Coord2.Y)
+                {
+                    return true;
+                }
+                else if (HitboxStart.X >= Coord1.X && HitboxStart.X <= Coord2.X &&
+                         HitboxStart.Y + Entity.HitboxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitboxSize.Y <= Coord2.Y)
+                {
+                    return true;
+                }
+            }
+            
+
+
+            return false;
         }
     }
 
