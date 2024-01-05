@@ -173,6 +173,7 @@ namespace Bombarder
             public float Angle { get; set; }
             public float Velocity { get; set; }
             public const float VelocityLoss = 0.95F;
+            public const float DefaultVelocity = 25;
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
             {
