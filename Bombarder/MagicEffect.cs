@@ -50,6 +50,7 @@ namespace Bombarder
             IsProjectile = false;
 
             Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece() { LifeSpan = DamageDuration } };
+            MagicObj = new StaticOrb();
         }
 
         public void EnactLifespan()
