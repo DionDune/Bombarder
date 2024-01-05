@@ -23,10 +23,6 @@ namespace Bombarder
         public Point RadiusSize { get; set; }
         public int DamageDuration { get; set; }
 
-        public bool IsProjectile { get; set; }
-        public float Angle { get; set; }
-        public float Velocity { get; set; }
-        public float VelocityLoss { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
 
@@ -46,8 +42,6 @@ namespace Bombarder
             DamageRadius = 0;
             RadiusOffset = new Point(-24, -24);
             RadiusSize = new Point(24, 24);
-
-            IsProjectile = false;
 
             Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece() { LifeSpan = DamageDuration } };
             MagicObj = new StaticOrb();
@@ -74,7 +68,7 @@ namespace Bombarder
             }
         }
 
-        public void EnactVelocity()
+        private void EnactVelocity(float Angle, float Velocity, float VelocityLoss)
         {
             float AngleRadians = Angle * (float)(Math.PI / 180);
 
@@ -185,6 +179,11 @@ namespace Bombarder
                 Point EffectStart;
                 Point EffectEnd;
 
+                //EnactVelocity
+                NonStaticOrb Orb = (NonStaticOrb)Effect.MagicObj;
+                Effect.EnactVelocity(Orb.Angle, Orb.Velocity, VelocityLoss);
+
+                //Enact Damage
                 foreach (Entity Entity in Entites)
                 {
                     EffectStart = new Point(Effect.X + Effect.RadiusOffset.X, Effect.Y + Effect.RadiusOffset.Y);

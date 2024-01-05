@@ -411,10 +411,6 @@ namespace Bombarder
                 {
                     X = (int)Player.X,
                     Y = (int)Player.Y,
-                    IsProjectile = true,
-                    Angle = Angle,
-                    Velocity = 25,
-                    VelocityLoss = 0.95F
                 });
             }
         }
@@ -422,14 +418,12 @@ namespace Bombarder
         {
             foreach (MagicEffect Effect in MagicEffects)
             {
-                //Enact Movement
-                if (Effect.IsProjectile)
-                {
-                    Effect.EnactVelocity();
-                }
-
                 //Enact Inbuilt Function
                 if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+StaticOrb")
+                {
+                    MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
+                }
+                if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
                 {
                     MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
                 }
