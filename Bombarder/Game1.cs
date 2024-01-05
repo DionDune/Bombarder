@@ -411,6 +411,12 @@ namespace Bombarder
                 {
                     X = (int)Player.X,
                     Y = (int)Player.Y,
+
+                    MagicObj = new NonStaticOrb()
+                    {
+                        Angle = Angle,
+                        Velocity = NonStaticOrb.DefaultVelocity,
+                    }
                 });
             }
         }
@@ -425,7 +431,7 @@ namespace Bombarder
                 }
                 if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
                 {
-                    MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
+                    MagicEffect.NonStaticOrb.EnactEffect(Effect, Entities);
                 }
             }
 
