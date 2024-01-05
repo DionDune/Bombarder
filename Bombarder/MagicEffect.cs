@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
@@ -65,21 +66,6 @@ namespace Bombarder
             foreach(MagicEffectPiece Piece in DeadPieces)
             {
                 Pieces.Remove(Piece);
-            }
-        }
-
-        private void EnactVelocity(float Angle, float Velocity, float VelocityLoss)
-        {
-            float AngleRadians = Angle * (float)(Math.PI / 180);
-
-            X += (int)(Velocity * (float)Math.Cos(AngleRadians));
-            Y += (int)(Velocity * (float)Math.Sin(AngleRadians));
-
-            Velocity *= VelocityLoss;
-
-            if (Velocity < 1)
-            {
-                Velocity = 0;
             }
         }
 
@@ -182,7 +168,7 @@ namespace Bombarder
 
                 //EnactVelocity
                 NonStaticOrb Orb = (NonStaticOrb)Effect.MagicObj;
-                Effect.EnactVelocity(Orb.Angle, Orb.Velocity, VelocityLoss);
+                EnactVelocity(Effect);
 
                 //Enact Damage
                 foreach (Entity Entity in Entites)
@@ -194,6 +180,22 @@ namespace Bombarder
                     {
                         Entity.GiveDamage(Damage);
                     }
+                }
+            }
+            private static void EnactVelocity(MagicEffect Effect)
+            {
+                NonStaticOrb Orb = (NonStaticOrb)Effect.MagicObj;
+
+                float AngleRadians = Orb.Angle * (float)(Math.PI / 180);
+
+                Effect.X += (int)(Orb.Velocity * (float)Math.Cos(AngleRadians));
+                Effect.Y += (int)(Orb.Velocity * (float)Math.Sin(AngleRadians));
+
+                Orb.Velocity *= VelocityLoss;
+
+                if (Orb.Velocity < 1)
+                {
+                    Orb.Velocity = 0;
                 }
             }
         }
