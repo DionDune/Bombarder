@@ -90,7 +90,7 @@ namespace Bombarder
 
 
 
-        public static bool CheckCollision(Point Coord1, Point Coord2, int Damage, Entity Entity)
+        public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)
         {
             Vector2 HitboxStart = new Vector2(Entity.X + Entity.HitboxOffset.X, Entity.Y + Entity.HitboxOffset.Y);
 
