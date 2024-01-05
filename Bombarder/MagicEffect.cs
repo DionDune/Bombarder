@@ -149,6 +149,29 @@ namespace Bombarder
 
             return false;
         }
+
+
+        internal class StaticOrb
+        {
+            const int Damage = 4;
+
+            public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
+            {
+                Point EffectStart;
+                Point EffectEnd;
+
+                foreach (Entity Entity in Entites)
+                {
+                    EffectStart = new Point(Effect.X + Effect.RadiusOffset.X, Effect.Y + Effect.RadiusOffset.Y);
+                    EffectEnd = new Point(EffectStart.X + Effect.RadiusSize.X, EffectStart.Y + Effect.RadiusSize.Y);
+
+                    if (CheckCollision(EffectStart, EffectEnd, Entity))
+                    {
+                        Entity.GiveDamage(Damage);
+                    }
+                }
+            }
+        }
     }
 
     internal class MagicEffectPiece
