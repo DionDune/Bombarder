@@ -199,6 +199,56 @@ namespace Bombarder
                 }
             }
         }
+        internal class DissapationWave
+        {
+            public float Damage { get; set; }
+            private const float DefaultDamage = 15;
+
+            public float Radius { get; set; }
+            private const float DefaultRadius = 5;
+            private const float RadiusSpread = 5;
+            private const float EdgeEffectWith = 10;
+
+            public float Opacity { get; set; }
+            private const float DefaultOpacity = 0.95F;
+            private const float OpacityMultiplier = 0.9F;
+
+            public DissapationWave()
+            {
+                Damage = DefaultDamage;
+                Radius = DefaultRadius;
+                Opacity = DefaultOpacity;
+            }
+
+
+            public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
+            {
+                EnactDamage(Effect, Entites);
+            }
+            private static void EnactDamage(MagicEffect Effect, List<Entity> Entites)
+            {
+                foreach (Entity Entity in Entites)
+                {
+                    float XDiff = Math.Abs(Effect.X - Entity.X);
+                    float YDiff = Math.Abs(Effect.Y - Entity.Y);
+                    float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                    if (Math.Abs(((DissapationWave)Effect.MagicObj).Radius - Distance) <= EdgeEffectWith)
+                    {
+                        Entity.GiveDamage((int)((DissapationWave)Effect.MagicObj).Damage);
+                    }
+                }
+
+                EnactSpread(Effect);
+            }
+            private static void EnactSpread(MagicEffect Effect)
+            {
+                DissapationWave Wave = (DissapationWave)Effect.MagicObj;
+
+                ((DissapationWave)Effect.MagicObj).Radius += RadiusSpread;
+                ((DissapationWave)Effect.MagicObj).Opacity *= OpacityMultiplier;
+            }
+        }
     }
 
     internal class MagicEffectPiece
