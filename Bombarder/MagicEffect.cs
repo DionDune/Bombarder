@@ -225,6 +225,7 @@ namespace Bombarder
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
             {
+                EnactSpread(Effect);
                 EnactDamage(Effect, Entites);
             }
             private static void EnactDamage(MagicEffect Effect, List<Entity> Entites)
@@ -240,8 +241,6 @@ namespace Bombarder
                         Entity.GiveDamage((int)((DissapationWave)Effect.MagicObj).Damage);
                     }
                 }
-
-                EnactSpread(Effect);
             }
             private static void EnactSpread(MagicEffect Effect)
             {
