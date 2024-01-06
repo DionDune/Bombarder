@@ -205,7 +205,7 @@ namespace Bombarder
 
             public float Damage { get; set; }
             private const float DefaultDamage = 12;
-            private const float DamageMultiplier = 0.98F;
+            private const float DamageMultiplier = 0.992F;
 
             public float Radius { get; set; }
             private const float DefaultRadius = 5;
