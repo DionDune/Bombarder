@@ -566,7 +566,11 @@ namespace Bombarder
             //Middle Click
             if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
             {
-
+                if (!Input.isClickingMiddle)
+                {
+                    CreateMagic((int)Player.X, (int)Player.Y,
+                                new DissapationWave());
+                }
 
                 Input.isClickingMiddle = true;
             }
