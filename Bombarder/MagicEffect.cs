@@ -201,6 +201,8 @@ namespace Bombarder
         }
         internal class DissapationWave
         {
+            public Color Colour = Color.MediumPurple;
+
             public float Damage { get; set; }
             private const float DefaultDamage = 15;
 
