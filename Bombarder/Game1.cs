@@ -433,6 +433,10 @@ namespace Bombarder
                 {
                     MagicEffect.NonStaticOrb.EnactEffect(Effect, Entities);
                 }
+                if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+DissapationWave")
+                {
+                    MagicEffect.DissapationWave.EnactEffect(Effect, Entities);
+                }
             }
 
             //Enact Lifespan
