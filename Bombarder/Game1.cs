@@ -390,9 +390,9 @@ namespace Bombarder
 
         #region Magic Interaction
 
-        private void CreateMagic(int X, int Y, bool IsProjectile)
+        private void CreateMagic(int X, int Y, object MagicType)
         {
-            if (!IsProjectile)
+            if (MagicType.ToString() == "Bombarder.MagicEffect+StaticOrb")
             {
                 MagicEffects.Add(new MagicEffect()
                 {
@@ -400,7 +400,7 @@ namespace Bombarder
                     Y = Y
                 });
             }
-            else
+            else if (MagicType.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
             {
                 //Calculating Angle
                 float xDiff = X - Player.X;
@@ -417,6 +417,15 @@ namespace Bombarder
                         Angle = Angle,
                         Velocity = NonStaticOrb.DefaultVelocity,
                     }
+                });
+            }
+            else if (MagicType.ToString() == "Bombarder.MagicEffect+DissapationWave")
+            {
+                MagicEffects.Add(new MagicEffect()
+                {
+                    X = X,
+                    Y = Y,
+                    MagicObj = new DissapationWave()
                 });
             }
         }
@@ -526,7 +535,7 @@ namespace Bombarder
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
-                                    false);
+                                    new StaticOrb());
                     }
                 }
 
@@ -544,7 +553,7 @@ namespace Bombarder
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
-                                    true);
+                                    new NonStaticOrb());
                 }
 
                 Input.isClickingRight = true;
