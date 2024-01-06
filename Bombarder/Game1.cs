@@ -795,7 +795,7 @@ namespace Bombarder
 
                         _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                       (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                      (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Wave.Colour * Wave.Opacity);
+                                                                      (int)Wave.Radius * 2, (int)Wave.Radius * 2), Wave.Colour * Wave.Opacity);
                     }
                     else
                     {
