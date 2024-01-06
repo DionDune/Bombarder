@@ -205,6 +205,7 @@ namespace Bombarder
 
             public float Damage { get; set; }
             private const float DefaultDamage = 12;
+            private const float DamageMultiplier = 0.98F;
 
             public float Radius { get; set; }
             private const float DefaultRadius = 5;
@@ -248,6 +249,7 @@ namespace Bombarder
 
                 ((DissapationWave)Effect.MagicObj).Radius += RadiusSpread;
                 ((DissapationWave)Effect.MagicObj).Opacity *= OpacityMultiplier;
+                ((DissapationWave)Effect.MagicObj).Damage *= DamageMultiplier;
             }
         }
     }
