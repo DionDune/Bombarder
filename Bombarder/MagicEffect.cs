@@ -204,7 +204,7 @@ namespace Bombarder
             public Color Colour = Color.MediumPurple;
 
             public float Damage { get; set; }
-            private const float DefaultDamage = 15;
+            private const float DefaultDamage = 12;
 
             public float Radius { get; set; }
             private const float DefaultRadius = 5;
@@ -213,7 +213,7 @@ namespace Bombarder
 
             public float Opacity { get; set; }
             private const float DefaultOpacity = 0.95F;
-            private const float OpacityMultiplier = 0.9F;
+            private const float OpacityMultiplier = 0.98F;
 
             public DissapationWave()
             {
