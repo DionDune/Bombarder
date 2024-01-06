@@ -769,18 +769,33 @@ namespace Bombarder
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)
                 {
-                    foreach (MagicEffectPiece Piece in Effect.Pieces)
-                    {
-                        Texture2D EffectTexture = Textures.White;
-                        if (Piece.BaseShape == "Circle")
-                        {
-                            EffectTexture = Textures.WhiteCircle;
-                        }
+                    string MagicType = Effect.MagicObj.ToString();
 
-                        _spriteBatch.Draw(EffectTexture, new Rectangle(Effect.X + Piece.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                     Effect.Y + Piece.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                     Piece.Width, Piece.Height), Piece.Color);
+
+                    if (MagicType == "Bombarder.MagicEffect+DissapationWave")
+                    {
+                        DissapationWave Wave = (DissapationWave)Effect.MagicObj;
+
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                      (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed * Wave.Opacity);
                     }
+                    else
+                    {
+                        foreach (MagicEffectPiece Piece in Effect.Pieces)
+                        {
+                            Texture2D EffectTexture = Textures.White;
+                            if (Piece.BaseShape == "Circle")
+                            {
+                                EffectTexture = Textures.WhiteCircle;
+                            }
+
+                            _spriteBatch.Draw(EffectTexture, new Rectangle(Effect.X + Piece.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                         Effect.Y + Piece.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                         Piece.Width, Piece.Height), Piece.Color);
+                        }
+                    }
+                    
                     if (Settings.ShowDamageRadii)
                     {
                         if (Effect.RadiusIsCircle)
