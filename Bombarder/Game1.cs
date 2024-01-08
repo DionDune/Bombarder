@@ -590,6 +590,22 @@ namespace Bombarder
                                     new NonStaticOrb());
                     }
                 }
+                else
+                {
+                    if (MagicEffects.Count > 0)
+                    {
+                        foreach(MagicEffect Effect in SelectedEffects)
+                        {
+                            if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+WideLazer")
+                            {
+                                float xDiff = Mouse.GetState().X - (_graphics.PreferredBackBufferWidth / 2);
+                                float yDiff = Mouse.GetState().Y - (_graphics.PreferredBackBufferHeight / 2);
+                                float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+                                ((WideLazer)Effect.MagicObj).Angle = Angle;
+                            }
+                        }
+                    }
+                }
 
                 Input.isClickingRight = true;
             }
