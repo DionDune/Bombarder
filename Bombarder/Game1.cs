@@ -432,7 +432,7 @@ namespace Bombarder
                     MagicObj = new DissapationWave()
                 });
             }
-            else if (MagicType.ToString() == "Mombarder.MagicEffect+WideLazer")
+            else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
             {
                 //Calculating Angle
                 float xDiff = X - Player.X;
@@ -447,7 +447,7 @@ namespace Bombarder
                     Duration = MagicEffect.WideLazer.DefaultDuration,
                     MagicObj = new WideLazer()
                     {
-                        Angle = Angle,
+                        Angle = Angle
                     }
                 });
             }
@@ -820,6 +820,7 @@ namespace Bombarder
                 foreach (MagicEffect Effect in MagicEffects)
                 {
                     string MagicType = Effect.MagicObj.ToString();
+                    //Debug.WriteLine(MagicType);
 
 
                     if (MagicType == "Bombarder.MagicEffect+DissapationWave")
@@ -829,6 +830,26 @@ namespace Bombarder
                         _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                       (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)Wave.Radius * 2, (int)Wave.Radius * 2), Wave.Colour * Wave.Opacity);
+                    }
+                    else if (MagicType == "Bombarder.MagicEffect+WideLazer")
+                    {
+                        Debug.WriteLine("L");
+                        WideLazer Lazer = (WideLazer)Effect.MagicObj;
+
+                        float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+
+                        float X = (float)Player.X;
+                        float Y = (float)Player.Y;
+                        
+                        for (int i = 0; i < WideLazer.Range / WideLazer.MarkerDistance; i++)
+                        {
+                            X += (int)(WideLazer.MarkerDistance * (float)Math.Cos(AngleRadians));
+                            Y += (int)(WideLazer.MarkerDistance * (float)Math.Sin(AngleRadians));
+
+                            _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(X - 2) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Y - 2) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                      4, 4), Lazer.MarkerColor);
+                        }
                     }
                     else
                     {
