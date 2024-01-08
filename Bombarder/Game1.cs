@@ -18,6 +18,7 @@ namespace Bombarder
         private SpriteBatch _spriteBatch;
 
         Random random = new Random();
+        public uint GameTick;
 
         List<UIPage> UIPages = new List<UIPage>();
         UIPage UIPage_Current;
@@ -50,6 +51,8 @@ namespace Bombarder
 
         protected override void Initialize()
         {
+            GameTick = 0;
+
             UIPages = UIPage.GeneratePages();
             UIPage_Current = UIPages[0];
             GameState = "Start";
@@ -752,6 +755,8 @@ namespace Bombarder
 
         protected override void Update(GameTime gameTime)
         {
+            GameTick++;
+
             KeyboardHandler();
             MouseHandler();
 
