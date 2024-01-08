@@ -462,13 +462,17 @@ namespace Bombarder
                 {
                     MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
                 }
-                if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
+                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
                 {
                     MagicEffect.NonStaticOrb.EnactEffect(Effect, Entities);
                 }
-                if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+DissapationWave")
+                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+DissapationWave")
                 {
                     MagicEffect.DissapationWave.EnactEffect(Effect, Entities);
+                }
+                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+WideLazer")
+                {
+                    MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities);
                 }
             }
 
@@ -855,7 +859,6 @@ namespace Bombarder
                 foreach (MagicEffect Effect in MagicEffects)
                 {
                     string MagicType = Effect.MagicObj.ToString();
-                    //Debug.WriteLine(MagicType);
 
 
                     if (MagicType == "Bombarder.MagicEffect+DissapationWave")
@@ -868,7 +871,6 @@ namespace Bombarder
                     }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {
-                        Debug.WriteLine("L");
                         WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
                         float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);

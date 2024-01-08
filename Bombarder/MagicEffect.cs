@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Reflection.PortableExecutable;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -247,7 +248,7 @@ namespace Bombarder
         public class WideLazer
         {
             const int Damage = 1;
-            const int DamageInterval = 1;
+            const int DamageInterval = 3;
 
             public const int Range = 400;
             public const int Width = 24;
@@ -260,6 +261,39 @@ namespace Bombarder
             public const int DefaultDuration = -1;
 
             public float Angle = 0;
+
+
+            public static void EnactEffect(MagicEffect Effect, Player Player, List<Entity> Entites)
+            {
+                EnactDamage(Effect, Player, Entites);
+            }
+            private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites)
+            {
+                WideLazer Lazer = (WideLazer)Effect.MagicObj;
+
+                float X = Player.X;
+                float Y = Player.Y;
+
+                float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+
+                for (int i = 0; i < WideLazer.Range / 3; i++)
+                {
+                    X += 3 * (float)Math.Cos(AngleRadians);
+                    Y += 3 * (float)Math.Sin(AngleRadians);
+
+                    foreach (Entity Entity in Entites)
+                    {
+                        float XDiff = Math.Abs(X - Entity.X);
+                        float YDiff = Math.Abs(Y - Entity.Y);
+                        float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                        if (Math.Abs(Distance) <= WideLazer.Width / 2)
+                        {
+                            Entity.GiveDamage((int)WideLazer.Damage);
+                        }
+                    }
+                }
+            }
         }
     }
 
