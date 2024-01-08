@@ -749,6 +749,14 @@ namespace Bombarder
             }
         }
 
+        void DrawLine(Vector2 point, float Length, float Angle, Color Color, float Thickness = 1F)
+        {
+            var origin = new Vector2(0f, 0.5f);
+            var scale = new Vector2(Length, Thickness);
+
+            _spriteBatch.Draw(Textures.White, point, null, Color, Angle, origin, scale, SpriteEffects.None, 0);
+        }
+
         #endregion
 
         #region Fundamentals
@@ -879,10 +887,16 @@ namespace Bombarder
                         WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
                         float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+                        float RightAngleRadians = (Lazer.Angle + 90) * (float)(Math.PI / 180);
 
                         float X = (float)Player.X;
                         float Y = (float)Player.Y;
-                        
+
+                        Vector2 LeftLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) - (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
+                                (_graphics.PreferredBackBufferHeight / 2) - (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
+                        Vector2 RightLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) + (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
+                                (_graphics.PreferredBackBufferHeight / 2) + (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
+
                         for (int i = 0; i < WideLazer.Range / WideLazer.MarkerDistance; i++)
                         {
                             X += (int)(WideLazer.MarkerDistance * (float)Math.Cos(AngleRadians));
@@ -892,6 +906,8 @@ namespace Bombarder
                                                                       (int)(Y - 2) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       4, 4), Lazer.MarkerColor);
                         }
+                        DrawLine(LeftLine, WideLazer.Range, AngleRadians, Lazer.MarkerColor);
+                        DrawLine(RightLine, WideLazer.Range, AngleRadians, Lazer.MarkerColor);
                     }
                     else
                     {
