@@ -248,11 +248,11 @@ namespace Bombarder
         public class WideLazer
         {
             const int Damage = 1;
-            const int DamageInterval = 3;
+            const int DamageInterval = 5;
 
-            public const int Range = 400;
+            public const int Range = 600;
             public const int Width = 24;
-            public const int MarkerDistance = 25;
+            public const int MarkerDistance = 75;
 
             public Color PrimaryColor = Color.PaleTurquoise;
             public Color SecondaryColor = Color.White;
