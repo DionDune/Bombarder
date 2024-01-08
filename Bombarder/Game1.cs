@@ -432,6 +432,25 @@ namespace Bombarder
                     MagicObj = new DissapationWave()
                 });
             }
+            else if (MagicType.ToString() == "Mombarder.MagicEffect+WideLazer")
+            {
+                //Calculating Angle
+                float xDiff = X - Player.X;
+                float yDiff = Y - Player.Y;
+                float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+
+                MagicEffects.Add(new MagicEffect()
+                {
+                    X = (int)Player.X,
+                    Y = (int)Player.Y,
+
+                    Duration = MagicEffect.WideLazer.DefaultDuration,
+                    MagicObj = new WideLazer()
+                    {
+                        Angle = Angle,
+                    }
+                });
+            }
         }
         private void EnactMagic()
         {
@@ -556,9 +575,18 @@ namespace Bombarder
             {
                 if (!Input.isClickingRight)
                 {
-                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
+                    if (true)
+                    {
+                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
+                                    new WideLazer());
+                    }
+                    else
+                    {
+                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
                                     new NonStaticOrb());
+                    }
                 }
 
                 Input.isClickingRight = true;

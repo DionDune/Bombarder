@@ -257,9 +257,9 @@ namespace Bombarder
             public Color SecondaryColor = Color.White;
             public Color MarkerColor = Color.Red;
 
-            const int DefaultDuration = -1;
+            public const int DefaultDuration = -1;
 
-            float Angle = 0;
+            public float Angle = 0;
         }
     }
 
