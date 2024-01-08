@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -243,8 +244,22 @@ namespace Bombarder
                 ((DissapationWave)Effect.MagicObj).Damage *= DamageMultiplier;
             }
         }
+        public class WideLazer
+        {
+            const int Damage = 1;
+            const int DamageInterval = 1;
 
-        
+            const int Range = 400;
+            const int Width = 24;
+            const int MarkerDistance = 25;
+
+            public Color PrimaryColor = Color.PaleTurquoise;
+            public Color SecondaryColor = Color.White;
+            public Color MarkerColor = Color.Red;
+
+
+            float Angle = 0;
+        }
     }
 
     internal class MagicEffectPiece
