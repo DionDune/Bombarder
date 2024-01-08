@@ -24,6 +24,7 @@ namespace Bombarder
         public Point RadiusSize { get; set; }
         public int DamageDuration { get; set; }
 
+        public int Duration { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
 
@@ -44,28 +45,17 @@ namespace Bombarder
             RadiusOffset = new Point(-24, -24);
             RadiusSize = new Point(24, 24);
 
+            Duration = StaticOrb.DefaultDuration;
+
             Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece() { LifeSpan = DamageDuration } };
             MagicObj = new StaticOrb();
         }
 
         public void EnactLifespan()
         {
-            DamageDuration--;
-
-            List<MagicEffectPiece> DeadPieces = new List<MagicEffectPiece>();
-            foreach (MagicEffectPiece Piece in Pieces)
+            if (Duration > 0)
             {
-                Piece.LifeSpan--;
-
-                if (Piece.LifeSpan <= 0)
-                {
-                    DeadPieces.Add(Piece);
-                }
-            }
-
-            foreach(MagicEffectPiece Piece in DeadPieces)
-            {
-                Pieces.Remove(Piece);
+                Duration--;
             }
         }
 
@@ -135,6 +125,7 @@ namespace Bombarder
         internal class StaticOrb
         {
             const int Damage = 4;
+            public const int DefaultDuration = 150;
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
             {
@@ -156,6 +147,7 @@ namespace Bombarder
         internal class NonStaticOrb
         {
             const int Damage = 4;
+            public const int DefaultDuration = 150;
             public float Angle { get; set; }
             public float Velocity { get; set; }
             public const float VelocityLoss = 0.95F;
@@ -204,6 +196,7 @@ namespace Bombarder
             public Color Colour = Color.MediumPurple;
 
             public float Damage { get; set; }
+            public const int DefaultDuration = 150;
             private const float DefaultDamage = 12;
             private const float DamageMultiplier = 0.992F;
 

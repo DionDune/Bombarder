@@ -397,7 +397,8 @@ namespace Bombarder
                 MagicEffects.Add(new MagicEffect()
                 {
                     X = X,
-                    Y = Y
+                    Y = Y,
+                    Duration = MagicEffect.StaticOrb.DefaultDuration
                 });
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
@@ -412,6 +413,7 @@ namespace Bombarder
                     X = (int)Player.X,
                     Y = (int)Player.Y,
 
+                    Duration = MagicEffect.NonStaticOrb.DefaultDuration,
                     MagicObj = new NonStaticOrb()
                     {
                         Angle = Angle,
@@ -425,6 +427,8 @@ namespace Bombarder
                 {
                     X = X,
                     Y = Y,
+
+                    Duration = MagicEffect.DissapationWave.DefaultDuration,
                     MagicObj = new DissapationWave()
                 });
             }
@@ -453,7 +457,8 @@ namespace Bombarder
             foreach (MagicEffect Effect in MagicEffects)
             {
                 Effect.EnactLifespan();
-                if (Effect.Pieces.Count == 0)
+                
+                if (Effect.Duration == 0)
                 {
                     DeadEffects.Add(Effect);
                 }
