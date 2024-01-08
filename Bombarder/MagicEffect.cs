@@ -263,11 +263,11 @@ namespace Bombarder
             public float Angle = 0;
 
 
-            public static void EnactEffect(MagicEffect Effect, Player Player, List<Entity> Entites)
+            public static void EnactEffect(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
-                EnactDamage(Effect, Player, Entites);
+                EnactDamage(Effect, Player, Entites, Tick);
             }
-            private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites)
+            private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
                 WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
@@ -287,7 +287,7 @@ namespace Bombarder
                         float YDiff = Math.Abs(Y - Entity.Y);
                         float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
-                        if (Math.Abs(Distance) <= WideLazer.Width / 2)
+                        if (Math.Abs(Distance) <= WideLazer.Width / 2 && Tick % WideLazer.DamageInterval == 0)
                         {
                             Entity.GiveDamage((int)WideLazer.Damage);
                         }

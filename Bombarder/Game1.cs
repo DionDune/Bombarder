@@ -475,7 +475,7 @@ namespace Bombarder
                 }
                 else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+WideLazer")
                 {
-                    MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities);
+                    MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
                 }
             }
 
