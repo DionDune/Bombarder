@@ -31,6 +31,7 @@ namespace Bombarder
 
         List<Entity> Entities = new List<Entity>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
+        List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 
         #endregion
 
@@ -580,6 +581,7 @@ namespace Bombarder
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
                                     new WideLazer());
+                        SelectedEffects.Add(MagicEffects.Last());
                     }
                     else
                     {
@@ -593,6 +595,23 @@ namespace Bombarder
             }
             else
             {
+                if (SelectedEffects.Count > 0)
+                {
+                    List<MagicEffect> ToRemove = new List<MagicEffect>();
+                    foreach(MagicEffect Effect in SelectedEffects)
+                    {
+                        if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+WideLazer")
+                        {
+                            ToRemove.Add(Effect);
+                        }
+                    }
+
+                    foreach(MagicEffect Effect in ToRemove)
+                    {
+                        MagicEffects.Remove(Effect);
+                    }
+                }
+
                 Input.isClickingRight = false;
             }
 
