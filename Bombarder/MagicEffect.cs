@@ -30,26 +30,7 @@ namespace Bombarder
 
         public object MagicObj { get; set; }
 
-        
 
-        public MagicEffect()
-        {
-            X = 0;
-            Y = 0;
-
-            DamageTarget = "Entities";
-            Damage = 4;
-            DamageDuration = 150;
-            RadiusIsCircle = false;
-            DamageRadius = 0;
-            RadiusOffset = new Point(-24, -24);
-            RadiusSize = new Point(24, 24);
-
-            Duration = StaticOrb.DefaultDuration;
-
-            Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece() { LifeSpan = DamageDuration } };
-            MagicObj = new StaticOrb();
-        }
 
         public void EnactLifespan()
         {
@@ -58,16 +39,13 @@ namespace Bombarder
                 Duration--;
             }
         }
-
-
-
         public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)
         {
             Vector2 HitboxStart = new Vector2(Entity.X + Entity.HitboxOffset.X, Entity.Y + Entity.HitboxOffset.Y);
 
 
             // Effect Hitbox is smaller than the Entity Hitbox
-            if (Coord2.X - Coord1.X < Entity.HitboxSize.X && 
+            if (Coord2.X - Coord1.X < Entity.HitboxSize.X &&
                 Coord2.Y - Coord1.Y < Entity.HitboxSize.Y)
             {
                 if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitboxSize.X &&
@@ -115,14 +93,34 @@ namespace Bombarder
                     return true;
                 }
             }
-            
+
 
 
             return false;
         }
 
 
-        internal class StaticOrb
+
+        public MagicEffect()
+        {
+            X = 0;
+            Y = 0;
+
+            DamageTarget = "Entities";
+            Damage = 4;
+            DamageDuration = 150;
+            RadiusIsCircle = false;
+            DamageRadius = 0;
+            RadiusOffset = new Point(-24, -24);
+            RadiusSize = new Point(24, 24);
+
+            Duration = StaticOrb.DefaultDuration;
+
+            Pieces = new List<MagicEffectPiece>() { new MagicEffectPiece() { LifeSpan = DamageDuration } };
+            MagicObj = new StaticOrb();
+        }
+
+        public class StaticOrb
         {
             const int Damage = 4;
             public const int DefaultDuration = 150;
@@ -144,7 +142,7 @@ namespace Bombarder
                 }
             }
         }
-        internal class NonStaticOrb
+        public class NonStaticOrb
         {
             const int Damage = 4;
             public const int DefaultDuration = 150;
@@ -191,7 +189,7 @@ namespace Bombarder
                 }
             }
         }
-        internal class DissapationWave
+        public class DissapationWave
         {
             public Color Colour = Color.MediumPurple;
 
@@ -245,6 +243,8 @@ namespace Bombarder
                 ((DissapationWave)Effect.MagicObj).Damage *= DamageMultiplier;
             }
         }
+
+        
     }
 
     internal class MagicEffectPiece
