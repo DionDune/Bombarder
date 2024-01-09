@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
@@ -25,8 +26,11 @@ namespace Bombarder
         public int Width { get; set; }
         public int Height { get; set; }
 
+
         public class HitMarker
         {
+            const string Name = "Hitmarker";
+
             const int Width = 20;
             const int Height = 20;
 
