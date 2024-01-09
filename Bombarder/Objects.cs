@@ -24,5 +24,14 @@ namespace Bombarder
 
         public int Width { get; set; }
         public int Height { get; set; }
+
+        public class HitMarker
+        {
+            const int Width = 20;
+            const int Height = 20;
+
+            const bool HasDuration = true;
+            const int Duration = 150;
+        }
     }
 }
