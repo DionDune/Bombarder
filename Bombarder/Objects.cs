@@ -29,13 +29,13 @@ namespace Bombarder
 
         public class HitMarker
         {
-            const string Name = "Hitmarker";
+            public const string Name = "Hitmarker";
 
-            const int Width = 20;
-            const int Height = 20;
+            public const int Width = 20;
+            public const int Height = 20;
 
-            const bool HasDuration = true;
-            const int Duration = 150;
+            public const bool HasDuration = true;
+            public const int Duration = 150;
         }
     }
 }
