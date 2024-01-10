@@ -31,7 +31,7 @@ namespace Bombarder
         Player Player;
 
         List<Entity> Entities = new List<Entity>();
-        List<Object> Objects = new List<Object>();
+        public static List<Object> Objects = new List<Object>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
         List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 

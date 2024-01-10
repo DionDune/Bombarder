@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Bombarder
 {
-    internal class Object
+    public class Object
     {
         public string Type { get; set; }
 
