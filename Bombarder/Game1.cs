@@ -31,6 +31,7 @@ namespace Bombarder
         Player Player;
 
         List<Entity> Entities = new List<Entity>();
+        List<Object> Objects = new List<Object>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
         List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 
@@ -807,6 +808,18 @@ namespace Bombarder
                 //Grid
                 DrawGrid();
 
+                //Objects
+                foreach (Object Obj in Objects)
+                {
+                    string Type = Obj.Type;
+                    
+                    if (Type == "HitMarker")
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle(Obj.X, Obj.Y, Obj.Width, Obj.Height), Color.Red);
+                    }
+                }
+
+
                 //Player
                 _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
                                                              _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
@@ -819,6 +832,7 @@ namespace Bombarder
                 _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 + Player.HealthBarOffset.X + 2,
                                                              _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y + 2,
                                                              (int)((Player.HealthBarDimentions.X - 4) * ((float)Player.Health / Player.HealthMax)), Player.HealthBarDimentions.Y - 4), Color.Green);
+
 
                 //Entities
                 foreach (Entity Entity in Entities)
