@@ -813,11 +813,6 @@ namespace Bombarder
                 foreach (Object Obj in Objects.GeneralObjects)
                 {
                     string Type = Obj.Type;
-                    
-                    if (Type == "HitMarker")
-                    {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(Obj.X, Obj.Y, Obj.Width, Obj.Height), Color.Red);
-                    }
                 }
 
 
@@ -882,6 +877,13 @@ namespace Bombarder
                                                                         (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y + 2),
                                                                         (int)((Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
                     }
+                }
+                //HitMarkers
+                foreach (Object Obj in Objects.HitMarkers)
+                {
+                    _spriteBatch.Draw(Textures.White, new Rectangle(Obj.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                    Obj.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                    Obj.Width, Obj.Height), Color.White);
                 }
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)
