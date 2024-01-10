@@ -18,7 +18,7 @@ namespace Bombarder
         private SpriteBatch _spriteBatch;
 
         public static Random random = new Random();
-        public uint GameTick;
+        public static uint GameTick;
 
         List<UIPage> UIPages = new List<UIPage>();
         UIPage UIPage_Current;
@@ -32,7 +32,6 @@ namespace Bombarder
 
         List<Entity> Entities = new List<Entity>();
         public static Object.ObjectContainer Objects = new Object.ObjectContainer();
-        //public static List<Object> Objects = new List<Object>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
         List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 
@@ -868,6 +867,14 @@ namespace Bombarder
                                                                     2, Entity.HitboxSize.Y), Color.White);
                     }
 
+                    //HitMarkers
+                    foreach (Object Obj in Entity.HitMarkers)
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle(Obj.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                        Obj.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                        Obj.Width, Obj.Height), Color.White);
+                    }
+
                     if (Entity.HealthBarVisible)
                     {
                         _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
@@ -877,13 +884,6 @@ namespace Bombarder
                                                                         (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y + 2),
                                                                         (int)((Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
                     }
-                }
-                //HitMarkers
-                foreach (Object Obj in Objects.HitMarkers)
-                {
-                    _spriteBatch.Draw(Textures.White, new Rectangle(Obj.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                    Obj.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                    Obj.Width, Obj.Height), Color.White);
                 }
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)

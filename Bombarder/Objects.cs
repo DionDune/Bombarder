@@ -55,12 +55,10 @@ namespace Bombarder
 
         public class ObjectContainer
         {
-            public List<Object> HitMarkers;
             public List<Object> GeneralObjects;
 
             public ObjectContainer()
             {
-                HitMarkers = new List<Object>();
                 GeneralObjects = new List<Object>();
             }
         }

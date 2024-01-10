@@ -33,6 +33,8 @@ namespace Bombarder
         public bool ChasesPlayer { get; set; }
 
         public List<EntityBlock> Peices { get; set; }
+        public List<Object> HitMarkers;
+        public uint LastHitMakerFrame;
 
         public Entity()
         {
@@ -57,6 +59,8 @@ namespace Bombarder
             ChasesPlayer = true;
 
             Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-28, -28), Color = Color.Red } };
+            HitMarkers = new List<Object>();
+            LastHitMakerFrame = 0;
         }
 
         public void MoveTowards(Vector2 Goal)
@@ -80,8 +84,18 @@ namespace Bombarder
                 IsDead = true;
             }
 
-            Game1.Objects.HitMarkers.Add(new Object(new Object.HitMarker(), Game1.random.Next((int)X, (int)X + HitboxSize.X),
-                                                                 Game1.random.Next((int)Y, (int)Y + HitboxSize.Y)));
+            ApplyHitMarker();
+        }
+
+        public void ApplyHitMarker()    
+        {
+            if (Math.Abs(Game1.GameTick - LastHitMakerFrame) > 20)
+            {
+                HitMarkers.Add(new Object(new Object.HitMarker(), Game1.random.Next((int)X + HitboxOffset.X, (int)X + HitboxOffset.X + HitboxSize.X),
+                                                                 Game1.random.Next((int)Y + HitboxOffset.Y, (int)Y + HitboxOffset.Y + HitboxSize.Y)));
+
+                LastHitMakerFrame = Game1.GameTick;
+            }
         }
     }
 
