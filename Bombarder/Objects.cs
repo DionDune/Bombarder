@@ -27,6 +27,21 @@ namespace Bombarder
         public int Height { get; set; }
 
 
+        public Object(object Obj, int x, int y)
+        {
+            if (Obj.ToString() == "Bombarder.Object+HitMarker")
+            {
+                Type = HitMarker.Name;
+                HasDuration = HitMarker.HasDuration;
+                Duration = HitMarker.Duration;
+
+                X = x;
+                Y = y;
+                Width = HitMarker.Width;
+                Height = HitMarker.Height;
+            }
+        }
+
         public class HitMarker
         {
             public const string Name = "Hitmarker";
