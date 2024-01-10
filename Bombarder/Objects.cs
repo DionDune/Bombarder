@@ -52,5 +52,17 @@ namespace Bombarder
             public const bool HasDuration = true;
             public const int Duration = 150;
         }
+
+        public class ObjectContainer
+        {
+            public List<Object> HitMarkers;
+            public List<Object> GeneralObjects;
+
+            public ObjectContainer()
+            {
+                HitMarkers = new List<Object>();
+                GeneralObjects = new List<Object>();
+            }
+        }
     }
 }

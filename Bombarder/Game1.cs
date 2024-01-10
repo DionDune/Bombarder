@@ -31,7 +31,8 @@ namespace Bombarder
         Player Player;
 
         List<Entity> Entities = new List<Entity>();
-        public static List<Object> Objects = new List<Object>();
+        public static Object.ObjectContainer Objects = new Object.ObjectContainer();
+        //public static List<Object> Objects = new List<Object>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
         List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 
@@ -809,7 +810,7 @@ namespace Bombarder
                 DrawGrid();
 
                 //Objects
-                foreach (Object Obj in Objects)
+                foreach (Object Obj in Objects.GeneralObjects)
                 {
                     string Type = Obj.Type;
                     
