@@ -17,7 +17,7 @@ namespace Bombarder
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        Random random = new Random();
+        public static Random random = new Random();
         public uint GameTick;
 
         List<UIPage> UIPages = new List<UIPage>();

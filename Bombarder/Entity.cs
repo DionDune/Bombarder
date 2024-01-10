@@ -79,6 +79,9 @@ namespace Bombarder
             {
                 IsDead = true;
             }
+
+            Game1.Objects.Add(new Object(new Object.HitMarker(), Game1.random.Next((int)X, (int)X + HitboxSize.X),
+                                                                 Game1.random.Next((int)Y, (int)Y + HitboxSize.Y)));
         }
     }
 
