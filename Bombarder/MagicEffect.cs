@@ -258,6 +258,7 @@ namespace Bombarder
             public Color PrimaryColor = Color.PaleTurquoise;
             public Color SecondaryColor = Color.White;
             public Color MarkerColor = Color.Red;
+            public const float Opacity = 0.8F;
 
             public const int DefaultDuration = -1;
 
