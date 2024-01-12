@@ -762,13 +762,19 @@ namespace Bombarder
 
             _spriteBatch.Draw(Textures.White, point, null, Color, Angle, origin, scale, SpriteEffects.None, 0);
         }
-        void DrawRotatedTexture(Vector2 Point, Texture2D Texture, float Width, float Height, float Angle, Color Color)
+        void DrawRotatedTexture(Vector2 Point, Texture2D Texture, float Width, float Height, float Angle, bool Centered, Color Color)
         {
             float AngleRadians = Angle * (float)(Math.PI / 180);
 
             var origin = new Vector2(0f, 0.5f);
             Vector2 scale;
             scale = new Vector2(Width, Height);
+
+            if (!Centered)
+            {
+                Point.Y -= ((Texture.Width * scale.Y) / 2) * (float)Math.Cos(AngleRadians);
+                Point.X += ((Texture.Height * scale.Y) / 2) * (float)Math.Sin(AngleRadians);
+            }
 
             _spriteBatch.Draw(Texture, Point, null, Color, AngleRadians, origin, scale, SpriteEffects.None, 0);
         }
