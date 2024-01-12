@@ -13,5 +13,7 @@ namespace Bombarder
         public Texture2D WhiteCircle { get; set; }
         public Texture2D Cursor { get; set; }
         public (Texture2D, Texture2D) DemonEye { get; set; }
+
+        public Texture2D HitMarker { get; set; }
     }
 }

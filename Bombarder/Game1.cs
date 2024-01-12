@@ -79,6 +79,7 @@ namespace Bombarder
 
             Textures.WhiteCircle = Content.Load<Texture2D>("Circle");
             Textures.Cursor = Content.Load<Texture2D>("Cursor");
+            Textures.HitMarker = Content.Load<Texture2D>("HitMarker");
 
             //Demon Eye Textures
             Textures.DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
