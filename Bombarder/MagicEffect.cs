@@ -250,9 +250,9 @@ namespace Bombarder
             const int Damage = 1;
             const int DamageInterval = 10;
 
-            public const int Range = 1000;
+            public const int Range = 1100;
             public const int InitialDistance = 40;
-            public const int Width = 80;
+            public const int Width = 60;
             public const int MarkerDistance = 75;
 
             public Color PrimaryColor = Color.Turquoise;
