@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Authentication;
 using static Bombarder.MagicEffect;
 
@@ -760,6 +761,16 @@ namespace Bombarder
             var scale = new Vector2(Length, Thickness);
 
             _spriteBatch.Draw(Textures.White, point, null, Color, Angle, origin, scale, SpriteEffects.None, 0);
+        }
+        void DrawRotatedTexture(Vector2 Point, Texture2D Texture, float Width, float Height, float Angle, Color Color)
+        {
+            float AngleRadians = Angle * (float)(Math.PI / 180);
+
+            var origin = new Vector2(0f, 0.5f);
+            Vector2 scale;
+            scale = new Vector2(Width, Height);
+
+            _spriteBatch.Draw(Texture, Point, null, Color, AngleRadians, origin, scale, SpriteEffects.None, 0);
         }
 
         #endregion
