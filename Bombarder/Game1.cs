@@ -380,6 +380,9 @@ namespace Bombarder
                 {
                     DeadEntities.Add(Entity);
                 }
+
+                //Temporarily Here. Need an Enemy Interation handler
+                Object.HitMarker.PurgeDead(Entity);
             }
 
             foreach (Entity Entity in DeadEntities)

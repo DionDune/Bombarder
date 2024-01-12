@@ -51,6 +51,25 @@ namespace Bombarder
 
             public const bool HasDuration = true;
             public const int Duration = 150;
+
+            public static void PurgeDead(Entity Entity)
+            {
+                List<Object> DeadMarkers = new List<Object>();
+
+                foreach (Object Marker in Entity.HitMarkers)
+                {
+                    Marker.Duration--;
+                    if (Marker.Duration <= 0)
+                    {
+                        DeadMarkers.Add(Marker);
+                    }
+                }
+
+                foreach (Object DeadMarker in DeadMarkers)
+                {
+                    Entity.HitMarkers.Remove(DeadMarker);
+                }
+            }
         }
 
         public class ObjectContainer
