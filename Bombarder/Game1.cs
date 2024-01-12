@@ -874,7 +874,7 @@ namespace Bombarder
                     //HitMarkers
                     foreach (Object Obj in Entity.HitMarkers)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(Obj.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                        _spriteBatch.Draw(Textures.HitMarker, new Rectangle(Obj.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                         Obj.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                         Obj.Width, Obj.Height), Color.White);
                     }

@@ -46,8 +46,8 @@ namespace Bombarder
         {
             public const string Name = "Hitmarker";
 
-            public const int Width = 20;
-            public const int Height = 20;
+            public const int Width = 25;
+            public const int Height = 25;
 
             public const bool HasDuration = true;
             public const int Duration = 50;
