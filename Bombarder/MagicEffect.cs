@@ -248,7 +248,7 @@ namespace Bombarder
         public class WideLazer
         {
             const int Damage = 1;
-            const int DamageInterval = 5;
+            const int DamageInterval = 10;
 
             public const int Range = 600;
             public const int Width = 80;

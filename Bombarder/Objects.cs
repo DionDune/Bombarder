@@ -50,7 +50,7 @@ namespace Bombarder
             public const int Height = 20;
 
             public const bool HasDuration = true;
-            public const int Duration = 150;
+            public const int Duration = 50;
 
             public static void PurgeDead(Entity Entity)
             {
