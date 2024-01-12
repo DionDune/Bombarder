@@ -251,6 +251,7 @@ namespace Bombarder
             const int DamageInterval = 10;
 
             public const int Range = 600;
+            public const int InitialDistance = 40;
             public const int Width = 80;
             public const int MarkerDistance = 75;
 
@@ -273,8 +274,11 @@ namespace Bombarder
 
                 float X = Player.X;
                 float Y = Player.Y;
-
                 float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+
+                // Start an Initial Distance from source
+                X += InitialDistance * (float)Math.Cos(AngleRadians);
+                Y += InitialDistance * (float)Math.Sin(AngleRadians);
 
                 for (int i = 0; i < WideLazer.Range / 3; i++)
                 {

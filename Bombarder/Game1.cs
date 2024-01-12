@@ -915,8 +915,12 @@ namespace Bombarder
 
                         Vector2 LeftLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) - (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
                                 (_graphics.PreferredBackBufferHeight / 2) - (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
+                        LeftLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
+                        LeftLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
                         Vector2 RightLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) + (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
                                 (_graphics.PreferredBackBufferHeight / 2) + (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
+                        RightLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
+                        RightLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
 
                         for (int i = 0; i < WideLazer.Range / WideLazer.MarkerDistance; i++)
                         {
