@@ -953,6 +953,10 @@ namespace Bombarder
                                                                       (int)(Y - 2) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       4, 4), Lazer.MarkerColor);
                         }
+
+                        //TEMP
+                        float Scale = (float)WideLazer.Width / Textures.HalfWhiteCirlce.Width;
+                        DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
                     }
                     else
                     {
