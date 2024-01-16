@@ -271,7 +271,7 @@ namespace Bombarder
                 if (Item.Type == "Fillbar")
                 {
                     //Border
-                    RenderOutline(_spriteBatch, Textures, Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
+                    RenderOutline(_spriteBatch, Textures.White, Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
                     //Inner
                     _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
@@ -284,7 +284,7 @@ namespace Bombarder
                 if (Item.Type == "Container")
                 {
                     //Border
-                    RenderOutline(_spriteBatch, Textures, Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
+                    RenderOutline(_spriteBatch, Textures.White, Item.BorderColor, X, Y, Item.Width, Item.Height, Item.BorderWidth, Item.BorderTransparency);
                     //Inner
                     _spriteBatch.Draw(Textures.White, new Rectangle(X + Item.BorderWidth, Y + Item.BorderWidth,
                                                                    Item.Width - Item.BorderWidth * 2, Item.Height - Item.BorderWidth * 2),
@@ -345,7 +345,7 @@ namespace Bombarder
 
 
                                 //Border
-                                RenderOutline(_spriteBatch, Textures, BorderColor, X, Y, InnerItem.Width, InnerItem.Height, InnerItem.BorderWidth, BorderTransparency);
+                                RenderOutline(_spriteBatch, Textures.White, BorderColor, X, Y, InnerItem.Width, InnerItem.Height, InnerItem.BorderWidth, BorderTransparency);
                                 //Inner
                                 _spriteBatch.Draw(Textures.White, new Rectangle(X + InnerItem.BorderWidth, Y + InnerItem.BorderWidth,
                                                                                InnerItem.Width - InnerItem.BorderWidth * 2, InnerItem.Height - InnerItem.BorderWidth * 2),
