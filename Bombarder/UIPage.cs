@@ -383,12 +383,12 @@ namespace Bombarder
                 }
             }
         }
-        public static void RenderOutline(SpriteBatch _spriteBatch, Textures Textures, Color color, int X, int Y, int Width, int Height, int BorderWidth, float BorderTransparency)
+        public static void RenderOutline(SpriteBatch _spriteBatch, Texture2D Texture, Color color, int X, int Y, int Width, int Height, int BorderWidth, float BorderTransparency)
         {
-            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y, Width, BorderWidth), color * BorderTransparency);
-            _spriteBatch.Draw(Textures.White, new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth), color * BorderTransparency);
-            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y + Height - BorderWidth, Width - BorderWidth, BorderWidth), color * BorderTransparency);
-            _spriteBatch.Draw(Textures.White, new Rectangle(X, Y + BorderWidth, BorderWidth, Height - (BorderWidth * 2)), color * BorderTransparency);
+            _spriteBatch.Draw(Texture, new Rectangle(X, Y, Width, BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Texture, new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Texture, new Rectangle(X, Y + Height - BorderWidth, Width - BorderWidth, BorderWidth), color * BorderTransparency);
+            _spriteBatch.Draw(Texture, new Rectangle(X, Y + BorderWidth, BorderWidth, Height - (BorderWidth * 2)), color * BorderTransparency);
         }
     }
 }
