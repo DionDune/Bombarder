@@ -854,7 +854,8 @@ namespace Bombarder
                 Point OrientPos = UIItem.GetOritentationPosition(_graphics, Player.ManaBarScreenOrientation);
                 Point ManaPos = new Point(OrientPos.X + Player.ManaBarOffset.X, OrientPos.Y + Player.ManaBarOffset.Y);
                 float ManaPercent = (float)Player.Mana / Player.ManaMax;
-                _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.8F);
+                _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
+                UIPage.RenderOutline(_spriteBatch, Textures, Color.White, ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
                 _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X, ManaPos.Y, Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
 
 
