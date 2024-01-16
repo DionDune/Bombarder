@@ -450,6 +450,17 @@ namespace Bombarder
                     MagicObj = new DissapationWave()
                 });
             }
+            else if (MagicType.ToString() == "Bombarder.MagicEffect+ForceWave")
+            {
+                MagicEffects.Add(new MagicEffect()
+                {
+                    X = X,
+                    Y = Y,
+
+                    Duration = MagicEffect.ForceWave.DefaultDuration,
+                    MagicObj = new ForceWave()
+                });
+            }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
             {
                 //Calculating Angle
