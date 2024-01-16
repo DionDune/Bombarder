@@ -720,6 +720,12 @@ namespace Bombarder
                 }
 
 
+                //Magic Creation
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
+                {
+                    CreateMagic((int)Player.X, (int)Player.Y, new ForceWave());
+                }
+
 
                 //Settings Changes
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.I))
