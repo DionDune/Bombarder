@@ -14,6 +14,7 @@ namespace Bombarder
         public bool ShowHitBoxes { get; set; }
 
         public bool RunEntityAI { get; set; }
+        public (int, int) EnemySpawnCountRange { get; set; }
 
         public Settings()
         {
@@ -22,6 +23,7 @@ namespace Bombarder
             ShowDamageRadii = true;
             RunEntityAI = true;
             ShowHitBoxes = true;
+            EnemySpawnCountRange = (1, 3);
         }
     }
 }

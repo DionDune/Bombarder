@@ -314,46 +314,53 @@ namespace Bombarder
 
         private void SpawnRandomEnemy(bool OnFringe, bool IsEnemy)
         {
+            int SpawnCount = random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
+
             if (OnFringe)
             //Spawns randomly from edges of screen
             {
-                float SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
-                int SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
-                Vector2 SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
-                                                 Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
-
-                if (IsEnemy)
+                float SpawnAngle;
+                int SpawnDistance;
+                for (int i = 0; i < SpawnCount; i++)
                 {
-                    if (random.Next(0, 4) == 0)
-                    {
-                        //Demon Eye
-                        Entities.Add(new Entity()
-                        {
-                            X = (int)SpawnPoint.X,
-                            Y = (int)SpawnPoint.Y,
-                            
-                            Type = "DemonEye",
+                    SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
+                    SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
+                    Vector2 SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
+                                                     Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
 
-                            Peices = new List<EntityBlock>() { new EntityBlock() }
-                        });
-                        Entities.Last().Peices[0].Textures = new List<Texture2D>() { Textures.DemonEye.Item1, Textures.DemonEye.Item2 };
-                        Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width / 3 * 2;
-                        Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height / 3 * 2;
-                        Entities.Last().Peices[0].Offset = new Vector2( -Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2 );
-                        Entities.Last().HitboxOffset = new Point( -(int)(Entities.Last().Peices[0].Width / 2 * 0.8), -(int)(Entities.Last().Peices[0].Height / 2 * 0.8) );
-                        Entities.Last().HitboxSize = new Point( (int)(Entities.Last().Peices[0].Width * 0.8), (int)(Entities.Last().Peices[0].Height * 0.8) );
-                        Entities.Last().HealthBarVisible = true;
-                        Entities.Last().HealthBarDimentions = new Point(80, 16);
-                        Entities.Last().HealthBarOffset = new Point(-40, -Entities.Last().HitboxOffset.Y + 5);
-                    }
-                    else
+                    if (IsEnemy)
                     {
-                        //Default
-                        Entities.Add(new Entity()
+                        if (random.Next(0, 4) == 0)
                         {
-                            X = (int)SpawnPoint.X,
-                            Y = (int)SpawnPoint.Y,
-                        });
+                            //Demon Eye
+                            Entities.Add(new Entity()
+                            {
+                                X = (int)SpawnPoint.X,
+                                Y = (int)SpawnPoint.Y,
+
+                                Type = "DemonEye",
+
+                                Peices = new List<EntityBlock>() { new EntityBlock() }
+                            });
+                            Entities.Last().Peices[0].Textures = new List<Texture2D>() { Textures.DemonEye.Item1, Textures.DemonEye.Item2 };
+                            Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width / 3 * 2;
+                            Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height / 3 * 2;
+                            Entities.Last().Peices[0].Offset = new Vector2(-Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2);
+                            Entities.Last().HitboxOffset = new Point(-(int)(Entities.Last().Peices[0].Width / 2 * 0.8), -(int)(Entities.Last().Peices[0].Height / 2 * 0.8));
+                            Entities.Last().HitboxSize = new Point((int)(Entities.Last().Peices[0].Width * 0.8), (int)(Entities.Last().Peices[0].Height * 0.8));
+                            Entities.Last().HealthBarVisible = true;
+                            Entities.Last().HealthBarDimentions = new Point(80, 16);
+                            Entities.Last().HealthBarOffset = new Point(-40, -Entities.Last().HitboxOffset.Y + 5);
+                        }
+                        else
+                        {
+                            //Default
+                            Entities.Add(new Entity()
+                            {
+                                X = (int)SpawnPoint.X,
+                                Y = (int)SpawnPoint.Y,
+                            });
+                        }
                     }
                 }
             }
