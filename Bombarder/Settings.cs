@@ -23,7 +23,7 @@ namespace Bombarder
             ShowDamageRadii = true;
             RunEntityAI = true;
             ShowHitBoxes = true;
-            EnemySpawnCountRange = (1, 3);
+            EnemySpawnCountRange = (10000, 10000);
         }
     }
 }

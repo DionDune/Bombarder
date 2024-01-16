@@ -245,6 +245,54 @@ namespace Bombarder
                 ((DissapationWave)Effect.MagicObj).Damage *= DamageMultiplier;
             }
         }
+        public class ForceWave
+        {
+            public Color Colour = Color.Crimson;
+
+            public const float DefaultDuration = 200;
+
+            public float Radius { get; set; }
+            private const float DefaultRadius = 5;
+            private const float RadiusSpread = 10;
+
+            public ForceWave()
+            {
+                Radius = DefaultRadius;
+            }
+
+
+            public static void EnactEffect(MagicEffect Effect, List<Entity> Entities)
+            {
+                EnactSpread(Effect);
+                EnactForce(Effect, Entities);
+            }
+            private static void EnactForce(MagicEffect Effect, List<Entity> Entites)
+            {
+                ForceWave Wave = (ForceWave)Effect.MagicObj;
+
+                foreach (Entity Entity in Entites)
+                {
+                    float XDiff = Math.Abs(Effect.X - Entity.X);
+                    float YDiff = Math.Abs(Effect.Y - Entity.Y);
+                    float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                    if (Distance <= Wave.Radius)
+                    {
+                        float Angle = (float)(Math.Atan2(XDiff, YDiff) * 180.0 / Math.PI);
+                        float AngleRadians = Angle * (float)(Math.PI / 180);
+
+                        Entity.X += (Wave.Radius - Distance) * (float)Math.Cos(AngleRadians);
+                        Entity.Y += (Wave.Radius - Distance) * (float)Math.Sin(AngleRadians);
+                    }
+                }
+            }
+            private static void EnactSpread(MagicEffect Effect)
+            {
+                ForceWave Wave = (ForceWave)Effect.MagicObj;
+
+                Wave.Radius += RadiusSpread;
+            }
+        }
         public class WideLazer
         {
             const int Damage = 1;
