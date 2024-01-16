@@ -276,10 +276,12 @@ namespace Bombarder
                     float XDiff = Math.Abs(Effect.X - Entity.X);
                     float YDiff = Math.Abs(Effect.Y - Entity.Y);
                     float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-
+                    
                     if (Distance <= Wave.Radius)
                     {
-                        float Angle = (float)(Math.Atan2(XDiff, YDiff) * 180.0 / Math.PI);
+                        float xDiff = Entity.X - Effect.X;
+                        float yDiff = Entity.Y - Effect.Y;
+                        float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                         float AngleRadians = Angle * (float)(Math.PI / 180);
 
                         Entity.X += (Wave.Radius - Distance) * (float)Math.Cos(AngleRadians);
