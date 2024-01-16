@@ -498,6 +498,10 @@ namespace Bombarder
                 {
                     MagicEffect.DissapationWave.EnactEffect(Effect, Entities);
                 }
+                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+ForceWave")
+                {
+                    MagicEffect.ForceWave.EnactEffect(Effect, Entities);
+                }
                 else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+WideLazer")
                 {
                     MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
