@@ -100,5 +100,33 @@ namespace Bombarder
         {
             Highlighted = State;
         }
+
+
+        public static Point GetOritentationPosition(GraphicsDeviceManager _graphics, string Orientation)
+        {
+            switch (Orientation)
+            {
+                case "Top Left":
+                    return new Point(0, 0);
+                case "Top":
+                    return new Point(_graphics.PreferredBackBufferWidth / 2, 0);
+                case "Top Right":
+                    return new Point(_graphics.PreferredBackBufferWidth, 0);
+                case "Middle Left":
+                    return new Point(0, _graphics.PreferredBackBufferHeight / 2);
+                case "Middle":
+                    return new Point(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2);
+                case "Middle Right":
+                    return new Point(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight / 2);
+                case "Bottom Left":
+                    return new Point(0, _graphics.PreferredBackBufferHeight);
+                case "Bottom":
+                    return new Point(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight);
+                case "Bottom Right":
+                    return new Point(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                default:
+                    return new Point(0, 0);
+            }
+        }
     }
 }
