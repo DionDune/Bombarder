@@ -49,9 +49,9 @@ namespace Bombarder
 
             Mana = 280;
             ManaMax = 300;
-            ManaBarDimentions = new Point(75, 450);
+            ManaBarDimentions = new Point(45, 450);
             ManaBarScreenOrientation = "Bottom Left";
-            ManaBarOffset = new Point(95, -470);
+            ManaBarOffset = new Point(20, -470);
             ManaBarHorizontalFill = false;
             ManaBarVisible = true;
 
