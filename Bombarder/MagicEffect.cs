@@ -249,7 +249,7 @@ namespace Bombarder
         {
             public Color Colour = Color.Crimson;
 
-            public const float DefaultDuration = 200;
+            public const int DefaultDuration = 200;
 
             public float Radius { get; set; }
             private const float DefaultRadius = 5;
