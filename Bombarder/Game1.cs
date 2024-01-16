@@ -850,6 +850,13 @@ namespace Bombarder
                                                              _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y + 2,
                                                              (int)((Player.HealthBarDimentions.X - 4) * ((float)Player.Health / Player.HealthMax)), Player.HealthBarDimentions.Y - 4), Color.Green);
 
+                //Mana Bar
+                Point OrientPos = UIItem.GetOritentationPosition(_graphics, Player.ManaBarScreenOrientation);
+                Point ManaPos = new Point(OrientPos.X + Player.ManaBarOffset.X, OrientPos.Y + Player.ManaBarOffset.Y);
+                float ManaPercent = (float)Player.Mana / Player.ManaMax;
+                _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.8F);
+                _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X, ManaPos.Y, Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
+
 
                 //Entities
                 foreach (Entity Entity in Entities)
