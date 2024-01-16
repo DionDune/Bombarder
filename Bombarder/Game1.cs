@@ -953,6 +953,14 @@ namespace Bombarder
                                                                       (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)Wave.Radius * 2, (int)Wave.Radius * 2), Wave.Colour * Wave.Opacity);
                     }
+                    else if (MagicType == "Bombarder.MagicEffect+ForceWave")
+                    {
+                        ForceWave Wave = (ForceWave)Effect.MagicObj;
+
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                      (int)Wave.Radius * 2, (int)Wave.Radius * 2), Wave.Colour * 0.7F);
+                    }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {
                         WideLazer Lazer = (WideLazer)Effect.MagicObj;
