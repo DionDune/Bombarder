@@ -18,6 +18,14 @@ namespace Bombarder
         public Point HealthBarOffset { get; set; }
         public bool HealthBarVisible { get; set; }
 
+        public int Mana { get; set; }
+        public int ManaMax { get; set; }
+        public Point ManaBarDimentions { get; set; }
+        public string ManaBarScreenOrientation { get; set; }
+        public Point ManaBarOffset { get; set; }
+        public bool ManaBarHorizontalFill { get; set; }
+        public bool ManaBarVisible { get; set; }
+
         public float Momentum_X { get; set; }
         public float Momentum_Y { get; set; }
         public float BaseSpeed { get; set; }
@@ -38,6 +46,14 @@ namespace Bombarder
             HealthBarDimentions = new Point(40, 10);
             HealthBarOffset = new Point(-20, 55);
             HealthBarVisible = true;
+
+            Mana = 280;
+            ManaMax = 300;
+            ManaBarDimentions = new Point(75, 450);
+            ManaBarScreenOrientation = "Bottom Left";
+            ManaBarOffset = new Point(95, -470);
+            ManaBarHorizontalFill = false;
+            ManaBarVisible = true;
 
             Momentum_X = 0;
             Momentum_Y = 0;
