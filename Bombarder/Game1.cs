@@ -485,26 +485,28 @@ namespace Bombarder
         {
             foreach (MagicEffect Effect in MagicEffects)
             {
+                string MagicType = Effect.MagicObj.ToString();
+
                 //Enact Inbuilt Function
-                if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+StaticOrb")
+                switch (MagicType)
                 {
-                    MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
-                }
-                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
-                {
-                    MagicEffect.NonStaticOrb.EnactEffect(Effect, Entities);
-                }
-                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+DissapationWave")
-                {
-                    MagicEffect.DissapationWave.EnactEffect(Effect, Entities);
-                }
-                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+ForceWave")
-                {
-                    MagicEffect.ForceWave.EnactEffect(Effect, Entities);
-                }
-                else if (Effect.MagicObj.ToString() == "Bombarder.MagicEffect+WideLazer")
-                {
-                    MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
+                    case "Bombarder.MagicEffect+StaticOrb":
+                        MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
+                        break;
+                    case "Bombarder.MagicEffect+NonStaticOrb":
+                        MagicEffect.NonStaticOrb.EnactEffect(Effect, Entities);
+                        break;
+                    case "Bombarder.MagicEffect+DissapationWave":
+                        MagicEffect.DissapationWave.EnactEffect(Effect, Entities);
+                        break;
+                    case "Bombarder.MagicEffect+ForceWave":
+                        MagicEffect.ForceWave.EnactEffect(Effect, Entities);
+                        break;
+                    case "Bombarder.MagicEffect+WideLazer":
+                        MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
+                        break;
+                    default:
+                        break;
                 }
             }
 
