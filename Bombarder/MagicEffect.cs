@@ -252,6 +252,7 @@ namespace Bombarder
             public const int DefaultDuration = 200;
 
             public float Radius { get; set; }
+            public const float RadiusMax = 400;
             private const float DefaultRadius = 5;
             private const float RadiusSpread = 10;
 
@@ -289,8 +290,11 @@ namespace Bombarder
             private static void EnactSpread(MagicEffect Effect)
             {
                 ForceWave Wave = (ForceWave)Effect.MagicObj;
-
-                Wave.Radius += RadiusSpread;
+                
+                if (Wave.Radius < ForceWave.RadiusMax)
+                {
+                    Wave.Radius += RadiusSpread;
+                }
             }
         }
         public class WideLazer
