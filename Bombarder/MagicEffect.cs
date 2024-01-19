@@ -433,11 +433,7 @@ namespace Bombarder
 
                         ParticleObj = new Particle.LazerLine()
                         {
-                            Length = Game1.random.Next(Particle.LazerLine.LengthMin, Particle.LazerLine.LengthMax),
-                            Thickness = Game1.random.Next(Particle.LazerLine.ThicknessMin, Particle.LazerLine.ThicknessMax),
-                            Direction = AngleRadians,
-                            Speed = Game1.random.Next(Particle.LazerLine.SpeedMin, Particle.LazerLine.SpeedMax),
-                            Colour = Color.Turquoise
+                            Direction = AngleRadians
                         }
                     });
                 }

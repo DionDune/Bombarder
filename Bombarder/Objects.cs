@@ -162,6 +162,14 @@ namespace Bombarder
                 Particle.X = (int)((float)Particle.X + Line.Speed * (float)Math.Cos(Line.Direction));
                 Particle.Y = (int)((float)Particle.Y + Line.Speed * (float)Math.Sin(Line.Direction));
             }
+
+            public LazerLine()
+            {
+                Length = Game1.random.Next(LengthMin, LengthMax);
+                Thickness = Game1.random.Next(ThicknessMin, ThicknessMax);
+                Speed = Game1.random.Next(SpeedMin, SpeedMax);
+                Colour = Color.Turquoise;
+            }
         }
         public class Impact
         {
