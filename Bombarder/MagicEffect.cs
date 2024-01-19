@@ -34,11 +34,24 @@ namespace Bombarder
 
 
 
-        public void EnactLifespan()
+        public static void EnactDuration(List<MagicEffect> Effects)
         {
-            if (Duration > 0)
+            List<MagicEffect> DeadEffects = new List<MagicEffect>();
+
+            foreach (MagicEffect Effect in Effects)
             {
-                Duration--;
+                if (Effect.Duration <= 0)
+                {
+                    DeadEffects.Add(Effect);
+                }
+                else
+                {
+                    Effect.Duration--;
+                }
+            }
+            foreach (MagicEffect Effect in DeadEffects)
+            {
+                Effects.Remove(Effect);
             }
         }
         public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)

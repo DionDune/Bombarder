@@ -488,22 +488,6 @@ namespace Bombarder
                         break;
                 }
             }
-
-            //Enact Lifespan
-            List<MagicEffect> DeadEffects = new List<MagicEffect>();
-            foreach (MagicEffect Effect in MagicEffects)
-            {
-                Effect.EnactLifespan();
-                
-                if (Effect.Duration == 0)
-                {
-                    DeadEffects.Add(Effect);
-                }
-            }
-            foreach(MagicEffect Effect in DeadEffects)
-            {
-                MagicEffects.Remove(Effect);
-            }
         }
 
         #endregion
@@ -817,6 +801,7 @@ namespace Bombarder
 
                 //Magic Functions
                 EnactMagic();
+                MagicEffect.EnactDuration(MagicEffects);
             }
 
 
