@@ -164,11 +164,11 @@ namespace Bombarder
         {
             public const int DurationDefault = 50;
 
-            private const float DefaultRadius = 5;
-            private const float RadiusSpread = 5;
+            public const float DefaultRadius = 5;
+            public const float RadiusSpread = 5;
 
-            private const float DefaultOpacity = 0.95F;
-            private const float OpacityMultiplier = 0.98F;
+            public const float DefaultOpacity = 0.95F;
+            public const float OpacityMultiplier = 0.98F;
 
 
             public float Radius { get; set; }
