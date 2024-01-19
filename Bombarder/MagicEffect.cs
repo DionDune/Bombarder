@@ -140,6 +140,7 @@ namespace Bombarder
         {
             const int Damage = 4;
             public const int DefaultDuration = 150;
+            public uint LastParticleFrame;
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
             {
@@ -156,6 +157,33 @@ namespace Bombarder
                         Entity.GiveDamage(Damage);
                     }
                 }
+                CreateParticles(Effect);
+            }
+            private static void CreateParticles(MagicEffect Effect)
+            {
+                StaticOrb Orb = (StaticOrb)Effect.MagicObj;
+
+                if (Math.Abs(Game1.GameTick - Orb.LastParticleFrame) > 20)
+                {
+                    Game1.Particles.Add(new Particle(Effect.X, Effect.Y)
+                    {
+                        HasDuration = true,
+                        Duration = Particle.Impact.DurationDefault,
+
+                        ParticleObj = new Particle.Impact(1)
+                        {
+                            Radius = Particle.Impact.DefaultRadius,
+                            Opacity = Particle.Impact.DefaultOpacity
+                        }
+                    });
+
+                    Orb.LastParticleFrame = Game1.GameTick;
+                }
+            }
+
+            public StaticOrb()
+            {
+                LastParticleFrame = 0;
             }
         }
         public class NonStaticOrb
