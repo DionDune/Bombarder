@@ -603,6 +603,8 @@ namespace Bombarder
                                 float yDiff = Mouse.GetState().Y - (_graphics.PreferredBackBufferHeight / 2);
                                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                                 ((WideLazer)Effect.MagicObj).Angle = Angle;
+                                Effect.X = (int)Player.X;
+                                Effect.Y = (int)Player.Y;
                             }
                         }
                     }
