@@ -1066,7 +1066,9 @@ namespace Bombarder
                 {
                     if (particle.Item2 == "HitMarker")
                     {
-                        _spriteBatch.Draw(Textures.HitMarker, new Rectangle(particle.Item1.X, particle.Item1.Y, Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
+                        _spriteBatch.Draw(Textures.HitMarker, new Rectangle(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, 
+                                                                            particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y, 
+                                                                            Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
                     }
                 }
             }
