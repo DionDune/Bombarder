@@ -33,6 +33,7 @@ namespace Bombarder
 
         List<Entity> Entities = new List<Entity>();
         public static Object.ObjectContainer Objects = new Object.ObjectContainer();
+        List<Particle> Particles = new List<Particle>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
         List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 
@@ -865,6 +866,17 @@ namespace Bombarder
                 {
                     string Type = Obj.Type;
                 }
+                //Particles
+                List<(Particle, string)> LaterParticles = new List<(Particle, string)>();
+                foreach (Particle particle in Particles)
+                {
+                    string ParticleType = particle.ParticleObj.ToString();
+
+                    if (ParticleType == "Bombarder.Particle+HitMarker")
+                    {
+                        LaterParticles.Add((particle, "HitMarker"));
+                    }
+                }
 
 
                 //Player
@@ -1047,6 +1059,14 @@ namespace Bombarder
                                                                          (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                         2, Effect.RadiusSize.Y * 2), Color.White);
                         }
+                    }
+                }
+                //Later Particles
+                foreach ((Particle, string) particle in LaterParticles)
+                {
+                    if (particle.Item2 == "HitMarker")
+                    {
+                        _spriteBatch.Draw(Textures.HitMarker, new Rectangle(particle.Item1.X, particle.Item1.Y, Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
                     }
                 }
             }
