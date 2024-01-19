@@ -82,4 +82,26 @@ namespace Bombarder
             }
         }
     }
+
+    public class Particle
+    {
+        public bool HasDuration { get; set; }
+        public int Duration { get; set; }
+
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public object ParticleObj { get; set; }
+
+        public Particle(int x, int y)
+        {
+            X = x;
+            Y = y;
+
+            HasDuration = false;
+            Duration = 0;
+
+            ParticleObj = null;
+        }
+    }
 }
