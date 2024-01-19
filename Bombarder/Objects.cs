@@ -132,8 +132,8 @@ namespace Bombarder
         {
             public const int LengthMin = 10;
             public const int LengthMax = 200;
-            public const int ThicknessMin = 3;
-            public const int ThicknessMax = 5;
+            public const int ThicknessMin = 2;
+            public const int ThicknessMax = 4;
             public const int DurationMin = 25;
             public const int DurationMax = 200;
             public const int SpeedMin = 15;
