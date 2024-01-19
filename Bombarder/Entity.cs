@@ -91,8 +91,15 @@ namespace Bombarder
         {
             if (Math.Abs(Game1.GameTick - LastHitMakerFrame) > 20)
             {
-                HitMarkers.Add(new Object(new Object.HitMarker(), Game1.random.Next((int)X + HitboxOffset.X, (int)X + HitboxOffset.X + HitboxSize.X),
-                                                                 Game1.random.Next((int)Y + HitboxOffset.Y, (int)Y + HitboxOffset.Y + HitboxSize.Y)));
+                int x = Game1.random.Next((int)X + HitboxOffset.X, (int)X + HitboxOffset.X + HitboxSize.X);
+                int y = Game1.random.Next((int)Y + HitboxOffset.Y, (int)Y + HitboxOffset.Y + HitboxSize.Y);
+
+                Game1.Particles.Add(new Particle(x, y)
+                {
+                    HasDuration = true,
+                    Duration = Particle.HitMarker.DefaultDuration,
+                    ParticleObj = new Particle.HitMarker()
+                });
 
                 LastHitMakerFrame = Game1.GameTick;
             }
