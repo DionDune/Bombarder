@@ -944,6 +944,7 @@ namespace Bombarder
                     }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {
+                        /*
                         WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
                         float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
@@ -978,6 +979,7 @@ namespace Bombarder
                         //TEMP
                         float Scale = (float)WideLazer.Width / Textures.HalfWhiteCirlce.Width;
                         DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
+                        */
                     }
                     else
                     {
