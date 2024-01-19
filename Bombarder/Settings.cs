@@ -18,7 +18,7 @@ namespace Bombarder
 
         public Settings()
         {
-            CursorSizeMultiplier = 2;
+            CursorSizeMultiplier = 1.66F;
             ShowGrid = true;
             ShowDamageRadii = false;
             RunEntityAI = true;
