@@ -10,6 +10,8 @@ namespace Bombarder
     {
         public float CursorSizeMultiplier { get; set; }
         public bool ShowGrid { get; set; }
+        public float GridOpacityMultiplier { get; set; }
+        public float GridSizeMultiplier { get; set; }
         public bool ShowDamageRadii { get; set; }
         public bool ShowHitBoxes { get; set; }
 
@@ -20,6 +22,8 @@ namespace Bombarder
         {
             CursorSizeMultiplier = 1.66F;
             ShowGrid = true;
+            GridOpacityMultiplier = 1;
+            GridSizeMultiplier = 1;
             ShowDamageRadii = false;
             RunEntityAI = true;
             ShowHitBoxes = false;
