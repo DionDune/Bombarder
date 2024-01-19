@@ -33,7 +33,7 @@ namespace Bombarder
 
         List<Entity> Entities = new List<Entity>();
         public static Object.ObjectContainer Objects = new Object.ObjectContainer();
-        List<Particle> Particles = new List<Particle>();
+        public static List<Particle> Particles = new List<Particle>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
         List<MagicEffect> SelectedEffects = new List<MagicEffect>();
 
