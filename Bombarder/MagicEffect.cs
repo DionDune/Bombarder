@@ -322,6 +322,7 @@ namespace Bombarder
             public static void EnactEffect(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
                 EnactDamage(Effect, Player, Entites, Tick);
+                CreateParticles(Effect);
             }
             private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
@@ -351,6 +352,32 @@ namespace Bombarder
                             Entity.GiveDamage((int)WideLazer.Damage);
                         }
                     }
+                }
+            }
+            public static void CreateParticles(MagicEffect Effect)
+            {
+                WideLazer Lazer = (WideLazer)Effect.MagicObj;
+
+                float AngleRadians;
+                int Count = Game1.random.Next(1, 4);
+
+                for (int i = 0; i < Count; i++)
+                {
+                    AngleRadians = (Lazer.Angle + Game1.random.Next(-15, 15)) * (float)(Math.PI / 180);
+
+                    Game1.Particles.Add(new Particle(Effect.X, Effect.Y)
+                    {
+                        HasDuration = true,
+                        Duration = Game1.random.Next(Particle.LazerLine.DurationMin, Particle.LazerLine.DurationMax),
+
+                        ParticleObj = new Particle.LazerLine()
+                        {
+                            Length = Game1.random.Next(Particle.LazerLine.LengthMin, Particle.LazerLine.LengthMax),
+                            Direction = AngleRadians,
+                            Speed = Game1.random.Next(5, 50),
+                            Colour = Color.Turquoise
+                        }
+                    });
                 }
             }
         }
