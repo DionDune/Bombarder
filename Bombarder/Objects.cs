@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
@@ -89,13 +90,41 @@ namespace Bombarder
             }
         }
 
-        
+
         public class HitMarker
         {
             public const int Width = 30;
             public const int Height = 30;
 
             public const int DefaultDuration = 50;
+        }
+        public class LazerLine
+        {
+            public const int LengthMin = 10;
+            public const int LengthMax = 200;
+            public const int DurationMin = 25;
+            public const int DurationMax = 200;
+            public static readonly IList<Color> Colours = new ReadOnlyCollection<Color>
+                (new List<Color> { Color.Turquoise, Color.DarkTurquoise, Color.MediumTurquoise, Color.MediumTurquoise});
+
+
+            public float Length { get; set; }
+            public float Direction { get; set; }
+            public float Speed { get; set;  }
+            public Color Colour { get; set; }
+
+
+            public static void EnactParticle(Particle Particle)
+            {
+                EnactMovement(Particle);
+            }
+            public static void EnactMovement(Particle Particle)
+            {
+                LazerLine Line = (LazerLine)Particle.ParticleObj;
+
+                Particle.X = (int)((float)Particle.X + Line.Speed * (float)Math.Cos(Line.Direction));
+                Particle.Y = (int)((float)Particle.Y + Line.Speed * (float)Math.Sin(Line.Direction));
+            }
         }
     }
 }
