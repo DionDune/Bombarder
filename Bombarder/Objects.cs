@@ -135,6 +135,7 @@ namespace Bombarder
             public const int AngleSpreadRange = 5;
             public static readonly IList<Color> Colours = new ReadOnlyCollection<Color>
                 (new List<Color> { Color.Turquoise, Color.DarkTurquoise, Color.MediumTurquoise, Color.MediumTurquoise});
+            public static Color CentralLazerColor = Color.Red;
 
 
             public float Length { get; set; }
