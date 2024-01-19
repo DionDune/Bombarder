@@ -101,6 +101,20 @@ namespace Bombarder
                 return false;
             }
         }
+        public static void EnactParticles(List<Particle> Particles)
+        {
+            foreach (Particle particle in Particles)
+            {
+                string ParticleType = particle.ParticleObj.ToString();
+                switch (ParticleType)
+                {
+                    case "Bombarder.Particle+LazerLine":
+                        LazerLine.EnactParticle(particle);
+                        break;
+                }
+            }
+        }
+
 
 
         public class HitMarker

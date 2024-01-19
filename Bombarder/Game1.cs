@@ -832,6 +832,7 @@ namespace Bombarder
                 PurgeDeadEntities();
                 //Particles
                 Particle.EnactDuration(Particles);
+                Particle.EnactParticles(Particles);
 
                 //Magic Functions
                 EnactMagic();
