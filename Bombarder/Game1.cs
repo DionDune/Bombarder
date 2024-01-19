@@ -848,6 +848,10 @@ namespace Bombarder
                     {
                         LaterParticles.Add((particle, "LazerLine"));
                     }
+                    if (ParticleType == "Bombarder.Particle+Impact")
+                    {
+                        LaterParticles.Add((particle, "Impact"));
+                    }
                 }
 
 
@@ -1042,6 +1046,14 @@ namespace Bombarder
                         Particle.LazerLine Line = (Particle.LazerLine)particle.Item1.ParticleObj;
                         Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
                         DrawLine(Position, Line.Length, Line.Direction, Line.Colour);
+                    }
+                    else if (particle.Item2 == "Impact")
+                    {
+                        Particle.Impact Effect = (Particle.Impact)particle.Item1.ParticleObj;
+
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(particle.Item1.X - Effect.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                            (int)(particle.Item1.Y - Effect.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                            (int)(Effect.Radius * 2), (int)(Effect.Radius * 2)), Particle.Impact.Colour * Effect.Opacity);
                     }
                 }
             }
