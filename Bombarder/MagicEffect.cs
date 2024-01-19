@@ -26,6 +26,7 @@ namespace Bombarder
         public Point RadiusSize { get; set; }
         public int DamageDuration { get; set; }
 
+        public bool HasDuration { get; set; }
         public int Duration { get; set; }
 
         public List<MagicEffectPiece> Pieces { get; set; }
@@ -40,7 +41,7 @@ namespace Bombarder
 
             foreach (MagicEffect Effect in Effects)
             {
-                if (Effect.Duration <= 0)
+                if (Effect.Duration == 0)
                 {
                     DeadEffects.Add(Effect);
                 }
