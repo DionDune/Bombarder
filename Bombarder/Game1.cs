@@ -987,21 +987,6 @@ namespace Bombarder
                         DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
                         */
                     }
-                    else
-                    {
-                        foreach (MagicEffectPiece Piece in Effect.Pieces)
-                        {
-                            Texture2D EffectTexture = Textures.White;
-                            if (Piece.BaseShape == "Circle")
-                            {
-                                EffectTexture = Textures.WhiteCircle;
-                            }
-
-                            _spriteBatch.Draw(EffectTexture, new Rectangle(Effect.X + Piece.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                         Effect.Y + Piece.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                         Piece.Width, Piece.Height), Piece.Color);
-                        }
-                    }
                     
                     if (Settings.ShowDamageRadii)
                     {
