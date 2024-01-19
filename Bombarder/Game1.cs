@@ -751,7 +751,7 @@ namespace Bombarder
             }
         }
 
-        void DrawLine(Vector2 point, float Length, float Angle, Color Color, float Thickness = 1F)
+        void DrawLine(Vector2 point, float Length, float Angle, Color Color, float Thickness)
         {
             var origin = new Vector2(0f, 0.5f);
             var scale = new Vector2(Length, Thickness);
@@ -1030,7 +1030,7 @@ namespace Bombarder
                     {
                         Particle.LazerLine Line = (Particle.LazerLine)particle.Item1.ParticleObj;
                         Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
-                        DrawLine(Position, Line.Length, Line.Direction, Line.Colour);
+                        DrawLine(Position, Line.Length, Line.Direction, Line.Colour, Line.Thickness);
                     }
                     else if (particle.Item2 == "Impact")
                     {
