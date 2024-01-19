@@ -165,10 +165,12 @@ namespace Bombarder
             public const int DurationDefault = 50;
 
             public const float DefaultRadius = 5;
-            public const float RadiusSpread = 5;
+            public const float RadiusSpread = 0.6F;
 
             public const float DefaultOpacity = 0.95F;
             public const float OpacityMultiplier = 0.98F;
+
+            public const int DefaultFrequency = 10;
 
             public readonly static Color Colour = Color.White;
             public float Radius { get; set; }

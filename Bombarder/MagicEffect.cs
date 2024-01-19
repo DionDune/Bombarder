@@ -163,7 +163,7 @@ namespace Bombarder
             {
                 StaticOrb Orb = (StaticOrb)Effect.MagicObj;
 
-                if (Math.Abs(Game1.GameTick - Orb.LastParticleFrame) > 20)
+                if (Math.Abs(Game1.GameTick - Orb.LastParticleFrame) > Particle.Impact.DefaultFrequency)
                 {
                     Game1.Particles.Add(new Particle(Effect.X, Effect.Y)
                     {
