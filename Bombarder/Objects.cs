@@ -103,5 +103,14 @@ namespace Bombarder
 
             ParticleObj = null;
         }
+
+        
+        public class HitMarker
+        {
+            public const int Width = 30;
+            public const int Height = 30;
+
+            public const int DefaultDuration = 50;
+        }
     }
 }
