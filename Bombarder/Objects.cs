@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static Bombarder.MagicEffect;
 
 namespace Bombarder
 {
@@ -111,6 +112,9 @@ namespace Bombarder
                     case "Bombarder.Particle+LazerLine":
                         LazerLine.EnactParticle(particle);
                         break;
+                    case "Bombarder.Particle+Impact":
+                        Impact.EnactParticle(particle);
+                        break;
                 }
             }
         }
@@ -154,6 +158,38 @@ namespace Bombarder
 
                 Particle.X = (int)((float)Particle.X + Line.Speed * (float)Math.Cos(Line.Direction));
                 Particle.Y = (int)((float)Particle.Y + Line.Speed * (float)Math.Sin(Line.Direction));
+            }
+        }
+        public class Impact
+        {
+            public const int DurationDefault = 50;
+
+            private const float DefaultRadius = 5;
+            private const float RadiusSpread = 5;
+
+            private const float DefaultOpacity = 0.95F;
+            private const float OpacityMultiplier = 0.98F;
+
+
+            public float Radius { get; set; }
+            public float Opacity { get; set; }
+
+            public Impact(float Scalar)
+            {
+                Radius = DefaultRadius * Scalar;
+            }
+
+
+            public static void EnactParticle(Particle Particle)
+            {
+                EnactSpread(Particle);
+            }
+            private static void EnactSpread(Particle Particle)
+            {
+                Impact Effect = (Impact)Particle.ParticleObj;
+
+                Effect.Radius += RadiusSpread;
+                Effect.Opacity *= OpacityMultiplier;
             }
         }
     }
