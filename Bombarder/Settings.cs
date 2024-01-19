@@ -20,9 +20,9 @@ namespace Bombarder
         {
             CursorSizeMultiplier = 2;
             ShowGrid = true;
-            ShowDamageRadii = true;
+            ShowDamageRadii = false;
             RunEntityAI = true;
-            ShowHitBoxes = true;
+            ShowHitBoxes = false;
             EnemySpawnCountRange = (1, 3);
         }
     }
