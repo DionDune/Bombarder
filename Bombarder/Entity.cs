@@ -102,6 +102,26 @@ namespace Bombarder
                 LastHitMakerFrame = Game1.GameTick;
             }
         }
+
+
+
+        public static void PurgeDead(List<Entity> Entities)
+        {
+            List<Entity> DeadEntities = new List<Entity>();
+
+            foreach (Entity Entity in Entities)
+            {
+                if (Entity.IsDead)
+                {
+                    DeadEntities.Add(Entity);
+                }
+            }
+
+            foreach (Entity Entity in DeadEntities)
+            {
+                Entities.Remove(Entity);
+            }
+        }
     }
 
 

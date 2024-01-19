@@ -381,25 +381,6 @@ namespace Bombarder
             }
         }
 
-        private void PurgeDeadEntities()
-        {
-            List<Entity> DeadEntities = new List<Entity>();
-
-            foreach (Entity Entity in Entities)
-            {
-                if (Entity.IsDead)
-                {
-                    DeadEntities.Add(Entity);
-                }
-            }
-
-            foreach (Entity Entity in DeadEntities)
-            {
-                Entities.Remove(Entity);
-            }
-        }
-
-
         #endregion
 
         /////////////////////////////////////////
@@ -829,7 +810,7 @@ namespace Bombarder
                 {
                     EnactEnemyChase();
                 }
-                PurgeDeadEntities();
+                Entity.PurgeDead(Entities);
                 //Particles
                 Particle.EnactDuration(Particles);
                 Particle.EnactParticles(Particles);
