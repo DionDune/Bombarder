@@ -130,6 +130,9 @@ namespace Bombarder
             public const int LengthMax = 200;
             public const int DurationMin = 25;
             public const int DurationMax = 200;
+            public const int SpeedMin = 15;
+            public const int SpeedMax = 75;
+            public const int AngleSpreadRange = 5;
             public static readonly IList<Color> Colours = new ReadOnlyCollection<Color>
                 (new List<Color> { Color.Turquoise, Color.DarkTurquoise, Color.MediumTurquoise, Color.MediumTurquoise});
 

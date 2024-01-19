@@ -377,7 +377,7 @@ namespace Bombarder
 
                 for (int i = 0; i < Count; i++)
                 {
-                    AngleRadians = (Lazer.Angle + Game1.random.Next(-15, 15)) * (float)(Math.PI / 180);
+                    AngleRadians = (Lazer.Angle + Game1.random.Next(-Particle.LazerLine.AngleSpreadRange, Particle.LazerLine.AngleSpreadRange)) * (float)(Math.PI / 180);
 
                     Game1.Particles.Add(new Particle(Effect.X, Effect.Y)
                     {
@@ -388,7 +388,7 @@ namespace Bombarder
                         {
                             Length = Game1.random.Next(Particle.LazerLine.LengthMin, Particle.LazerLine.LengthMax),
                             Direction = AngleRadians,
-                            Speed = Game1.random.Next(5, 50),
+                            Speed = Game1.random.Next(Particle.LazerLine.SpeedMin, Particle.LazerLine.SpeedMax),
                             Colour = Color.Turquoise
                         }
                     });
