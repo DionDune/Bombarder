@@ -18,6 +18,7 @@ namespace Bombarder
         public Point HealthBarOffset { get; set; }
         public bool HealthBarVisible { get; set; }
 
+        public bool ManaInfinite { get; set; }
         public int Mana { get; set; }
         public int ManaMax { get; set; }
         public Point ManaBarDimentions { get; set; }
@@ -47,6 +48,7 @@ namespace Bombarder
             HealthBarOffset = new Point(-20, 55);
             HealthBarVisible = true;
 
+            ManaInfinite = true;
             Mana = 280;
             ManaMax = 300;
             ManaBarDimentions = new Point(45, 450);
