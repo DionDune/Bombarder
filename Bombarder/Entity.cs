@@ -33,7 +33,6 @@ namespace Bombarder
         public bool ChasesPlayer { get; set; }
 
         public List<EntityBlock> Peices { get; set; }
-        public List<Object> HitMarkers;
         public uint LastHitMakerFrame;
 
         public Entity()
@@ -59,7 +58,6 @@ namespace Bombarder
             ChasesPlayer = true;
 
             Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-28, -28), Color = Color.Red } };
-            HitMarkers = new List<Object>();
             LastHitMakerFrame = 0;
         }
 

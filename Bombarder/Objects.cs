@@ -29,47 +29,7 @@ namespace Bombarder
 
         public Object(object Obj, int x, int y)
         {
-            if (Obj.ToString() == "Bombarder.Object+HitMarker")
-            {
-                Type = HitMarker.Name;
-                HasDuration = HitMarker.HasDuration;
-                Duration = HitMarker.Duration;
 
-                X = x;
-                Y = y;
-                Width = HitMarker.Width;
-                Height = HitMarker.Height;
-            }
-        }
-
-        public class HitMarker
-        {
-            public const string Name = "Hitmarker";
-
-            public const int Width = 25;
-            public const int Height = 25;
-
-            public const bool HasDuration = true;
-            public const int Duration = 50;
-
-            public static void PurgeDead(Entity Entity)
-            {
-                List<Object> DeadMarkers = new List<Object>();
-
-                foreach (Object Marker in Entity.HitMarkers)
-                {
-                    Marker.Duration--;
-                    if (Marker.Duration <= 0)
-                    {
-                        DeadMarkers.Add(Marker);
-                    }
-                }
-
-                foreach (Object DeadMarker in DeadMarkers)
-                {
-                    Entity.HitMarkers.Remove(DeadMarker);
-                }
-            }
         }
 
         public class ObjectContainer

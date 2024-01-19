@@ -391,9 +391,6 @@ namespace Bombarder
                 {
                     DeadEntities.Add(Entity);
                 }
-
-                //Temporarily Here. Need an Enemy Interation handler
-                Object.HitMarker.PurgeDead(Entity);
             }
 
             foreach (Entity Entity in DeadEntities)
@@ -940,15 +937,6 @@ namespace Bombarder
                                                                      (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                     }
-
-                    //HitMarkers
-                    foreach (Object Obj in Entity.HitMarkers)
-                    {
-                        _spriteBatch.Draw(Textures.HitMarker, new Rectangle(Obj.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        Obj.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                        Obj.Width, Obj.Height), Color.White);
-                    }
-
                     if (Entity.HealthBarVisible)
                     {
                         _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
