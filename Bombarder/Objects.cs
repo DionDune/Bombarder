@@ -104,6 +104,31 @@ namespace Bombarder
             ParticleObj = null;
         }
 
+        public static void EnactDuration(List<Particle> Particles)
+        {
+            List<Particle> Dead = new List<Particle>();
+
+            foreach (Particle particle in Particles)
+            {
+                if (particle.HasDuration)
+                {
+                    if (particle.Duration <= 0)
+                    {
+                        Dead.Add(particle);
+                    }
+                    else
+                    {
+                        particle.Duration--;
+                    }
+                }
+            }
+
+            foreach (Particle particle in Dead)
+            {
+                Particles.Remove(particle);
+            }
+        }
+
         
         public class HitMarker
         {

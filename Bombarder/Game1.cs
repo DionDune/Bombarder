@@ -833,6 +833,8 @@ namespace Bombarder
                     EnactEnemyChase();
                 }
                 PurgeDeadEntities();
+                //Particles
+                Particle.EnactDuration(Particles);
 
                 //Magic Functions
                 EnactMagic();
