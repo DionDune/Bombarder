@@ -170,7 +170,7 @@ namespace Bombarder
             public const float DefaultOpacity = 0.95F;
             public const float OpacityMultiplier = 0.98F;
 
-
+            public readonly static Color Colour = Color.White;
             public float Radius { get; set; }
             public float Opacity { get; set; }
 
