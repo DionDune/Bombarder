@@ -7,12 +7,14 @@ Controls:
 
      - W/S : Up/Down
      - A/D: Left/Right
+     - Shift: Increase Speed
  
-  > Attacks:
+  > Magic:
 
-     - Left-Click: Place Orb
-     - Right-Click: Launch Orb
-     - Middle-Click: Create Wave
+     - Left-Click:   Impact Attact
+     - Right-Click:  Lazer Attack
+     - Middle-Click: Wave Attack
+     - Q:            Force Field
 
   > Other:
 
