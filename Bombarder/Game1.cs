@@ -950,42 +950,30 @@ namespace Bombarder
                     }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {
-                        /*
-                        WideLazer Lazer = (WideLazer)Effect.MagicObj;
-
-                        float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
-                        float RightAngleRadians = (Lazer.Angle + 90) * (float)(Math.PI / 180);
-
-                        float X = (float)Player.X;
-                        float Y = (float)Player.Y;
-
-                        Vector2 LeftLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) - (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
-                                (_graphics.PreferredBackBufferHeight / 2) - (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
-                        LeftLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
-                        LeftLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
-                        Vector2 RightLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) + ((WideLazer.Width / 2 - 5) * (float)Math.Cos(RightAngleRadians)),
-                                (_graphics.PreferredBackBufferHeight / 2) + ((WideLazer.Width / 2 - 5) * (float)Math.Sin(RightAngleRadians)));
-                        RightLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
-                        RightLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
-
-                        
-                        DrawRotatedTexture(LeftLine, Textures.White, WideLazer.Width, WideLazer.Range, Lazer.Angle + 90, false, Lazer.PrimaryColor * WideLazer.Opacity);
-                        DrawRotatedTexture(LeftLine, Textures.White, 5, WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
-                        DrawRotatedTexture(RightLine, Textures.White, 5, WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
-                        for (int i = 0; i < WideLazer.Range / WideLazer.MarkerDistance; i++)
+                        if (Settings.ShowDamageRadii)
                         {
-                            X += (int)(WideLazer.MarkerDistance * (float)Math.Cos(AngleRadians));
-                            Y += (int)(WideLazer.MarkerDistance * (float)Math.Sin(AngleRadians));
+                            WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
-                            _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(X - 2) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Y - 2) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                      4, 4), Lazer.MarkerColor);
+                            float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+                            float RightAngleRadians = (Lazer.Angle + 90) * (float)(Math.PI / 180);
+
+                            Vector2 LeftLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) - (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
+                                    (_graphics.PreferredBackBufferHeight / 2) - (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
+                            LeftLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
+                            LeftLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
+                            Vector2 RightLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) + ((WideLazer.Width / 2 - 5) * (float)Math.Cos(RightAngleRadians)),
+                                    (_graphics.PreferredBackBufferHeight / 2) + ((WideLazer.Width / 2 - 5) * (float)Math.Sin(RightAngleRadians)));
+                            RightLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
+                            RightLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
+
+
+                            DrawRotatedTexture(LeftLine, Textures.White, WideLazer.Width, WideLazer.Range, Lazer.Angle + 90, false, Lazer.PrimaryColor * WideLazer.Opacity);
+                            DrawRotatedTexture(LeftLine, Textures.White, 5, WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
+                            DrawRotatedTexture(RightLine, Textures.White, 5, WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
+
+                            float Scale = (float)WideLazer.Width / Textures.HalfWhiteCirlce.Width;
+                            DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
                         }
-
-                        //TEMP
-                        float Scale = (float)WideLazer.Width / Textures.HalfWhiteCirlce.Width;
-                        DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
-                        */
                     }
                     
                     if (Settings.ShowDamageRadii)
