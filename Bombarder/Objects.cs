@@ -112,20 +112,7 @@ namespace Bombarder
             int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
 
 
-            if (Tick % Dust.SpawnInterval  == 0)
-            {
-                object DustObj = Dust.GetRandom();
-                int DustX = Game1.random.Next((int)PlayerPos.X - ClutterSpawnRangeX, (int)PlayerPos.X + ClutterSpawnRangeX);
-                int DustY = Game1.random.Next((int)PlayerPos.Y - ClutterSpawnRangeY, (int)PlayerPos.Y + ClutterSpawnRangeY);
-
-                Particles.Add(new Particle(DustX, DustY)
-                {
-                    HasDuration = true,
-                    Duration = Game1.random.Next(100, 1000),
-
-                    ParticleObj = DustObj
-                });
-            }
+            Dust.SpawnRandom(Particles, PlayerPos, ClutterSpawnRangeX, ClutterSpawnRangeY, Tick);
         }
 
 
@@ -224,6 +211,24 @@ namespace Bombarder
             public Color Colour;
 
 
+
+            public static void SpawnRandom(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
+            {
+                if (Tick % Dust.SpawnInterval == 0)
+                {
+                    object DustObj = Dust.GetRandom();
+                    int DustX = Game1.random.Next((int)PlayerPos.X - RangeX, (int)PlayerPos.X + RangeX);
+                    int DustY = Game1.random.Next((int)PlayerPos.Y - RangeY, (int)PlayerPos.Y + RangeY);
+
+                    Particles.Add(new Particle(DustX, DustY)
+                    {
+                        HasDuration = true,
+                        Duration = Game1.random.Next(100, 1000),
+
+                        ParticleObj = DustObj
+                    });
+                }
+            }
             public static Dust GetRandom()
                 //Gets a random dust instance
             {
@@ -255,6 +260,8 @@ namespace Bombarder
                     };
                 }
             }
+
+
 
             public class WhiteDust
             {
