@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Security.Authentication;
 using static Bombarder.MagicEffect;
 
@@ -950,7 +951,8 @@ namespace Bombarder
                     }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {
-                        if (Settings.ShowDamageRadii)
+                        //Old
+                        if (Settings.ShowDamageRadii && false)
                         {
                             WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
@@ -973,6 +975,25 @@ namespace Bombarder
 
                             float Scale = (float)WideLazer.Width / Textures.HalfWhiteCirlce.Width;
                             DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
+                        }
+
+                        //New accounting for Lazer Spread
+                        if (Settings.ShowDamageRadii)
+                        {
+                            WideLazer Lazer = (WideLazer)Effect.MagicObj;
+
+                            float TrueSpread = WideLazer.Spread * 4.5F;
+
+                            float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+                            float AngleRadiansLeft = (Lazer.Angle - TrueSpread) * (float)(Math.PI / 180);
+                            float AngleRadiansRight = (Lazer.Angle + TrueSpread) * (float)(Math.PI / 180);
+
+                            Vector2 Start = new Vector2(Effect.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                        Effect.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+
+                            DrawLine(Start, WideLazer.Range, AngleRadiansLeft, Lazer.SecondaryColor, 10);
+                            DrawLine(Start, WideLazer.Range, AngleRadians, Lazer.MarkerColor, 10);
+                            DrawLine(Start, WideLazer.Range, AngleRadiansRight, Lazer.SecondaryColor, 10);
                         }
                     }
                     
