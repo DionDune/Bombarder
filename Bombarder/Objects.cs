@@ -110,6 +110,22 @@ namespace Bombarder
         {
             int ClutterSpawnRangeX = Graphics.PreferredBackBufferWidth;
             int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
+
+
+            if (Dust.SpawnInterval % Tick == 0)
+            {
+                object DustObj = Dust.GetRandom();
+                int DustX = Game1.random.Next((int)PlayerPos.X - ClutterSpawnRangeX, (int)PlayerPos.X + ClutterSpawnRangeX);
+                int DustY = Game1.random.Next((int)PlayerPos.Y - ClutterSpawnRangeY, (int)PlayerPos.Y + ClutterSpawnRangeY);
+
+                Particles.Add(new Particle(DustX, DustY)
+                {
+                    HasDuration = true,
+                    Duration = Game1.random.Next(100, 1000),
+
+                    ParticleObj = DustObj
+                });
+            }
         }
 
 
@@ -200,10 +216,10 @@ namespace Bombarder
 
         public class Dust
         {
-            const int SpawnInterval = 30;
+            public const int SpawnInterval = 30;
 
 
-            public object GetRandom()
+            public static object GetRandom()
                 //Gets a random dust instance
             {
                 const int ChanceRange = 100;
