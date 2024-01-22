@@ -357,6 +357,7 @@ namespace Bombarder
             public const float Opacity = 0.8F;
 
             public const int Spread = 1;
+            public const float TrueSpreadMultiplier = 4.5F;
 
             public const int DefaultDuration = -1;
 
@@ -437,7 +438,7 @@ namespace Bombarder
                             EntityStartY = Entity.Y + Entity.HitboxOffset.Y;
 
                             //Calculate radius of the Lazers Current spread
-                            CurrentLazerWidth = (SpreadValue * Distance) * 4.5F;
+                            CurrentLazerWidth = (SpreadValue * Distance) * TrueSpreadMultiplier;
 
                             if (RotatedX >= EntityStartX - CurrentLazerWidth && RotatedX <= EntityStartX + Entity.HitboxSize.X + CurrentLazerWidth &&
                                 RotatedY >= EntityStartY - CurrentLazerWidth && RotatedY <= EntityStartY + Entity.HitboxSize.Y + CurrentLazerWidth)

@@ -982,7 +982,7 @@ namespace Bombarder
                         {
                             WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
-                            float TrueSpread = WideLazer.Spread * 4.5F;
+                            float TrueSpread = WideLazer.Spread * WideLazer.TrueSpreadMultiplier;
 
                             float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
                             float AngleRadiansLeft = (Lazer.Angle - TrueSpread) * (float)(Math.PI / 180);
