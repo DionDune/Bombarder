@@ -90,18 +90,6 @@ namespace Bombarder
                 Particles.Remove(particle);
             }
         }
-        public static bool EnactParticleDuration(Particle particle)
-        {
-            if (particle.Duration <= 0)
-            {
-                return true;
-            }
-            else
-            {
-                particle.Duration--;
-                return false;
-            }
-        }
         public static void EnactParticles(List<Particle> Particles)
         {
             foreach (Particle particle in Particles)
