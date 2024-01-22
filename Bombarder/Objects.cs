@@ -106,7 +106,7 @@ namespace Bombarder
                 }
             }
         }
-        public static void SpawnParticles(List<Particle> Particles, Vector2 PlayerPos, GraphicsDeviceManager Graphics, int Tick)
+        public static void SpawnParticles(List<Particle> Particles, Vector2 PlayerPos, GraphicsDeviceManager Graphics, uint Tick)
         {
             int ClutterSpawnRangeX = Graphics.PreferredBackBufferWidth;
             int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
