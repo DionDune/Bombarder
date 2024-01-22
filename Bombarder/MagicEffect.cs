@@ -407,14 +407,19 @@ namespace Bombarder
                 float XDiff;
                 float YDiff;
                 float Distance;
-
+                
                 float RotatedX;
                 float RotatedY;
+                float CurrentLazerWidth;
                 float EntityStartX;
                 float EntityStartY;
 
+
                 if (Tick % DamageInterval == 0)
                 {
+                    //Calculate radius of the Lazers Spread every 1 Distance
+                    float SpreadValue = (float)Math.Sin(Spread * (float)(Math.PI / 180));
+
                     foreach (Entity Entity in Entites)
                     {
                         XDiff = Math.Abs(Effect.X - Entity.X);
@@ -424,15 +429,18 @@ namespace Bombarder
                         if (Distance < Range)
                             // Entity is close enough to the lazer
                         {
+                            // Point along lazer with equal distance as Entity
                             RotatedX = Effect.X + (Distance * (float)Math.Cos(AngleRadians));
                             RotatedY = Effect.Y + (Distance * (float)Math.Sin(AngleRadians));
-                            // Point along lazer with equal distance as Entity
 
                             EntityStartX = Entity.X + Entity.HitboxOffset.X;
                             EntityStartY = Entity.Y + Entity.HitboxOffset.Y;
 
-                            if (RotatedX >= EntityStartX - Width && RotatedX <= EntityStartX + Entity.HitboxSize.X + Width &&
-                                RotatedY >= EntityStartY - Width && RotatedY <= EntityStartY + Entity.HitboxSize.Y + Width)
+                            //Calculate radius of the Lazers Current spread
+                            CurrentLazerWidth = (SpreadValue * Distance) * 4.5F;
+
+                            if (RotatedX >= EntityStartX - CurrentLazerWidth && RotatedX <= EntityStartX + Entity.HitboxSize.X + CurrentLazerWidth &&
+                                RotatedY >= EntityStartY - CurrentLazerWidth && RotatedY <= EntityStartY + Entity.HitboxSize.Y + CurrentLazerWidth)
                             {
                                 Entity.GiveDamage((int)WideLazer.Damage);
                             }
