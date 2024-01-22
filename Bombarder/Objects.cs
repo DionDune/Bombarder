@@ -207,7 +207,7 @@ namespace Bombarder
 
         public class Dust
         {
-            public const int SpawnInterval = 6;
+            public const int SpawnInterval = 2;
             public const int DurationDefault = -1;
             public const float OpacityDefault = 0;
             public const float OpacityChange = 0.025F;
