@@ -854,17 +854,12 @@ namespace Bombarder
                     {
                         LaterParticles.Add((particle, "Impact"));
                     }
-                    else if (ParticleType == "Bombarder.Particle+Dust+WhiteDust")
+                    else if (ParticleType == "Bombarder.Particle+Dust")
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(particle.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                        (int)(particle.Y +(_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y), 
-                                                                        Particle.Dust.WhiteDust.Width, Particle.Dust.WhiteDust.Height), Particle.Dust.WhiteDust.Colour);
-                    }
-                    else if (ParticleType == "Bombarder.Particle+Dust+RedDust")
-                    {
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(particle.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                        (int)(particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y),
-                                                                        Particle.Dust.RedDust.Width, Particle.Dust.RedDust.Height), Particle.Dust.RedDust.Colour);
+                        Particle.Dust Dust = (Particle.Dust)particle.ParticleObj;
+                        _spriteBatch.Draw(Textures.White, new Rectangle(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                        particle.Y +(_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y, 
+                                                                        Dust.Width, Dust.Height), Dust.Colour);
                     }
                 }
 

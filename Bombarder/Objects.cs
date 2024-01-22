@@ -218,21 +218,41 @@ namespace Bombarder
         {
             public const int SpawnInterval = 30;
 
+            public int Width;
+            public int Height;
 
-            public static object GetRandom()
+            public Color Colour;
+
+
+            public static Dust GetRandom()
                 //Gets a random dust instance
             {
                 const int ChanceRange = 100;
                 const int RedChance = 30;
 
+
+
                 int TypeVal = Game1.random.Next(0, ChanceRange);
+
                 if (TypeVal < RedChance)
                 {
-                    return new RedDust();
+                    // Red Dust
+                    return new Dust()
+                    {
+                        Width = RedDust.Width,
+                        Height = RedDust.Height,
+                        Colour = RedDust.Colour
+                    };
                 }
                 else
                 {
-                    return new WhiteDust();
+                    // White Dust
+                    return new Dust()
+                    {
+                        Width = WhiteDust.Width,
+                        Height = WhiteDust.Height,
+                        Colour = WhiteDust.Colour
+                    };
                 }
             }
 
