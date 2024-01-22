@@ -87,6 +87,7 @@ namespace Bombarder
 
             foreach (Particle particle in Dead)
             {
+                
                 Particles.Remove(particle);
             }
         }
@@ -245,6 +246,7 @@ namespace Bombarder
                         if (Effect.Opacity <= 0)
                         {
                             Particle.Duration = 1;
+                            Particle.HasDuration = true;
                         }
                     }
                 }
