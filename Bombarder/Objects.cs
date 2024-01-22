@@ -197,5 +197,43 @@ namespace Bombarder
                 Effect.Opacity *= OpacityMultiplier;
             }
         }
+
+        public class Dust
+        {
+            const int SpawnInterval = 30;
+
+
+            public object GetRandom()
+                //Gets a random dust instance
+            {
+                const int ChanceRange = 100;
+                const int RedChance = 30;
+
+                int TypeVal = Game1.random.Next(0, ChanceRange);
+                if (TypeVal < 30)
+                {
+                    return new RedDust();
+                }
+                else
+                {
+                    return new WhiteDust();
+                }
+            }
+
+            public class WhiteDust
+            {
+                const int Width = 10;
+                const int Height = 10;
+
+                readonly Color Colour = Color.White;
+            }
+            public class RedDust
+            {
+                const int Width = 8;
+                const int Height = 8;
+
+                readonly Color Colour = Color.Red;
+            }
+        }
     }
 }
