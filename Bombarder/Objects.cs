@@ -207,7 +207,7 @@ namespace Bombarder
 
         public class Dust
         {
-            public const int SpawnInterval = 15;
+            public const int SpawnInterval = 6;
             public const int DurationDefault = -1;
             public const float OpacityDefault = 0;
             public const float OpacityChange = 0.025F;
@@ -257,11 +257,14 @@ namespace Bombarder
             {
                 if (Tick % Dust.SpawnInterval == 0)
                 {
+                    int NewRangeX = RangeX * 2;
+                    int NewRangeY = RangeY * 2;
+
                     float Opacity = OpacityDefault;
 
                     object DustObj = Dust.GetRandom(Opacity);
-                    int DustX = Game1.random.Next((int)PlayerPos.X - RangeX, (int)PlayerPos.X + RangeX);
-                    int DustY = Game1.random.Next((int)PlayerPos.Y - RangeY, (int)PlayerPos.Y + RangeY);
+                    int DustX = Game1.random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
+                    int DustY = Game1.random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
 
                     Particles.Add(new Particle(DustX, DustY)
                     {
