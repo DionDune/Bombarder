@@ -366,7 +366,7 @@ namespace Bombarder
                 EnactDamage(Effect, Player, Entites, Tick);
                 CreateParticles(Effect);
             }
-            private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
+            private static void EnactDamageOld(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
                 WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
@@ -392,6 +392,48 @@ namespace Bombarder
                         if (Math.Abs(Distance) <= WideLazer.Width / 2 && Tick % WideLazer.DamageInterval == 0)
                         {
                             Entity.GiveDamage((int)WideLazer.Damage);
+                        }
+                    }
+                }
+            }
+            private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
+            {
+                WideLazer Lazer = (WideLazer)Effect.MagicObj;
+
+                float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
+
+                float XDiff;
+                float YDiff;
+                float Distance;
+
+                float RotatedX;
+                float RotatedY;
+                float EntityStartX;
+                float EntityStartY;
+
+                if (Tick % DamageInterval == 0)
+                {
+                    foreach (Entity Entity in Entites)
+                    {
+                        XDiff = Math.Abs(Effect.X - Entity.X);
+                        YDiff = Math.Abs(Effect.Y - Entity.Y);
+                        Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                        if (Distance < Range)
+                            // Entity is close enough to the lazer
+                        {
+                            RotatedX = Effect.X + (Distance * (float)Math.Cos(AngleRadians));
+                            RotatedY = Effect.Y + (Distance * (float)Math.Sin(AngleRadians));
+                            // Point along lazer with equal distance as Entity
+
+                            EntityStartX = Entity.X + Entity.HitboxOffset.X;
+                            EntityStartY = Entity.Y + Entity.HitboxOffset.Y;
+
+                            if (RotatedX >= EntityStartX - Width && RotatedX <= EntityStartX + Entity.HitboxSize.X + Width &&
+                                RotatedY >= EntityStartY - Width && RotatedY <= EntityStartY + Entity.HitboxSize.Y + Width)
+                            {
+                                Entity.GiveDamage((int)WideLazer.Damage);
+                            }
                         }
                     }
                 }
