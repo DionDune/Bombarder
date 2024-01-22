@@ -112,7 +112,7 @@ namespace Bombarder
             int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
 
 
-            if (Dust.SpawnInterval % Tick == 0)
+            if (Tick % Dust.SpawnInterval  == 0)
             {
                 object DustObj = Dust.GetRandom();
                 int DustX = Game1.random.Next((int)PlayerPos.X - ClutterSpawnRangeX, (int)PlayerPos.X + ClutterSpawnRangeX);
@@ -226,7 +226,7 @@ namespace Bombarder
                 const int RedChance = 30;
 
                 int TypeVal = Game1.random.Next(0, ChanceRange);
-                if (TypeVal < 30)
+                if (TypeVal < RedChance)
                 {
                     return new RedDust();
                 }
@@ -238,17 +238,17 @@ namespace Bombarder
 
             public class WhiteDust
             {
-                const int Width = 10;
-                const int Height = 10;
+                public const int Width = 10;
+                public const int Height = 10;
 
-                readonly Color Colour = Color.White;
+                public static readonly Color Colour = Color.White;
             }
             public class RedDust
             {
-                const int Width = 8;
-                const int Height = 8;
+                public const int Width = 8;
+                public const int Height = 8;
 
-                readonly Color Colour = Color.Red;
+                public static readonly Color Colour = Color.Red;
             }
         }
     }

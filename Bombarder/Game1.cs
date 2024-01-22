@@ -846,13 +846,25 @@ namespace Bombarder
                     {
                         LaterParticles.Add((particle, "HitMarker"));
                     }
-                    if (ParticleType == "Bombarder.Particle+LazerLine")
+                    else if (ParticleType == "Bombarder.Particle+LazerLine")
                     {
                         LaterParticles.Add((particle, "LazerLine"));
                     }
-                    if (ParticleType == "Bombarder.Particle+Impact")
+                    else if (ParticleType == "Bombarder.Particle+Impact")
                     {
                         LaterParticles.Add((particle, "Impact"));
+                    }
+                    else if (ParticleType == "Bombarder.Particle+Dust+WhiteDust")
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(particle.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                        (int)(particle.Y +(_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y), 
+                                                                        Particle.Dust.WhiteDust.Width, Particle.Dust.WhiteDust.Height), Particle.Dust.WhiteDust.Colour);
+                    }
+                    else if (ParticleType == "Bombarder.Particle+Dust+RedDust")
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(particle.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                        (int)(particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y),
+                                                                        Particle.Dust.RedDust.Width, Particle.Dust.RedDust.Height), Particle.Dust.RedDust.Colour);
                     }
                 }
 
