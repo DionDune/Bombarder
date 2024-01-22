@@ -800,7 +800,7 @@ namespace Bombarder
                 Entity.PurgeDead(Entities);
                 //Particles
                 Particle.EnactDuration(Particles);
-                Particle.EnactParticles(Particles);
+                Particle.EnactParticles(Particles, GameTick);
                 Particle.SpawnParticles(Particles, new Vector2(Player.X, Player.Y), _graphics, GameTick);
 
                 //Magic Functions

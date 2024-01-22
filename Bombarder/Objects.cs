@@ -90,7 +90,7 @@ namespace Bombarder
                 Particles.Remove(particle);
             }
         }
-        public static void EnactParticles(List<Particle> Particles)
+        public static void EnactParticles(List<Particle> Particles, uint Tick)
         {
             foreach (Particle particle in Particles)
             {
@@ -102,6 +102,9 @@ namespace Bombarder
                         break;
                     case "Bombarder.Particle+Impact":
                         Impact.EnactParticle(particle);
+                        break;
+                    case "Bombarder.Particle+Dust":
+                        Dust.EnactParticle(particle, Tick);
                         break;
                 }
             }
@@ -204,10 +207,10 @@ namespace Bombarder
         public class Dust
         {
             public const int SpawnInterval = 30;
-            public const int DurationMin = 150;
-            public const int DurationMax = 1000;
-            public const int OpacityMin = 30;
-            public const int OpacityMax = 80;
+            public const int DurationDefault = -1;
+            public const float OpacityDefault = 0;
+            public const float OpacityChange = 0.025F;
+            public const int OpacityChangeInterval = 5;
 
             public int Width;
             public int Height;
@@ -215,13 +218,44 @@ namespace Bombarder
             public Color Colour;
             public float Opacity;
 
+            public bool OpacityIncreasing = true;
+
+
+            public static void EnactParticle(Particle Particle, uint Tick)
+            {
+                EnactOpacityChange(Particle, Tick);
+            }
+            private static void EnactOpacityChange(Particle Particle, uint Tick)
+            {
+                if (Tick % OpacityChangeInterval == 0)
+                {
+                    Dust Effect = (Dust)Particle.ParticleObj;
+
+                    if (Effect.OpacityIncreasing)
+                    {
+                        Effect.Opacity += Particle.Dust.OpacityChange;
+                        if (Effect.Opacity >= 1)
+                        {
+                            Effect.OpacityIncreasing = false;
+                        }
+                    }
+                    else
+                    {
+                        Effect.Opacity -= Particle.Dust.OpacityChange;
+                        if (Effect.Opacity <= 0)
+                        {
+                            Particle.Duration = 1;
+                        }
+                    }
+                }
+            }
 
 
             public static void SpawnRandom(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
             {
                 if (Tick % Dust.SpawnInterval == 0)
                 {
-                    float Opacity = ((float)Game1.random.Next(OpacityMin, OpacityMax)) / 100;
+                    float Opacity = OpacityDefault;
 
                     object DustObj = Dust.GetRandom(Opacity);
                     int DustX = Game1.random.Next((int)PlayerPos.X - RangeX, (int)PlayerPos.X + RangeX);
@@ -229,8 +263,8 @@ namespace Bombarder
 
                     Particles.Add(new Particle(DustX, DustY)
                     {
-                        HasDuration = true,
-                        Duration = Game1.random.Next(DurationMin, DurationMax),
+                        HasDuration = false,
+                        Duration = DurationDefault,
 
                         ParticleObj = DustObj
                     });
