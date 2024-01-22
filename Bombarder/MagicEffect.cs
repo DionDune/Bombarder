@@ -356,6 +356,8 @@ namespace Bombarder
             public Color MarkerColor = Color.Red;
             public const float Opacity = 0.8F;
 
+            public const int Spread = 1;
+
             public const int DefaultDuration = -1;
 
             public float Angle = 0;
@@ -447,7 +449,7 @@ namespace Bombarder
 
 
                 // Central Lazer
-                AngleRadians = (Lazer.Angle + ((float)Game1.random.Next(-10, 10) / 10)) * (float)(Math.PI / 180);
+                AngleRadians = (Lazer.Angle + ((float)Game1.random.Next(-Spread * 10, Spread * 10) / 10)) * (float)(Math.PI / 180);
                 Game1.Particles.Add(new Particle(Effect.X, Effect.Y)
                 {
                     HasDuration = true,
