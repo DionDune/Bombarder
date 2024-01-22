@@ -204,6 +204,8 @@ namespace Bombarder
         public class Dust
         {
             public const int SpawnInterval = 30;
+            public const int DurationMin = 150;
+            public const int DurationMax = 1000;
 
             public int Width;
             public int Height;
@@ -223,7 +225,7 @@ namespace Bombarder
                     Particles.Add(new Particle(DustX, DustY)
                     {
                         HasDuration = true,
-                        Duration = Game1.random.Next(100, 1000),
+                        Duration = Game1.random.Next(DurationMin, DurationMax),
 
                         ParticleObj = DustObj
                     });
