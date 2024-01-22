@@ -206,11 +206,14 @@ namespace Bombarder
             public const int SpawnInterval = 30;
             public const int DurationMin = 150;
             public const int DurationMax = 1000;
+            public const int OpacityMin = 30;
+            public const int OpacityMax = 80;
 
             public int Width;
             public int Height;
 
             public Color Colour;
+            public float Opacity;
 
 
 
@@ -218,7 +221,9 @@ namespace Bombarder
             {
                 if (Tick % Dust.SpawnInterval == 0)
                 {
-                    object DustObj = Dust.GetRandom();
+                    float Opacity = ((float)Game1.random.Next(OpacityMin, OpacityMax)) / 100;
+
+                    object DustObj = Dust.GetRandom(Opacity);
                     int DustX = Game1.random.Next((int)PlayerPos.X - RangeX, (int)PlayerPos.X + RangeX);
                     int DustY = Game1.random.Next((int)PlayerPos.Y - RangeY, (int)PlayerPos.Y + RangeY);
 
@@ -231,7 +236,7 @@ namespace Bombarder
                     });
                 }
             }
-            public static Dust GetRandom()
+            public static Dust GetRandom(float Opacity)
                 //Gets a random dust instance
             {
                 const int ChanceRange = 100;
@@ -248,7 +253,8 @@ namespace Bombarder
                     {
                         Width = RedDust.Width,
                         Height = RedDust.Height,
-                        Colour = RedDust.Colour
+                        Colour = RedDust.Colour,
+                        Opacity = Opacity
                     };
                 }
                 else
@@ -258,7 +264,8 @@ namespace Bombarder
                     {
                         Width = WhiteDust.Width,
                         Height = WhiteDust.Height,
-                        Colour = WhiteDust.Colour
+                        Colour = WhiteDust.Colour,
+                        Opacity = Opacity
                     };
                 }
             }

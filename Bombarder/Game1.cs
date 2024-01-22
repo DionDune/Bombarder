@@ -859,7 +859,7 @@ namespace Bombarder
                         Particle.Dust Dust = (Particle.Dust)particle.ParticleObj;
                         _spriteBatch.Draw(Textures.White, new Rectangle(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                         particle.Y +(_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y, 
-                                                                        Dust.Width, Dust.Height), Dust.Colour);
+                                                                        Dust.Width, Dust.Height), Dust.Colour * Dust.Opacity);
                     }
                 }
 
