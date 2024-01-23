@@ -488,6 +488,9 @@ namespace Bombarder
                     case "Bombarder.MagicEffect+ForceWave":
                         MagicEffect.ForceWave.EnactEffect(Effect, Entities);
                         break;
+                    case "Bombarder.MagicEffect+ForceContainer":
+                        MagicEffect.ForceContainer.EnactEffect(Effect, Entities);
+                        break;
                     case "Bombarder.MagicEffect+WideLazer":
                         MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
                         break;
