@@ -22,7 +22,7 @@ namespace Bombarder
         {
             CursorSizeMultiplier = 1.66F;
             ShowGrid = true;
-            GridOpacityMultiplier = 1;
+            GridOpacityMultiplier = 0.15F;
             GridSizeMultiplier = 1;
             ShowDamageRadii = false;
             RunEntityAI = true;
