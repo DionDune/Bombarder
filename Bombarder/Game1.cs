@@ -440,11 +440,15 @@ namespace Bombarder
             {
                 MagicEffects.Add(new MagicEffect()
                 {
-                    X = X,
-                    Y = Y,
+                    X = (int)Player.X,
+                    Y = (int)Player.Y,
                     
                     Duration = MagicEffect.ForceContainer.DurationDefault,
                     MagicObj = new ForceContainer()
+                    {
+                        CurrentRadius = ForceContainer.RadiusMoving,
+                        Destination = new Point(X, Y)
+                    }
                 });
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
@@ -985,9 +989,9 @@ namespace Bombarder
                     {
                         ForceContainer Container = (ForceContainer)Effect.MagicObj;
 
-                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - ForceContainer.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Effect.Y - ForceContainer.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                      (int)ForceContainer.Radius * 2, (int)ForceContainer.Radius * 2), Container.Colour * 0.7F);
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Container.CurrentRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Effect.Y - Container.CurrentRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                      (int)Container.CurrentRadius * 2, (int)Container.CurrentRadius * 2), Container.Colour * 0.7F);
                     }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {

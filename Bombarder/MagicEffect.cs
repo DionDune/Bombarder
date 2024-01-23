@@ -347,13 +347,48 @@ namespace Bombarder
 
             public const int DurationDefault = 350;
             public const float Radius = 250;
+            public const float RadiusMoving = 50;
+            public const float MovementSpeed = 25;
             public const float EdgeEffectWith = 10;
+            public const bool HasDuration_Moving = false;
+            public const bool HasDuration_DestinationReached = true;
 
-            
+            public Point Destination;
+            public bool DestinationReached = false;
+            public float CurrentRadius = RadiusMoving;
+
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entities)
             {
+                EnactMovement(Effect);
                 EnactForce(Effect, Entities);
+            }
+            public static void EnactMovement(MagicEffect Effect)
+            {
+                ForceContainer Container = (ForceContainer)Effect.MagicObj;
+
+                if (!Container.DestinationReached)
+                {
+                    float XDiff = Container.Destination.X - Effect.X;
+                    float YDiff = Container.Destination.Y - Effect.Y;
+                    float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+                    float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
+                    float AngleRadians = Angle * (float)(Math.PI / 180);
+
+                    if (Distance <= MovementSpeed)
+                    {
+                        Effect.X = Container.Destination.X;
+                        Effect.Y = Container.Destination.Y;
+                        Container.DestinationReached = true;
+                        Container.CurrentRadius = Radius;
+                        Effect.HasDuration = HasDuration_DestinationReached;
+                    }
+                    else
+                    {
+                        Effect.X += (int)(MovementSpeed * (float)Math.Cos(AngleRadians));
+                        Effect.Y += (int)(MovementSpeed * (float)Math.Sin(AngleRadians));
+                    }
+                }
             }
             public static void EnactForce(MagicEffect Effect, List<Entity> Entities)
             {
@@ -365,22 +400,22 @@ namespace Bombarder
                     float YDiff = Math.Abs(Effect.Y - Entity.Y);
                     float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
-                    if (Distance >= Radius - EdgeEffectWith && Distance <= Radius)
+                    if (Distance >= Container.CurrentRadius - EdgeEffectWith && Distance <= Container.CurrentRadius)
                     {
                         float xDiff = Entity.X - Effect.X;
                         float yDiff = Entity.Y - Effect.Y;
                         float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                         float AngleRadians = Angle * (float)(Math.PI / 180);
 
-                        Entity.X -= (Radius - Distance) * (float)Math.Cos(AngleRadians);
-                        Entity.Y -= (Radius - Distance) * (float)Math.Sin(AngleRadians);
+                        Entity.X -= (Container.CurrentRadius - Distance) * (float)Math.Cos(AngleRadians);
+                        Entity.Y -= (Container.CurrentRadius - Distance) * (float)Math.Sin(AngleRadians);
                     }
                 }
             }
         }
         public class WideLazer
         {
-            const int Damage = 2;
+            const int Damage = 3;
             const int DamageInterval = 3;
 
             public const int Range = 1500;
