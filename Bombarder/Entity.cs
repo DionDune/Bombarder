@@ -9,120 +9,6 @@ using System.Threading.Tasks;
 
 namespace Bombarder
 {
-    public class EntityAlt
-    {
-        public string Type { get; set; }
-
-        public int Health { get; set; }
-        public int HealthMax { get; set; }
-        public bool IsDead { get; set; }
-
-        public Point HealthBarDimentions { get; set; }
-        public Point HealthBarOffset { get; set; }
-        public bool HealthBarVisible { get; set; }
-
-        public float X { get; set; }
-        public float Y { get; set; }
-
-        public Point HitboxOffset { get; set; }
-        public Point HitboxSize { get; set; }
-
-        public float Direction { get; set; }
-        public float BaseSpeed { get; set; }
-
-        public bool ChasesPlayer { get; set; }
-
-        public List<EntityBlock> Peices { get; set; }
-        public uint LastHitMakerFrame;
-
-        public EntityAlt()
-        {
-            Type = "Default";
-
-            Health = 80;
-            HealthMax = 100;
-            IsDead = false;
-
-            X = 0;
-            Y = 0;
-            HitboxOffset = new Point(-33, -33);
-            HitboxSize = new Point(66, 66);
-
-            HealthBarVisible = true;
-            HealthBarDimentions = new Point(40, 10);
-            HealthBarOffset = new Point(-20, -HitboxOffset.Y + 5);
-
-            Direction = 0;
-            BaseSpeed = 5;
-
-            ChasesPlayer = true;
-
-            Peices = new List<EntityBlock>() { new EntityBlock(), new EntityBlock() { Width = 56, Height = 56, Offset = new Vector2(-28, -28), Color = Color.Red } };
-            LastHitMakerFrame = 0;
-        }
-
-        public void MoveTowards(Vector2 Goal)
-        {
-            float XDifference = X - Goal.X;
-            float YDifference = Y - Goal.Y;
-            float Angle = (float)(Math.Atan2(YDifference, XDifference));
-
-            Direction = Angle;
-
-            X -= BaseSpeed * (float)Math.Cos(Angle);
-            Y -= BaseSpeed * (float)Math.Sin(Angle);
-        }
-
-        public void GiveDamage(int Damage)
-        {
-            Health -= Damage;
-
-            if (Health <= 0)
-            {
-                IsDead = true;
-            }
-
-            ApplyHitMarker();
-        }
-
-        public void ApplyHitMarker()    
-        {
-            if (Math.Abs(Game1.GameTick - LastHitMakerFrame) > 20)
-            {
-                int x = Game1.random.Next((int)X + HitboxOffset.X, (int)X + HitboxOffset.X + HitboxSize.X);
-                int y = Game1.random.Next((int)Y + HitboxOffset.Y, (int)Y + HitboxOffset.Y + HitboxSize.Y);
-
-                Game1.Particles.Add(new Particle(x, y)
-                {
-                    HasDuration = true,
-                    Duration = Particle.HitMarker.DefaultDuration,
-                    ParticleObj = new Particle.HitMarker()
-                });
-
-                LastHitMakerFrame = Game1.GameTick;
-            }
-        }
-
-
-
-        public static void PurgeDead(List<EntityAlt> Entities)
-        {
-            List<EntityAlt> DeadEntities = new List<EntityAlt>();
-
-            foreach (EntityAlt Entity in Entities)
-            {
-                if (Entity.IsDead)
-                {
-                    DeadEntities.Add(Entity);
-                }
-            }
-
-            foreach (EntityAlt Entity in DeadEntities)
-            {
-                Entities.Remove(Entity);
-            }
-        }
-    }
     internal class Entity
     {
         public float X { get; set; }
@@ -310,8 +196,6 @@ namespace Bombarder
             }
         }
     }
-
-
 
 
     public class EntityBlock
