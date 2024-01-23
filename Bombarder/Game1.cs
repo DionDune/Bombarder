@@ -335,29 +335,16 @@ namespace Bombarder
                         if (random.Next(0, 4) == 0)
                         {
                             //Demon Eye
-                            Entities.Add(new Entity()
+                            Entities.Add(new Entity(new Entity.DemonEye())
                             {
                                 X = (int)SpawnPoint.X,
                                 Y = (int)SpawnPoint.Y,
-
-                                Type = "DemonEye",
-
-                                Peices = new List<EntityBlock>() { new EntityBlock() }
                             });
-                            Entities.Last().Peices[0].Textures = new List<Texture2D>() { Textures.DemonEye.Item1, Textures.DemonEye.Item2 };
-                            Entities.Last().Peices[0].Width = Entities.Last().Peices[0].Textures[0].Width / 3 * 2;
-                            Entities.Last().Peices[0].Height = Entities.Last().Peices[0].Textures[0].Height / 3 * 2;
-                            Entities.Last().Peices[0].Offset = new Vector2(-Entities.Last().Peices[0].Width / 2, -Entities.Last().Peices[0].Height / 2);
-                            Entities.Last().HitboxOffset = new Point(-(int)(Entities.Last().Peices[0].Width / 2 * 0.8), -(int)(Entities.Last().Peices[0].Height / 2 * 0.8));
-                            Entities.Last().HitboxSize = new Point((int)(Entities.Last().Peices[0].Width * 0.8), (int)(Entities.Last().Peices[0].Height * 0.8));
-                            Entities.Last().HealthBarVisible = true;
-                            Entities.Last().HealthBarDimentions = new Point(80, 16);
-                            Entities.Last().HealthBarOffset = new Point(-40, -Entities.Last().HitboxOffset.Y + 5);
                         }
                         else
                         {
                             //Default
-                            Entities.Add(new Entity()
+                            Entities.Add(new Entity(new Entity.RedCube())
                             {
                                 X = (int)SpawnPoint.X,
                                 Y = (int)SpawnPoint.Y,
@@ -368,15 +355,23 @@ namespace Bombarder
             }
         }
 
-        private void EnactEnemyChase()
+        private void EnactEntities()
         {
             if (Settings.RunEntityAI)
             {
                 foreach (Entity Entity in Entities)
                 {
-                    if (Entity.ChasesPlayer)
+                    string EntityType = Entity.EntityObj.ToString();
+
+                    //Enact Inbuilt Function
+                    switch (EntityType)
                     {
-                        Entity.MoveTowards(new Vector2(Player.X, Player.Y));
+                        case "Bombarder.Entity+RedCube":
+                            Entity.RedCube.EnactAI(Entity, Player);
+                            break;
+                        case "Bombarder.Entity+DemonEye":
+                            Entity.DemonEye.EnactAI(Entity, Player);
+                            break;
                     }
                 }
             }
@@ -793,10 +788,7 @@ namespace Bombarder
                 PlayerMovement_EnactMomentum();
 
                 //Entity Functions
-                if (Settings.RunEntityAI)
-                {
-                    EnactEnemyChase();
-                }
+                EnactEntities();
                 Entity.PurgeDead(Entities);
                 //Particles
                 Particle.EnactDuration(Particles);
@@ -891,20 +883,33 @@ namespace Bombarder
                 //Entities
                 foreach (Entity Entity in Entities)
                 {
-                    foreach (EntityBlock Block in Entity.Peices)
-                    {
-                        Color BlockColor = Block.Color;
-                        Texture2D BlockTexture = Textures.White;
-                        if (Block.Textures != null)
-                        {
-                            BlockColor = Color.White;
-                            BlockTexture = Block.Textures.First();
-                        }
+                    string EntityType = Entity.EntityObj.ToString();
 
-                        _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                     (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
-                                                                    Block.Width, Block.Height), BlockColor);
+
+                    if (EntityType == "Bombarder.Entity+RedCube")
+                    {
+                        foreach (EntityBlock Block in Entity.Parts)
+                        {
+                            Color BlockColor = Block.Color;
+                            Texture2D BlockTexture = Textures.White;
+                            if (Block.Textures != null)
+                            {
+                                BlockColor = Color.White;
+                                BlockTexture = Block.Textures.First();
+                            }
+
+                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        Block.Width, Block.Height), BlockColor);
+                        }
                     }
+                    else if (EntityType == "Bombarder.Entity+DemonEye")
+                    {
+                        _spriteBatch.Draw(Textures.DemonEye.Item1, new Rectangle((int)(Entity.X - (Textures.DemonEye.Item1.Width * 0.8 / 2)) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Entity.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                      (int)(Textures.DemonEye.Item1.Width * 0.8), (int)(Textures.DemonEye.Item1.Height * 0.8)), Color.White);
+                    }
+
 
                     if (Settings.ShowHitBoxes)
                     {
