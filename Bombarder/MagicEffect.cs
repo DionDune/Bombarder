@@ -341,6 +341,43 @@ namespace Bombarder
                 }
             }
         }
+        public class ForceContainer
+        {
+            public readonly Color Colour = Color.OrangeRed;
+
+            public const int DurationDefault = 250;
+            public const float Radius = 300;
+            public const float EdgeEffectWith = 10;
+
+            
+
+            public static void EnactEffect(MagicEffect Effect, List<Entity> Entities)
+            {
+                EnactForce(Effect, Entities);
+            }
+            public static void EnactForce(MagicEffect Effect, List<Entity> Entities)
+            {
+                ForceContainer Container = (ForceContainer)Effect.MagicObj;
+
+                foreach (Entity Entity in Entities)
+                {
+                    float XDiff = Math.Abs(Effect.X - Entity.X);
+                    float YDiff = Math.Abs(Effect.Y - Entity.Y);
+                    float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                    if (Distance >= Radius - EdgeEffectWith && Distance <= Radius)
+                    {
+                        float xDiff = Entity.X - Effect.X;
+                        float yDiff = Entity.Y - Effect.Y;
+                        float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+                        float AngleRadians = Angle * (float)(Math.PI / 180);
+
+                        Entity.X -= (Radius - Distance) * (float)Math.Cos(AngleRadians);
+                        Entity.Y -= (Radius - Distance) * (float)Math.Sin(AngleRadians);
+                    }
+                }
+            }
+        }
         public class WideLazer
         {
             const int Damage = 2;
