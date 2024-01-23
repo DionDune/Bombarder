@@ -345,8 +345,8 @@ namespace Bombarder
         {
             public readonly Color Colour = Color.OrangeRed;
 
-            public const int DurationDefault = 250;
-            public const float Radius = 300;
+            public const int DurationDefault = 350;
+            public const float Radius = 250;
             public const float EdgeEffectWith = 10;
 
             
