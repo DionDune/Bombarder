@@ -436,6 +436,17 @@ namespace Bombarder
                     MagicObj = new ForceWave()
                 });
             }
+            else if (MagicType.ToString() == "Bombarder.MagicEffect+ForceContainer")
+            {
+                MagicEffects.Add(new MagicEffect()
+                {
+                    X = X,
+                    Y = Y,
+                    
+                    Duration = MagicEffect.ForceContainer.DurationDefault,
+                    MagicObj = new ForceWave()
+                });
+            }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
             {
                 //Calculating Angle
@@ -691,6 +702,10 @@ namespace Bombarder
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
                 {
                     CreateMagic((int)Player.X, (int)Player.Y, new ForceWave());
+                }
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
+                {
+                    CreateMagic(Mouse.GetState().X, Mouse.GetState().Y, new ForceContainer());
                 }
 
 
