@@ -444,7 +444,7 @@ namespace Bombarder
                     Y = Y,
                     
                     Duration = MagicEffect.ForceContainer.DurationDefault,
-                    MagicObj = new ForceWave()
+                    MagicObj = new ForceContainer()
                 });
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
