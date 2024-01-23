@@ -708,7 +708,8 @@ namespace Bombarder
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
                 {
-                    CreateMagic(Mouse.GetState().X, Mouse.GetState().Y, new ForceContainer());
+                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new ForceContainer());
                 }
 
 
