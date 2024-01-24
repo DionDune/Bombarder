@@ -407,8 +407,8 @@ namespace Bombarder
                         float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                         float AngleRadians = Angle * (float)(Math.PI / 180);
 
-                        Entity.X -= (Container.CurrentRadius - Distance) * (float)Math.Cos(AngleRadians);
-                        Entity.Y -= (Container.CurrentRadius - Distance) * (float)Math.Sin(AngleRadians);
+                        Entity.X -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Cos(AngleRadians);
+                        Entity.Y -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Sin(AngleRadians);
                     }
                 }
             }
