@@ -389,13 +389,16 @@ namespace Bombarder
         {
             if (MagicType.ToString() == "Bombarder.MagicEffect+StaticOrb")
             {
-                MagicEffects.Add(new MagicEffect()
+                if (Player.CheckUseMana(MagicEffect.StaticOrb.ManaCost))
                 {
-                    X = X,
-                    Y = Y,
-                    Duration = MagicEffect.StaticOrb.DefaultDuration,
-                    HasDuration = MagicEffect.StaticOrb.HasDuration
-                });
+                    MagicEffects.Add(new MagicEffect()
+                    {
+                        X = X,
+                        Y = Y,
+                        Duration = MagicEffect.StaticOrb.DefaultDuration,
+                        HasDuration = MagicEffect.StaticOrb.HasDuration
+                    });
+                }
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
             {
@@ -419,42 +422,52 @@ namespace Bombarder
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+DissapationWave")
             {
-                MagicEffects.Add(new MagicEffect()
+                if (Player.CheckUseMana(MagicEffect.DissapationWave.ManaCost))
                 {
-                    X = X,
-                    Y = Y,
+                    MagicEffects.Add(new MagicEffect()
+                    {
+                        X = X,
+                        Y = Y,
 
-                    Duration = MagicEffect.DissapationWave.DefaultDuration,
-                    HasDuration = MagicEffect.DissapationWave.HasDuration,
-                    MagicObj = new DissapationWave()
-                });
+                        Duration = MagicEffect.DissapationWave.DefaultDuration,
+                        HasDuration = MagicEffect.DissapationWave.HasDuration,
+                        MagicObj = new DissapationWave()
+                    });
+                }
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+ForceWave")
             {
-                MagicEffects.Add(new MagicEffect()
+                if (Player.CheckUseMana(MagicEffect.ForceWave.ManaCost))
                 {
-                    X = X,
-                    Y = Y,
+                    MagicEffects.Add(new MagicEffect()
+                    {
+                        X = X,
+                        Y = Y,
 
-                    Duration = MagicEffect.ForceWave.DefaultDuration,
-                    HasDuration = MagicEffect.ForceWave.HasDuration,
-                    MagicObj = new ForceWave()
-                });
+                        Duration = MagicEffect.ForceWave.DefaultDuration,
+                        HasDuration = MagicEffect.ForceWave.HasDuration,
+                        MagicObj = new ForceWave()
+                    });
+                }
+                
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+ForceContainer")
             {
-                MagicEffects.Add(new MagicEffect()
+                if (Player.CheckUseMana(MagicEffect.ForceContainer.ManaCost))
                 {
-                    X = (int)Player.X,
-                    Y = (int)Player.Y,
-                    
-                    Duration = MagicEffect.ForceContainer.DurationDefault,
-                    MagicObj = new ForceContainer()
+                    MagicEffects.Add(new MagicEffect()
                     {
-                        CurrentRadius = ForceContainer.RadiusMoving,
-                        Destination = new Point(X, Y)
-                    }
-                });
+                        X = (int)Player.X,
+                        Y = (int)Player.Y,
+
+                        Duration = MagicEffect.ForceContainer.DurationDefault,
+                        MagicObj = new ForceContainer()
+                        {
+                            CurrentRadius = ForceContainer.RadiusMoving,
+                            Destination = new Point(X, Y)
+                        }
+                    });
+                }
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
             {

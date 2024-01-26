@@ -142,6 +142,7 @@ namespace Bombarder
         public class StaticOrb
         {
             const int Damage = 4;
+            public static readonly int ManaCost = 75;
 
             public const int DefaultDuration = 150;
             public const bool HasDuration = true;
@@ -243,6 +244,8 @@ namespace Bombarder
         {
             public Color Colour = Color.MediumPurple;
 
+            public static readonly int ManaCost = 50;
+
             public float Damage { get; set; }
             public const int DefaultDuration = 150;
             private const float DefaultDamage = 12;
@@ -298,6 +301,8 @@ namespace Bombarder
         public class ForceWave
         {
             public Color Colour = Color.Crimson;
+
+            public static readonly int ManaCost = 200;
 
             public const int DefaultDuration = 200;
             public const bool HasDuration = true;
@@ -355,6 +360,8 @@ namespace Bombarder
         public class ForceContainer
         {
             public readonly Color Colour = Color.OrangeRed;
+
+            public static readonly int ManaCost = 150;
 
             public const int DurationDefault = 350;
             public const float Radius = 250;
@@ -472,6 +479,9 @@ namespace Bombarder
         }
         public class WideLazer
         {
+            public static readonly int ManaCost = 50;
+            public const uint ManaCostInterval = 5;
+
             const int Damage = 3;
             const int DamageInterval = 3;
 
