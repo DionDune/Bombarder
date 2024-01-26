@@ -32,7 +32,7 @@ namespace Bombarder
         InputStates Input;
         Player Player;
 
-        List<Entity> Entities = new List<Entity>();
+        public List<Entity> Entities = new List<Entity>();
         public static Object.ObjectContainer Objects = new Object.ObjectContainer();
         public static List<Particle> Particles = new List<Particle>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();

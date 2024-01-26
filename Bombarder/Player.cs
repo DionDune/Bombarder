@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bombarder
 {
-    internal class Player
+    public class Player
     {
         public float X { get; set; }
         public float Y { get; set; }
