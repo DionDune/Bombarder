@@ -74,6 +74,20 @@ namespace Bombarder
 
                 //EntityObj = EntityClass;
             }
+            else if (EntityType == "Bombarder.Entity+CubeMother")
+            {
+                Health = CubeMother.HealthDefault;
+                HealthMax = CubeMother.HealthMax;
+                HealthBarVisible = CubeMother.HealthBarVisible;
+
+                ChaseMode = CubeMother.ChaseModeDefault;
+
+                Parts = CubeMother.Parts;
+                HitboxOffset = CubeMother.HitboxOffset;
+                HitboxSize = CubeMother.HitBoxSize;
+                HealthBarOffset = CubeMother.HealthBarOffset;
+                HealthBarDimentions = CubeMother.HealthBarDimentions;
+            }
         }
 
         public class RedCube
@@ -115,8 +129,10 @@ namespace Bombarder
         public class CubeMother
         {
             public const float HealthMax = 1500;
+            public const float HealthDefault = 1500;
             public const int HealthRegainInterval = 3;
             public const float HealthRegainAmount = 1;
+            public const bool HealthBarVisible = true;
 
             public static readonly Point HitboxOffset = new Point(-231, -231);
             public static readonly Point HitBoxSize = new Point(462, 462);
