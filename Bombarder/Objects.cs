@@ -278,14 +278,26 @@ namespace Bombarder
             public static Dust GetRandom(float Opacity)
                 //Gets a random dust instance
             {
-                const int ChanceRange = 100;
-                const int RedChance = 30;
+                const int ChanceRange = 105;
+                const int RedChance = 35;
+                const int PrupleChance = 2;
 
 
 
                 int TypeVal = Game1.random.Next(0, ChanceRange);
 
-                if (TypeVal < RedChance)
+                if (TypeVal < PrupleChance)
+                {
+                    //Gold Dust
+                    return new Dust()
+                    {
+                        Width = PrupleDust.Width,
+                        Height = PrupleDust.Height,
+                        Colour = PrupleDust.Colour,
+                        Opacity = Opacity
+                    };
+                }
+                else if (TypeVal < RedChance)
                 {
                     // Red Dust
                     return new Dust()
@@ -324,6 +336,13 @@ namespace Bombarder
                 public const int Height = 8;
 
                 public static readonly Color Colour = Color.Red;
+            }
+            public class PrupleDust
+            {
+                public const int Width = 12;
+                public const int Height = 12;
+
+                public static readonly Color Colour = new Color(204, 51, 255);
             }
         }
     }
