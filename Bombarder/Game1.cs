@@ -959,6 +959,23 @@ namespace Bombarder
                                                                       (int)(Entity.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)(Textures.DemonEye.Item1.Width * 0.8), (int)(Textures.DemonEye.Item1.Height * 0.8)), Color.White);
                     }
+                    else if (EntityType == "Bombarder.Entity+CubeMother")
+                    {
+                        foreach (EntityBlock Block in Entity.Parts)
+                        {
+                            Color BlockColor = Block.Color;
+                            Texture2D BlockTexture = Textures.White;
+                            if (Block.Textures != null)
+                            {
+                                BlockColor = Color.White;
+                                BlockTexture = Block.Textures.First();
+                            }
+
+                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
+                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                                                                        Block.Width, Block.Height), BlockColor);
+                        }
+                    }
 
 
                     if (Settings.ShowHitBoxes)
