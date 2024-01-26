@@ -14,7 +14,8 @@ Controls:
      - Left-Click:   Impact Attact
      - Right-Click:  Lazer Attack
      - Middle-Click: Wave Attack
-     - Q:            Force Field
+     - Q:            Create Force Field
+     - Tab:          Create Force Container
 
   > Other:
 
