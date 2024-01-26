@@ -298,6 +298,8 @@ namespace Bombarder
             private const float DefaultRadius = 5;
             private const float RadiusSpread = 10;
 
+            private const int BorderWidth = 20;
+
             public ForceWave()
             {
                 Radius = DefaultRadius;
@@ -356,6 +358,8 @@ namespace Bombarder
             public Point Destination;
             public bool DestinationReached = false;
             public float CurrentRadius = RadiusMoving;
+
+            public const int BorderWidth = 15;
 
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entities)
