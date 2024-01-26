@@ -116,7 +116,7 @@ namespace Bombarder
             int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
 
 
-            Dust.SpawnRandom(Particles, PlayerPos, ClutterSpawnRangeX, ClutterSpawnRangeY, Tick);
+            Dust.Spawn(Particles, PlayerPos, ClutterSpawnRangeX, ClutterSpawnRangeY, Tick);
         }
 
 
@@ -208,6 +208,7 @@ namespace Bombarder
         public class Dust
         {
             public const int SpawnInterval = 1;
+            public const int MaxSpawnCount = 2;
             public const int DurationDefault = -1;
             public const float OpacityDefault = 0;
             public const float OpacityChange = 0.025F;
@@ -253,26 +254,29 @@ namespace Bombarder
             }
 
 
-            public static void SpawnRandom(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
+            public static void Spawn(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
             {
                 if (Tick % Dust.SpawnInterval == 0)
                 {
-                    int NewRangeX = RangeX * 2;
-                    int NewRangeY = RangeY * 2;
-
-                    float Opacity = OpacityDefault;
-
-                    object DustObj = Dust.GetRandom(Opacity);
-                    int DustX = Game1.random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
-                    int DustY = Game1.random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
-
-                    Particles.Add(new Particle(DustX, DustY)
+                    for (int i = 0; i < Game1.random.Next(0, MaxSpawnCount); i++)
                     {
-                        HasDuration = false,
-                        Duration = DurationDefault,
+                        int NewRangeX = RangeX * 2;
+                        int NewRangeY = RangeY * 2;
 
-                        ParticleObj = DustObj
-                    });
+                        float Opacity = OpacityDefault;
+
+                        object DustObj = Dust.GetRandom(Opacity);
+                        int DustX = Game1.random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
+                        int DustY = Game1.random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
+
+                        Particles.Add(new Particle(DustX, DustY)
+                        {
+                            HasDuration = false,
+                            Duration = DurationDefault,
+
+                            ParticleObj = DustObj
+                        });
+                    }
                 }
             }
             public static Dust GetRandom(float Opacity)
