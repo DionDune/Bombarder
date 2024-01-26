@@ -144,6 +144,8 @@ namespace Bombarder
 
             public const int SpawnIntervalMin = 25;
             public const int SpawnIntervalMax = 150;
+            public const int SpawnDistanceMin = 150;
+            public const int SpawnDistanceMax = 350;
             public uint NextSpawnFrame = 0;
 
             public static readonly List<EntityBlock> Parts = new List<EntityBlock>() {
@@ -175,11 +177,16 @@ namespace Bombarder
                 CubeMother Mother = (CubeMother)Entity.EntityObj;
                 if (Mother.NextSpawnFrame == Game1.GameTick || Game1.GameTick > Mother.NextSpawnFrame)
                 {
+                    float SpawnAngle = Game1.random.Next(0, 360) * (float)(Math.PI / 180);
+                    int SpawnDistance = Game1.random.Next(SpawnDistanceMin, SpawnDistanceMax);
+                    Vector2 SpawnPoint = new Vector2(Entity.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
+                                                        Entity.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
+
                     //Red Cube
                     Game1.EntitiesToAdd.Add(new Entity(new Entity.RedCube())
                     {
-                        X = Entity.X,
-                        Y = Entity.Y
+                        X = SpawnPoint.X,
+                        Y = SpawnPoint.Y
                     });
 
                     Mother.NextSpawnFrame = (uint)(Game1.GameTick + Game1.random.Next(SpawnIntervalMin, SpawnIntervalMax));
