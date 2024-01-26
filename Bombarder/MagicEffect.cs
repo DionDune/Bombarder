@@ -354,6 +354,7 @@ namespace Bombarder
             public const float EdgeEffectWith = 10;
             public const bool HasDuration_Moving = false;
             public const bool HasDuration_DestinationReached = true;
+            public const float RadiusIncrease = 16;
 
             public Point Destination;
             public bool DestinationReached = false;
@@ -384,13 +385,23 @@ namespace Bombarder
                         Effect.X = Container.Destination.X;
                         Effect.Y = Container.Destination.Y;
                         Container.DestinationReached = true;
-                        Container.CurrentRadius = Radius;
                         Effect.HasDuration = HasDuration_DestinationReached;
                     }
                     else
                     {
                         Effect.X += (int)(MovementSpeed * (float)Math.Cos(AngleRadians));
                         Effect.Y += (int)(MovementSpeed * (float)Math.Sin(AngleRadians));
+                    }
+                }
+                else if (Container.CurrentRadius < ForceContainer.Radius)
+                {
+                    if (ForceContainer.Radius - Container.CurrentRadius < ForceContainer.RadiusIncrease)
+                    {
+                        Container.CurrentRadius = ForceContainer.Radius;
+                    }
+                    else
+                    {
+                        Container.CurrentRadius += ForceContainer.RadiusIncrease;
                     }
                 }
             }
