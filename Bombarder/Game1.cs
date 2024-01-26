@@ -825,6 +825,7 @@ namespace Bombarder
                 MagicEffect.EnactDuration(MagicEffects);
             }
 
+            Debug.WriteLine(MagicEffects.Count());
 
             base.Update(gameTime);
         }

@@ -41,13 +41,16 @@ namespace Bombarder
 
             foreach (MagicEffect Effect in Effects)
             {
-                if (Effect.Duration == 0)
+                if (Effect.HasDuration)
                 {
-                    DeadEffects.Add(Effect);
-                }
-                else
-                {
-                    Effect.Duration--;
+                    if (Effect.Duration == 0)
+                    {
+                        DeadEffects.Add(Effect);
+                    }
+                    else
+                    {
+                        Effect.Duration--;
+                    }
                 }
             }
             foreach (MagicEffect Effect in DeadEffects)
