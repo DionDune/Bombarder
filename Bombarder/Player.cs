@@ -52,7 +52,7 @@ namespace Bombarder
             HealthBarOffset = new Point(-20, 55);
             HealthBarVisible = true;
 
-            ManaInfinite = false;
+            ManaInfinite = true;
             Mana = 0;
             ManaMax = 400;
             ManaBarDimentions = new Point(25, 450);
@@ -94,6 +94,12 @@ namespace Bombarder
         }
         public bool CheckUseMana(int Cost)
         {
+            if (ManaInfinite)
+            {
+                return true;
+            }
+
+
             if (Mana > Cost)
             {
                 Mana -= Cost;
