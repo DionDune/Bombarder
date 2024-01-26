@@ -82,6 +82,8 @@ namespace Bombarder
 
             Textures.WhiteCircle = Content.Load<Texture2D>("Circle");
             Textures.HalfWhiteCirlce = Content.Load<Texture2D>("HalfCircle");
+            Textures.HollowCircle = Content.Load<Texture2D>("HollowCircle");
+
             Textures.Cursor = Content.Load<Texture2D>("Cursor");
             Textures.HitMarker = Content.Load<Texture2D>("HitMarker");
 
