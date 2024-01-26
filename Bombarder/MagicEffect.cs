@@ -142,7 +142,10 @@ namespace Bombarder
         public class StaticOrb
         {
             const int Damage = 4;
+
             public const int DefaultDuration = 150;
+            public const bool HasDuration = true;
+
             public uint LastParticleFrame;
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entites)
@@ -254,6 +257,8 @@ namespace Bombarder
             private const float DefaultOpacity = 0.95F;
             private const float OpacityMultiplier = 0.98F;
 
+            public const bool HasDuration = true;
+
             public DissapationWave()
             {
                 Damage = DefaultDamage;
@@ -295,6 +300,7 @@ namespace Bombarder
             public Color Colour = Color.Crimson;
 
             public const int DefaultDuration = 200;
+            public const bool HasDuration = true;
 
             public float Radius { get; set; }
             public const float RadiusMax = 400;

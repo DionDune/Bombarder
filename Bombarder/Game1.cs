@@ -393,7 +393,8 @@ namespace Bombarder
                 {
                     X = X,
                     Y = Y,
-                    Duration = MagicEffect.StaticOrb.DefaultDuration
+                    Duration = MagicEffect.StaticOrb.DefaultDuration,
+                    HasDuration = MagicEffect.StaticOrb.HasDuration
                 });
             }
             else if (MagicType.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
@@ -424,6 +425,7 @@ namespace Bombarder
                     Y = Y,
 
                     Duration = MagicEffect.DissapationWave.DefaultDuration,
+                    HasDuration = MagicEffect.DissapationWave.HasDuration,
                     MagicObj = new DissapationWave()
                 });
             }
@@ -435,6 +437,7 @@ namespace Bombarder
                     Y = Y,
 
                     Duration = MagicEffect.ForceWave.DefaultDuration,
+                    HasDuration = MagicEffect.ForceWave.HasDuration,
                     MagicObj = new ForceWave()
                 });
             }
@@ -825,7 +828,6 @@ namespace Bombarder
                 MagicEffect.EnactDuration(MagicEffects);
             }
 
-            Debug.WriteLine(MagicEffects.Count());
 
             base.Update(gameTime);
         }
