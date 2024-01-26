@@ -1036,6 +1036,9 @@ namespace Bombarder
                     {
                         ForceWave Wave = (ForceWave)Effect.MagicObj;
 
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                      (int)(Wave.Radius * 2), (int)(Wave.Radius * 2)), Wave.Colour * 0.3F);
                         for (int i = 0; i < ForceWave.BorderWidth; i++)
                         {
                             _spriteBatch.Draw(Textures.HollowCircle, new Rectangle((int)(Effect.X - Wave.Radius + i) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
