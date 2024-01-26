@@ -316,44 +316,56 @@ namespace Bombarder
 
         #region Entity Interaction
 
-        private void SpawnRandomEnemy(bool OnFringe, bool IsEnemy)
+        private void SpawnRandomEnemy(bool OnFringe)
         {
             int SpawnCount = random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
 
-            if (OnFringe)
+            for (int i = 0; i < SpawnCount; i++)
+            {
+                if (random.Next(0, 4) == 0)
+                {
+                    //Demon Eye
+                    SpawnEnemy(new Entity.DemonEye(), OnFringe, Vector2.Zero);
+                }
+                else
+                {
+                    //Red Cube
+                    SpawnEnemy(new Entity.RedCube(), OnFringe, Vector2.Zero);
+                }
+            }
+        }
+        private void SpawnEnemy(object EnemyClass, bool RandomLocation, Vector2 Location)
+        {
+            Vector2 SpawnPoint = Location;
+
+            if (RandomLocation)
             //Spawns randomly from edges of screen
             {
-                float SpawnAngle;
-                int SpawnDistance;
-                for (int i = 0; i < SpawnCount; i++)
-                {
-                    SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
-                    SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
-                    Vector2 SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
-                                                     Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
+                float SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
+                int SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
+                SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
+                                                    Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
+            }
 
-                    if (IsEnemy)
+
+            switch (EnemyClass.ToString())
+            {
+                case "Bombarder.Entity+RedCube":
+                    //Red Cube
+                    Entities.Add(new Entity(new Entity.RedCube())
                     {
-                        if (random.Next(0, 4) == 0)
-                        {
-                            //Demon Eye
-                            Entities.Add(new Entity(new Entity.DemonEye())
-                            {
-                                X = (int)SpawnPoint.X,
-                                Y = (int)SpawnPoint.Y,
-                            });
-                        }
-                        else
-                        {
-                            //Default
-                            Entities.Add(new Entity(new Entity.RedCube())
-                            {
-                                X = (int)SpawnPoint.X,
-                                Y = (int)SpawnPoint.Y,
-                            });
-                        }
-                    }
-                }
+                        X = (int)SpawnPoint.X,
+                        Y = (int)SpawnPoint.Y,
+                    });
+                    break;
+                case "Bombarder.Entity+DemonEye":
+                    //Demon Eye
+                    Entities.Add(new Entity(new Entity.DemonEye())
+                    {
+                        X = (int)SpawnPoint.X,
+                        Y = (int)SpawnPoint.Y,
+                    });
+                    break;
             }
         }
 
@@ -719,7 +731,7 @@ namespace Bombarder
 
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.V))
                 {
-                    SpawnRandomEnemy(true, true);
+                    SpawnRandomEnemy(true);
                 }
 
 
