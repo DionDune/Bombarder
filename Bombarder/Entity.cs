@@ -112,6 +112,43 @@ namespace Bombarder
                 MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
             }
         }
+        public class CubeMother
+        {
+            public const float HealthMax = 1500;
+            public const int HealthRegainInterval = 3;
+            public const float HealthRegainAmount = 1;
+
+            public static readonly Point HitboxOffset = new Point(-231, -231);
+            public static readonly Point HitBoxSize = new Point(462, 462);
+            public static readonly Point HealthBarDimentions = new Point(350, 74);
+            public static readonly Point HealthBarOffset = new Point(-175, -37);
+
+            public const float BaseSpeed = 2;
+            public const bool ChaseModeDefault = false;
+
+            public static readonly List<EntityBlock> Parts = new List<EntityBlock>() {
+                new EntityBlock()
+                {
+                    Width = 462,
+                    Height = 462,
+                    Offset = new Vector2(-231, -231),
+                    Color = Color.IndianRed,
+                },
+                new EntityBlock()
+                {
+                    Width = 442,
+                    Height = 442,
+                    Offset = new Vector2(-221, -221),
+                    Color = Color.FloralWhite
+                }
+            };
+
+
+            public static void EnactAI(Entity Entity, Player Player)
+            {
+                MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+            } 
+        }
         public class DemonEye
         {
             public const float HealthMax = 150;
