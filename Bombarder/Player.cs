@@ -19,7 +19,7 @@ namespace Bombarder
         public bool HealthBarVisible { get; set; }
 
         public bool ManaInfinite { get; set; }
-        public const uint ManaRegainInterval = 10;
+        public const uint ManaRegainInterval = 8;
         public const int ManaRegainDefault = 5;
         public int ManaRegain = ManaRegainDefault;
         public int Mana { get; set; }
@@ -54,7 +54,7 @@ namespace Bombarder
 
             ManaInfinite = false;
             Mana = 0;
-            ManaMax = 300;
+            ManaMax = 400;
             ManaBarDimentions = new Point(25, 450);
             ManaBarScreenOrientation = "Bottom Left";
             ManaBarOffset = new Point(20, -20);
