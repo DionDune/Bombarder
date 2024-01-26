@@ -352,21 +352,28 @@ namespace Bombarder
             public const float RadiusMoving = 50;
             public const float MovementSpeed = 25;
             public const float EdgeEffectWith = 10;
+            public const float RadiusIncrease = 16;
+            public const float OpacityDefault = 0.7F;
+            public const float DeathOpacityMultiplier = 0.9F;
+
             public const bool HasDuration_Moving = false;
             public const bool HasDuration_DestinationReached = true;
-            public const float RadiusIncrease = 16;
+            public const bool IsActiveDefault = true;
 
             public Point Destination;
             public bool DestinationReached = false;
             public float CurrentRadius = RadiusMoving;
+            public bool IsActive = IsActiveDefault;
 
             public static readonly int BorderWidth = 15;
+            public float Opacity = OpacityDefault;
 
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entities)
             {
                 EnactMovement(Effect);
                 EnactForce(Effect, Entities);
+                EnactDuration(Effect);
             }
             public static void EnactMovement(MagicEffect Effect)
             {
@@ -409,21 +416,47 @@ namespace Bombarder
             {
                 ForceContainer Container = (ForceContainer)Effect.MagicObj;
 
-                foreach (Entity Entity in Entities)
+                if (Container.IsActive)
                 {
-                    float XDiff = Math.Abs(Effect.X - Entity.X);
-                    float YDiff = Math.Abs(Effect.Y - Entity.Y);
-                    float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-
-                    if (Distance >= Container.CurrentRadius - EdgeEffectWith && Distance <= Container.CurrentRadius)
+                    foreach (Entity Entity in Entities)
                     {
-                        float xDiff = Entity.X - Effect.X;
-                        float yDiff = Entity.Y - Effect.Y;
-                        float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
-                        float AngleRadians = Angle * (float)(Math.PI / 180);
+                        float XDiff = Math.Abs(Effect.X - Entity.X);
+                        float YDiff = Math.Abs(Effect.Y - Entity.Y);
+                        float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
-                        Entity.X -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Cos(AngleRadians);
-                        Entity.Y -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Sin(AngleRadians);
+                        if (Distance >= Container.CurrentRadius - EdgeEffectWith && Distance <= Container.CurrentRadius)
+                        {
+                            float xDiff = Entity.X - Effect.X;
+                            float yDiff = Entity.Y - Effect.Y;
+                            float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+                            float AngleRadians = Angle * (float)(Math.PI / 180);
+
+                            Entity.X -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Cos(AngleRadians);
+                            Entity.Y -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Sin(AngleRadians);
+                        }
+                    }
+                }
+            }
+            public static void EnactDuration(MagicEffect Effect)
+            {
+                ForceContainer Container = (ForceContainer)Effect.MagicObj;
+
+                if (Effect.Duration < 3)
+                {
+                    if (Container.IsActive)
+                    {
+                        Effect.HasDuration = false;
+                        Container.IsActive = false;
+                    }
+
+
+                    if (Container.Opacity > 0.05F)
+                    {
+                        Container.Opacity *= ForceContainer.DeathOpacityMultiplier;
+                    }
+                    else
+                    {
+                        Effect.HasDuration = true;
                     }
                 }
             }

@@ -996,7 +996,7 @@ namespace Bombarder
 
                         _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Container.CurrentRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                       (int)(Effect.Y - Container.CurrentRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
-                                                                      (int)Container.CurrentRadius * 2, (int)Container.CurrentRadius * 2), Container.Colour * 0.7F);
+                                                                      (int)Container.CurrentRadius * 2, (int)Container.CurrentRadius * 2), Container.Colour * Container.Opacity);
                     }
                     else if (MagicType == "Bombarder.MagicEffect+WideLazer")
                     {
