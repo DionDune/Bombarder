@@ -729,9 +729,15 @@ namespace Bombarder
                 //Movement
                 PlayerMovement_InputHandler(Keys_NewlyPressed);
 
+
+                //Enemy Spawning
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.V))
                 {
                     SpawnRandomEnemy(true);
+                }
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.D1))
+                {
+                    SpawnEnemy(new Entity.CubeMother(), false, new Vector2(0, 0));
                 }
 
 
