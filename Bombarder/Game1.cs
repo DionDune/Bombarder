@@ -394,6 +394,9 @@ namespace Bombarder
                         case "Bombarder.Entity+DemonEye":
                             Entity.DemonEye.EnactAI(Entity, Player);
                             break;
+                        case "Bombarder.Entity+CubeMother":
+                            Entity.CubeMother.EnactAI(Entity, Player);
+                            break;
                     }
                 }
             }
