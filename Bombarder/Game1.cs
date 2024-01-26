@@ -863,7 +863,7 @@ namespace Bombarder
             if (GameState == "Play")
             {
                 //Grid
-                //DrawGrid();
+                DrawGrid();
 
                 //Objects
                 foreach (Object Obj in Objects.GeneralObjects)
