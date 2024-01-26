@@ -19,8 +19,12 @@ namespace Bombarder
         public bool HealthBarVisible { get; set; }
 
         public bool ManaInfinite { get; set; }
+        public const uint ManaRegainInterval = 10;
+        public const int ManaRegainDefault = 5;
+        public int ManaRegain = ManaRegainDefault;
         public int Mana { get; set; }
         public int ManaMax { get; set; }
+
         public Point ManaBarDimentions { get; set; }
         public string ManaBarScreenOrientation { get; set; }
         public Point ManaBarOffset { get; set; }
@@ -48,8 +52,8 @@ namespace Bombarder
             HealthBarOffset = new Point(-20, 55);
             HealthBarVisible = true;
 
-            ManaInfinite = true;
-            Mana = 280;
+            ManaInfinite = false;
+            Mana = 0;
             ManaMax = 300;
             ManaBarDimentions = new Point(45, 450);
             ManaBarScreenOrientation = "Bottom Left";
@@ -67,6 +71,38 @@ namespace Bombarder
 
             Width = 50;
             Height = 100;
+        }
+
+        public void Handler()
+        {
+            ManaHandler();
+        }
+
+        public void ManaHandler()
+        {
+            if (Mana < ManaMax && Game1.GameTick % ManaRegainInterval == 0)
+            {
+                if (ManaMax - Mana < ManaRegain)
+                {
+                    Mana = ManaMax;
+                }
+                else
+                {
+                    Mana += ManaRegain;
+                }
+            }
+        }
+        public bool CheckUseMana(int Cost)
+        {
+            if (Mana > Cost)
+            {
+                Mana -= Cost;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

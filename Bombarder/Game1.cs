@@ -814,6 +814,7 @@ namespace Bombarder
             {
                 //Player Interaction
                 PlayerMovement_EnactMomentum();
+                Player.Handler();
 
                 //Entity Functions
                 EnactEntities();
