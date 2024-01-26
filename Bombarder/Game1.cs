@@ -1112,11 +1112,20 @@ namespace Bombarder
                 if (!Player.ManaInfinite && Player.Mana < Player.ManaMax)
                 {
                     Point OrientPos = UIItem.GetOritentationPosition(_graphics, Player.ManaBarScreenOrientation);
-                    Point ManaPos = new Point(OrientPos.X + Player.ManaBarOffset.X, OrientPos.Y + Player.ManaBarOffset.Y);
                     float ManaPercent = (float)Player.Mana / Player.ManaMax;
-                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
-                    UIPage.RenderOutline(_spriteBatch, Textures.White, Color.White, ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
-                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X, ManaPos.Y, Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
+
+                    Point ManaContainerPos = new Point(OrientPos.X + Player.ManaBarOffset.X, OrientPos.Y + Player.ManaBarOffset.Y - Player.ManaBarDimentions.Y);
+                    Point ManaBarPos = new Point(OrientPos.X + Player.ManaBarOffset.X, 
+                                                 OrientPos.Y + Player.ManaBarOffset.Y - (int)(Player.ManaBarDimentions.Y * ManaPercent));
+
+                    
+
+                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaContainerPos.X - 2, ManaContainerPos.Y - 2, 
+                                                                    Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
+                    UIPage.RenderOutline(_spriteBatch, Textures.White, Color.White, ManaContainerPos.X - 2, ManaContainerPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
+
+                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaBarPos.X, ManaBarPos.Y, 
+                                                                    Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
                 }
             }
 
