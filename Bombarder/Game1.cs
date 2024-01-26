@@ -911,16 +911,6 @@ namespace Bombarder
                                                              _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y + 2,
                                                              (int)((Player.HealthBarDimentions.X - 4) * ((float)Player.Health / Player.HealthMax)), Player.HealthBarDimentions.Y - 4), Color.Green);
 
-                //Mana Bar
-                if (!Player.ManaInfinite)
-                {
-                    Point OrientPos = UIItem.GetOritentationPosition(_graphics, Player.ManaBarScreenOrientation);
-                    Point ManaPos = new Point(OrientPos.X + Player.ManaBarOffset.X, OrientPos.Y + Player.ManaBarOffset.Y);
-                    float ManaPercent = (float)Player.Mana / Player.ManaMax;
-                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
-                    UIPage.RenderOutline(_spriteBatch, Textures.White, Color.White, ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
-                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X, ManaPos.Y, Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
-                }
 
                 //Entities
                 foreach (Entity Entity in Entities)
@@ -1115,6 +1105,18 @@ namespace Bombarder
                                                                             (int)(particle.Item1.Y - Effect.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                             (int)(Effect.Radius * 2), (int)(Effect.Radius * 2)), Particle.Impact.Colour * Effect.Opacity);
                     }
+                }
+
+
+                //Mana Bar
+                if (!Player.ManaInfinite && Player.Mana < Player.ManaMax)
+                {
+                    Point OrientPos = UIItem.GetOritentationPosition(_graphics, Player.ManaBarScreenOrientation);
+                    Point ManaPos = new Point(OrientPos.X + Player.ManaBarOffset.X, OrientPos.Y + Player.ManaBarOffset.Y);
+                    float ManaPercent = (float)Player.Mana / Player.ManaMax;
+                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
+                    UIPage.RenderOutline(_spriteBatch, Textures.White, Color.White, ManaPos.X - 2, ManaPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
+                    _spriteBatch.Draw(Textures.White, new Rectangle(ManaPos.X, ManaPos.Y, Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
                 }
             }
 
