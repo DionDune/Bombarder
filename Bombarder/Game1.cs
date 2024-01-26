@@ -366,6 +366,14 @@ namespace Bombarder
                         Y = (int)SpawnPoint.Y,
                     });
                     break;
+                case "Bombarder.Entity+CubeMother":
+                    //Cube Mother
+                    Entities.Add(new Entity(new Entity.CubeMother())
+                    {
+                        X = (int)SpawnPoint.X,
+                        Y = (int)SpawnPoint.Y
+                    });
+                    break;
             }
         }
 
