@@ -308,9 +308,11 @@ namespace Bombarder
             public const bool HasDuration = true;
 
             public float Radius { get; set; }
-            public const float RadiusMax = 400;
+            public const float RadiusMax = 200;
             private const float DefaultRadius = 5;
             private const float RadiusSpread = 10;
+            public const float RadiusDecreaseMultiplier = 0.9F;
+            public const int DurationSpreadCutoff = 5;
 
             public static readonly int BorderWidth = 20;
 
@@ -324,6 +326,7 @@ namespace Bombarder
             {
                 EnactSpread(Effect);
                 EnactForce(Effect, Entities);
+                EnactDuration(Effect);
             }
             private static void EnactForce(MagicEffect Effect, List<Entity> Entites)
             {
@@ -349,11 +352,32 @@ namespace Bombarder
             }
             private static void EnactSpread(MagicEffect Effect)
             {
-                ForceWave Wave = (ForceWave)Effect.MagicObj;
-                
-                if (Wave.Radius < ForceWave.RadiusMax)
+                if (Effect.Duration > DurationSpreadCutoff)
                 {
-                    Wave.Radius += RadiusSpread;
+                    ForceWave Wave = (ForceWave)Effect.MagicObj;
+
+                    if (Wave.Radius < ForceWave.RadiusMax)
+                    {
+                        Wave.Radius += RadiusSpread;
+                    }
+                }
+            }
+            private static void EnactDuration(MagicEffect Effect)
+            {
+                ForceWave Wave = (ForceWave)Effect.MagicObj;
+
+                if (Effect.Duration < DurationSpreadCutoff)
+                {
+                    if (Wave.Radius > 1)
+                    {
+                        Effect.HasDuration = false;
+
+                        Wave.Radius *= ForceWave.RadiusDecreaseMultiplier;
+                    }
+                    else
+                    {
+                        Effect.HasDuration = true;
+                    }
                 }
             }
         }
