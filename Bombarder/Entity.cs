@@ -148,14 +148,14 @@ namespace Bombarder
                     Width = 462,
                     Height = 462,
                     Offset = new Vector2(-231, -231),
-                    Color = Color.IndianRed,
+                    Color = Color.DarkRed,
                 },
                 new EntityBlock()
                 {
                     Width = 442,
                     Height = 442,
                     Offset = new Vector2(-221, -221),
-                    Color = Color.FloralWhite
+                    Color = Color.Red
                 }
             };
 
