@@ -32,7 +32,8 @@ namespace Bombarder
         InputStates Input;
         Player Player;
 
-        public List<Entity> Entities = new List<Entity>();
+        public static List<Entity> Entities = new List<Entity>();
+        public static List<Entity> EntitiesToAdd = new List<Entity>();
         public static Object.ObjectContainer Objects = new Object.ObjectContainer();
         public static List<Particle> Particles = new List<Particle>();
         List<MagicEffect> MagicEffects = new List<MagicEffect>();
@@ -381,6 +382,7 @@ namespace Bombarder
         {
             if (Settings.RunEntityAI)
             {
+
                 foreach (Entity Entity in Entities)
                 {
                     string EntityType = Entity.EntityObj.ToString();
@@ -399,6 +401,12 @@ namespace Bombarder
                             break;
                     }
                 }
+                
+                for (int i = 0; i < EntitiesToAdd.Count(); i++)
+                {
+                    Entities.Add(EntitiesToAdd.First());
+                }
+                EntitiesToAdd.Clear();
             }
         }
 

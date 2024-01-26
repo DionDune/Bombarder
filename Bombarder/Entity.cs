@@ -142,6 +142,10 @@ namespace Bombarder
             public const float BaseSpeed = 2;
             public const bool ChaseModeDefault = false;
 
+            public const int SpawnIntervalMin = 25;
+            public const int SpawnIntervalMax = 150;
+            public uint NextSpawnFrame = 0;
+
             public static readonly List<EntityBlock> Parts = new List<EntityBlock>() {
                 new EntityBlock()
                 {
@@ -163,7 +167,24 @@ namespace Bombarder
             public static void EnactAI(Entity Entity, Player Player)
             {
                 MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                EnactSpawn(Entity);
+                
             } 
+            public static void EnactSpawn(Entity Entity)
+            {
+                CubeMother Mother = (CubeMother)Entity.EntityObj;
+                if (Mother.NextSpawnFrame == Game1.GameTick || Game1.GameTick > Mother.NextSpawnFrame)
+                {
+                    //Red Cube
+                    Game1.EntitiesToAdd.Add(new Entity(new Entity.RedCube())
+                    {
+                        X = Entity.X,
+                        Y = Entity.Y
+                    });
+
+                    Mother.NextSpawnFrame = (uint)(Game1.GameTick + Game1.random.Next(SpawnIntervalMin, SpawnIntervalMax));
+                }
+            }
         }
         public class DemonEye
         {
