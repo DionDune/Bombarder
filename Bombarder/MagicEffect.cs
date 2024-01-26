@@ -298,7 +298,7 @@ namespace Bombarder
             private const float DefaultRadius = 5;
             private const float RadiusSpread = 10;
 
-            private static readonly int BorderWidth = 20;
+            public static readonly int BorderWidth = 20;
 
             public ForceWave()
             {
