@@ -220,12 +220,12 @@ namespace Bombarder
             public const int Height = 22;
 
             public float Velocity;
-            public const float VelocityMin = 3;
-            public const float VelocityMax = 3;
+            public const float VelocityMin = 2;
+            public const float VelocityMax = 4;
             public const float VelocityMultiplier = 0.95F;
 
             public float Angle;
-            public static float AngleOffsetAllowance = 15;
+            public static float AngleOffsetAllowance = 30;
 
             public readonly static Color Colour = Color.Red;
 
