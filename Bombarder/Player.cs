@@ -37,7 +37,7 @@ namespace Bombarder
 
         public int Mana { get; set; }
         public int ManaMax { get; set; }
-        public bool ManaInfinite { get; set; }
+        public bool ManaInfinite = false;
         public const uint ManaRegainInterval = 8;
         public const int ManaRegainDefault = 5;
         public int ManaRegain = ManaRegainDefault;
@@ -66,7 +66,6 @@ namespace Bombarder
             HealthBarOffset = new Point(-20, 55);
             HealthBarVisible = true;
 
-            ManaInfinite = true;
             Mana = 0;
             ManaMax = 400;
             ManaBarDimentions = new Point(25, 450);
