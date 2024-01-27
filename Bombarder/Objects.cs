@@ -213,8 +213,8 @@ namespace Bombarder
         //Entity Related
         public class RedCubeSegment
         {
-            public const int DurationMin = 80;
-            public const int DurationMax = 125;
+            public const int DurationMin = 70;
+            public const int DurationMax = 135;
 
             public const int Width = 22;
             public const int Height = 22;
@@ -232,6 +232,11 @@ namespace Bombarder
             public RedCubeSegment()
             {
                 Velocity = (float)Game1.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10;
+
+                if (Game1.random.Next(0, 4) == 0)
+                {
+                    Velocity = (float)Game1.random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10;
+                }
             }
 
 
