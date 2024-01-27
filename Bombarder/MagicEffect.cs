@@ -503,8 +503,8 @@ namespace Bombarder
         }
         public class WideLazer
         {
-            public static readonly int ManaCost = 50;
-            public const uint ManaCostInterval = 5;
+            public const int ManaCost = 2;
+            public const uint ManaCostInterval = 1;
 
             const int Damage = 3;
             const int DamageInterval = 3;
@@ -529,8 +529,11 @@ namespace Bombarder
 
             public static void EnactEffect(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
-                EnactDamage(Effect, Player, Entites, Tick);
-                CreateParticles(Effect);
+                if (Player.CheckUseMana(ManaCost))
+                {
+                    EnactDamage(Effect, Player, Entites, Tick);
+                    CreateParticles(Effect);
+                }
             }
             private static void EnactDamageOld(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
