@@ -148,6 +148,8 @@ namespace Bombarder
             public const int SpawnDistanceMax = 350;
             public uint NextSpawnFrame = 0;
 
+            public const float PreferredDistance = 3500;
+
             public static readonly List<EntityBlock> Parts = new List<EntityBlock>() {
                 new EntityBlock()
                 {
@@ -168,10 +170,23 @@ namespace Bombarder
 
             public static void EnactAI(Entity Entity, Player Player)
             {
-                MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                EnactMovement(Entity, Player);
                 EnactSpawn(Entity);
-                
             } 
+            public static void EnactMovement(Entity Entity, Player Player)
+            {
+                float Distance = GetDistanceBetween(new Vector2(Entity.X, Entity.Y),
+                                                    new Vector2(Player.X, Player.Y));
+
+                if (Distance > PreferredDistance)
+                {
+                    MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                }
+                else if (Distance < PreferredDistance)
+                {
+                    MoveAwayFrom(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                }
+            }
             public static void EnactSpawn(Entity Entity)
             {
                 CubeMother Mother = (CubeMother)Entity.EntityObj;
