@@ -125,6 +125,32 @@ namespace Bombarder
             {
                 MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
             }
+
+            public static void CreateDeathParticles(Entity Entity)
+            {
+                EntityBlock Block = Entity.Parts.First();
+                Vector2 StartPoint = new Vector2(Entity.X + Block.Offset.X, 
+                                                 Entity.Y + Block.Offset.Y);
+
+                for (int y = 0; y < Block.Height / Particle.RedCubeSegment.Height; y++)
+                {
+                    for (int x = 0; x < Block.Width / Particle.RedCubeSegment.Width; x++)
+                    {
+                        Game1.Particles.Add(new Particle( (int)(StartPoint.X + (x * Particle.RedCubeSegment.Width)),
+                                                          (int)(StartPoint.Y + (y * Particle.RedCubeSegment.Height)) )
+                        { 
+                            HasDuration = true,
+                            Duration = Game1.random.Next(Particle.RedCubeSegment.DurationMin, Particle.RedCubeSegment.DurationMax),
+
+                            ParticleObj = new Particle.RedCubeSegment()
+                            {
+                                Angle = 0,
+                                Velocity = 0
+                            }
+                        });
+                    }
+                }
+            }
         }
         public class CubeMother
         {
@@ -307,6 +333,11 @@ namespace Bombarder
 
             foreach (Entity Entity in DeadEntities)
             {
+                if (Entity.EntityObj.ToString() == "Bombarder.Entity+RedCube")
+                {
+                    RedCube.CreateDeathParticles(Entity);
+                }
+
                 Entities.Remove(Entity);
             }
         }
