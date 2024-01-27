@@ -120,6 +120,7 @@ namespace Bombarder
         }
 
 
+        //Attack Related
         public class HitMarker
         {
             public const int Width = 30;
@@ -205,6 +206,45 @@ namespace Bombarder
             }
         }
 
+        //Entity Related
+        public class RedCubeSegment
+        {
+            public const int DurationMin = 20;
+            public const int DurationMax = 35;
+
+            public const int Width = 22;
+            public const int Height = 22;
+
+            public float Velocity;
+            public const float VelocityMin = 3;
+            public const float VelocityMax = 5;
+            public const float VelocityMultiplier = 0.9F;
+
+            public float Angle;
+            public float AngleOffsetAllowance = 15;
+
+            public readonly static Color Colour = Color.Red;
+
+            public RedCubeSegment()
+            {
+                Velocity = (float)Game1.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10) / 10);
+            }
+
+
+            public static void EnactParticle(Particle Particle)
+            {
+                EnactMovement(Particle);
+            }
+            private static void EnactMovement(Particle Particle)
+            {
+                RedCubeSegment Segment = (RedCubeSegment)Particle.ParticleObj;
+
+                Particle.X = (int)((float)Particle.X + Segment.Velocity * (float)Math.Cos(Segment.Angle));
+                Particle.Y = (int)((float)Particle.Y + Segment.Velocity * (float)Math.Sin(Segment.Angle));
+            }
+        }
+
+        //Aesthetics
         public class Dust
         {
             public const int SpawnInterval = 1;
