@@ -222,8 +222,8 @@ namespace Bombarder
             public const float BaseSpeed = 2;
             public const bool ChaseModeDefault = false;
 
-            public const int SpawnIntervalMin = 25;
-            public const int SpawnIntervalMax = 150;
+            public const int SpawnIntervalMin = 15;
+            public const int SpawnIntervalMax = 100;
             public const int SpawnDistanceMin = 150;
             public const int SpawnDistanceMax = 350;
             public uint NextSpawnFrame = 0;
