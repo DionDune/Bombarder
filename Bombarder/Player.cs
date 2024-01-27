@@ -107,6 +107,10 @@ namespace Bombarder
                 }
             }
         }
+        public void GiveDamage(int Damage)
+        {
+            Health -= Damage;
+        }
 
         public void ManaHandler()
         {
