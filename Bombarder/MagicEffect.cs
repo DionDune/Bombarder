@@ -248,7 +248,7 @@ namespace Bombarder
 
             public float Damage { get; set; }
             public const int DefaultDuration = 150;
-            private const float DefaultDamage = 12;
+            private const float DefaultDamage = 10;
             private const float DamageMultiplier = 0.992F;
 
             public float Radius { get; set; }
@@ -302,7 +302,7 @@ namespace Bombarder
         {
             public Color Colour = Color.Crimson;
 
-            public static readonly int ManaCost = 200;
+            public static readonly int ManaCost = 150;
 
             public const int DefaultDuration = 200;
             public const bool HasDuration = true;

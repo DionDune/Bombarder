@@ -39,7 +39,7 @@ namespace Bombarder
         public int ManaMax { get; set; }
         public bool ManaInfinite = false;
         public const uint ManaRegainInterval = 8;
-        public const int ManaRegainDefault = 5;
+        public const int ManaRegainDefault = 4;
         public int ManaRegain = ManaRegainDefault;
 
         public Point ManaBarDimentions { get; set; }
