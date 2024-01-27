@@ -922,6 +922,12 @@ namespace Bombarder
                                                                     particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                     Dust.Width, Dust.Height), Dust.Colour * Dust.Opacity);
                 }
+                else if (ParticleType == "Bombarder.Particle+RedCubeSegment")
+                {
+                    _spriteBatch.Draw(Textures.White, new Rectangle(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                    particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                    Particle.RedCubeSegment.Width, Particle.RedCubeSegment.Height), Particle.RedCubeSegment.Colour);
+                }
             }
 
             //Ingame
