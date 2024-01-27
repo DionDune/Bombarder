@@ -225,7 +225,7 @@ namespace Bombarder
         
 
 
-        public static void MoveTowards( Vector2 Goal, Entity Entity, float Speed)
+        public static void MoveTowards( Vector2 Goal, Entity Entity, float Speed )
         {
             float XDifference = Entity.X - Goal.X;
             float YDifference = Entity.Y - Goal.Y;
@@ -235,6 +235,25 @@ namespace Bombarder
 
             Entity.X -= Speed * (float)Math.Cos(Angle);
             Entity.Y -= Speed * (float)Math.Sin(Angle);
+        }
+        public static void MoveAwayFrom( Vector2 Position, Entity Entity, float Speed)
+        {
+            float XDifference = Entity.X - Position.X;
+            float YDifference = Entity.Y - Position.Y;
+            float Angle = (float)(Math.Atan2(YDifference, XDifference));
+
+            Entity.Direction = Angle;
+
+            Entity.X += Speed * (float)Math.Cos(Angle);
+            Entity.Y += Speed * (float)Math.Sin(Angle);
+        }
+        public static float GetDistanceBetween(Vector2 Point1, Vector2 Point2)
+        {
+            float XDiff = Math.Abs(Point1.X - Point2.X);
+            float YDiff = Math.Abs(Point1.Y - Point2.Y);
+            float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+            return Distance;
         }
         public void GiveDamage(int Damage)
         {
