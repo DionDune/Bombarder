@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bombarder
 {
@@ -298,6 +299,10 @@ namespace Bombarder
             public static readonly Point HealthBarDimentions = new Point(80, 16);
             public static readonly Point HealthBarOffset = new Point(-40, -HitboxOffset.Y + 5);
 
+            public const int Damage = 15;
+            public const int DamageInterval = 10;
+            public uint LastDamageFrame = 0;
+
             public const float BaseSpeed = 4;
             public const bool ChaseModeDefault = true;
 
@@ -314,6 +319,54 @@ namespace Bombarder
             public static void EnactAI(Entity Entity, Player Player)
             {
                 MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                EnactAttack(Entity, Player);
+            }
+            public static void EnactAttack(Entity Entity, Player Player)
+            {
+                DemonEye Eye = (DemonEye)Entity.EntityObj;
+                if (Game1.GameTick - Eye.LastDamageFrame >= DamageInterval)
+                {
+                    Point TopLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y);
+                    Point TopRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y);
+                    Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+                    Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+
+                    Point PlayerTopLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
+                    Point PlayerTopRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
+                    Point PlayerBottomLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+                    Point PlayerBottomRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+
+
+                    bool Contact = false;
+
+                    if (PlayerTopLeft.X >= TopLeft.X && PlayerTopLeft.X <= TopRight.X &&
+                        PlayerTopLeft.Y >= TopLeft.Y && PlayerTopLeft.Y <= BottomRight.Y)
+                    {
+                        Contact = true;
+                    }
+                    else if (PlayerTopRight.X >= TopLeft.X && PlayerTopRight.X <= TopRight.X &&
+                             PlayerTopRight.Y >= TopLeft.Y && PlayerTopRight.Y <= BottomLeft.Y)
+                    {
+                        Contact = true;
+                    }
+                    else if (PlayerBottomLeft.X >= TopLeft.X && PlayerBottomLeft.X <= TopRight.X &&
+                             PlayerBottomLeft.Y >= TopLeft.Y && PlayerBottomLeft.Y <= BottomLeft.Y)
+                    {
+                        Contact = true;
+                    }
+                    else if (PlayerBottomRight.X >= TopLeft.X && PlayerBottomRight.X <= TopRight.X &&
+                             PlayerBottomRight.Y >= TopLeft.Y && PlayerBottomRight.Y <= BottomLeft.Y)
+                    {
+                        Contact = true;
+                    }
+
+
+                    if (Contact)
+                    {
+                        Player.GiveDamage(Damage);
+                        Eye.LastDamageFrame = Game1.GameTick;
+                    }
+                }
             }
         }
         
