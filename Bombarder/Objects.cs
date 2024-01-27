@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
@@ -106,6 +107,9 @@ namespace Bombarder
                         break;
                     case "Bombarder.Particle+Dust":
                         Dust.EnactParticle(particle, Tick);
+                        break;
+                    case "Bombarder.Particle+RedCubeSegment":
+                        RedCubeSegment.EnactParticle(particle);
                         break;
                 }
             }

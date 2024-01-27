@@ -132,20 +132,30 @@ namespace Bombarder
                 Vector2 StartPoint = new Vector2(Entity.X + Block.Offset.X, 
                                                  Entity.Y + Block.Offset.Y);
 
+                float XDifference;
+                float YDifference;
+                float Angle;
+
                 for (int y = 0; y < Block.Height / Particle.RedCubeSegment.Height; y++)
                 {
                     for (int x = 0; x < Block.Width / Particle.RedCubeSegment.Width; x++)
                     {
-                        Game1.Particles.Add(new Particle( (int)(StartPoint.X + (x * Particle.RedCubeSegment.Width)),
-                                                          (int)(StartPoint.Y + (y * Particle.RedCubeSegment.Height)) )
+                        float ParticleX = StartPoint.X + (x * Particle.RedCubeSegment.Width);
+                        float ParticleY = StartPoint.Y + (y * Particle.RedCubeSegment.Height);
+
+                        XDifference = Entity.X - ParticleX;
+                        YDifference = Entity.Y - ParticleY;
+                        Angle = (float)(Math.Atan2(YDifference, XDifference));
+
+                        Game1.Particles.Add(new Particle( (int)ParticleX,
+                                                          (int)ParticleY )
                         { 
                             HasDuration = true,
                             Duration = Game1.random.Next(Particle.RedCubeSegment.DurationMin, Particle.RedCubeSegment.DurationMax),
 
                             ParticleObj = new Particle.RedCubeSegment()
                             {
-                                Angle = 0,
-                                Velocity = 0
+                                Angle = Angle
                             }
                         });
                     }
