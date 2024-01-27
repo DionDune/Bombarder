@@ -101,6 +101,9 @@ namespace Bombarder
             public static readonly Point HealthBarDimentions = new Point(40, 10);
             public static readonly Point HealthBarOffset = new Point(-20, -HitboxOffset.Y + 5);
 
+            public const int Damage = 30;
+            public const int SelfDamage = (int)HealthMax / 2;
+
             public const float BaseSpeed = 5;
             public const bool ChaseModeDefault = true;
 
@@ -124,6 +127,44 @@ namespace Bombarder
             public static void EnactAI(Entity Entity, Player Player)
             {
                 MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                EnactAttack(Entity, Player);
+            }
+            public static void EnactAttack(Entity Entity, Player Player)
+            {
+                Point TopLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y);
+                Point TopRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y);
+                Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+                Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+
+                Point PlayerTopLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
+                Point PlayerTopRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
+                Point PlayerBottomLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+                Point PlayerBottomRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+
+                if (TopLeft.X >= PlayerTopLeft.X && TopLeft.X <= PlayerTopRight.X &&
+                    TopLeft.Y >= PlayerTopLeft.Y && TopLeft.Y <= PlayerBottomLeft.Y)
+                {
+                    Player.GiveDamage(Damage);
+                    Entity.GiveDamage(SelfDamage);
+                }
+                else if (TopRight.X >= PlayerTopLeft.X && TopRight.X <= PlayerTopRight.X &&
+                    TopRight.Y >= PlayerTopLeft.Y && TopRight.Y <= PlayerBottomLeft.Y)
+                {
+                    Player.GiveDamage(Damage);
+                    Entity.GiveDamage(SelfDamage);
+                }
+                else if (BottomLeft.X >= PlayerTopLeft.X && BottomLeft.X <= PlayerTopRight.X &&
+                    BottomLeft.Y >= PlayerTopLeft.Y && BottomLeft.Y <= PlayerBottomLeft.Y)
+                {
+                    Player.GiveDamage(Damage);
+                    Entity.GiveDamage(SelfDamage);
+                }
+                else if (BottomRight.X >= PlayerTopLeft.X && BottomRight.X <= PlayerTopRight.X &&
+                    BottomRight.Y >= PlayerTopLeft.Y && BottomRight.Y <= PlayerBottomLeft.Y)
+                {
+                    Player.GiveDamage(Damage);
+                    Entity.GiveDamage(SelfDamage);
+                }
             }
 
             public static void CreateDeathParticles(Entity Entity)
