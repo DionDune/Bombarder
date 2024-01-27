@@ -241,6 +241,8 @@ namespace Bombarder
 
                 Particle.X = (int)((float)Particle.X + Segment.Velocity * (float)Math.Cos(Segment.Angle));
                 Particle.Y = (int)((float)Particle.Y + Segment.Velocity * (float)Math.Sin(Segment.Angle));
+
+                Segment.Velocity *= RedCubeSegment.VelocityMultiplier;
             }
         }
 
