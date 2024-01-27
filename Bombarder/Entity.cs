@@ -143,8 +143,8 @@ namespace Bombarder
                         float ParticleX = StartPoint.X + (x * Particle.RedCubeSegment.Width);
                         float ParticleY = StartPoint.Y + (y * Particle.RedCubeSegment.Height);
 
-                        XDifference = Entity.X - ParticleX;
-                        YDifference = Entity.Y - ParticleY;
+                        XDifference = ParticleX - Entity.X;
+                        YDifference = ParticleY - Entity.Y;
                         Angle = (float)(Math.Atan2(YDifference, XDifference));
 
                         Game1.Particles.Add(new Particle( (int)ParticleX,

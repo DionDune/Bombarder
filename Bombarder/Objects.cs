@@ -221,8 +221,8 @@ namespace Bombarder
 
             public float Velocity;
             public const float VelocityMin = 3;
-            public const float VelocityMax = 5;
-            public const float VelocityMultiplier = 0.9F;
+            public const float VelocityMax = 3;
+            public const float VelocityMultiplier = 0.99F;
 
             public float Angle;
             public float AngleOffsetAllowance = 15;
