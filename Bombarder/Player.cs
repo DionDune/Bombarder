@@ -106,6 +106,10 @@ namespace Bombarder
                     Health += HealthRegain;
                 }
             }
+            if (Health < 0)
+            {
+                Health = 0;
+            }
         }
         public void GiveDamage(int Damage)
         {
