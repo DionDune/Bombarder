@@ -28,7 +28,7 @@ namespace Bombarder
         public int HealthMax { get; set; }
         public bool HealthInfinite = false;
         public const uint HealthRegainInterval = 4;
-        public const int HealthRegainDefault = 4;
+        public const int HealthRegainDefault = 3;
         public int HealthRegain = HealthRegainDefault;
 
         public Point HealthBarDimentions { get; set; }
@@ -114,6 +114,11 @@ namespace Bombarder
         public void GiveDamage(int Damage)
         {
             Health -= Damage;
+
+            if (Health < 0)
+            {
+                Health = 0;
+            }
         }
 
         public void ManaHandler()
