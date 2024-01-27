@@ -918,14 +918,14 @@ namespace Bombarder
                 else if (ParticleType == "Bombarder.Particle+Dust")
                 {
                     Particle.Dust Dust = (Particle.Dust)particle.ParticleObj;
-                    _spriteBatch.Draw(Textures.White, new Rectangle(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                    particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                    (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                     Dust.Width, Dust.Height), Dust.Colour * Dust.Opacity);
                 }
                 else if (ParticleType == "Bombarder.Particle+RedCubeSegment")
                 {
-                    _spriteBatch.Draw(Textures.White, new Rectangle(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                    particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                    (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                     Particle.RedCubeSegment.Width, Particle.RedCubeSegment.Height), Particle.RedCubeSegment.Colour);
                 }
             }
@@ -1177,8 +1177,8 @@ namespace Bombarder
             {
                 if (particle.Item2 == "HitMarker")
                 {
-                    _spriteBatch.Draw(Textures.HitMarker, new Rectangle(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.HitMarker, new Rectangle((int)particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                        (int)particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                         Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
                 }
                 else if (particle.Item2 == "LazerLine")

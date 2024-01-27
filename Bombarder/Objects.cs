@@ -51,8 +51,8 @@ namespace Bombarder
         public bool HasDuration { get; set; }
         public int Duration { get; set; }
 
-        public int X { get; set; }
-        public int Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
 
         public object ParticleObj { get; set; }
 
@@ -243,8 +243,8 @@ namespace Bombarder
             {
                 RedCubeSegment Segment = (RedCubeSegment)Particle.ParticleObj;
 
-                Particle.X = (int)((float)Particle.X + Segment.Velocity * (float)Math.Cos(Segment.Angle));
-                Particle.Y = (int)((float)Particle.Y + Segment.Velocity * (float)Math.Sin(Segment.Angle));
+                Particle.X = Particle.X + Segment.Velocity * (float)Math.Cos(Segment.Angle);
+                Particle.Y = Particle.Y + Segment.Velocity * (float)Math.Sin(Segment.Angle);
 
                 Segment.Velocity *= RedCubeSegment.VelocityMultiplier;
             }
