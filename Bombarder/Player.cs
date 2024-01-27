@@ -28,7 +28,7 @@ namespace Bombarder
         public int HealthMax { get; set; }
         public bool HealthInfinite = false;
         public const uint HealthRegainInterval = 4;
-        public const int HealthRegainDefault = 3;
+        public const int HealthRegainDefault = 4;
         public int HealthRegain = HealthRegainDefault;
 
         

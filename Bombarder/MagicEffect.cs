@@ -504,9 +504,9 @@ namespace Bombarder
         public class WideLazer
         {
             public const int ManaCost = 2;
-            public const uint ManaCostInterval = 1;
+            public const uint ManaCostInterval = 2;
 
-            const int Damage = 3;
+            const int Damage = 4;
             const int DamageInterval = 3;
 
             public const int Range = 1500;
