@@ -12,24 +12,8 @@ namespace Bombarder
         public float X { get; set; }
         public float Y { get; set; }
 
-        public int Health { get; set; }
-        public int HealthMax { get; set; }
-        public Point HealthBarDimentions { get; set; }
-        public Point HealthBarOffset { get; set; }
-        public bool HealthBarVisible { get; set; }
-
-        public bool ManaInfinite { get; set; }
-        public const uint ManaRegainInterval = 8;
-        public const int ManaRegainDefault = 5;
-        public int ManaRegain = ManaRegainDefault;
-        public int Mana { get; set; }
-        public int ManaMax { get; set; }
-
-        public Point ManaBarDimentions { get; set; }
-        public string ManaBarScreenOrientation { get; set; }
-        public Point ManaBarOffset { get; set; }
-        public bool ManaBarHorizontalFill { get; set; }
-        public bool ManaBarVisible { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public float Momentum_X { get; set; }
         public float Momentum_Y { get; set; }
@@ -38,8 +22,38 @@ namespace Bombarder
         public float Acceleration { get; set; }
         public float Slowdown { get; set; }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+
+
+        public int Health { get; set; }
+        public int HealthMax { get; set; }
+        public bool HealthInfinite = false;
+        public const uint HealthRegainInterval = 4;
+        public const int HealthRegainDefault = 4;
+        public int HealthRegain = HealthRegainDefault;
+
+        public Point HealthBarDimentions { get; set; }
+        public Point HealthBarOffset { get; set; }
+        public bool HealthBarVisible { get; set; }
+
+        public int Mana { get; set; }
+        public int ManaMax { get; set; }
+        public bool ManaInfinite { get; set; }
+        public const uint ManaRegainInterval = 8;
+        public const int ManaRegainDefault = 5;
+        public int ManaRegain = ManaRegainDefault;
+
+        public Point ManaBarDimentions { get; set; }
+        public string ManaBarScreenOrientation { get; set; }
+        public Point ManaBarOffset { get; set; }
+        public bool ManaBarHorizontalFill { get; set; }
+        public bool ManaBarVisible { get; set; }
+
+
+
+        
+
+
+        
 
         public Player()
         {
@@ -76,6 +90,22 @@ namespace Bombarder
         public void Handler()
         {
             ManaHandler();
+            HealthHandler();
+        }
+
+        private void HealthHandler()
+        {
+            if (Health < HealthMax && Game1.GameTick % HealthRegainInterval == 0)
+            {
+                if (HealthMax - Health < HealthRegain)
+                {
+                    Health = HealthMax;
+                }
+                else
+                {
+                    Health += HealthRegain;
+                }
+            }
         }
 
         public void ManaHandler()
