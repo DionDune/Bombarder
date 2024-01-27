@@ -145,7 +145,9 @@ namespace Bombarder
 
                         XDifference = ParticleX - Entity.X;
                         YDifference = ParticleY - Entity.Y;
-                        Angle = (float)(Math.Atan2(YDifference, XDifference));
+                        Angle = ( ((float)Math.Atan2(YDifference, XDifference) * (float)(180 / Math.PI)) +
+                                 ((float)Game1.random.Next((int)(-Particle.RedCubeSegment.AngleOffsetAllowance * 10), (int)(Particle.RedCubeSegment.AngleOffsetAllowance * 10)) / 10) ) *
+                                 (float)(Math.PI / 180);
 
                         Game1.Particles.Add(new Particle( (int)ParticleX,
                                                           (int)ParticleY )
