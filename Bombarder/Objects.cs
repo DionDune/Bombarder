@@ -209,8 +209,8 @@ namespace Bombarder
         //Entity Related
         public class RedCubeSegment
         {
-            public const int DurationMin = 20;
-            public const int DurationMax = 35;
+            public const int DurationMin = 80;
+            public const int DurationMax = 125;
 
             public const int Width = 22;
             public const int Height = 22;
