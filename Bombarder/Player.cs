@@ -31,9 +31,7 @@ namespace Bombarder
         public const int HealthRegainDefault = 3;
         public int HealthRegain = HealthRegainDefault;
 
-        public Point HealthBarDimentions { get; set; }
-        public Point HealthBarOffset { get; set; }
-        public bool HealthBarVisible { get; set; }
+        
 
         public int Mana { get; set; }
         public int ManaMax { get; set; }
@@ -48,31 +46,31 @@ namespace Bombarder
         public bool ManaBarHorizontalFill { get; set; }
         public bool ManaBarVisible { get; set; }
 
+        public Point HealthBarDimentions { get; set; }
+        public string HealthBarScreenOrientation { get; set; }
+        public Point HealthBarOffset { get; set; }
+        public bool HealthBarHorizontalFill { get; set; }
+        public bool HealthBarVisible { get; set; }
 
 
-        
 
 
-        
+
 
         public Player()
         {
             X = 0;
             Y = 0;
 
+            Width = 50;
+            Height = 100;
+
             Health = 130;
             HealthMax = 150;
-            HealthBarDimentions = new Point(40, 10);
-            HealthBarOffset = new Point(-20, 55);
-            HealthBarVisible = true;
-
+            
             Mana = 0;
             ManaMax = 400;
-            ManaBarDimentions = new Point(25, 450);
-            ManaBarScreenOrientation = "Bottom Left";
-            ManaBarOffset = new Point(20, -20);
-            ManaBarHorizontalFill = false;
-            ManaBarVisible = true;
+
 
             Momentum_X = 0;
             Momentum_Y = 0;
@@ -82,8 +80,16 @@ namespace Bombarder
             Acceleration = 0.45F;
             Slowdown = 0.75F;
 
-            Width = 50;
-            Height = 100;
+            
+            ManaBarDimentions = new Point(25, 450);
+            ManaBarScreenOrientation = "Bottom Left";
+            ManaBarOffset = new Point(20, -20);
+            ManaBarHorizontalFill = false;
+            ManaBarVisible = true;
+            HealthBarDimentions = new Point(25, 450);
+            HealthBarScreenOrientation = "Bottom Left";
+            HealthBarOffset = new Point(75, -20);
+            HealthBarVisible = true;
         }
 
         public void Handler()

@@ -959,14 +959,6 @@ namespace Bombarder
                 _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 - Player.Width / 2, 
                                                              _graphics.PreferredBackBufferHeight / 2 - Player.Height / 2, 
                                                              Player.Width, Player.Height), Color.Red);
-                //Player Health Bar
-                _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 + Player.HealthBarOffset.X,
-                                                             _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y,
-                                                             Player.HealthBarDimentions.X, Player.HealthBarDimentions.Y), Color.LightGray);
-                //Player Health Bar
-                _spriteBatch.Draw(Textures.White, new Rectangle(_graphics.PreferredBackBufferWidth / 2 + Player.HealthBarOffset.X + 2,
-                                                             _graphics.PreferredBackBufferHeight / 2 + Player.HealthBarOffset.Y + 2,
-                                                             (int)((Player.HealthBarDimentions.X - 4) * ((float)Player.Health / Player.HealthMax)), Player.HealthBarDimentions.Y - 4), Color.Green);
 
 
                 //Entities
@@ -1162,6 +1154,25 @@ namespace Bombarder
                 
 
 
+                //Health Bar
+                if (!Player.HealthInfinite && Player.Health < Player.HealthMax)
+                {
+                    Point OrientPos = UIItem.GetOritentationPosition(_graphics, Player.ManaBarScreenOrientation);
+                    float HealthPercent = (float)Player.Health / Player.HealthMax;
+
+                    Point HealthBarContainerPos = new Point(OrientPos.X + Player.HealthBarOffset.X, OrientPos.Y + Player.HealthBarOffset.Y - Player.HealthBarDimentions.Y);
+                    Point HealthBarPos = new Point(OrientPos.X + Player.HealthBarOffset.X,
+                                                 OrientPos.Y + Player.HealthBarOffset.Y - (int)(Player.HealthBarDimentions.Y * HealthPercent));
+
+
+
+                    _spriteBatch.Draw(Textures.White, new Rectangle(HealthBarContainerPos.X - 2, HealthBarContainerPos.Y - 2,
+                                                                    Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
+                    UIPage.RenderOutline(_spriteBatch, Textures.White, Color.White, HealthBarContainerPos.X - 2, HealthBarContainerPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
+
+                    _spriteBatch.Draw(Textures.White, new Rectangle(HealthBarPos.X, HealthBarPos.Y,
+                                                                    Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * HealthPercent)), Color.Red);
+                }
                 //Mana Bar
                 if (!Player.ManaInfinite && Player.Mana < Player.ManaMax)
                 {
