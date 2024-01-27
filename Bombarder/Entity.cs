@@ -219,7 +219,7 @@ namespace Bombarder
             public static readonly Point HealthBarDimentions = new Point(350, 74);
             public static readonly Point HealthBarOffset = new Point(-175, -37);
 
-            public const float BaseSpeed = 2;
+            public const float BaseSpeed = 3;
             public const bool ChaseModeDefault = false;
 
             public const int SpawnIntervalMin = 15;

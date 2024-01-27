@@ -141,8 +141,8 @@ namespace Bombarder
 
         public class StaticOrb
         {
-            const int Damage = 3;
-            public static readonly int ManaCost = 400;
+            const int Damage = 2;
+            public static readonly int ManaCost = 399;
 
             public const int DefaultDuration = 150;
             public const bool HasDuration = true;
