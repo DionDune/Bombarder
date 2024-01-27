@@ -23,7 +23,7 @@ namespace Bombarder
         public float Slowdown { get; set; }
 
 
-
+        public bool IsDead = false;
         public int Health { get; set; }
         public int HealthMax { get; set; }
         public bool HealthInfinite = false;
@@ -105,18 +105,18 @@ namespace Bombarder
                     Health += HealthRegain;
                 }
             }
-            if (Health < 0)
+            if (Health <= 0)
             {
-                Health = 0;
+                IsDead = true;
             }
         }
         public void GiveDamage(int Damage)
         {
             Health -= Damage;
 
-            if (Health < 0)
+            if (Health <= 0)
             {
-                Health = 0;
+                IsDead = true;
             }
         }
 
