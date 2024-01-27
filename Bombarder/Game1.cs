@@ -161,7 +161,7 @@ namespace Bombarder
 
         #endregion
 
-        #region Player Movement
+        #region Player
 
         private void PlayerMovement_InputHandler(List<Keys> NewPresses)
         {
@@ -311,6 +311,16 @@ namespace Bombarder
         {
             Player.X += Player.Momentum_X;
             Player.Y += Player.Momentum_Y;
+        }
+
+        private void CheckEnactPlayerDeath()
+        {
+            if (Player.IsDead)
+            {
+                Player.IsDead = false;
+                Player.Health = Player.HealthMax;
+                UI_ChangePage("Pause");
+            }
         }
 
         #endregion
@@ -865,6 +875,7 @@ namespace Bombarder
                 //Player Interaction
                 PlayerMovement_EnactMomentum();
                 Player.Handler();
+                CheckEnactPlayerDeath();
 
                 //Entity Functions
                 EnactEntities();
