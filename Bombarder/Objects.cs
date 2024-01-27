@@ -227,7 +227,7 @@ namespace Bombarder
 
             public RedCubeSegment()
             {
-                Velocity = (float)Game1.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10) / 10);
+                Velocity = (float)Game1.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10;
             }
 
 
