@@ -107,7 +107,8 @@ namespace Bombarder
             MagicEffects.Clear();
             SelectedEffects.Clear();
 
-            Player.SetDefaults(Player);
+            Player.SetDefaultStats(Player);
+            Player.ResetPosition(Player);
         }
 
         #region UI
@@ -171,6 +172,11 @@ namespace Bombarder
             {
                 UI_ChangePage("Play");
                 ResetGame();
+            }
+            else if (Data.Contains("Resurrect"))
+            {
+                UI_ChangePage("Play");
+                Player.SetDefaultStats(Player);
             }
             else if (Data.Contains("Quit"))
             {

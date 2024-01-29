@@ -740,7 +740,7 @@ namespace Bombarder
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Resume" }
+                        Data = new List<string>() { "Resurrect" }
                     },
                     //Pause Quit Button
                     new UIItem()
