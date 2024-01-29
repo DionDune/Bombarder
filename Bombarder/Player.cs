@@ -96,8 +96,8 @@ namespace Bombarder
             Player.X = 0;
             Player.Y = 0;
 
-            Player.Health = 130;
-            Player.Mana = 0;
+            Player.Health = Player.HealthMax;
+            Player.Mana = Player.ManaMax;
 
             Player.Momentum_X = 0;
             Player.Momentum_Y = 0;
