@@ -681,14 +681,14 @@ namespace Bombarder
                     }
                 }
             });
-            //Pause Page
+            //Death Screen
             Pages.Add(new UIPage()
             {
                 Type = "Death",
 
                 UIItems = new List<UIItem>()
                 {
-                    //Resume Button
+                    //Respawn Button
                     new UIItem()
                     {
                         Type = "Button",
@@ -701,6 +701,34 @@ namespace Bombarder
 
                         CentreX = -200 + (400 / 2),
                         CentreY = -75 + (150 / 2),
+
+                        BorderWidth = 5,
+                        BorderColor = Color.Green,
+                        BaseColor = Color.PaleGreen,
+
+                        Text = new TextElement()
+                        {
+                            Text = "RESPAWN",
+                            Elements = TextElement.GetString("RESPAWN"),
+                            ElementSize = 8,
+                            Color = Color.Black
+                        },
+
+                        Data = new List<string>() { "Respawn" }
+                    },
+                    //Resume Button
+                    new UIItem()
+                    {
+                        Type = "Button",
+
+                        X = -200,
+                        Y = 100,
+
+                        Width = 400,
+                        Height = 150,
+
+                        CentreX = -200 + (400 / 2),
+                        CentreY = 100 + (150 / 2),
 
                         BorderWidth = 5,
                         BorderColor = Color.Green,
@@ -722,13 +750,13 @@ namespace Bombarder
                         Type = "Button",
 
                         X = -200,
-                        Y = 100,
+                        Y = 275,
 
                         Width = 400,
                         Height = 150,
 
                         CentreX = -200 + (400 / 2),
-                        CentreY = 100 + (150 / 2),
+                        CentreY = 275 + (150 / 2),
 
                         BorderWidth = 5,
                         BorderColor = Color.DarkRed,

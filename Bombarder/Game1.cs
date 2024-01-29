@@ -167,6 +167,11 @@ namespace Bombarder
             {
                 UI_ChangePage("Play");
             }
+            else if (Data.Contains("Respawn"))
+            {
+                UI_ChangePage("Play");
+                ResetGame();
+            }
             else if (Data.Contains("Quit"))
             {
                 System.Environment.Exit(0);
