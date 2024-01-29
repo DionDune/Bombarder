@@ -708,7 +708,6 @@ namespace Bombarder
 
                         Text = new TextElement()
                         {
-                            Text = "RESPAWN",
                             Elements = TextElement.GetString("RESPAWN"),
                             ElementSize = 8,
                             Color = Color.Black
@@ -716,7 +715,7 @@ namespace Bombarder
 
                         Data = new List<string>() { "Respawn" }
                     },
-                    //Resume Button
+                    //Resurrect Button
                     new UIItem()
                     {
                         Type = "Button",
@@ -731,13 +730,12 @@ namespace Bombarder
                         CentreY = 100 + (150 / 2),
 
                         BorderWidth = 5,
-                        BorderColor = Color.Green,
-                        BaseColor = Color.PaleGreen,
+                        BorderColor = Color.Purple,
+                        BaseColor = Color.BlueViolet,
 
                         Text = new TextElement()
                         {
-                            Text = "RESUME",
-                            Elements = TextElement.GetString("RESUME"),
+                            Elements = TextElement.GetString("RESURRECT"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
@@ -753,10 +751,10 @@ namespace Bombarder
                         Y = 275,
 
                         Width = 400,
-                        Height = 150,
+                        Height = 100,
 
                         CentreX = -200 + (400 / 2),
-                        CentreY = 275 + (150 / 2),
+                        CentreY = 275 + (100 / 2),
 
                         BorderWidth = 5,
                         BorderColor = Color.DarkRed,
@@ -764,7 +762,6 @@ namespace Bombarder
 
                         Text = new TextElement()
                         {
-                            Text = "QUIT",
                             Elements = TextElement.GetString("QUIT"),
                             ElementSize = 8,
                             Color = Color.Black
