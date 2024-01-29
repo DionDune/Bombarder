@@ -755,7 +755,7 @@ namespace Bombarder
 
                         Text = new TextElement()
                         {
-                            Elements = TextElement.GetString("GET GOOD"),
+                            Elements = TextElement.GetString("YOU FUCKING DIED"),
                             ElementSize = 16,
                             Color = Color.White
                         }

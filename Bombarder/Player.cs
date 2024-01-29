@@ -36,7 +36,7 @@ namespace Bombarder
         public int Mana { get; set; }
         public int ManaMax { get; set; }
         public bool ManaInfinite = false;
-        public const uint ManaRegainInterval = 8;
+        public const uint ManaRegainInterval = 6;
         public const int ManaRegainDefault = 4;
         public int ManaRegain = ManaRegainDefault;
 
@@ -69,7 +69,7 @@ namespace Bombarder
             HealthMax = 150;
             
             Mana = 0;
-            ManaMax = 400;
+            ManaMax = 750;
 
 
             Momentum_X = 0;
