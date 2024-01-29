@@ -319,7 +319,7 @@ namespace Bombarder
             {
                 Player.IsDead = false;
                 Player.Health = Player.HealthMax;
-                UI_ChangePage("Pause");
+                UI_ChangePage("Death");
             }
         }
 
