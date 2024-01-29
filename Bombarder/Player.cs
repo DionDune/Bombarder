@@ -91,6 +91,17 @@ namespace Bombarder
             HealthBarOffset = new Point(75, -20);
             HealthBarVisible = true;
         }
+        public static void SetDefaults(Player Player)
+        {
+            Player.X = 0;
+            Player.Y = 0;
+
+            Player.Health = 130;
+            Player.Mana = 0;
+
+            Player.Momentum_X = 0;
+            Player.Momentum_Y = 0;
+        }
 
         public void Handler()
         {

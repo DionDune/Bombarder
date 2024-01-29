@@ -95,6 +95,20 @@ namespace Bombarder
         #endregion
 
         /////////////////////////////////////////
+        
+        public void ResetGame()
+        {
+            Entities.Clear();
+            EntitiesToAdd.Clear();
+
+            Objects.GeneralObjects.Clear();
+            Particles.Clear();
+
+            MagicEffects.Clear();
+            SelectedEffects.Clear();
+
+            Player.SetDefaults(Player);
+        }
 
         #region UI
 
