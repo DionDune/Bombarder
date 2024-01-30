@@ -177,6 +177,7 @@ namespace Bombarder
             {
                 UI_ChangePage("Play");
                 Player.SetDefaultStats(Player);
+                Player.SetRandomLocalPosition(Player, 500, 1000);
             }
             else if (Data.Contains("Quit"))
             {

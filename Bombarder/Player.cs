@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,6 +104,15 @@ namespace Bombarder
         {
             Player.X = 0;
             Player.Y = 0;
+        }
+        public static void SetRandomLocalPosition(Player Player, int MinDistance, int MaxDistance)
+        {
+            int Angle = Game1.random.Next(0, 360);
+            float AngleRadians = (float)Angle * (float)(Math.PI / 180);
+            int Distance = Game1.random.Next(MinDistance, MaxDistance);
+
+            Player.X += (int)(Distance * (float)Math.Cos(AngleRadians));
+            Player.Y += (int)(Distance * (float)Math.Sin(AngleRadians));
         }
 
         public void Handler()
