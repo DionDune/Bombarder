@@ -95,7 +95,9 @@ namespace Bombarder
         #endregion
 
         /////////////////////////////////////////
-        
+
+        #region Game/Player state interaction
+
         public void ResetGame()
         {
             Entities.Clear();
@@ -110,6 +112,23 @@ namespace Bombarder
             Player.SetDefaultStats(Player);
             Player.ResetPosition(Player);
         }
+        public void ResurrectPlayer()
+        {
+            Player.SetDefaultStats(Player);
+            Player.SetRandomLocalPosition(Player, 500, 1000);
+            UI_ChangePage("Play");
+        }
+        public void ResumeGame()
+        {
+            UI_ChangePage("Play");
+        }
+        public void StartNewGame()
+        {
+            ResetGame();
+            UI_ChangePage("Play");
+        }
+
+        #endregion
 
         #region UI
 
@@ -162,22 +181,19 @@ namespace Bombarder
         {
             if (Data.Contains("Start New"))
             {
-                UI_ChangePage("Play");
+                StartNewGame();
             }
             else if (Data.Contains("Resume"))
             {
-                UI_ChangePage("Play");
+                ResumeGame();
             }
             else if (Data.Contains("Respawn"))
             {
-                UI_ChangePage("Play");
-                ResetGame();
+                StartNewGame();
             }
             else if (Data.Contains("Resurrect"))
             {
-                UI_ChangePage("Play");
-                Player.SetDefaultStats(Player);
-                Player.SetRandomLocalPosition(Player, 500, 1000);
+                ResurrectPlayer();
             }
             else if (Data.Contains("Quit"))
             {
