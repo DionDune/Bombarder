@@ -413,6 +413,7 @@ namespace Bombarder
 
             public const float JumpVelocityMin = 20;
             public const float JumpVelocityMax = 40;
+            public const float JumpVelocityFullThreshhold = 500;
             public const float VelocityMultiplier = 0.95F;
             public float Velocity = 0;
             public float Angle = 0;
@@ -432,7 +433,18 @@ namespace Bombarder
                     float XDiff = Entity.X - Player.X;
                     float YDiff = Entity.Y - Player.Y;
                     float Angle = (float)Math.Atan2(YDiff, XDiff);
-                    float Velocity = (float)Game1.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMax * 100) / 100;
+                    float Velocity;
+
+                    float PlayerDistance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+                    if (PlayerDistance > JumpVelocityFullThreshhold)
+                    {
+                        Velocity = JumpVelocityMax;
+                    }
+                    else
+                    {
+                        Velocity = (float)Game1.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMax * 100) / 100;
+                    }
+                    
 
                     spider.Angle = Angle;
                     spider.Velocity = Velocity;
