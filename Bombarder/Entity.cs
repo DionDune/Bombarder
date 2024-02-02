@@ -432,7 +432,7 @@ namespace Bombarder
                     float XDiff = Entity.X - Player.X;
                     float YDiff = Entity.Y - Player.Y;
                     float Angle = (float)Math.Atan2(YDiff, XDiff);
-                    float Velocity = (float)Game1.random.Next(JumpIntervalMin * 100, JumpIntervalMax * 100) / 100;
+                    float Velocity = (float)Game1.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMax * 100) / 100;
 
                     spider.Angle = Angle;
                     spider.Velocity = Velocity;
