@@ -89,6 +89,18 @@ namespace Bombarder
                 HealthBarOffset = CubeMother.HealthBarOffset;
                 HealthBarDimentions = CubeMother.HealthBarDimentions;
             }
+            else if (EntityType == "Bombarder.Entity+Spider")
+            {
+                Health = Spider.HealthDefault;
+                HealthMax = Spider.HealthMax;
+                HealthBarVisible = Spider.HealthBarVisible;
+
+                Parts = Spider.Parts;
+                HitboxOffset = Spider.HitboxOffset;
+                HitboxSize = Spider.HitboxSize;
+                HealthBarOffset = Spider.HealthBarOffset;
+                HealthBarDimentions = Spider.HealthBarDimentions;
+            }
         }
 
         public class RedCube
@@ -376,7 +388,7 @@ namespace Bombarder
             public const bool HealthBarVisible = true;
 
             public static readonly Point HitboxOffset = new Point(-100, -100);
-            public static readonly Point HitboxLeft = new Point(200, 200);
+            public static readonly Point HitboxSize = new Point(200, 200);
             public static readonly Point HealthBarDimentions = new Point(80, 16);
             public static readonly Point HealthBarOffset = new Point(-40, -HitboxOffset.Y + 5);
 
