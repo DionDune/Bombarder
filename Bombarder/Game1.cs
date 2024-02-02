@@ -821,6 +821,10 @@ namespace Bombarder
                 {
                     SpawnEnemy(new Entity.CubeMother(), false, new Vector2(0, 0));
                 }
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.D2))
+                {
+                    SpawnEnemy(new Entity.Spider(), false, new Vector2(0, 0));
+                }
 
 
                 //Magic Creation
