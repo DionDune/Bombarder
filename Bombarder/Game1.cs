@@ -930,6 +930,10 @@ namespace Bombarder
                 //Magic Functions
                 EnactMagic();
                 MagicEffect.EnactDuration(MagicEffects);
+
+                float XDiff = 0 - Player.X;
+                float YDiff = 0 - Player.Y;
+                Debug.WriteLine(Math.Atan2(YDiff, XDiff) * (180 / Math.PI));
             }
 
 

@@ -369,6 +369,82 @@ namespace Bombarder
                 }
             }
         }
+        public class Spider
+        {
+            public const float HealthMax = 180;
+            public const float HealthDefault = HealthMax;
+            public const bool HealthBarVisible = true;
+
+            public static readonly Point HitboxOffset = new Point(-100, -100);
+            public static readonly Point HitboxLeft = new Point(200, 200);
+            public static readonly Point HealthBarDimentions = new Point(80, 16);
+            public static readonly Point HealthBarOffset = new Point(-40, -HitboxOffset.Y + 5);
+
+            public static readonly List<EntityBlock> Parts = new List<EntityBlock>() {
+                new EntityBlock()
+                {
+                    Width = 200,
+                    Height = 200,
+                    Offset = new Vector2(-100, -100),
+                    Color = Color.MediumPurple,
+                }
+            };
+
+
+            public const int Damage = 40;
+            public uint LastDamageFrame = 0;
+            public int DamageInterval = 300;
+
+            public const int JumpIntervalMin = 220;
+            public const int JumpIntervalMax = 850;
+            public uint NextJumpFrame = 0;
+
+            public const float JumpVelocityMin = 20;
+            public const float JumpVelocityMax = 40;
+            public const float VelocityMultiplier = 0.95F;
+            public float Velocity = 0;
+            public float Angle = 0;
+
+            public static void EnactAI(Entity Entity, Player Player)
+            {
+                EnactJump(Entity, Player);
+                EnactVelocity(Entity, Player);
+            }
+            public static void EnactJump(Entity Entity, Player Player)
+            {
+                Spider spider = (Spider)Entity.EntityObj;
+
+
+                if (spider.NextJumpFrame <= Game1.GameTick)
+                {
+                    float XDiff = Entity.X - Player.X;
+                    float YDiff = Entity.Y - Player.Y;
+                    float Angle = (float)Math.Atan2(YDiff, XDiff);
+                    float Velocity = (float)Game1.random.Next(JumpIntervalMin * 100, JumpIntervalMax * 100) / 100;
+
+                    spider.Angle = Angle;
+                    spider.Velocity = Velocity;
+                    spider.NextJumpFrame = Game1.GameTick + (uint)Game1.random.Next(JumpIntervalMin, JumpIntervalMax);
+                }
+            }
+            public static void EnactVelocity(Entity Entity, Player Player)
+            {
+                Spider spider = (Spider)Entity.EntityObj;
+
+
+                if (spider.Velocity > 0)
+                {
+                    Entity.X -= spider.Velocity * (float)Math.Cos(spider.Angle);
+                    Entity.Y -= spider.Velocity * (float)Math.Sin(spider.Angle);
+
+                    spider.Velocity *= VelocityMultiplier;
+                    if (spider.Velocity <= 1)
+                    {
+                        spider.Velocity = 0;
+                    }
+                }
+            }
+        }
         
 
 
