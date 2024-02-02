@@ -427,6 +427,14 @@ namespace Bombarder
                         Y = (int)SpawnPoint.Y
                     });
                     break;
+                case "Bombarder.Entity+Spider":
+                    //Spider
+                    Entities.Add(new Entity(new Entity.Spider())
+                    {
+                        X = (int)SpawnPoint.X,
+                        Y = (int)SpawnPoint.Y
+                    });
+                    break;
             }
         }
 
