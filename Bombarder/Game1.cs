@@ -1067,7 +1067,7 @@ namespace Bombarder
                     else if (EntityType == "Bombarder.Entity+Spider")
                     {
                         _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        (int)Entity.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                                                                        (int)Entity.Y + (int)Entity.Parts[0].Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                         Entity.Parts[0].Width, Entity.Parts[0].Height), Color.MediumPurple);
                     }
 

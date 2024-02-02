@@ -407,8 +407,8 @@ namespace Bombarder
             public uint LastDamageFrame = 0;
             public int DamageInterval = 300;
 
-            public const int JumpIntervalMin = 220;
-            public const int JumpIntervalMax = 850;
+            public const int JumpIntervalMin = 60;
+            public const int JumpIntervalMax = 350;
             public uint NextJumpFrame = 0;
 
             public const float JumpVelocityMin = 20;
