@@ -451,6 +451,9 @@ namespace Bombarder
                         case "Bombarder.Entity+CubeMother":
                             Entity.CubeMother.EnactAI(Entity, Player);
                             break;
+                        case "Bombarder.Entity+Spider":
+                            Entity.Spider.EnactAI(Entity, Player);
+                            break;
                     }
                 }
                 
