@@ -348,6 +348,14 @@ namespace Bombarder
                 letter.Add(new List<bool>() { false });
                 letter.Add(new List<bool>() { false });
             }
+            if (Character == '!')
+            {
+                letter.Add(new List<bool>() { false, true, false });
+                letter.Add(new List<bool>() { false, true, false });
+                letter.Add(new List<bool>() { false, true, false });
+                letter.Add(new List<bool>() { false, false, false });
+                letter.Add(new List<bool>() { false, true, false });
+            }
 
             return letter;
         }
