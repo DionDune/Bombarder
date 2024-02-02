@@ -383,7 +383,7 @@ namespace Bombarder
         }
         public class Spider
         {
-            public const float HealthMax = 180;
+            public const float HealthMax = 650;
             public const float HealthDefault = HealthMax;
             public const bool HealthBarVisible = true;
 
@@ -408,7 +408,7 @@ namespace Bombarder
             public int DamageInterval = 300;
 
             public const int JumpIntervalMin = 60;
-            public const int JumpIntervalMax = 350;
+            public const int JumpIntervalMax = 250;
             public uint NextJumpFrame = 0;
 
             public const float JumpVelocityMin = 20;
