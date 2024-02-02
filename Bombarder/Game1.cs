@@ -1053,6 +1053,12 @@ namespace Bombarder
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
+                    else if (EntityType == "Bombarder.Entity+Spider")
+                    {
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.X + (int)Entity.Parts[0].Offset.X,
+                                                                        (int)Entity.X + (int)Entity.Parts[0].Offset.X,
+                                                                        Entity.Parts[0].Width, Entity.Parts[0].Height), Color.MediumPurple);
+                    }
 
 
                     if (Settings.ShowHitBoxes)
