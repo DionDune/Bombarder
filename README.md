@@ -25,7 +25,6 @@ Controls:
      
   > Other:
 
-     - V: Spawn Enemy
      - I: Toggle Entity AI
      - O: Toggle Hitbox Rendering
      
