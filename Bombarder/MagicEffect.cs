@@ -408,6 +408,8 @@ namespace Bombarder
             public static readonly int BorderWidth = 15;
             public float Opacity = OpacityDefault;
 
+            public List<Entity> ContainedEntities = new List<Entity>();
+
 
             public static void EnactEffect(MagicEffect Effect, List<Entity> Entities)
             {
@@ -458,13 +460,35 @@ namespace Bombarder
 
                 if (Container.IsActive)
                 {
+                    float XDiff;
+                    float YDiff;
+                    float Distance;
+
+
+                    //Store new entites in Container list
                     foreach (Entity Entity in Entities)
                     {
-                        float XDiff = Math.Abs(Effect.X - Entity.X);
-                        float YDiff = Math.Abs(Effect.Y - Entity.Y);
-                        float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+                        XDiff = Math.Abs(Effect.X - Entity.X);
+                        YDiff = Math.Abs(Effect.Y - Entity.Y);
+                        Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
-                        if (Distance >= Container.CurrentRadius - EdgeEffectWith && Distance <= Container.CurrentRadius)
+                        if (Distance <= Container.CurrentRadius)
+                        {
+                            if (!Container.ContainedEntities.Contains(Entity))
+                            {
+                                Container.ContainedEntities.Add(Entity);
+                            }
+                        }
+                    }
+
+                    //Keep all contained entites within confines
+                    foreach (Entity Entity in Container.ContainedEntities)
+                    {
+                        XDiff = Math.Abs(Effect.X - Entity.X);
+                        YDiff = Math.Abs(Effect.Y - Entity.Y);
+                        Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                        if (Distance >= Container.CurrentRadius - EdgeEffectWith)
                         {
                             float xDiff = Entity.X - Effect.X;
                             float yDiff = Entity.Y - Effect.Y;
