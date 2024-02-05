@@ -468,13 +468,13 @@ namespace Bombarder
                     //Store new entites in Container list
                     foreach (Entity Entity in Entities)
                     {
-                        XDiff = Math.Abs(Effect.X - Entity.X);
-                        YDiff = Math.Abs(Effect.Y - Entity.Y);
-                        Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-
-                        if (Distance <= Container.CurrentRadius)
+                        if (!Container.ContainedEntities.Contains(Entity))
                         {
-                            if (!Container.ContainedEntities.Contains(Entity))
+                            XDiff = Math.Abs(Effect.X - Entity.X);
+                            YDiff = Math.Abs(Effect.Y - Entity.Y);
+                            Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+
+                            if (Distance <= Container.CurrentRadius)
                             {
                                 Container.ContainedEntities.Add(Entity);
                             }
