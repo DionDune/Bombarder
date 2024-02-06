@@ -412,8 +412,9 @@ namespace Bombarder
             public uint NextJumpFrame = 0;
 
             public const float JumpVelocityMin = 20;
-            public const float JumpVelocityMax = 40;
-            public const float JumpVelocityFullThreshhold = 500;
+            public const float JumpVelocityMed = 40;
+            public const float JumpVelocityMax = 60;
+            public const float JumpVelocityFullThreshhold = 650;
             public const float VelocityMultiplier = 0.95F;
             public float Velocity = 0;
             public float Angle = 0;
@@ -443,7 +444,7 @@ namespace Bombarder
                     }
                     else
                     {
-                        Velocity = (float)Game1.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMax * 100) / 100;
+                        Velocity = (float)Game1.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100;
                     }
                     
 
