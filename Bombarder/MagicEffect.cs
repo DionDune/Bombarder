@@ -682,6 +682,57 @@ namespace Bombarder
                 }
             }
         }
+
+        public class PlayerTeleport
+        {
+            public const int ManaCost = 100;
+
+            public const int DefaultDuration = 2;
+            public const bool HasDuration = false;
+            public const bool HasDurationWhenReached = true;
+
+            public const float Speed = 10;
+            public Vector2 Goal;
+            public bool GoalReacted;
+
+
+
+            public static void EnactEffect(MagicEffect Effect, Player Player)
+            {
+                EnactMovement(Effect, Player);
+                EnactDuration(Effect, Player);
+            }
+            public static void EnactMovement(MagicEffect Effect, Player Player)
+            {
+                PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
+
+                float xDiff = Player.X - Effect.X;
+                float yDiff = Player.Y - Effect.Y;
+                float Distance = (float)Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
+                float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+                float AngleRadians = Angle * (float)(Math.PI / 180);
+
+                float DistanceToMove = Speed;
+
+                if (Distance <= Speed)
+                {
+                    DistanceToMove = Distance;
+                    Teleport.GoalReacted = true;
+                }
+
+                Player.X -= Math.Abs(DistanceToMove * (float)Math.Cos(AngleRadians));
+                Player.Y -= Math.Abs(DistanceToMove * (float)Math.Sin(AngleRadians));
+            }
+            public static void EnactDuration(MagicEffect Effect, Player Player)
+            {
+                PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
+
+                if (Teleport.GoalReacted)
+                {
+                    Effect.HasDuration = true;
+                }
+            }
+        }
     }
 
     internal class MagicEffectPiece
