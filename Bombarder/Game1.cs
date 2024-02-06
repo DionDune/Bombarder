@@ -582,6 +582,25 @@ namespace Bombarder
                     }
                 });
             }
+            else if (MagicType.ToString() == "Bombarder.MagicEffect+PlayerTeleport")
+            {
+                if (Player.CheckUseMana(MagicEffect.PlayerTeleport.ManaCost))
+                {
+                    MagicEffects.Add(new MagicEffect()
+                    {
+                        X = (int)Player.X,
+                        Y = (int)Player.Y,
+
+                        Duration = MagicEffect.PlayerTeleport.DefaultDuration,
+                        HasDuration = MagicEffect.PlayerTeleport.HasDuration,
+                        MagicObj = new PlayerTeleport()
+                        {
+                            Goal = new Vector2(X, Y),
+                            GoalReacted = false
+                        }
+                    });
+                }
+            }
         }
         private void EnactMagic()
         {
@@ -836,6 +855,11 @@ namespace Bombarder
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                 (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new ForceContainer());
+                }
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
+                {
+                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new ForceWave());
                 }
 
 
