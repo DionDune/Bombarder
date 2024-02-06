@@ -201,7 +201,7 @@ namespace Bombarder
             public float Length { get; set; }
             public float Thickness { get; set; }
             public float Direction { get; set; }
-            public Color Color { get; set; }
+            public Color Colour { get; set; }
             public float Opacity { get; set; }
 
 
@@ -258,7 +258,7 @@ namespace Bombarder
                         Length = Game1.random.Next(LengthMin, LengthMax),
                         Thickness = Game1.random.Next(ThicknessMin, ThicknessMax),
                         Direction = (Angle + Game1.random.Next(-AngleSpreadRange, AngleSpreadRange) * (float)(Math.PI / 180)),
-                        Color = Colours.First(),
+                        Colour = Colours.First(),
                         Opacity = 1
                     }
                 });

@@ -1007,6 +1007,10 @@ namespace Bombarder
                 {
                     LaterParticles.Add((particle, "LazerLine"));
                 }
+                else if (ParticleType == "Bombarder.Particle+TeleportLine")
+                {
+                    LaterParticles.Add((particle, "TeleportLine"));
+                }
                 else if (ParticleType == "Bombarder.Particle+Impact")
                 {
                     LaterParticles.Add((particle, "Impact"));
@@ -1297,6 +1301,12 @@ namespace Bombarder
                 else if (particle.Item2 == "LazerLine")
                 {
                     Particle.LazerLine Line = (Particle.LazerLine)particle.Item1.ParticleObj;
+                    Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+                    DrawLine(Position, Line.Length, Line.Direction, Line.Colour, Line.Thickness);
+                }
+                else if (particle.Item2 == "TeleportLine")
+                {
+                    Particle.TeleportLine Line = (Particle.TeleportLine)particle.Item1.ParticleObj;
                     Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
                     DrawLine(Position, Line.Length, Line.Direction, Line.Colour, Line.Thickness);
                 }
