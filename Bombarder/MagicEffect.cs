@@ -696,6 +696,9 @@ namespace Bombarder
             public bool GoalReacted = false;
             public bool JustStarted = true;
 
+            public const int ParticleCountMin = 15;
+            public const int ParticleCountMax = 25;
+
 
 
             public static void EnactEffect(MagicEffect Effect, Player Player)
@@ -749,7 +752,10 @@ namespace Bombarder
             {
                 PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
 
-                Particle.TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Effect.X, Effect.Y), new Vector2(Teleport.Goal.X, Teleport.Goal.Y));
+                for (int i = 0; i < Game1.random.Next(ParticleCountMin, ParticleCountMax); i++)
+                {
+                    Particle.TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Effect.X, Effect.Y), new Vector2(Teleport.Goal.X, Teleport.Goal.Y));
+                }
             }
         }
     }
