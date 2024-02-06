@@ -111,6 +111,9 @@ namespace Bombarder
                     case "Bombarder.Particle+RedCubeSegment":
                         RedCubeSegment.EnactParticle(particle);
                         break;
+                    case "Bombarder.Particle+TeleportLine":
+                        TeleportLine.EnactParticle(particle);
+                        break;
                 }
             }
         }
