@@ -410,13 +410,13 @@ namespace Bombarder
             public const int JumpIntervalMin = 60;
             public const int JumpIntervalMax = 250;
             public const int JumpIntervalErraticMin = 60;
-            public const int JumpIntervalErraticMax = 120;
+            public const int JumpIntervalErraticMax = 140;
             public const int ErraticDistanceThreshold = 800;
             public uint NextJumpFrame = 0;
 
             public const float JumpVelocityMin = 20;
             public const float JumpVelocityMed = 40;
-            public const float JumpVelocityMax = 60;
+            public const float JumpVelocityMax = 55;
             public const float JumpVelocityFullThreshhold = 650;
             public const float VelocityMultiplier = 0.95F;
             public float Velocity = 0;
