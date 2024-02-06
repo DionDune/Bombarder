@@ -693,7 +693,7 @@ namespace Bombarder
 
             public const float Speed = 10;
             public Vector2 Goal;
-            public bool GoalReacted;
+            public bool GoalReacted = false;
 
 
 
@@ -706,8 +706,8 @@ namespace Bombarder
             {
                 PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
 
-                float xDiff = Player.X - Effect.X;
-                float yDiff = Player.Y - Effect.Y;
+                float xDiff = Player.X - Teleport.Goal.X;
+                float yDiff = Player.Y - Teleport.Goal.Y;
                 float Distance = (float)Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                 float AngleRadians = Angle * (float)(Math.PI / 180);
@@ -720,8 +720,8 @@ namespace Bombarder
                     Teleport.GoalReacted = true;
                 }
 
-                Player.X -= Math.Abs(DistanceToMove * (float)Math.Cos(AngleRadians));
-                Player.Y -= Math.Abs(DistanceToMove * (float)Math.Sin(AngleRadians));
+                Player.X -= (DistanceToMove * (float)Math.Cos(AngleRadians));
+                Player.Y -= (DistanceToMove * (float)Math.Sin(AngleRadians));
             }
             public static void EnactDuration(MagicEffect Effect, Player Player)
             {

@@ -599,6 +599,7 @@ namespace Bombarder
                             GoalReacted = false
                         }
                     });
+                    int a = 0;
                 }
             }
         }
@@ -628,6 +629,9 @@ namespace Bombarder
                         break;
                     case "Bombarder.MagicEffect+WideLazer":
                         MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
+                        break;
+                    case "Bombarder.MagicEffect+PlayerTeleport":
+                        MagicEffect.PlayerTeleport.EnactEffect(Effect, Player);
                         break;
                     default:
                         break;
@@ -859,7 +863,7 @@ namespace Bombarder
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new ForceWave());
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new PlayerTeleport());
                 }
 
 
