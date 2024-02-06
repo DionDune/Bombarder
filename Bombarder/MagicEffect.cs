@@ -694,13 +694,21 @@ namespace Bombarder
             public const float Speed = 80;
             public Vector2 Goal;
             public bool GoalReacted = false;
+            public bool JustStarted = true;
 
 
 
             public static void EnactEffect(MagicEffect Effect, Player Player)
             {
+                PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
+
                 EnactMovement(Effect, Player);
                 EnactDuration(Effect, Player);
+
+                if (Teleport.JustStarted)
+                {
+                    CreateParticles(Effect);
+                }
             }
             public static void EnactMovement(MagicEffect Effect, Player Player)
             {
@@ -720,9 +728,12 @@ namespace Bombarder
                     Teleport.GoalReacted = true;
                 }
 
+
                 Player.X -= (DistanceToMove * (float)Math.Cos(AngleRadians));
                 Player.Y -= (DistanceToMove * (float)Math.Sin(AngleRadians));
                 Player.IsImmune = true;
+
+                Teleport.JustStarted = false;
             }
             public static void EnactDuration(MagicEffect Effect, Player Player)
             {
@@ -733,6 +744,12 @@ namespace Bombarder
                     Effect.HasDuration = true;
                     Player.IsImmune = false;
                 }
+            }
+            public static void CreateParticles(MagicEffect Effect)
+            {
+                PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
+
+                Particle.TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Effect.X, Effect.Y), new Vector2(Teleport.Goal.X, Teleport.Goal.Y));
             }
         }
     }
