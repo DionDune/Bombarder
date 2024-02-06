@@ -722,6 +722,7 @@ namespace Bombarder
 
                 Player.X -= (DistanceToMove * (float)Math.Cos(AngleRadians));
                 Player.Y -= (DistanceToMove * (float)Math.Sin(AngleRadians));
+                Player.IsImmune = true;
             }
             public static void EnactDuration(MagicEffect Effect, Player Player)
             {
@@ -730,6 +731,7 @@ namespace Bombarder
                 if (Teleport.GoalReacted)
                 {
                     Effect.HasDuration = true;
+                    Player.IsImmune = false;
                 }
             }
         }
