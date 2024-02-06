@@ -265,7 +265,7 @@ namespace Bombarder
                     {
                         Length = Game1.random.Next(LengthMin, LengthMax),
                         Thickness = Game1.random.Next(ThicknessMin, ThicknessMax),
-                        Direction = (Angle + Game1.random.Next(-AngleSpreadRange, AngleSpreadRange) * (float)(Math.PI / 180)),
+                        Direction = (Angle + Game1.random.Next(-AngleSpreadRange, AngleSpreadRange)) * (float)(Math.PI / 180),
                         Colour = Colours.First(),
                         Opacity = OpacityDefault,
                     }
