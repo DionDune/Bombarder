@@ -1308,7 +1308,7 @@ namespace Bombarder
                 {
                     Particle.TeleportLine Line = (Particle.TeleportLine)particle.Item1.ParticleObj;
                     Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
-                    DrawLine(Position, Line.Length, Line.Direction, Line.Colour, Line.Thickness);
+                    DrawLine(Position, Line.Length, Line.Direction, Line.Colour * Line.Opacity, Line.Thickness);
                 }
                 else if (particle.Item2 == "Impact")
                 {

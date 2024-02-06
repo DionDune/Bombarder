@@ -193,9 +193,12 @@ namespace Bombarder
                 (new List<Color> { Color.Purple, Color.MediumPurple, Color.DarkMagenta });
 
             public const float OpacityDefault = 0;
-            public const float OpacityChange = 0.025F;
-            public const int OpacityChangeInterval = 5;
+            public const float OpacityIncreasingChange = 0.15F;
+            public const int OpacityIncreaseInterval = 1;
+            public const float OpacityDecreasingChange = 0.025F;
+            public const int OpacityDecreasingInterval = 3;
             public bool OpacityIncreasing = true;
+
 
 
             public float Length { get; set; }
@@ -211,27 +214,31 @@ namespace Bombarder
             }
             private static void EnactOpacityChange(Particle Particle)
             {
-                if (Game1.GameTick % OpacityChangeInterval == 0)
-                {
-                    TeleportLine Line = (TeleportLine)Particle.ParticleObj;
+                TeleportLine Line = (TeleportLine)Particle.ParticleObj;
 
-                    if (Line.OpacityIncreasing)
+                if (Line.OpacityIncreasing)
+                {
+                    if (Game1.GameTick % OpacityIncreaseInterval == 0)
                     {
-                        Line.Opacity += Particle.Dust.OpacityChange;
+                        Line.Opacity += OpacityIncreasingChange;
                         if (Line.Opacity >= 1)
                         {
                             Line.OpacityIncreasing = false;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    if (Game1.GameTick % OpacityDecreasingInterval == 0)
                     {
-                        Line.Opacity -= Particle.Dust.OpacityChange;
+                        Line.Opacity -= OpacityDecreasingChange;
                         if (Line.Opacity <= 0)
                         {
                             Particle.Duration = 1;
                             Particle.HasDuration = true;
                         }
                     }
+                    
                 }
             }
 
@@ -260,7 +267,7 @@ namespace Bombarder
                         Thickness = Game1.random.Next(ThicknessMin, ThicknessMax),
                         Direction = (Angle + Game1.random.Next(-AngleSpreadRange, AngleSpreadRange) * (float)(Math.PI / 180)),
                         Colour = Colours.First(),
-                        Opacity = 1
+                        Opacity = OpacityDefault,
                     }
                 });
             }
