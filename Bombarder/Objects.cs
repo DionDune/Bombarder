@@ -245,8 +245,9 @@ namespace Bombarder
                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                 float AngleRadians = Angle * (float)(Math.PI / 180);
 
-                int X = (int)(Point1.X + (Game1.random.Next(0, (int)Distance) * (float)Math.Cos(AngleRadians)));
-                int Y = (int)(Point1.X + (Game1.random.Next(0, (int)Distance) * (float)Math.Sin(AngleRadians)));
+                int ParticleDistance = Game1.random.Next(0, (int)Distance);
+                int X = (int)(Point1.X - (ParticleDistance * (float)Math.Cos(AngleRadians)));
+                int Y = (int)(Point1.Y - (ParticleDistance * (float)Math.Sin(AngleRadians)));
 
                 Particles.Add(new Particle(X, Y)
                 {
