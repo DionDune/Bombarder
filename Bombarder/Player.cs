@@ -24,6 +24,7 @@ namespace Bombarder
         public float Slowdown { get; set; }
 
 
+        public bool IsImmune = false;
         public bool IsDead = false;
         public int Health { get; set; }
         public int HealthMax { get; set; }
@@ -141,11 +142,14 @@ namespace Bombarder
         }
         public void GiveDamage(int Damage)
         {
-            Health -= Damage;
-
-            if (Health <= 0)
+            if (!IsImmune)
             {
-                IsDead = true;
+                Health -= Damage;
+
+                if (Health <= 0)
+                {
+                    IsDead = true;
+                }
             }
         }
 
