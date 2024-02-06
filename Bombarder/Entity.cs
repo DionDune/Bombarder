@@ -409,6 +409,9 @@ namespace Bombarder
 
             public const int JumpIntervalMin = 60;
             public const int JumpIntervalMax = 250;
+            public const int JumpIntervalErraticMin = 60;
+            public const int JumpIntervalErraticMax = 120;
+            public const int ErraticDistanceThreshold = 800;
             public uint NextJumpFrame = 0;
 
             public const float JumpVelocityMin = 20;
@@ -450,7 +453,15 @@ namespace Bombarder
 
                     spider.Angle = Angle;
                     spider.Velocity = Velocity;
-                    spider.NextJumpFrame = Game1.GameTick + (uint)Game1.random.Next(JumpIntervalMin, JumpIntervalMax);
+
+                    if (PlayerDistance > ErraticDistanceThreshold)
+                    {
+                        spider.NextJumpFrame = Game1.GameTick + (uint)Game1.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax);
+                    }
+                    else
+                    {
+                        spider.NextJumpFrame = Game1.GameTick + (uint)Game1.random.Next(JumpIntervalMin, JumpIntervalMax);
+                    }
                 }
             }
             public static void EnactVelocity(Entity Entity, Player Player)
