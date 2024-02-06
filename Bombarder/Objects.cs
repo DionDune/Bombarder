@@ -180,10 +180,10 @@ namespace Bombarder
         }
         public class TeleportLine
         {
-            public const int LengthMin = 10;
-            public const int LengthMax = 200;
-            public const int ThicknessMin = 1;
-            public const int ThicknessMax = 4;
+            public const int LengthMin = 40;
+            public const int LengthMax = 250;
+            public const int ThicknessMin = 3;
+            public const int ThicknessMax = 6;
 
             public const int DurationMin = 10;
             public const int DurationMax = 100;

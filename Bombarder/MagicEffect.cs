@@ -697,7 +697,9 @@ namespace Bombarder
             public bool JustStarted = true;
 
             public const int ParticleCountMin = 15;
-            public const int ParticleCountMax = 25;
+            public const int ParticleCountMed = 30;
+            public const int ParticleCountMax = 50;
+            public const int ParticleCountMaxDistanceThreshold = 400;
 
 
 
@@ -752,7 +754,17 @@ namespace Bombarder
             {
                 PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
 
-                for (int i = 0; i < Game1.random.Next(ParticleCountMin, ParticleCountMax); i++)
+                float xDiff = Effect.X - Teleport.Goal.X;
+                float yDiff = Effect.Y - Teleport.Goal.Y;
+                float Distance = (float)Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
+
+                int Count = PlayerTeleport.ParticleCountMed;
+                if (Distance > PlayerTeleport.ParticleCountMaxDistanceThreshold)
+                {
+                    Count = PlayerTeleport.ParticleCountMax;
+                }
+
+                for (int i = 0; i < Game1.random.Next(ParticleCountMin, Count); i++)
                 {
                     Particle.TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Effect.X, Effect.Y), new Vector2(Teleport.Goal.X, Teleport.Goal.Y));
                 }
