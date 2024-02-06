@@ -702,13 +702,13 @@ namespace Bombarder
             {
                 PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
 
-                EnactMovement(Effect, Player);
-                EnactDuration(Effect, Player);
 
                 if (Teleport.JustStarted)
                 {
                     CreateParticles(Effect);
                 }
+                EnactMovement(Effect, Player);
+                EnactDuration(Effect, Player);
             }
             public static void EnactMovement(MagicEffect Effect, Player Player)
             {
