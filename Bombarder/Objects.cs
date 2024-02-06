@@ -175,6 +175,92 @@ namespace Bombarder
                 Colour = Color.Turquoise;
             }
         }
+        public class TeleportLine
+        {
+            public const int LengthMin = 10;
+            public const int LengthMax = 200;
+            public const int ThicknessMin = 1;
+            public const int ThicknessMax = 4;
+
+            public const int DurationMin = 10;
+            public const int DurationMax = 100;
+
+            public const int AngleSpreadRange = 10;
+            public static readonly IList<Color> Colours = new ReadOnlyCollection<Color>
+                (new List<Color> { Color.Purple, Color.MediumPurple, Color.DarkMagenta });
+
+            public const float OpacityDefault = 0;
+            public const float OpacityChange = 0.025F;
+            public const int OpacityChangeInterval = 5;
+            public bool OpacityIncreasing = true;
+
+
+            public float Length { get; set; }
+            public float Thickness { get; set; }
+            public float Direction { get; set; }
+            public Color Color { get; set; }
+            public float Opacity { get; set; }
+
+
+            public static void EnactParticle(Particle Particle)
+            {
+                EnactOpacityChange(Particle);
+            }
+            private static void EnactOpacityChange(Particle Particle)
+            {
+                if (Game1.GameTick % OpacityChangeInterval == 0)
+                {
+                    TeleportLine Line = (TeleportLine)Particle.ParticleObj;
+
+                    if (Line.OpacityIncreasing)
+                    {
+                        Line.Opacity += Particle.Dust.OpacityChange;
+                        if (Line.Opacity >= 1)
+                        {
+                            Line.OpacityIncreasing = false;
+                        }
+                    }
+                    else
+                    {
+                        Line.Opacity -= Particle.Dust.OpacityChange;
+                        if (Line.Opacity <= 0)
+                        {
+                            Particle.Duration = 1;
+                            Particle.HasDuration = true;
+                        }
+                    }
+                }
+            }
+
+
+            public static void SpawnBetween(List<Particle> Particles, Vector2 Point1, Vector2 Point2)
+            {
+                float xDiff = Point1.X - Point2.X;
+                float yDiff = Point1.Y - Point2.Y;
+
+                float Distance = (float)Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
+                float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+                float AngleRadians = Angle * (float)(Math.PI / 180);
+
+                int X = (int)(Point1.X + (Game1.random.Next(0, (int)Distance) * (float)Math.Cos(AngleRadians)));
+                int Y = (int)(Point1.X + (Game1.random.Next(0, (int)Distance) * (float)Math.Sin(AngleRadians)));
+
+                Particles.Add(new Particle(X, Y)
+                {
+                    HasDuration = false,
+                    Duration = Game1.random.Next(DurationMin, DurationMax),
+
+                    ParticleObj = new TeleportLine()
+                    {
+                        Length = Game1.random.Next(LengthMin, LengthMax),
+                        Thickness = Game1.random.Next(ThicknessMin, ThicknessMax),
+                        Direction = (Angle + Game1.random.Next(-AngleSpreadRange, AngleSpreadRange) * (float)(Math.PI / 180)),
+                        Color = Colours.First(),
+                        Opacity = 1
+                    }
+                });
+            }
+        }
         public class Impact
         {
             public const int DurationDefault = 50;
