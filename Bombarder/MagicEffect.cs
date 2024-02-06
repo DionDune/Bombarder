@@ -685,13 +685,13 @@ namespace Bombarder
 
         public class PlayerTeleport
         {
-            public const int ManaCost = 100;
+            public const int ManaCost = 150;
 
             public const int DefaultDuration = 2;
             public const bool HasDuration = false;
             public const bool HasDurationWhenReached = true;
 
-            public const float Speed = 10;
+            public const float Speed = 80;
             public Vector2 Goal;
             public bool GoalReacted = false;
 
