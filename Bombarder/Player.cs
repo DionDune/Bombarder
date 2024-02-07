@@ -152,6 +152,15 @@ namespace Bombarder
                 }
             }
         }
+        public void GiveHealth(int Amount)
+        {
+            Health += Amount;
+
+            if (Health > HealthMax)
+            {
+                Health = HealthMax;
+            }
+        }
 
         public void ManaHandler()
         {
@@ -183,6 +192,15 @@ namespace Bombarder
             else
             {
                 return false;
+            }
+        }
+        public void GiveMana(int Amount)
+        {
+            Mana += Amount;
+
+            if (Mana > ManaMax)
+            {
+                Mana = ManaMax;
             }
         }
     }
