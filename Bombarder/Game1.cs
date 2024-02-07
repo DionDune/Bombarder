@@ -418,9 +418,9 @@ namespace Bombarder
             }
 
 
-            switch (EnemyClass.ToString())
+            switch (EnemyClass)
             {
-                case "Bombarder.Entity+RedCube":
+                case Entity.RedCube:
                     //Red Cube
                     Entities.Add(new Entity(new Entity.RedCube())
                     {
@@ -428,7 +428,7 @@ namespace Bombarder
                         Y = (int)SpawnPoint.Y,
                     });
                     break;
-                case "Bombarder.Entity+DemonEye":
+                case Entity.DemonEye:
                     //Demon Eye
                     Entities.Add(new Entity(new Entity.DemonEye())
                     {
@@ -436,7 +436,7 @@ namespace Bombarder
                         Y = (int)SpawnPoint.Y,
                     });
                     break;
-                case "Bombarder.Entity+CubeMother":
+                case Entity.CubeMother:
                     //Cube Mother
                     Entities.Add(new Entity(new Entity.CubeMother())
                     {
@@ -444,7 +444,7 @@ namespace Bombarder
                         Y = (int)SpawnPoint.Y
                     });
                     break;
-                case "Bombarder.Entity+Spider":
+                case Entity.Spider:
                     //Spider
                     Entities.Add(new Entity(new Entity.Spider())
                     {
