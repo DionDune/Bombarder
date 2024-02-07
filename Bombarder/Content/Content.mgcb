@@ -97,3 +97,9 @@
 /processorParam:TextureFormat=Color
 /build:HollowCircle.png
 
+#begin Jon Shuemaker - Neurosis.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Jon Shuemaker - Neurosis.mp3
+
