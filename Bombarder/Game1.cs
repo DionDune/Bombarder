@@ -964,7 +964,7 @@ namespace Bombarder
 
                 //Entity Functions
                 EnactEntities();
-                Entity.PurgeDead(Entities);
+                Entity.PurgeDead(Entities, Player);
                 //Particles
                 Particle.EnactDuration(Particles);
                 Particle.EnactParticles(Particles, GameTick);

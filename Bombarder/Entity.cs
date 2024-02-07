@@ -605,7 +605,7 @@ namespace Bombarder
                 LastHitMarkerFrame = Game1.GameTick;
             }
         }
-        public static void PurgeDead(List<Entity> Entities)
+        public static void PurgeDead(List<Entity> Entities, Player Player)
         {
             List<Entity> DeadEntities = new List<Entity>();
 
@@ -625,6 +625,7 @@ namespace Bombarder
                 }
 
                 Entities.Remove(Entity);
+                Player.GiveKillReward(Entity);
             }
         }
     }
