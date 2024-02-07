@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -212,25 +213,24 @@ namespace Bombarder
             int HealthGain = 0;
             int ManaGain = 0;
 
-            if (EntityType == typeof(Entity.RedCube))
+            switch (Entity.EntityObj)
             {
-                HealthGain = Entity.RedCube.killHealthReward;
-                ManaGain = Entity.RedCube.killManaReward;
-            }
-            else if (EntityType == typeof(Entity.DemonEye))
-            {
-                HealthGain = Entity.DemonEye.killHealthReward;
-                ManaGain = Entity.DemonEye.killManaReward;
-            }
-            else if (EntityType == typeof(Entity.CubeMother))
-            {
-                HealthGain = Entity.CubeMother.killHealthReward;
-                ManaGain = Entity.CubeMother.killManaReward;
-            }
-            else if (EntityType == typeof(Entity.Spider))
-            {
-                HealthGain = Entity.Spider.killHealthReward;
-                ManaGain = Entity.Spider.killManaReward;
+                case Entity.RedCube:
+                    HealthGain = Entity.RedCube.killHealthReward;
+                    ManaGain = Entity.RedCube.killManaReward;
+                    break;
+                case Entity.DemonEye:
+                    HealthGain = Entity.DemonEye.killHealthReward;
+                    ManaGain = Entity.DemonEye.killManaReward;
+                    break;
+                case Entity.CubeMother:
+                    HealthGain = Entity.CubeMother.killHealthReward;
+                    ManaGain = Entity.CubeMother.killManaReward;
+                    break;
+                case Entity.Spider:
+                    HealthGain = Entity.Spider.killHealthReward;
+                    ManaGain = Entity.Spider.killManaReward;
+                    break;
             }
 
 
