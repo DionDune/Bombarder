@@ -498,7 +498,7 @@ namespace Bombarder
 
         private void CreateMagic(int X, int Y, object MagicType)
         {
-            if (MagicType.ToString() == "Bombarder.MagicEffect+StaticOrb")
+            if (MagicType == typeof(MagicEffect.StaticOrb))
             {
                 if (Player.CheckUseMana(MagicEffect.StaticOrb.ManaCost))
                 {
@@ -511,7 +511,7 @@ namespace Bombarder
                     });
                 }
             }
-            else if (MagicType.ToString() == "Bombarder.MagicEffect+NonStaticOrb")
+            else if (MagicType == typeof(MagicEffect.NonStaticOrb))
             {
                 //Calculating Angle
                 float xDiff = X - Player.X;
@@ -531,7 +531,7 @@ namespace Bombarder
                     }
                 });
             }
-            else if (MagicType.ToString() == "Bombarder.MagicEffect+DissapationWave")
+            else if (MagicType == typeof(MagicEffect.DissapationWave))
             {
                 if (Player.CheckUseMana(MagicEffect.DissapationWave.ManaCost))
                 {
@@ -546,7 +546,7 @@ namespace Bombarder
                     });
                 }
             }
-            else if (MagicType.ToString() == "Bombarder.MagicEffect+ForceWave")
+            else if (MagicType == typeof(MagicEffect.ForceWave))
             {
                 if (Player.CheckUseMana(MagicEffect.ForceWave.ManaCost))
                 {
@@ -562,7 +562,7 @@ namespace Bombarder
                 }
                 
             }
-            else if (MagicType.ToString() == "Bombarder.MagicEffect+ForceContainer")
+            else if (MagicType == typeof(MagicEffect.ForceContainer))
             {
                 if (Player.CheckUseMana(MagicEffect.ForceContainer.ManaCost))
                 {
@@ -580,7 +580,7 @@ namespace Bombarder
                     });
                 }
             }
-            else if (MagicType.ToString() == "Bombarder.MagicEffect+WideLazer")
+            else if (MagicType == typeof(MagicEffect.WideLazer))
             {
                 //Calculating Angle
                 float xDiff = X - Player.X;
@@ -599,7 +599,7 @@ namespace Bombarder
                     }
                 });
             }
-            else if (MagicType.ToString() == "Bombarder.MagicEffect+PlayerTeleport")
+            else if (MagicType == typeof(MagicEffect.PlayerTeleport))
             {
                 if (Player.CheckUseMana(MagicEffect.PlayerTeleport.ManaCost))
                 {
