@@ -465,18 +465,18 @@ namespace Bombarder
                     string EntityType = Entity.EntityObj.ToString();
 
                     //Enact Inbuilt Function
-                    switch (EntityType)
+                    switch (Entity.EntityObj)
                     {
-                        case "Bombarder.Entity+RedCube":
+                        case Entity.RedCube:
                             Entity.RedCube.EnactAI(Entity, Player);
                             break;
-                        case "Bombarder.Entity+DemonEye":
+                        case Entity.DemonEye:
                             Entity.DemonEye.EnactAI(Entity, Player);
                             break;
-                        case "Bombarder.Entity+CubeMother":
+                        case Entity.CubeMother:
                             Entity.CubeMother.EnactAI(Entity, Player);
                             break;
-                        case "Bombarder.Entity+Spider":
+                        case Entity.Spider:
                             Entity.Spider.EnactAI(Entity, Player);
                             break;
                     }
