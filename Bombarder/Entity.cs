@@ -619,7 +619,7 @@ namespace Bombarder
 
             foreach (Entity Entity in DeadEntities)
             {
-                if (Entity.EntityObj.ToString() == "Bombarder.Entity+RedCube")
+                if (Entity.EntityObj is RedCube)
                 {
                     RedCube.CreateDeathParticles(Entity);
                 }
