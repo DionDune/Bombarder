@@ -696,9 +696,9 @@ namespace Bombarder
             public bool GoalReacted = false;
             public bool JustStarted = true;
 
-            public const int ParticleCountMin = 15;
-            public const int ParticleCountMed = 30;
-            public const int ParticleCountMax = 50;
+            public const int ParticleCountMin = 65;
+            public const int ParticleCountMed = 100;
+            public const int ParticleCountMax = 150;
             public const int ParticleCountMaxDistanceThreshold = 400;
 
 

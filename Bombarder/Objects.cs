@@ -180,10 +180,11 @@ namespace Bombarder
         }
         public class TeleportLine
         {
-            public const int LengthMin = 40;
-            public const int LengthMax = 250;
+            public const int LengthMin = 5;
+            public const int LengthMax = 20;
             public const int ThicknessMin = 3;
             public const int ThicknessMax = 6;
+            public const int RandomDistanceAllowance = 20;
 
             public const int DurationMin = 10;
             public const int DurationMax = 100;
@@ -253,8 +254,8 @@ namespace Bombarder
                 float AngleRadians = Angle * (float)(Math.PI / 180);
 
                 int ParticleDistance = Game1.random.Next(0, (int)Distance);
-                int X = (int)(Point1.X - (ParticleDistance * (float)Math.Cos(AngleRadians)));
-                int Y = (int)(Point1.Y - (ParticleDistance * (float)Math.Sin(AngleRadians)));
+                int X = (int)(Point1.X - (ParticleDistance * (float)Math.Cos(AngleRadians))) + Game1.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
+                int Y = (int)(Point1.Y - (ParticleDistance * (float)Math.Sin(AngleRadians))) + Game1.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
 
                 Particles.Add(new Particle(X, Y)
                 {
