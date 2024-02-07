@@ -28,6 +28,7 @@ namespace Bombarder
         string GameState;
         string UIState;
 
+        Song BackgroundSong;
         Textures Textures;
         Settings Settings;
         InputStates Input;
@@ -78,6 +79,13 @@ namespace Bombarder
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
+            BackgroundSong = Content.Load<Song>("Jon Shuemaker - Neurosis");
+            MediaPlayer.Play(BackgroundSong);
+            MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
+            MediaPlayer.IsRepeating = true;
+
+
             //Procedurally Creating and Assigning a 1x1 white texture to Color_White
             Textures.White = new Texture2D(GraphicsDevice, 1, 1);
             Textures.White.SetData(new Color[1] { Color.White });
@@ -91,6 +99,14 @@ namespace Bombarder
 
             //Demon Eye Textures
             Textures.DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
+        }
+
+        void MediaPlayer_MediaStateChanged(object sender, System.
+                                           EventArgs e)
+        {
+            // 0.0f is silent, 1.0f is full volume
+            MediaPlayer.Volume -= 0.1f;
+            MediaPlayer.Play(BackgroundSong);
         }
 
         #endregion
