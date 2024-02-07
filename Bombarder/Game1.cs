@@ -627,27 +627,27 @@ namespace Bombarder
                 string MagicType = Effect.MagicObj.ToString();
 
                 //Enact Inbuilt Function
-                switch (MagicType)
+                switch (Effect.MagicObj)
                 {
-                    case "Bombarder.MagicEffect+StaticOrb":
+                    case MagicEffect.StaticOrb:
                         MagicEffect.StaticOrb.EnactEffect(Effect, Entities);
                         break;
-                    case "Bombarder.MagicEffect+NonStaticOrb":
+                    case MagicEffect.NonStaticOrb:
                         MagicEffect.NonStaticOrb.EnactEffect(Effect, Entities);
                         break;
-                    case "Bombarder.MagicEffect+DissapationWave":
+                    case MagicEffect.DissapationWave:
                         MagicEffect.DissapationWave.EnactEffect(Effect, Entities);
                         break;
-                    case "Bombarder.MagicEffect+ForceWave":
+                    case MagicEffect.ForceWave:
                         MagicEffect.ForceWave.EnactEffect(Effect, Entities);
                         break;
-                    case "Bombarder.MagicEffect+ForceContainer":
+                    case MagicEffect.ForceContainer:
                         MagicEffect.ForceContainer.EnactEffect(Effect, Entities);
                         break;
-                    case "Bombarder.MagicEffect+WideLazer":
+                    case MagicEffect.WideLazer:
                         MagicEffect.WideLazer.EnactEffect(Effect, Player, Entities, GameTick);
                         break;
-                    case "Bombarder.MagicEffect+PlayerTeleport":
+                    case MagicEffect.PlayerTeleport:
                         MagicEffect.PlayerTeleport.EnactEffect(Effect, Player);
                         break;
                     default:
