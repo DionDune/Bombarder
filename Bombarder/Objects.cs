@@ -96,22 +96,21 @@ namespace Bombarder
         {
             foreach (Particle particle in Particles)
             {
-                string ParticleType = particle.ParticleObj.ToString();
-                switch (ParticleType)
+                switch (particle.ParticleObj)
                 {
-                    case "Bombarder.Particle+LazerLine":
+                    case LazerLine:
                         LazerLine.EnactParticle(particle);
                         break;
-                    case "Bombarder.Particle+Impact":
+                    case Impact:
                         Impact.EnactParticle(particle);
                         break;
-                    case "Bombarder.Particle+Dust":
+                    case Dust:
                         Dust.EnactParticle(particle, Tick);
                         break;
-                    case "Bombarder.Particle+RedCubeSegment":
+                    case RedCubeSegment:
                         RedCubeSegment.EnactParticle(particle);
                         break;
-                    case "Bombarder.Particle+TeleportLine":
+                    case TeleportLine:
                         TeleportLine.EnactParticle(particle);
                         break;
                 }
