@@ -496,7 +496,7 @@ namespace Bombarder
 
         #region Magic Interaction
 
-        private void CreateMagic(int X, int Y, object MagicType)
+        private void CreateMagic(int X, int Y, Type MagicType)
         {
             if (MagicType == typeof(MagicEffect.StaticOrb))
             {
@@ -624,8 +624,6 @@ namespace Bombarder
         {
             foreach (MagicEffect Effect in MagicEffects)
             {
-                string MagicType = Effect.MagicObj.ToString();
-
                 //Enact Inbuilt Function
                 switch (Effect.MagicObj)
                 {
@@ -727,7 +725,7 @@ namespace Bombarder
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
-                                    new StaticOrb());
+                                    typeof(StaticOrb));
                     }
                 }
 
@@ -747,14 +745,14 @@ namespace Bombarder
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
-                                    new WideLazer());
+                                    typeof(WideLazer));
                         SelectedEffects.Add(MagicEffects.Last());
                     }
                     else
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
-                                    new NonStaticOrb());
+                                    typeof(NonStaticOrb));
                     }
                 }
                 else
@@ -806,7 +804,7 @@ namespace Bombarder
                 if (!Input.isClickingMiddle)
                 {
                     CreateMagic((int)Player.X, (int)Player.Y,
-                                new DissapationWave());
+                                typeof(DissapationWave));
                 }
 
                 Input.isClickingMiddle = true;
@@ -870,17 +868,17 @@ namespace Bombarder
                 //Magic Creation
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
                 {
-                    CreateMagic((int)Player.X, (int)Player.Y, new ForceWave());
+                    CreateMagic((int)Player.X, (int)Player.Y, typeof(ForceWave));
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new ForceContainer());
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), typeof(ForceContainer));
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), new PlayerTeleport());
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), typeof(PlayerTeleport));
                 }
 
 
