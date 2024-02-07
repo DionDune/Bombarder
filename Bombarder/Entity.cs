@@ -139,7 +139,7 @@ namespace Bombarder
 
 
             public const int killHealthReward = 0;
-            public const int killManaReward = 20;
+            public const int killManaReward = 50;
 
             public static void EnactAI(Entity Entity, Player Player)
             {
@@ -265,8 +265,8 @@ namespace Bombarder
 
 
 
-            public const int killHealthReward = 1000;
-            public const int killManaReward = 1000;
+            public const int killHealthReward = 2000;
+            public const int killManaReward = 2000;
 
 
             public static void EnactAI(Entity Entity, Player Player)
@@ -340,7 +340,7 @@ namespace Bombarder
 
 
             public const int killHealthReward = 0;
-            public const int killManaReward = 50;
+            public const int killManaReward = 100;
 
             public static void EnactAI(Entity Entity, Player Player)
             {
@@ -419,7 +419,7 @@ namespace Bombarder
 
 
             public const int killHealthReward = 50;
-            public const int killManaReward = 100;
+            public const int killManaReward = 400;
 
 
             public const int Damage = 125;
