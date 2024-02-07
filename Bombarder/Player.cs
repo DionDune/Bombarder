@@ -204,7 +204,7 @@ namespace Bombarder
             }
         }
 
-        public void GiveRewardFromKill(Entity Entity)
+        public void GiveKillReward(Entity Entity)
         {
             Type EntityType = Entity.EntityObj.GetType();
 
