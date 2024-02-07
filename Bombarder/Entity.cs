@@ -139,7 +139,7 @@ namespace Bombarder
 
 
             public const int killHealthReward = 0;
-            public const int killManaReward = 50;
+            public const int killManaReward = 15;
 
             public static void EnactAI(Entity Entity, Player Player)
             {
