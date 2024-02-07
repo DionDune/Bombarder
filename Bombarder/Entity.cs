@@ -137,6 +137,10 @@ namespace Bombarder
                 }
             };
 
+
+            public const int killHealthReward = 0;
+            public const int killManaReward = 20;
+
             public static void EnactAI(Entity Entity, Player Player)
             {
                 MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
@@ -260,6 +264,11 @@ namespace Bombarder
             };
 
 
+
+            public const int killHealthReward = 1000;
+            public const int killManaReward = 1000;
+
+
             public static void EnactAI(Entity Entity, Player Player)
             {
                 EnactMovement(Entity, Player);
@@ -327,6 +336,11 @@ namespace Bombarder
                     Color = Color.White,
                 }
             };
+
+
+
+            public const int killHealthReward = 0;
+            public const int killManaReward = 50;
 
             public static void EnactAI(Entity Entity, Player Player)
             {
@@ -401,6 +415,11 @@ namespace Bombarder
                     Color = Color.MediumPurple,
                 }
             };
+
+
+
+            public const int killHealthReward = 50;
+            public const int killManaReward = 100;
 
 
             public const int Damage = 125;

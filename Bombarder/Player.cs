@@ -203,15 +203,39 @@ namespace Bombarder
                 Mana = ManaMax;
             }
         }
-        
+
         public void GiveRewardFromKill(Entity Entity)
         {
             Type EntityType = Entity.EntityObj.GetType();
 
-            switch (EntityType){
-                default:
-                    break;
+
+            int HealthGain = 0;
+            int ManaGain = 0;
+
+            if (EntityType == typeof(Entity.RedCube))
+            {
+                HealthGain = Entity.RedCube.killHealthReward;
+                ManaGain = Entity.RedCube.killManaReward;
             }
+            else if (EntityType == typeof(Entity.DemonEye))
+            {
+                HealthGain = Entity.DemonEye.killHealthReward;
+                ManaGain = Entity.DemonEye.killManaReward;
+            }
+            else if (EntityType == typeof(Entity.CubeMother))
+            {
+                HealthGain = Entity.CubeMother.killHealthReward;
+                ManaGain = Entity.CubeMother.killManaReward;
+            }
+            else if (EntityType == typeof(Entity.Spider))
+            {
+                HealthGain = Entity.Spider.killHealthReward;
+                ManaGain = Entity.Spider.killManaReward;
+            }
+
+
+            GiveHealth(HealthGain);
+            GiveMana(ManaGain);
         }
     }
 }
