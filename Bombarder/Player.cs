@@ -203,5 +203,15 @@ namespace Bombarder
                 Mana = ManaMax;
             }
         }
+        
+        public void GiveRewardFromKill(Entity Entity)
+        {
+            Type EntityType = Entity.EntityObj.GetType();
+
+            switch (EntityType){
+                default:
+                    break;
+            }
+        }
     }
 }
