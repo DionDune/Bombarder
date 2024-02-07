@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace Bombarder
         public bool ShowGrid { get; set; }
         public float GridOpacityMultiplier { get; set; }
         public float GridSizeMultiplier { get; set; }
+        public Color GridColor { get; set; }
+        public Color BackgroundColor { get; set; }
+
         public bool ShowDamageRadii { get; set; }
         public bool ShowHitBoxes { get; set; }
 
@@ -21,12 +25,17 @@ namespace Bombarder
         public Settings()
         {
             CursorSizeMultiplier = 1.66F;
+
             ShowGrid = true;
             GridOpacityMultiplier = 0.15F;
             GridSizeMultiplier = 1;
+            GridColor = Color.White;
+            BackgroundColor = Color.Black;
+
             ShowDamageRadii = false;
-            RunEntityAI = true;
             ShowHitBoxes = false;
+
+            RunEntityAI = true;
             EnemySpawnCountRange = (1, 3);
         }
     }
