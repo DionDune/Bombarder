@@ -1151,7 +1151,7 @@ namespace Bombarder
                     string MagicType = Effect.MagicObj.ToString();
 
 
-                    if (MagicType == "Bombarder.MagicEffect+DissapationWave")
+                    if (Effect.MagicObj is MagicEffect.DissapationWave)
                     {
                         DissapationWave Wave = (DissapationWave)Effect.MagicObj;
 
@@ -1159,7 +1159,7 @@ namespace Bombarder
                                                                       (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)Wave.Radius * 2, (int)Wave.Radius * 2), Wave.Colour * Wave.Opacity);
                     }
-                    else if (MagicType == "Bombarder.MagicEffect+ForceWave")
+                    else if (Effect.MagicObj is MagicEffect.ForceWave)
                     {
                         ForceWave Wave = (ForceWave)Effect.MagicObj;
 
@@ -1173,7 +1173,7 @@ namespace Bombarder
                                                                       (int)(Wave.Radius * 2) - (i * 2), (int)(Wave.Radius * 2) - (i * 2)), Wave.Colour * 0.7F);
                         }
                     }
-                    else if (MagicType == "Bombarder.MagicEffect+ForceContainer")
+                    else if (Effect.MagicObj is MagicEffect.ForceContainer)
                     {
                         ForceContainer Container = (ForceContainer)Effect.MagicObj;
 
@@ -1181,7 +1181,7 @@ namespace Bombarder
                                                                       (int)(Effect.Y - Container.CurrentRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)Container.CurrentRadius * 2, (int)Container.CurrentRadius * 2), Container.Colour * Container.Opacity);
                     }
-                    else if (MagicType == "Bombarder.MagicEffect+WideLazer")
+                    else if (Effect.MagicObj is MagicEffect.WideLazer)
                     {
                         //Old
                         if (Settings.ShowDamageRadii && false)
