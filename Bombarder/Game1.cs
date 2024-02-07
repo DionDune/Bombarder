@@ -1009,35 +1009,35 @@ namespace Bombarder
 
 
             //Particles
-            List<(Particle, string)> LaterParticles = new List<(Particle, string)>();
+            List<Particle> LaterParticles = new List<Particle>();
             foreach (Particle particle in Particles)
             {
                 string ParticleType = particle.ParticleObj.ToString();
 
-                if (ParticleType == "Bombarder.Particle+HitMarker")
+                if (particle.ParticleObj is Particle.HitMarker)
                 {
-                    LaterParticles.Add((particle, "HitMarker"));
+                    LaterParticles.Add(particle);
                 }
-                else if (ParticleType == "Bombarder.Particle+LazerLine")
+                else if (particle.ParticleObj is Particle.LazerLine)
                 {
-                    LaterParticles.Add((particle, "LazerLine"));
+                    LaterParticles.Add(particle);
                 }
-                else if (ParticleType == "Bombarder.Particle+TeleportLine")
+                else if (particle.ParticleObj is Particle.TeleportLine)
                 {
-                    LaterParticles.Add((particle, "TeleportLine"));
+                    LaterParticles.Add(particle);
                 }
-                else if (ParticleType == "Bombarder.Particle+Impact")
+                else if (particle.ParticleObj is Particle.Impact)
                 {
-                    LaterParticles.Add((particle, "Impact"));
+                    LaterParticles.Add(particle);
                 }
-                else if (ParticleType == "Bombarder.Particle+Dust")
+                else if (particle.ParticleObj is Particle.Dust)
                 {
                     Particle.Dust Dust = (Particle.Dust)particle.ParticleObj;
                     _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                     (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                     Dust.Width, Dust.Height), Dust.Colour * Dust.Opacity);
                 }
-                else if (ParticleType == "Bombarder.Particle+RedCubeSegment")
+                else if (particle.ParticleObj is Particle.RedCubeSegment)
                 {
                     _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                     (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
@@ -1302,32 +1302,32 @@ namespace Bombarder
             }
 
             //Later Particles
-            foreach ((Particle, string) particle in LaterParticles)
+            foreach (Particle particle in LaterParticles)
             {
-                if (particle.Item2 == "HitMarker")
+                if (particle.ParticleObj is Particle.HitMarker)
                 {
-                    _spriteBatch.Draw(Textures.HitMarker, new Rectangle((int)particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        (int)particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.HitMarker, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                        (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                         Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
                 }
-                else if (particle.Item2 == "LazerLine")
+                else if (particle.ParticleObj is Particle.LazerLine)
                 {
-                    Particle.LazerLine Line = (Particle.LazerLine)particle.Item1.ParticleObj;
-                    Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+                    Particle.LazerLine Line = (Particle.LazerLine)particle.ParticleObj;
+                    Vector2 Position = new Vector2(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
                     DrawLine(Position, Line.Length, Line.Direction, Line.Colour, Line.Thickness);
                 }
-                else if (particle.Item2 == "TeleportLine")
+                else if (particle.ParticleObj is Particle.TeleportLine)
                 {
-                    Particle.TeleportLine Line = (Particle.TeleportLine)particle.Item1.ParticleObj;
-                    Vector2 Position = new Vector2(particle.Item1.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Item1.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+                    Particle.TeleportLine Line = (Particle.TeleportLine)particle.ParticleObj;
+                    Vector2 Position = new Vector2(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
                     DrawLine(Position, Line.Length, Line.Direction, Line.Colour * Line.Opacity, Line.Thickness);
                 }
-                else if (particle.Item2 == "Impact")
+                else if (particle.ParticleObj is Particle.Impact)
                 {
-                    Particle.Impact Effect = (Particle.Impact)particle.Item1.ParticleObj;
+                    Particle.Impact Effect = (Particle.Impact)particle.ParticleObj;
 
-                    _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(particle.Item1.X - Effect.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        (int)(particle.Item1.Y - Effect.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(particle.X - Effect.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
+                                                                        (int)(particle.Y - Effect.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                         (int)(Effect.Radius * 2), (int)(Effect.Radius * 2)), Particle.Impact.Colour * Effect.Opacity);
                 }
             }
