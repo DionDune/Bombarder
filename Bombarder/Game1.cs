@@ -1068,10 +1068,7 @@ namespace Bombarder
                 //Entities
                 foreach (Entity Entity in Entities)
                 {
-                    string EntityType = Entity.EntityObj.ToString();
-
-
-                    if (EntityType == "Bombarder.Entity+RedCube")
+                    if (Entity.EntityObj is Entity.RedCube)
                     {
                         foreach (EntityBlock Block in Entity.Parts)
                         {
@@ -1088,13 +1085,13 @@ namespace Bombarder
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
-                    else if (EntityType == "Bombarder.Entity+DemonEye")
+                    else if (Entity.EntityObj is Entity.DemonEye)
                     {
                         _spriteBatch.Draw(Textures.DemonEye.Item1, new Rectangle((int)(Entity.X - (Textures.DemonEye.Item1.Width * 0.8 / 2)) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                       (int)(Entity.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
                                                                       (int)(Textures.DemonEye.Item1.Width * 0.8), (int)(Textures.DemonEye.Item1.Height * 0.8)), Color.White);
                     }
-                    else if (EntityType == "Bombarder.Entity+CubeMother")
+                    else if (Entity.EntityObj is Entity.CubeMother)
                     {
                         foreach (EntityBlock Block in Entity.Parts)
                         {
@@ -1111,7 +1108,7 @@ namespace Bombarder
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
-                    else if (EntityType == "Bombarder.Entity+Spider")
+                    else if (Entity.EntityObj is Entity.Spider)
                     {
                         _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
                                                                         (int)Entity.Y + (int)Entity.Parts[0].Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
