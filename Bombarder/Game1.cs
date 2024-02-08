@@ -462,8 +462,6 @@ namespace Bombarder
 
                 foreach (Entity Entity in Entities)
                 {
-                    string EntityType = Entity.EntityObj.ToString();
-
                     //Enact Inbuilt Function
                     switch (Entity.EntityObj)
                     {
@@ -1012,8 +1010,6 @@ namespace Bombarder
             List<Particle> LaterParticles = new List<Particle>();
             foreach (Particle particle in Particles)
             {
-                string ParticleType = particle.ParticleObj.ToString();
-
                 if (particle.ParticleObj is Particle.HitMarker)
                 {
                     LaterParticles.Add(particle);
@@ -1148,9 +1144,6 @@ namespace Bombarder
                 //Magic
                 foreach (MagicEffect Effect in MagicEffects)
                 {
-                    string MagicType = Effect.MagicObj.ToString();
-
-
                     if (Effect.MagicObj is MagicEffect.DissapationWave)
                     {
                         DissapationWave Wave = (DissapationWave)Effect.MagicObj;
