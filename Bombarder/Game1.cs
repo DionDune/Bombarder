@@ -4,12 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Reflection.Metadata;
-using System.Security.Authentication;
-using static Bombarder.MagicEffect;
 
 namespace Bombarder
 {
@@ -459,10 +454,10 @@ namespace Bombarder
                     Y = (int)Player.Position.Y,
 
                     Duration = MagicEffect.NonStaticOrb.DefaultDuration,
-                    MagicObj = new NonStaticOrb()
+                    MagicObj = new MagicEffect.NonStaticOrb()
                     {
                         Angle = Angle,
-                        Velocity = NonStaticOrb.DefaultVelocity,
+                        Velocity = MagicEffect.NonStaticOrb.DefaultVelocity,
                     }
                 });
             }
@@ -477,7 +472,7 @@ namespace Bombarder
 
                         Duration = MagicEffect.DissapationWave.DefaultDuration,
                         HasDuration = MagicEffect.DissapationWave.HasDuration,
-                        MagicObj = new DissapationWave()
+                        MagicObj = new MagicEffect.DissapationWave()
                     });
                 }
             }
@@ -492,7 +487,7 @@ namespace Bombarder
 
                         Duration = MagicEffect.ForceWave.DefaultDuration,
                         HasDuration = MagicEffect.ForceWave.HasDuration,
-                        MagicObj = new ForceWave()
+                        MagicObj = new MagicEffect.ForceWave()
                     });
                 }
                 
@@ -507,9 +502,9 @@ namespace Bombarder
                         Y = (int)Player.Position.Y,
 
                         Duration = MagicEffect.ForceContainer.DurationDefault,
-                        MagicObj = new ForceContainer()
+                        MagicObj = new MagicEffect.ForceContainer()
                         {
-                            CurrentRadius = ForceContainer.RadiusMoving,
+                            CurrentRadius = MagicEffect.ForceContainer.RadiusMoving,
                             Destination = new Point(X, Y)
                         }
                     });
@@ -528,7 +523,7 @@ namespace Bombarder
                     Y = (int)Player.Position.Y,
 
                     Duration = MagicEffect.WideLazer.DefaultDuration,
-                    MagicObj = new WideLazer()
+                    MagicObj = new MagicEffect.WideLazer()
                     {
                         Angle = Angle
                     }
@@ -545,7 +540,7 @@ namespace Bombarder
 
                         Duration = MagicEffect.PlayerTeleport.DefaultDuration,
                         HasDuration = MagicEffect.PlayerTeleport.HasDuration,
-                        MagicObj = new PlayerTeleport()
+                        MagicObj = new MagicEffect.PlayerTeleport()
                         {
                             Goal = new Vector2(X, Y),
                             GoalReacted = false
@@ -660,7 +655,7 @@ namespace Bombarder
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y),
-                                    typeof(StaticOrb));
+                                    typeof(MagicEffect.StaticOrb));
                     }
                 }
 
@@ -680,14 +675,14 @@ namespace Bombarder
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y),
-                                    typeof(WideLazer));
+                                    typeof(MagicEffect.WideLazer));
                         SelectedEffects.Add(MagicEffects.Last());
                     }
                     else
                     {
                         CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
                                     (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y),
-                                    typeof(NonStaticOrb));
+                                    typeof(MagicEffect.NonStaticOrb));
                     }
                 }
                 else
@@ -701,7 +696,7 @@ namespace Bombarder
                                 float xDiff = Mouse.GetState().X - (_graphics.PreferredBackBufferWidth / 2);
                                 float yDiff = Mouse.GetState().Y - (_graphics.PreferredBackBufferHeight / 2);
                                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
-                                ((WideLazer)Effect.MagicObj).Angle = Angle;
+                                ((MagicEffect.WideLazer)Effect.MagicObj).Angle = Angle;
                                 Effect.X = (int)Player.Position.X;
                                 Effect.Y = (int)Player.Position.Y;
                             }
@@ -739,7 +734,7 @@ namespace Bombarder
                 if (!Input.isClickingMiddle)
                 {
                     CreateMagic((int)Player.Position.X, (int)Player.Position.Y,
-                                typeof(DissapationWave));
+                                typeof(MagicEffect.DissapationWave));
                 }
 
                 Input.isClickingMiddle = true;
@@ -803,17 +798,17 @@ namespace Bombarder
                 //Magic Creation
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
                 {
-                    CreateMagic((int)Player.Position.X, (int)Player.Position.Y, typeof(ForceWave));
+                    CreateMagic((int)Player.Position.X, (int)Player.Position.Y, typeof(MagicEffect.ForceWave));
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y), typeof(ForceContainer));
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y), typeof(MagicEffect.ForceContainer));
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
                 {
                     CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y), typeof(PlayerTeleport));
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y), typeof(MagicEffect.PlayerTeleport));
                 }
 
 
@@ -1083,7 +1078,7 @@ namespace Bombarder
                 {
                     if (Effect.MagicObj is MagicEffect.DissapationWave)
                     {
-                        DissapationWave Wave = (DissapationWave)Effect.MagicObj;
+                        MagicEffect.DissapationWave Wave = (MagicEffect.DissapationWave)Effect.MagicObj;
 
                         _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
                                                                       (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
@@ -1091,12 +1086,12 @@ namespace Bombarder
                     }
                     else if (Effect.MagicObj is MagicEffect.ForceWave)
                     {
-                        ForceWave Wave = (ForceWave)Effect.MagicObj;
+                        MagicEffect.ForceWave Wave = (MagicEffect.ForceWave)Effect.MagicObj;
 
                         _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
                                                                       (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)(Wave.Radius * 2), (int)(Wave.Radius * 2)), Wave.Colour * 0.3F);
-                        for (int i = 0; i < ForceWave.BorderWidth; i++)
+                        for (int i = 0; i < MagicEffect.ForceWave.BorderWidth; i++)
                         {
                             _spriteBatch.Draw(Textures.HollowCircle, new Rectangle((int)(Effect.X - Wave.Radius + i) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
                                                                       (int)(Effect.Y - Wave.Radius + i) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
@@ -1105,7 +1100,7 @@ namespace Bombarder
                     }
                     else if (Effect.MagicObj is MagicEffect.ForceContainer)
                     {
-                        ForceContainer Container = (ForceContainer)Effect.MagicObj;
+                        MagicEffect.ForceContainer Container = (MagicEffect.ForceContainer)Effect.MagicObj;
 
                         _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Container.CurrentRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
                                                                       (int)(Effect.Y - Container.CurrentRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
@@ -1116,35 +1111,35 @@ namespace Bombarder
                         //Old
                         if (Settings.ShowDamageRadii && false)
                         {
-                            WideLazer Lazer = (WideLazer)Effect.MagicObj;
+                            MagicEffect.WideLazer Lazer = (MagicEffect.WideLazer)Effect.MagicObj;
 
                             float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
                             float RightAngleRadians = (Lazer.Angle + 90) * (float)(Math.PI / 180);
 
-                            Vector2 LeftLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) - (WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
-                                    (_graphics.PreferredBackBufferHeight / 2) - (WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
-                            LeftLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
-                            LeftLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
-                            Vector2 RightLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) + ((WideLazer.Width / 2 - 5) * (float)Math.Cos(RightAngleRadians)),
-                                    (_graphics.PreferredBackBufferHeight / 2) + ((WideLazer.Width / 2 - 5) * (float)Math.Sin(RightAngleRadians)));
-                            RightLine.X += WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
-                            RightLine.Y += WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
+                            Vector2 LeftLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) - (MagicEffect.WideLazer.Width / 2 * (float)Math.Cos(RightAngleRadians)),
+                                    (_graphics.PreferredBackBufferHeight / 2) - (MagicEffect.WideLazer.Width / 2 * (float)Math.Sin(RightAngleRadians)));
+                            LeftLine.X += MagicEffect.WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
+                            LeftLine.Y += MagicEffect.WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
+                            Vector2 RightLine = new Vector2((_graphics.PreferredBackBufferWidth / 2) + ((MagicEffect.WideLazer.Width / 2 - 5) * (float)Math.Cos(RightAngleRadians)),
+                                    (_graphics.PreferredBackBufferHeight / 2) + ((MagicEffect.WideLazer.Width / 2 - 5) * (float)Math.Sin(RightAngleRadians)));
+                            RightLine.X += MagicEffect.WideLazer.InitialDistance * (float)Math.Cos(AngleRadians);
+                            RightLine.Y += MagicEffect.WideLazer.InitialDistance * (float)Math.Sin(AngleRadians);
 
 
-                            DrawRotatedTexture(LeftLine, Textures.White, WideLazer.Width, WideLazer.Range, Lazer.Angle + 90, false, Lazer.PrimaryColor * WideLazer.Opacity);
-                            DrawRotatedTexture(LeftLine, Textures.White, 5, WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
-                            DrawRotatedTexture(RightLine, Textures.White, 5, WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
+                            DrawRotatedTexture(LeftLine, Textures.White, MagicEffect.WideLazer.Width, MagicEffect.WideLazer.Range, Lazer.Angle + 90, false, Lazer.PrimaryColor * MagicEffect.WideLazer.Opacity);
+                            DrawRotatedTexture(LeftLine, Textures.White, 5, MagicEffect.WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
+                            DrawRotatedTexture(RightLine, Textures.White, 5, MagicEffect.WideLazer.Range, Lazer.Angle + 90, false, Lazer.SecondaryColor);
 
-                            float Scale = (float)WideLazer.Width / Textures.HalfWhiteCirlce.Width;
-                            DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * WideLazer.Opacity);
+                            float Scale = (float)MagicEffect.WideLazer.Width / Textures.HalfWhiteCirlce.Width;
+                            DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Lazer.Angle + 90, true, Lazer.PrimaryColor * MagicEffect.WideLazer.Opacity);
                         }
 
                         //New accounting for Lazer Spread
                         if (Settings.ShowDamageRadii)
                         {
-                            WideLazer Lazer = (WideLazer)Effect.MagicObj;
+                            MagicEffect.WideLazer Lazer = (MagicEffect.WideLazer)Effect.MagicObj;
 
-                            float TrueSpread = WideLazer.Spread * WideLazer.TrueSpreadMultiplier;
+                            float TrueSpread = MagicEffect.WideLazer.Spread * MagicEffect.WideLazer.TrueSpreadMultiplier;
 
                             float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
                             float AngleRadiansLeft = (Lazer.Angle - TrueSpread) * (float)(Math.PI / 180);
@@ -1153,9 +1148,9 @@ namespace Bombarder
                             Vector2 Start = new Vector2(Effect.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
                                                         Effect.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y);
 
-                            DrawLine(Start, WideLazer.Range, AngleRadiansLeft, Lazer.SecondaryColor, 10);
-                            DrawLine(Start, WideLazer.Range, AngleRadians, Lazer.MarkerColor, 10);
-                            DrawLine(Start, WideLazer.Range, AngleRadiansRight, Lazer.SecondaryColor, 10);
+                            DrawLine(Start, MagicEffect.WideLazer.Range, AngleRadiansLeft, Lazer.SecondaryColor, 10);
+                            DrawLine(Start, MagicEffect.WideLazer.Range, AngleRadians, Lazer.MarkerColor, 10);
+                            DrawLine(Start, MagicEffect.WideLazer.Range, AngleRadiansRight, Lazer.SecondaryColor, 10);
                         }
                     }
                     
