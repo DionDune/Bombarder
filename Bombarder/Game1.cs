@@ -368,8 +368,17 @@ namespace Bombarder
 
         private void PlayerMovement_EnactMomentum()
         {
-            Player.X += Player.Momentum_X;
-            Player.Y += Player.Momentum_Y;
+            Vector2 MovementVector = new(Player.Momentum_X, Player.Momentum_Y);
+            // Clamp MovementVector magnitude if it is greater than max speed
+            float LengthSquared = MovementVector.LengthSquared();
+            float MaxDimension = Math.Max(MathF.Abs(Player.Momentum_X), MathF.Abs(Player.Momentum_Y));
+            if (LengthSquared > MaxDimension * MaxDimension)
+            {
+                MovementVector.Normalize();
+                MovementVector *= MaxDimension;
+            }
+            Player.X += MovementVector.X;
+            Player.Y += MovementVector.Y;
         }
 
         private void CheckEnactPlayerDeath()
