@@ -219,6 +219,10 @@ namespace Bombarder
 
         private void PlayerMovement_InputHandler(List<Keys> NewPresses)
         {
+            bool? HeadingUp = null;
+            bool? HeadingLeft = null;
+
+
             const float UnBoostDivider = 1.05f;
 
             float Speed = Player.BaseSpeed;
@@ -238,21 +242,38 @@ namespace Bombarder
             if (NewPresses.Contains(Keys.W))
             {
                 AccelerationVector -= Vector2.UnitY;
+
+                if (!NewPresses.Contains(Keys.S))
+                {
+                    HeadingUp = true;
+                }
             }
             //Downward
             if (NewPresses.Contains(Keys.S))
             {
                 AccelerationVector += Vector2.UnitY;
+                if (!NewPresses.Contains(Keys.W))
+                {
+                    HeadingUp = false;
+                }
             }
             //Left
             if (NewPresses.Contains(Keys.A))
             {
                 AccelerationVector -= Vector2.UnitX;
+                if (!NewPresses.Contains(Keys.D))
+                {
+                    HeadingLeft = true;
+                }
             }
             //Right
             if (NewPresses.Contains(Keys.D))
             {
                 AccelerationVector += Vector2.UnitX;
+                if (!NewPresses.Contains(Keys.A))
+                {
+                    HeadingLeft = false;
+                }
             }
 
             if (AccelerationVector != Vector2.Zero)
@@ -289,6 +310,27 @@ namespace Bombarder
             }
 
             Player.Momentum += AccelerationVector - DecelerationVector;
+
+            if (HeadingUp != null && HeadingLeft != null)
+            {
+                if (HeadingUp == true && Player.Momentum.Y > 0)
+                {
+                    Player.Momentum += new Vector2(0, AccelerationVector.Y - DecelerationVector.Y);
+                }
+                else if (HeadingUp == false && Player.Momentum.Y < 0)
+                {
+                    Player.Momentum += new Vector2(0, AccelerationVector.Y - DecelerationVector.Y);
+                }
+
+                if (HeadingLeft == true && Player.Momentum.X > 0)
+                {
+                    Player.Momentum += new Vector2(AccelerationVector.X - DecelerationVector.X, 0);
+                }
+                else if (HeadingLeft == false && Player.Momentum.X < 0)
+                {
+                    Player.Momentum += new Vector2(AccelerationVector.X - DecelerationVector.X, 0);
+                }
+            }
 
             // Clamp momentum magnitude if it is greater than max speed
             float LengthSquared = Player.Momentum.LengthSquared();
