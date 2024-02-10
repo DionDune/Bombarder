@@ -76,7 +76,7 @@ namespace Bombarder
 
 
             BackgroundSong = Content.Load<Song>("Jon Shuemaker - Neurosis");
-            MediaPlayer.Play(BackgroundSong);
+            //MediaPlayer.Play(BackgroundSong);
             MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
             MediaPlayer.IsRepeating = true;
 
