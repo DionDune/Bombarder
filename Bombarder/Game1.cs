@@ -224,161 +224,89 @@ namespace Bombarder
 
         private void PlayerMovement_InputHandler(List<Keys> NewPresses)
         {
-            const int UnBoostDivider = 3;
-            const float SwitchDirectionMult = 1F;
+            const float UnBoostDivider = 1.05f;
 
             float Speed = Player.BaseSpeed;
             if (NewPresses.Contains(Keys.LeftShift))
             {
                 Speed = Player.BaseSpeed * Player.BoostMultiplier;
             }
+            else if (Player.Momentum.LengthSquared() > Player.BaseSpeed * Player.BaseSpeed)
+            {
+                // Player is now slowing down from boost
+                Speed = Player.Momentum.Length() / UnBoostDivider;
+            }
+
+            Vector2 AccelerationVector = new();
 
             //Upward
-            if (NewPresses.Contains(Keys.W) && !Input.PreviouseKeys.Contains(Keys.S))
+            if (NewPresses.Contains(Keys.W))
             {
-                if (Player.Momentum_Y > -Speed)
-                {
-                    Player.Momentum_Y -= Player.Acceleration;
-                    if (Player.Momentum_Y > 0)
-                    {
-                        Player.Momentum_Y -= Player.Acceleration * SwitchDirectionMult;
-                    }
-
-
-                    if (Player.Momentum_Y < -Speed)
-                    {
-                        Player.Momentum_Y = -Speed;
-                    }
-                }
-                if (Player.Momentum_Y < -Speed)
-                {
-                    Player.Momentum_Y += Player.Acceleration / UnBoostDivider;
-                }
+                AccelerationVector -= Vector2.UnitY;
             }
             //Downward
-            if (NewPresses.Contains(Keys.S) && !Input.PreviouseKeys.Contains(Keys.W))
+            if (NewPresses.Contains(Keys.S))
             {
-                if (Player.Momentum_Y < Speed)
-                {
-                    Player.Momentum_Y += Player.Acceleration;
-                    if (Player.Momentum_Y < 0)
-                    {
-                        Player.Momentum_Y += Player.Acceleration * SwitchDirectionMult;
-                    }
-
-
-                    if (Player.Momentum_Y > Speed)
-                    {
-                        Player.Momentum_Y = Speed;
-                    }
-                }
-                if (Player.Momentum_Y > Speed)
-                {
-                    Player.Momentum_Y -= Player.Acceleration / UnBoostDivider;
-                }
+                AccelerationVector += Vector2.UnitY;
             }
             //Left
-            if (NewPresses.Contains(Keys.A) && !Input.PreviouseKeys.Contains(Keys.D))
+            if (NewPresses.Contains(Keys.A))
             {
-                if (Player.Momentum_X > -Speed)
-                {
-                    Player.Momentum_X -= Player.Acceleration;
-                    if (Player.Momentum_X > 0)
-                    {
-                        Player.Momentum_X -= Player.Acceleration * SwitchDirectionMult;
-                    }
-
-
-                    if (Player.Momentum_X < -Speed)
-                    {
-                        Player.Momentum_X = -Speed;
-                    }
-                }
-                if (Player.Momentum_X < -Speed)
-                {
-                    Player.Momentum_X += Player.Acceleration / UnBoostDivider;
-                }
+                AccelerationVector -= Vector2.UnitX;
             }
             //Right
-            if (NewPresses.Contains(Keys.D) && !Input.PreviouseKeys.Contains(Keys.A))
+            if (NewPresses.Contains(Keys.D))
             {
-                if (Player.Momentum_X < Speed)
-                {
-                    Player.Momentum_X += Player.Acceleration;
-                    if (Player.Momentum_X < 0)
-                    {
-                        Player.Momentum_X += Player.Acceleration * SwitchDirectionMult;
-                    }
-
-                    if (Player.Momentum_X > Speed)
-                    {
-                        Player.Momentum_X = Speed;
-                    }
-                }
-                if (Player.Momentum_X > -Speed)
-                {
-                    Player.Momentum_X -= Player.Acceleration / UnBoostDivider;
-                }
+                AccelerationVector += Vector2.UnitX;
             }
+
+            if (AccelerationVector != Vector2.Zero)
+            {
+                AccelerationVector.Normalize();
+                AccelerationVector *= Player.Acceleration;
+            }
+
+            Vector2 DecelerationVector = new();
 
             //Slowdown
-            if (!NewPresses.Contains(Keys.W) && !NewPresses.Contains(Keys.S))
+            if (!NewPresses.Contains(Keys.W) && !NewPresses.Contains(Keys.S) && Player.Momentum.Y != 0)
             {
-                if (Player.Momentum_Y > 0)
-                {
-                    Player.Momentum_Y -= Player.Slowdown;
+                DecelerationVector.Y = MathF.Sign(Player.Momentum.Y);
+            }
+            if (!NewPresses.Contains(Keys.A) && !NewPresses.Contains(Keys.D) && Player.Momentum.X != 0)
+            {
+                DecelerationVector.X = MathF.Sign(Player.Momentum.X);
+            }
 
-                    if (Player.Momentum_Y < 0)
-                    {
-                        Player.Momentum_Y = 0;
-                    }
+            if (DecelerationVector != Vector2.Zero)
+            {
+                DecelerationVector.Normalize();
+                DecelerationVector *= Player.Slowdown;
+                // Do not decelerate player past 0
+                if (MathF.Abs(DecelerationVector.X) > MathF.Abs(Player.Momentum.X))
+                {
+                    DecelerationVector.X = Player.Momentum.X;
                 }
-                else if (Player.Momentum_Y < 0)
+                if (MathF.Abs(DecelerationVector.Y) > MathF.Abs(Player.Momentum.Y))
                 {
-                    Player.Momentum_Y += Player.Slowdown;
-
-                    if (Player.Momentum_Y > 0)
-                    {
-                        Player.Momentum_Y = 0;
-                    }
+                    DecelerationVector.Y = Player.Momentum.Y;
                 }
             }
-            if (!NewPresses.Contains(Keys.A) && !NewPresses.Contains(Keys.D))
+
+            Player.Momentum += AccelerationVector - DecelerationVector;
+
+            // Clamp momentum magnitude if it is greater than max speed
+            float LengthSquared = Player.Momentum.LengthSquared();
+            if (LengthSquared > Speed * Speed)
             {
-                if (Player.Momentum_X > 0)
-                {
-                    Player.Momentum_X -= Player.Slowdown;
-
-                    if (Player.Momentum_X < 0)
-                    {
-                        Player.Momentum_X = 0;
-                    }
-                }
-                else if (Player.Momentum_X < 0)
-                {
-                    Player.Momentum_X += Player.Slowdown;
-
-                    if (Player.Momentum_X > 0)
-                    {
-                        Player.Momentum_X = 0;
-                    }
-                }
+                Player.Momentum = Vector2.Normalize(Player.Momentum);
+                Player.Momentum *= Speed;
             }
         }
 
         private void PlayerMovement_EnactMomentum()
         {
-            Vector2 MovementVector = new(Player.Momentum_X, Player.Momentum_Y);
-            // Clamp MovementVector magnitude if it is greater than max speed
-            float LengthSquared = MovementVector.LengthSquared();
-            float MaxDimension = Math.Max(MathF.Abs(Player.Momentum_X), MathF.Abs(Player.Momentum_Y));
-            if (LengthSquared > MaxDimension * MaxDimension)
-            {
-                MovementVector.Normalize();
-                MovementVector *= MaxDimension;
-            }
-            Player.X += MovementVector.X;
-            Player.Y += MovementVector.Y;
+            Player.Position += Player.Momentum;
         }
 
         private void CheckEnactPlayerDeath()
@@ -422,8 +350,8 @@ namespace Bombarder
             {
                 float SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
                 int SpawnDistance = random.Next((int)(_graphics.PreferredBackBufferWidth * 0.6F), (int)(_graphics.PreferredBackBufferWidth * 1.2));
-                SpawnPoint = new Vector2(Player.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
-                                                    Player.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
+                SpawnPoint = new Vector2(Player.Position.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
+                                                    Player.Position.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
             }
 
 
@@ -521,14 +449,14 @@ namespace Bombarder
             else if (MagicType == typeof(MagicEffect.NonStaticOrb))
             {
                 //Calculating Angle
-                float xDiff = X - Player.X;
-                float yDiff = Y - Player.Y;
+                float xDiff = X - Player.Position.X;
+                float yDiff = Y - Player.Position.Y;
                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
 
                 MagicEffects.Add(new MagicEffect()
                 {
-                    X = (int)Player.X,
-                    Y = (int)Player.Y,
+                    X = (int)Player.Position.X,
+                    Y = (int)Player.Position.Y,
 
                     Duration = MagicEffect.NonStaticOrb.DefaultDuration,
                     MagicObj = new NonStaticOrb()
@@ -575,8 +503,8 @@ namespace Bombarder
                 {
                     MagicEffects.Add(new MagicEffect()
                     {
-                        X = (int)Player.X,
-                        Y = (int)Player.Y,
+                        X = (int)Player.Position.X,
+                        Y = (int)Player.Position.Y,
 
                         Duration = MagicEffect.ForceContainer.DurationDefault,
                         MagicObj = new ForceContainer()
@@ -590,14 +518,14 @@ namespace Bombarder
             else if (MagicType == typeof(MagicEffect.WideLazer))
             {
                 //Calculating Angle
-                float xDiff = X - Player.X;
-                float yDiff = Y - Player.Y;
+                float xDiff = X - Player.Position.X;
+                float yDiff = Y - Player.Position.Y;
                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
 
                 MagicEffects.Add(new MagicEffect()
                 {
-                    X = (int)Player.X,
-                    Y = (int)Player.Y,
+                    X = (int)Player.Position.X,
+                    Y = (int)Player.Position.Y,
 
                     Duration = MagicEffect.WideLazer.DefaultDuration,
                     MagicObj = new WideLazer()
@@ -612,8 +540,8 @@ namespace Bombarder
                 {
                     MagicEffects.Add(new MagicEffect()
                     {
-                        X = (int)Player.X,
-                        Y = (int)Player.Y,
+                        X = (int)Player.Position.X,
+                        Y = (int)Player.Position.Y,
 
                         Duration = MagicEffect.PlayerTeleport.DefaultDuration,
                         HasDuration = MagicEffect.PlayerTeleport.HasDuration,
@@ -730,8 +658,8 @@ namespace Bombarder
 
                     if (!UIClicked)
                     {
-                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
+                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y),
                                     typeof(StaticOrb));
                     }
                 }
@@ -750,15 +678,15 @@ namespace Bombarder
                 {
                     if (true)
                     {
-                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
+                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y),
                                     typeof(WideLazer));
                         SelectedEffects.Add(MagicEffects.Last());
                     }
                     else
                     {
-                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y),
+                        CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
+                                    (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y),
                                     typeof(NonStaticOrb));
                     }
                 }
@@ -774,8 +702,8 @@ namespace Bombarder
                                 float yDiff = Mouse.GetState().Y - (_graphics.PreferredBackBufferHeight / 2);
                                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                                 ((WideLazer)Effect.MagicObj).Angle = Angle;
-                                Effect.X = (int)Player.X;
-                                Effect.Y = (int)Player.Y;
+                                Effect.X = (int)Player.Position.X;
+                                Effect.Y = (int)Player.Position.Y;
                             }
                         }
                     }
@@ -810,7 +738,7 @@ namespace Bombarder
             {
                 if (!Input.isClickingMiddle)
                 {
-                    CreateMagic((int)Player.X, (int)Player.Y,
+                    CreateMagic((int)Player.Position.X, (int)Player.Position.Y,
                                 typeof(DissapationWave));
                 }
 
@@ -875,17 +803,17 @@ namespace Bombarder
                 //Magic Creation
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
                 {
-                    CreateMagic((int)Player.X, (int)Player.Y, typeof(ForceWave));
+                    CreateMagic((int)Player.Position.X, (int)Player.Position.Y, typeof(ForceWave));
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
                 {
-                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), typeof(ForceContainer));
+                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y), typeof(ForceContainer));
                 }
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
                 {
-                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.X),
-                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Y), typeof(PlayerTeleport));
+                    CreateMagic((int)(Mouse.GetState().X - _graphics.PreferredBackBufferWidth / 2 + Player.Position.X),
+                                (int)(Mouse.GetState().Y - _graphics.PreferredBackBufferHeight / 2 + Player.Position.Y), typeof(PlayerTeleport));
                 }
 
 
@@ -915,8 +843,8 @@ namespace Bombarder
         {
             if (Settings.ShowGrid)
             {
-                Point ScreenStart = new Point((int)Player.X - (_graphics.PreferredBackBufferWidth / 2),
-                                                              (int)Player.Y - (_graphics.PreferredBackBufferHeight / 2));
+                Point ScreenStart = new Point((int)Player.Position.X - (_graphics.PreferredBackBufferWidth / 2),
+                                                              (int)Player.Position.Y - (_graphics.PreferredBackBufferHeight / 2));
                 for (int y = 0; y < _graphics.PreferredBackBufferHeight; y++)
                 {
                     if ((y + ScreenStart.Y) % (300 * Settings.GridSizeMultiplier) == 0)
@@ -990,7 +918,7 @@ namespace Bombarder
                 //Particles
                 Particle.EnactDuration(Particles);
                 Particle.EnactParticles(Particles, GameTick);
-                Particle.SpawnParticles(Particles, new Vector2(Player.X, Player.Y), _graphics, GameTick);
+                Particle.SpawnParticles(Particles, Player.Position, _graphics, GameTick);
 
                 //Magic Functions
                 EnactMagic();
@@ -1038,14 +966,14 @@ namespace Bombarder
                 else if (particle.ParticleObj is Particle.Dust)
                 {
                     Particle.Dust Dust = (Particle.Dust)particle.ParticleObj;
-                    _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                    (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                    (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                     Dust.Width, Dust.Height), Dust.Colour * Dust.Opacity);
                 }
                 else if (particle.ParticleObj is Particle.RedCubeSegment)
                 {
-                    _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                    (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.White, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                    (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                     Particle.RedCubeSegment.Width, Particle.RedCubeSegment.Height), Particle.RedCubeSegment.Colour);
                 }
             }
@@ -1085,15 +1013,15 @@ namespace Bombarder
                                 BlockTexture = Block.Textures.First();
                             }
 
-                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
                     else if (Entity.EntityObj is Entity.DemonEye)
                     {
-                        _spriteBatch.Draw(Textures.DemonEye.Item1, new Rectangle((int)(Entity.X - (Textures.DemonEye.Item1.Width * 0.8 / 2)) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Entity.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                        _spriteBatch.Draw(Textures.DemonEye.Item1, new Rectangle((int)(Entity.X - (Textures.DemonEye.Item1.Width * 0.8 / 2)) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Entity.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)(Textures.DemonEye.Item1.Width * 0.8), (int)(Textures.DemonEye.Item1.Height * 0.8)), Color.White);
                     }
                     else if (Entity.EntityObj is Entity.CubeMother)
@@ -1108,15 +1036,15 @@ namespace Bombarder
                                 BlockTexture = Block.Textures.First();
                             }
 
-                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
                     else if (Entity.EntityObj is Entity.Spider)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        (int)Entity.Y + (int)Entity.Parts[0].Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                        (int)Entity.Y + (int)Entity.Parts[0].Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                         Entity.Parts[0].Width, Entity.Parts[0].Height), Color.MediumPurple);
                     }
 
@@ -1124,29 +1052,29 @@ namespace Bombarder
                     if (Settings.ShowHitBoxes)
                     {
                         //Top Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     Entity.HitboxSize.X, 2), Color.White);
                         //Bottom Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + Entity.HitboxSize.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + Entity.HitboxSize.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     Entity.HitboxSize.X, 2), Color.White);
                         //Left Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                         //Right Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                     }
                     if (Entity.HealthBarVisible)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Entity.HealthBarDimentions.X, Entity.HealthBarDimentions.Y), Color.LightGray);
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X + 2),
-                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y + 2),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X + 2),
+                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y + 2),
                                                                         (int)((Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
                     }
                 }
@@ -1157,21 +1085,21 @@ namespace Bombarder
                     {
                         DissapationWave Wave = (DissapationWave)Effect.MagicObj;
 
-                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)Wave.Radius * 2, (int)Wave.Radius * 2), Wave.Colour * Wave.Opacity);
                     }
                     else if (Effect.MagicObj is MagicEffect.ForceWave)
                     {
                         ForceWave Wave = (ForceWave)Effect.MagicObj;
 
-                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Wave.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Effect.Y - Wave.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)(Wave.Radius * 2), (int)(Wave.Radius * 2)), Wave.Colour * 0.3F);
                         for (int i = 0; i < ForceWave.BorderWidth; i++)
                         {
-                            _spriteBatch.Draw(Textures.HollowCircle, new Rectangle((int)(Effect.X - Wave.Radius + i) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Effect.Y - Wave.Radius + i) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                            _spriteBatch.Draw(Textures.HollowCircle, new Rectangle((int)(Effect.X - Wave.Radius + i) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Effect.Y - Wave.Radius + i) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)(Wave.Radius * 2) - (i * 2), (int)(Wave.Radius * 2) - (i * 2)), Wave.Colour * 0.7F);
                         }
                     }
@@ -1179,8 +1107,8 @@ namespace Bombarder
                     {
                         ForceContainer Container = (ForceContainer)Effect.MagicObj;
 
-                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Container.CurrentRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Effect.Y - Container.CurrentRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                        _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Container.CurrentRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Effect.Y - Container.CurrentRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)Container.CurrentRadius * 2, (int)Container.CurrentRadius * 2), Container.Colour * Container.Opacity);
                     }
                     else if (Effect.MagicObj is MagicEffect.WideLazer)
@@ -1222,8 +1150,8 @@ namespace Bombarder
                             float AngleRadiansLeft = (Lazer.Angle - TrueSpread) * (float)(Math.PI / 180);
                             float AngleRadiansRight = (Lazer.Angle + TrueSpread) * (float)(Math.PI / 180);
 
-                            Vector2 Start = new Vector2(Effect.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                        Effect.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+                            Vector2 Start = new Vector2(Effect.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                        Effect.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y);
 
                             DrawLine(Start, WideLazer.Range, AngleRadiansLeft, Lazer.SecondaryColor, 10);
                             DrawLine(Start, WideLazer.Range, AngleRadians, Lazer.MarkerColor, 10);
@@ -1235,27 +1163,27 @@ namespace Bombarder
                     {
                         if (Effect.RadiusIsCircle)
                         {
-                            _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Effect.DamageRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                      (int)(Effect.Y - Effect.DamageRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                            _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(Effect.X - Effect.DamageRadius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Effect.Y - Effect.DamageRadius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed);
                         }
                         else
                         {
                             //Top Line
-                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Effect.RadiusSize.X * 2, 2), Color.White);
                             //Bottom Line
-                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Effect.RadiusSize.X * 2, 2), Color.White);
                             //Left Line
-                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         2, Effect.RadiusSize.Y * 2), Color.White);
                             //Right Line
-                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 + (_graphics.PreferredBackBufferWidth / 2) - Player.X),
-                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Y),
+                            _spriteBatch.Draw(Textures.White, new Rectangle((int)(Effect.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Effect.Y + Effect.RadiusOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         2, Effect.RadiusSize.Y * 2), Color.White);
                         }
                     }
@@ -1308,28 +1236,28 @@ namespace Bombarder
             {
                 if (particle.ParticleObj is Particle.HitMarker)
                 {
-                    _spriteBatch.Draw(Textures.HitMarker, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.HitMarker, new Rectangle((int)particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                        (int)particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                         Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
                 }
                 else if (particle.ParticleObj is Particle.LazerLine)
                 {
                     Particle.LazerLine Line = (Particle.LazerLine)particle.ParticleObj;
-                    Vector2 Position = new Vector2(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+                    Vector2 Position = new Vector2(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X, particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y);
                     DrawLine(Position, Line.Length, Line.Direction, Line.Colour, Line.Thickness);
                 }
                 else if (particle.ParticleObj is Particle.TeleportLine)
                 {
                     Particle.TeleportLine Line = (Particle.TeleportLine)particle.ParticleObj;
-                    Vector2 Position = new Vector2(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X, particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y);
+                    Vector2 Position = new Vector2(particle.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X, particle.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y);
                     DrawLine(Position, Line.Length, Line.Direction, Line.Colour * Line.Opacity, Line.Thickness);
                 }
                 else if (particle.ParticleObj is Particle.Impact)
                 {
                     Particle.Impact Effect = (Particle.Impact)particle.ParticleObj;
 
-                    _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(particle.X - Effect.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.X,
-                                                                        (int)(particle.Y - Effect.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Y,
+                    _spriteBatch.Draw(Textures.WhiteCircle, new Rectangle((int)(particle.X - Effect.Radius) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                        (int)(particle.Y - Effect.Radius) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                         (int)(Effect.Radius * 2), (int)(Effect.Radius * 2)), Particle.Impact.Colour * Effect.Opacity);
                 }
             }

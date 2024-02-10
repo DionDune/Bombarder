@@ -563,8 +563,8 @@ namespace Bombarder
             {
                 WideLazer Lazer = (WideLazer)Effect.MagicObj;
 
-                float X = Player.X;
-                float Y = Player.Y;
+                float X = Player.Position.X;
+                float Y = Player.Position.Y;
                 float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
 
                 // Start an Initial Distance from source
@@ -719,8 +719,8 @@ namespace Bombarder
             {
                 PlayerTeleport Teleport = (PlayerTeleport)Effect.MagicObj;
 
-                float xDiff = Player.X - Teleport.Goal.X;
-                float yDiff = Player.Y - Teleport.Goal.Y;
+                float xDiff = Player.Position.X - Teleport.Goal.X;
+                float yDiff = Player.Position.Y - Teleport.Goal.Y;
                 float Distance = (float)Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
                 float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                 float AngleRadians = Angle * (float)(Math.PI / 180);
@@ -734,8 +734,8 @@ namespace Bombarder
                 }
 
 
-                Player.X -= (DistanceToMove * (float)Math.Cos(AngleRadians));
-                Player.Y -= (DistanceToMove * (float)Math.Sin(AngleRadians));
+                Player.Position -= new Vector2(
+                    DistanceToMove * (float)Math.Cos(AngleRadians), DistanceToMove * (float)Math.Sin(AngleRadians));
                 Player.IsImmune = true;
 
                 Teleport.JustStarted = false;
