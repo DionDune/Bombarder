@@ -1,24 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bombarder
 {
     public class Player
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        public Vector2 Position { get; set; }
 
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public float Momentum_X { get; set; }
-        public float Momentum_Y { get; set; }
+        public Vector2 Momentum { get; set; }
         public float BaseSpeed { get; set; }
         public float BoostMultiplier { get; set; }
         public float Acceleration { get; set; }
@@ -62,8 +54,7 @@ namespace Bombarder
 
         public Player()
         {
-            X = 0;
-            Y = 0;
+            Position = new Vector2();
 
             Width = 50;
             Height = 100;
@@ -75,8 +66,7 @@ namespace Bombarder
             ManaMax = 750;
 
 
-            Momentum_X = 0;
-            Momentum_Y = 0;
+            Momentum = new Vector2();
             BaseSpeed = 5;
             BoostMultiplier = 1.85F;
 
@@ -99,13 +89,11 @@ namespace Bombarder
             Player.Health = Player.HealthMax;
             Player.Mana = Player.ManaMax;
 
-            Player.Momentum_X = 0;
-            Player.Momentum_Y = 0;
+            Player.Momentum = new Vector2();
         }
         public static void ResetPosition(Player Player)
         {
-            Player.X = 0;
-            Player.Y = 0;
+            Player.Position = new Vector2();
         }
         public static void SetRandomLocalPosition(Player Player, int MinDistance, int MaxDistance)
         {
@@ -113,8 +101,9 @@ namespace Bombarder
             float AngleRadians = (float)Angle * (float)(Math.PI / 180);
             int Distance = Game1.random.Next(MinDistance, MaxDistance);
 
-            Player.X += (int)(Distance * (float)Math.Cos(AngleRadians));
-            Player.Y += (int)(Distance * (float)Math.Sin(AngleRadians));
+            Player.Position += new Vector2(
+                (int)(Distance * (float)Math.Cos(AngleRadians)),
+                (int)(Distance * (float)Math.Sin(AngleRadians)));
         }
 
         public void Handler()

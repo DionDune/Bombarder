@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Bombarder
 {
@@ -143,7 +139,7 @@ namespace Bombarder
 
             public static void EnactAI(Entity Entity, Player Player)
             {
-                MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                MoveTowards(Player.Position, Entity, BaseSpeed);
                 EnactAttack(Entity, Player);
             }
             public static void EnactAttack(Entity Entity, Player Player)
@@ -153,10 +149,10 @@ namespace Bombarder
                 Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
                 Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
 
-                Point PlayerTopLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
-                Point PlayerTopRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
-                Point PlayerBottomLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
-                Point PlayerBottomRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+                Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
+                Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
+                Point PlayerBottomLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y + (Player.Height / 2));
+                Point PlayerBottomRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y + (Player.Height / 2));
 
                 if (TopLeft.X >= PlayerTopLeft.X && TopLeft.X <= PlayerTopRight.X &&
                     TopLeft.Y >= PlayerTopLeft.Y && TopLeft.Y <= PlayerBottomLeft.Y)
@@ -277,15 +273,15 @@ namespace Bombarder
             public static void EnactMovement(Entity Entity, Player Player)
             {
                 float Distance = GetDistanceBetween(new Vector2(Entity.X, Entity.Y),
-                                                    new Vector2(Player.X, Player.Y));
+                                                    Player.Position);
 
                 if (Distance > PreferredDistance)
                 {
-                    MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                    MoveTowards(Player.Position, Entity, BaseSpeed);
                 }
                 else if (Distance < PreferredDistance)
                 {
-                    MoveAwayFrom(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                    MoveAwayFrom(Player.Position, Entity, BaseSpeed);
                 }
             }
             public static void EnactSpawn(Entity Entity)
@@ -344,7 +340,7 @@ namespace Bombarder
 
             public static void EnactAI(Entity Entity, Player Player)
             {
-                MoveTowards(new Vector2(Player.X, Player.Y), Entity, BaseSpeed);
+                MoveTowards(Player.Position, Entity, BaseSpeed);
                 EnactAttack(Entity, Player);
             }
             public static void EnactAttack(Entity Entity, Player Player)
@@ -357,10 +353,10 @@ namespace Bombarder
                     Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
                     Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
 
-                    Point PlayerTopLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
-                    Point PlayerTopRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
-                    Point PlayerBottomLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
-                    Point PlayerBottomRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+                    Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
+                    Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
+                    Point PlayerBottomLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y + (Player.Height / 2));
+                    Point PlayerBottomRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y + (Player.Height / 2));
 
 
                     bool Contact = false;
@@ -454,8 +450,8 @@ namespace Bombarder
 
                 if (spider.NextJumpFrame <= Game1.GameTick)
                 {
-                    float XDiff = Entity.X - Player.X;
-                    float YDiff = Entity.Y - Player.Y;
+                    float XDiff = Entity.X - Player.Position.X;
+                    float YDiff = Entity.Y - Player.Position.Y;
                     float Angle = (float)Math.Atan2(YDiff, XDiff);
                     float Velocity;
 
@@ -511,10 +507,10 @@ namespace Bombarder
                     Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
                     Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
 
-                    Point PlayerTopLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
-                    Point PlayerTopRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y - (Player.Height / 2));
-                    Point PlayerBottomLeft = new Point((int)Player.X - (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
-                    Point PlayerBottomRight = new Point((int)Player.X + (Player.Width / 2), (int)Player.Y + (Player.Height / 2));
+                    Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
+                    Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
+                    Point PlayerBottomLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y + (Player.Height / 2));
+                    Point PlayerBottomRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y + (Player.Height / 2));
 
 
                     bool Contact = false;
