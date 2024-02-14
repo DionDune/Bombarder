@@ -880,28 +880,38 @@ namespace Bombarder
         {
             if (Settings.ShowGrid)
             {
+                int BigLineWidth = 2 * Settings.GridLineSizeMult;
+                int ThinLineWidth = 1 * Settings.GridLineSizeMult;
+                
+                if (Settings.TranceMode)
+                {
+                    BigLineWidth = 2 * Settings.TranceModeGridLineMult;
+                    ThinLineWidth = 1 * Settings.TranceModeGridLineMult;
+                }
+
+
                 Point ScreenStart = new Point((int)Player.Position.X - (_graphics.PreferredBackBufferWidth / 2),
                                                               (int)Player.Position.Y - (_graphics.PreferredBackBufferHeight / 2));
                 for (int y = 0; y < _graphics.PreferredBackBufferHeight; y++)
                 {
                     if ((y + ScreenStart.Y) % (300 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, 2 * Settings.GridLineSizeMult), Settings.GridColor * 0.7F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, BigLineWidth), Settings.GridColor * 0.7F * Settings.GridOpacityMultiplier);
                     }
                     if ((y + ScreenStart.Y) % (100 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, 1 * Settings.GridLineSizeMult), Settings.GridColor * 0.45F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, ThinLineWidth), Settings.GridColor * 0.45F * Settings.GridOpacityMultiplier);
                     }
                 }
                 for (int x = 0; x < _graphics.PreferredBackBufferWidth; x++)
                 {
                     if ((x + ScreenStart.X) % (300 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(x - 1, 0, 2 * Settings.GridLineSizeMult, _graphics.PreferredBackBufferWidth), Settings.GridColor * 0.7F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(x - 1, 0, BigLineWidth, _graphics.PreferredBackBufferWidth), Settings.GridColor * 0.7F * Settings.GridOpacityMultiplier);
                     }
                     if ((x + ScreenStart.X) % (100 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(x, 0, 1 * Settings.GridLineSizeMult, _graphics.PreferredBackBufferWidth), Settings.GridColor * 0.45F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(x, 0, ThinLineWidth, _graphics.PreferredBackBufferWidth), Settings.GridColor * 0.45F * Settings.GridOpacityMultiplier);
                     }
                 }
             }
@@ -968,7 +978,8 @@ namespace Bombarder
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Settings.BackgroundColor);
+            if (!Settings.TranceMode || (Settings.TranceMode && Settings.TranceModeClearScreen))
+                GraphicsDevice.Clear(Settings.BackgroundColor);
 
             // BEGIN Draw ----
             _spriteBatch.Begin(SpriteSortMode.Deferred,

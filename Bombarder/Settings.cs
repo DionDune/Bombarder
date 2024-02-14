@@ -15,6 +15,10 @@ namespace Bombarder
         public bool ShowDamageRadii { get; set; }
         public bool ShowHitBoxes { get; set; }
 
+        public bool TranceMode { get; set; }
+        public int TranceModeGridLineMult { get; set; }
+        public bool TranceModeClearScreen { get; set; }
+
         public bool RunEntityAI { get; set; }
         public (int, int) EnemySpawnCountRange { get; set; }
 
@@ -34,6 +38,10 @@ namespace Bombarder
 
             RunEntityAI = true;
             EnemySpawnCountRange = (1, 3);
+
+            TranceMode = false;
+            TranceModeGridLineMult = 100;
+            TranceModeClearScreen = false;
         }
     }
 }
