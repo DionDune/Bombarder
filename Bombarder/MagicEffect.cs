@@ -551,36 +551,6 @@ namespace Bombarder
                     CreateParticles(Effect);
                 }
             }
-            private static void EnactDamageOld(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
-            {
-                WideLazer Lazer = (WideLazer)Effect.MagicObj;
-
-                float X = Player.Position.X;
-                float Y = Player.Position.Y;
-                float AngleRadians = Lazer.Angle * (float)(Math.PI / 180);
-
-                // Start an Initial Distance from source
-                X += InitialDistance * (float)Math.Cos(AngleRadians);
-                Y += InitialDistance * (float)Math.Sin(AngleRadians);
-
-                for (int i = 0; i < WideLazer.Range / 3; i++)
-                {
-                    X += 3 * (float)Math.Cos(AngleRadians);
-                    Y += 3 * (float)Math.Sin(AngleRadians);
-
-                    foreach (Entity Entity in Entites)
-                    {
-                        float XDiff = Math.Abs(X - Entity.X);
-                        float YDiff = Math.Abs(Y - Entity.Y);
-                        float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-
-                        if (Math.Abs(Distance) <= WideLazer.Width / 2 && Tick % WideLazer.DamageInterval == 0)
-                        {
-                            Entity.GiveDamage((int)WideLazer.Damage);
-                        }
-                    }
-                }
-            }
             private static void EnactDamage(MagicEffect Effect, Player Player, List<Entity> Entites, uint Tick)
             {
                 WideLazer Lazer = (WideLazer)Effect.MagicObj;
