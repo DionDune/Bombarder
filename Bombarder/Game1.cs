@@ -855,14 +855,21 @@ namespace Bombarder
 
 
                 //Settings Changes
+                //  Entity AI
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.I))
                 {
                     Settings.RunEntityAI = !Settings.RunEntityAI;
                 }
+                //  Toggle Hitboxes
                 if (IsNewlyPressed(Keys_NewlyPressed, Keys.O))
                 {
                     Settings.ShowHitBoxes = !Settings.ShowHitBoxes;
                     Settings.ShowDamageRadii = !Settings.ShowDamageRadii;
+                }
+                //  Toggle Trance Mode
+                if (IsNewlyPressed(Keys_NewlyPressed, Keys.Back))
+                {
+                    Settings.TranceMode = !Settings.TranceMode;
                 }
             }
 
