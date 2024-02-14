@@ -16,6 +16,7 @@ namespace Bombarder
         public bool ShowHitBoxes { get; set; }
 
         public bool TranceMode { get; set; }
+        public Color TranceModeGridColor { get; set; }
         public int TranceModeGridLineMult { get; set; }
         public bool TranceModeClearScreen { get; set; }
 
@@ -39,7 +40,8 @@ namespace Bombarder
             RunEntityAI = true;
             EnemySpawnCountRange = (1, 3);
 
-            TranceMode = false;
+            TranceMode = true;
+            TranceModeGridColor = Color.Black;
             TranceModeGridLineMult = 100;
             TranceModeClearScreen = false;
         }

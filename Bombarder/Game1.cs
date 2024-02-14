@@ -882,11 +882,13 @@ namespace Bombarder
             {
                 int BigLineWidth = 2 * Settings.GridLineSizeMult;
                 int ThinLineWidth = 1 * Settings.GridLineSizeMult;
+                Color GridColor = Settings.GridColor;
                 
                 if (Settings.TranceMode)
                 {
                     BigLineWidth = 2 * Settings.TranceModeGridLineMult;
                     ThinLineWidth = 1 * Settings.TranceModeGridLineMult;
+                    GridColor = Settings.TranceModeGridColor;
                 }
 
 
@@ -896,22 +898,22 @@ namespace Bombarder
                 {
                     if ((y + ScreenStart.Y) % (300 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, BigLineWidth), Settings.GridColor * 0.7F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y - 1, _graphics.PreferredBackBufferWidth, BigLineWidth), GridColor * 0.7F * Settings.GridOpacityMultiplier);
                     }
                     if ((y + ScreenStart.Y) % (100 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, ThinLineWidth), Settings.GridColor * 0.45F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(0, y, _graphics.PreferredBackBufferWidth, ThinLineWidth), GridColor * 0.45F * Settings.GridOpacityMultiplier);
                     }
                 }
                 for (int x = 0; x < _graphics.PreferredBackBufferWidth; x++)
                 {
                     if ((x + ScreenStart.X) % (300 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(x - 1, 0, BigLineWidth, _graphics.PreferredBackBufferWidth), Settings.GridColor * 0.7F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(x - 1, 0, BigLineWidth, _graphics.PreferredBackBufferWidth), GridColor * 0.7F * Settings.GridOpacityMultiplier);
                     }
                     if ((x + ScreenStart.X) % (100 * Settings.GridSizeMultiplier) == 0)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle(x, 0, ThinLineWidth, _graphics.PreferredBackBufferWidth), Settings.GridColor * 0.45F * Settings.GridOpacityMultiplier);
+                        _spriteBatch.Draw(Textures.White, new Rectangle(x, 0, ThinLineWidth, _graphics.PreferredBackBufferWidth), GridColor * 0.45F * Settings.GridOpacityMultiplier);
                     }
                 }
             }
