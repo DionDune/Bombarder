@@ -10,6 +10,7 @@ namespace Bombarder
         public float GridSizeMultiplier { get; set; }
         public Color GridColor { get; set; }
         public Color BackgroundColor { get; set; }
+        public int GridLineSizeMult { get; set; }
 
         public bool ShowDamageRadii { get; set; }
         public bool ShowHitBoxes { get; set; }
@@ -23,6 +24,7 @@ namespace Bombarder
 
             ShowGrid = true;
             GridOpacityMultiplier = 0.15F;
+            GridLineSizeMult = 1;
             GridSizeMultiplier = 1;
             GridColor = Color.White;
             BackgroundColor = Color.Black;
