@@ -40,7 +40,7 @@ namespace Bombarder
             RunEntityAI = true;
             EnemySpawnCountRange = (1, 3);
 
-            TranceMode = true;
+            TranceMode = false;
             TranceModeGridColor = Color.Black;
             TranceModeGridLineMult = 100;
             TranceModeClearScreen = false;

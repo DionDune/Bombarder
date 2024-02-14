@@ -1028,12 +1028,14 @@ namespace Bombarder
                 }
             }
 
+
+            //Grid
+            if (GameState == "Play" || Settings.TranceMode)
+                DrawGrid();
+
             //Ingame
             if (GameState == "Play")
             {
-                //Grid
-                DrawGrid();
-
                 //Objects
                 foreach (Object Obj in Objects.GeneralObjects)
                 {
