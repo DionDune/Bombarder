@@ -139,6 +139,21 @@ namespace Bombarder
             ResetGame();
             UI_ChangePage("Play");
         }
+        private void TogglePause()
+        {
+            if (GameState == "Play")
+            {
+                UI_ChangePage("Pause");
+            }
+            else if (GameState == "Pause" || GameState == "Settings")
+            {
+                UI_ChangePage("Play");
+            }
+        }
+        public void OpenSettings()
+        {
+            UI_ChangePage("Settings");
+        }
 
         #endregion
 
@@ -177,18 +192,7 @@ namespace Bombarder
                 }
             }
         }
-        private void TogglePause()
-        {
-            if (GameState == "Play")
-            {
-                UI_ChangePage("Pause");
-            }
-            else if (GameState == "Pause")
-            {
-                UI_ChangePage("Play");
-            }
-        }
-
+        
         private void UserControl_ButtonPress(List<string> Data)
         {
             if (Data.Contains("Start New"))
@@ -198,6 +202,10 @@ namespace Bombarder
             else if (Data.Contains("Resume"))
             {
                 ResumeGame();
+            }
+            else if (Data.Contains("Settings"))
+            {
+                OpenSettings();
             }
             else if (Data.Contains("Respawn"))
             {

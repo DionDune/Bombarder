@@ -720,6 +720,59 @@ namespace Bombarder
                     }
                 }
             });
+            //Settings Page
+            Pages.Add(new UIPage()
+            {
+                Type = "Settings",
+
+                UIItems = new List<UIItem>()
+                {
+                    //Resume Button
+                    new UIItem()
+                    {
+                        Type = "Button",
+
+                        X = -200,
+                        Y = -75,
+
+                        Width = 400,
+                        Height = 150,
+
+                        CentreX = -200 + (400 / 2),
+                        CentreY = -75 + (150 / 2),
+
+                        BorderWidth = 5,
+                        BorderColor = Color.Green,
+                        BaseColor = Color.PaleGreen,
+
+                        Text = new TextElement()
+                        {
+                            Text = "RESUME",
+                            Elements = TextElement.GetString("RESUME"),
+                            ElementSize = 8,
+                            Color = Color.Black
+                        },
+
+                        Data = new List<string>() { "Resume" }
+                    },
+                    //Title Message
+                    new UIItem()
+                    {
+                        Type = "Text",
+                        CentreX = 0,
+                        CentreY = 100,
+                        Orientation = "Top",
+
+                        Text = new TextElement()
+                        {
+                            Elements = TextElement.GetString("SETTINGS"),
+                            ElementSize = 16,
+                            Color = Color.White
+                        }
+                    }
+                }
+            });
+
             //Death Screen
             Pages.Add(new UIPage()
             {
