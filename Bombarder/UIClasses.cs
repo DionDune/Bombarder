@@ -647,11 +647,10 @@ namespace Bombarder
 
                         Data = new List<string>() { "Resume" }
                     },
-                    //Pause Quit Button
+                    //Settings Button
                     new UIItem()
                     {
                         Type = "Button",
-
                         X = -200,
                         Y = 100,
 
@@ -660,6 +659,34 @@ namespace Bombarder
 
                         CentreX = -200 + (400 / 2),
                         CentreY = 100 + (150 / 2),
+
+                        BorderWidth = 10,
+                        BorderColor = Color.Blue,
+                        BaseColor = Color.Turquoise,
+
+                        Text = new TextElement()
+                        {
+                            Text = "SETTINGS",
+                            Elements = TextElement.GetString("SETTINGS"),
+                            ElementSize = 8,
+                            Color = Color.Black
+                        },
+
+                        Data = new List<string>() { "Settings" }
+                    },
+                    //Pause Quit Button
+                    new UIItem()
+                    {
+                        Type = "Button",
+
+                        X = -200,
+                        Y = 275,
+
+                        Width = 400,
+                        Height = 150,
+
+                        CentreX = -200 + (400 / 2),
+                        CentreY = 275 + (150 / 2),
 
                         BorderWidth = 5,
                         BorderColor = Color.DarkRed,
