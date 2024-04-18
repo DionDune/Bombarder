@@ -513,7 +513,7 @@ namespace Bombarder
                 case "Bottom Right":
                     return new Point(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
                 default:
-                    return new Point(0, 0);
+                    return new Point(_graphics.PreferredBackBufferWidth / 2 , _graphics.PreferredBackBufferHeight / 2 );
             }
         }
         public (Point, Point) getElementBounds(GraphicsDeviceManager _graphics)
