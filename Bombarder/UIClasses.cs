@@ -516,6 +516,14 @@ namespace Bombarder
                     return new Point(0, 0);
             }
         }
+        public (Point, Point) getElementBounds(GraphicsDeviceManager _graphics)
+        {
+            Point OritentationPosition = GetOritentationPosition(_graphics, Orientation);
+            Point TopLeft = new Point(OritentationPosition.X + X, OritentationPosition.Y + Y);
+            Point BottomRight = new Point(TopLeft.X + Width, TopLeft.Y + Height);
+
+            return (TopLeft, BottomRight);
+        }
     }
 
     internal class UIPage
@@ -754,6 +762,32 @@ namespace Bombarder
                         },
 
                         Data = new List<string>() { "Resume" }
+                    },
+                    //Player Invincibility Button
+                    new UIItem()
+                    {
+                        Type = "Button",
+
+                        Orientation = "Top Left",
+                        X = 25,
+                        Y = 250,
+                        Width =  400,
+                        Height = 150,
+                        CentreX = 25 + 200,
+                        CentreY = 250 + 75,
+
+                        BorderWidth = 3,
+                        BorderColor = Color.Purple,
+                        BaseColor = Color.BlueViolet,
+
+                        Text = new TextElement()
+                        {
+                            Elements = TextElement.GetString("INVINCIBLE"),
+                            ElementSize = 8,
+                            Color = Color.Black
+                        },
+
+                        Data = new List<string>() { "PLAYER INVINCIBLE" }
                     },
                     //Title Message
                     new UIItem()

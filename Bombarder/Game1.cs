@@ -654,13 +654,15 @@ namespace Bombarder
             {
                 foreach (UIItem Item in UIPage_Current.UIItems)
                 {
-                    int X = _graphics.PreferredBackBufferWidth / 2 + Item.X;
-                    int Y = _graphics.PreferredBackBufferHeight / 2 + Item.Y;
+                    (Point, Point) ElementBounds = Item.getElementBounds(_graphics);
+                    Point TopLeft = ElementBounds.Item1;
+                    Point BottomRight = ElementBounds.Item2;
+
 
                     if (Item.Type == "Button")
                     {
-                        if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
-                                    Mouse.GetState().Y > Y && Mouse.GetState().Y < Y + Item.Height)
+                        if (Mouse.GetState().X > TopLeft.X && Mouse.GetState().X < BottomRight.X &&
+                                    Mouse.GetState().Y > TopLeft.Y && Mouse.GetState().Y < BottomRight.Y)
                         {
                             Item.SetHighlight(true);
                         }
@@ -685,11 +687,12 @@ namespace Bombarder
                     {
                         foreach (UIItem Item in UIPage_Current.UIItems)
                         {
-                            int X = _graphics.PreferredBackBufferWidth / 2 + Item.X;
-                            int Y = _graphics.PreferredBackBufferHeight / 2 + Item.Y;
+                            (Point, Point) ElementBounds = Item.getElementBounds(_graphics);
+                            Point TopLeft = ElementBounds.Item1;
+                            Point BottomRight = ElementBounds.Item2;
 
-                            if (Mouse.GetState().X > X && Mouse.GetState().X < X + Item.Width &&
-                                    Mouse.GetState().Y > Y && Mouse.GetState().Y < Y + Item.Height)
+                            if (Mouse.GetState().X > TopLeft.X && Mouse.GetState().X < BottomRight.X &&
+                                    Mouse.GetState().Y > TopLeft.Y && Mouse.GetState().Y < BottomRight.Y)
                             {
                                 UIClicked = true;
 
