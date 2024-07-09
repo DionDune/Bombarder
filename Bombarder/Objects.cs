@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Bombarder
 {
-    public class Object
+    public class GameObject
     {
         public string Type { get; set; }
 
@@ -22,18 +22,18 @@ namespace Bombarder
         public int Height { get; set; }
 
 
-        public Object(object Obj, int x, int y)
+        public GameObject(object Obj, int x, int y)
         {
 
         }
 
         public class ObjectContainer
         {
-            public List<Object> GeneralObjects;
+            public List<GameObject> GeneralObjects;
 
             public ObjectContainer()
             {
-                GeneralObjects = new List<Object>();
+                GeneralObjects = new List<GameObject>();
             }
         }
     }
@@ -90,8 +90,8 @@ namespace Bombarder
             {
                 switch (particle.ParticleObj)
                 {
-                    case LazerLine:
-                        LazerLine.EnactParticle(particle);
+                    case LaserLine:
+                        LaserLine.EnactParticle(particle);
                         break;
                     case Impact:
                         Impact.EnactParticle(particle);
@@ -126,7 +126,7 @@ namespace Bombarder
 
             public const int DefaultDuration = 50;
         }
-        public class LazerLine
+        public class LaserLine
         {
             public const int LengthMin = 10;
             public const int LengthMax = 200;
@@ -139,7 +139,7 @@ namespace Bombarder
             public const int AngleSpreadRange = 5;
             public static readonly IList<Color> Colours = new ReadOnlyCollection<Color>
                 (new List<Color> { Color.Turquoise, Color.DarkTurquoise, Color.MediumTurquoise, Color.MediumTurquoise});
-            public static Color CentralLazerColor = Color.Red;
+            public static Color CentralLaserColor = Color.Red;
 
 
             public float Length { get; set; }
@@ -155,13 +155,13 @@ namespace Bombarder
             }
             public static void EnactMovement(Particle Particle)
             {
-                LazerLine Line = (LazerLine)Particle.ParticleObj;
+                LaserLine Line = (LaserLine)Particle.ParticleObj;
 
                 Particle.X = (int)((float)Particle.X + Line.Speed * (float)Math.Cos(Line.Direction));
                 Particle.Y = (int)((float)Particle.Y + Line.Speed * (float)Math.Sin(Line.Direction));
             }
 
-            public LazerLine()
+            public LaserLine()
             {
                 Length = Game1.random.Next(LengthMin, LengthMax);
                 Thickness = Game1.random.Next(ThicknessMin, ThicknessMax);

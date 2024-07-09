@@ -40,11 +40,11 @@ public abstract class Entity
         Position -= PositionChange;
     }
 
-    public void MoveAwayFrom(Vector2 Position, float Speed)
+    public void MoveAwayFrom(Vector2 TargetPosition, float Speed)
     {
-        float XDifference = Position.X - Position.X;
-        float YDifference = Position.Y - Position.Y;
-        float Angle = (float)(Math.Atan2(YDifference, XDifference));
+        float XDifference = Position.X - TargetPosition.X;
+        float YDifference = Position.Y - TargetPosition.Y;
+        float Angle = (float)Math.Atan2(YDifference, XDifference);
 
         Direction = Angle;
         Vector2 PositionChange = new Vector2(
