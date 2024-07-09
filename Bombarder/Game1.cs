@@ -406,32 +406,28 @@ namespace Bombarder
                     //Red Cube
                     Entities.Add(new Entity(new Entity.RedCube())
                     {
-                        X = (int)SpawnPoint.X,
-                        Y = (int)SpawnPoint.Y,
+                        Position = SpawnPoint
                     });
                     break;
                 case Entity.DemonEye:
                     //Demon Eye
                     Entities.Add(new Entity(new Entity.DemonEye())
                     {
-                        X = (int)SpawnPoint.X,
-                        Y = (int)SpawnPoint.Y,
+                        Position = SpawnPoint
                     });
                     break;
                 case Entity.CubeMother:
                     //Cube Mother
                     Entities.Add(new Entity(new Entity.CubeMother())
                     {
-                        X = (int)SpawnPoint.X,
-                        Y = (int)SpawnPoint.Y
+                        Position = SpawnPoint
                     });
                     break;
                 case Entity.Spider:
                     //Spider
                     Entities.Add(new Entity(new Entity.Spider())
                     {
-                        X = (int)SpawnPoint.X,
-                        Y = (int)SpawnPoint.Y
+                        Position = SpawnPoint
                     });
                     break;
             }
@@ -596,7 +592,6 @@ namespace Bombarder
                             GoalReacted = false
                         }
                     });
-                    int a = 0;
                 }
             }
         }
@@ -1083,15 +1078,15 @@ namespace Bombarder
                                 BlockTexture = Block.Textures.First();
                             }
 
-                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.Position.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Entity.Position.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
                     else if (Entity.EntityObj is Entity.DemonEye)
                     {
-                        _spriteBatch.Draw(Textures.DemonEye.Item1, new Rectangle((int)(Entity.X - (Textures.DemonEye.Item1.Width * 0.8 / 2)) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
-                                                                      (int)(Entity.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
+                        _spriteBatch.Draw(Textures.DemonEye.Item1, new Rectangle((int)(Entity.Position.X - (Textures.DemonEye.Item1.Width * 0.8 / 2)) + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                      (int)(Entity.Position.Y - (Textures.DemonEye.Item1.Height * 0.8 / 2)) + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                       (int)(Textures.DemonEye.Item1.Width * 0.8), (int)(Textures.DemonEye.Item1.Height * 0.8)), Color.White);
                     }
                     else if (Entity.EntityObj is Entity.CubeMother)
@@ -1106,15 +1101,15 @@ namespace Bombarder
                                 BlockTexture = Block.Textures.First();
                             }
 
-                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                         (int)(Entity.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                            _spriteBatch.Draw(BlockTexture, new Rectangle((int)(Entity.Position.X + Block.Offset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                         (int)(Entity.Position.Y + Block.Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Block.Width, Block.Height), BlockColor);
                         }
                     }
                     else if (Entity.EntityObj is Entity.Spider)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
-                                                                        (int)Entity.Y + (int)Entity.Parts[0].Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)Entity.Position.X + (int)Entity.Parts[0].Offset.X + (_graphics.PreferredBackBufferWidth / 2) - (int)Player.Position.X,
+                                                                        (int)Entity.Position.Y + (int)Entity.Parts[0].Offset.Y + (_graphics.PreferredBackBufferHeight / 2) - (int)Player.Position.Y,
                                                                         Entity.Parts[0].Width, Entity.Parts[0].Height), Color.MediumPurple);
                     }
 
@@ -1122,29 +1117,29 @@ namespace Bombarder
                     if (Settings.ShowHitBoxes)
                     {
                         //Top Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.Position.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Position.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     Entity.HitboxSize.X, 2), Color.White);
                         //Bottom Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + Entity.HitboxSize.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.Position.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Position.Y + Entity.HitboxOffset.Y + Entity.HitboxSize.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     Entity.HitboxSize.X, 2), Color.White);
                         //Left Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.Position.X + Entity.HitboxOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Position.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                         //Right Line
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                     (int)(Entity.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.Position.X + Entity.HitboxOffset.X + Entity.HitboxSize.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                     (int)(Entity.Position.Y + Entity.HitboxOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                     2, Entity.HitboxSize.Y), Color.White);
                     }
                     if (Entity.HealthBarVisible)
                     {
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
-                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.Position.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X),
+                                                                        (int)(Entity.Position.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y),
                                                                         Entity.HealthBarDimentions.X, Entity.HealthBarDimentions.Y), Color.LightGray);
-                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X + 2),
-                                                                        (int)(Entity.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y + 2),
+                        _spriteBatch.Draw(Textures.White, new Rectangle((int)(Entity.Position.X + Entity.HealthBarOffset.X + (_graphics.PreferredBackBufferWidth / 2) - Player.Position.X + 2),
+                                                                        (int)(Entity.Position.Y + Entity.HealthBarOffset.Y + (_graphics.PreferredBackBufferHeight / 2) - Player.Position.Y + 2),
                                                                         (int)((Entity.HealthBarDimentions.X - 4) * ((float)Entity.Health / Entity.HealthMax)), Entity.HealthBarDimentions.Y - 4), Color.Green);
                     }
                 }

@@ -8,8 +8,7 @@ namespace Bombarder
 {
     public class Entity
     {
-        public float X { get; set; }
-        public float Y { get; set; }
+        public Vector2 Position { get; set; }
 
         public float Health { get; set; }
         public float HealthMax { get; set; }
@@ -31,8 +30,7 @@ namespace Bombarder
 
         public Entity(object EntityClass)
         {
-            X = 0;
-            Y = 0;
+            Position = Vector2.Zero;
             Direction = 0;
             LastHitMarkerFrame = 0;
 
@@ -144,10 +142,10 @@ namespace Bombarder
             }
             public static void EnactAttack(Entity Entity, Player Player)
             {
-                Point TopLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y);
-                Point TopRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y);
-                Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
-                Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+                Point TopLeft = new Point((int)Entity.Position.X + HitboxOffset.X, (int)Entity.Position.Y + HitboxOffset.Y);
+                Point TopRight = new Point((int)Entity.Position.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Position.Y + HitboxOffset.Y);
+                Point BottomLeft = new Point((int)Entity.Position.X + HitboxOffset.X, (int)Entity.Position.Y + HitboxOffset.Y + HitboxSize.Y);
+                Point BottomRight = new Point((int)Entity.Position.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Position.Y + HitboxOffset.Y + HitboxSize.Y);
 
                 Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
                 Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
@@ -183,8 +181,8 @@ namespace Bombarder
             public static void CreateDeathParticles(Entity Entity)
             {
                 EntityBlock Block = Entity.Parts.First();
-                Vector2 StartPoint = new Vector2(Entity.X + Block.Offset.X, 
-                                                 Entity.Y + Block.Offset.Y);
+                Vector2 StartPoint = new Vector2(Entity.Position.X + Block.Offset.X, 
+                                                 Entity.Position.Y + Block.Offset.Y);
 
                 float XDifference;
                 float YDifference;
@@ -197,8 +195,8 @@ namespace Bombarder
                         float ParticleX = StartPoint.X + (x * Particle.RedCubeSegment.Width);
                         float ParticleY = StartPoint.Y + (y * Particle.RedCubeSegment.Height);
 
-                        XDifference = ParticleX - Entity.X;
-                        YDifference = ParticleY - Entity.Y;
+                        XDifference = ParticleX - Entity.Position.X;
+                        YDifference = ParticleY - Entity.Position.Y;
                         Angle = ( ((float)Math.Atan2(YDifference, XDifference) * (float)(180 / Math.PI)) +
                                  ((float)Game1.random.Next((int)(-Particle.RedCubeSegment.AngleOffsetAllowance * 10), (int)(Particle.RedCubeSegment.AngleOffsetAllowance * 10)) / 10) ) *
                                  (float)(Math.PI / 180);
@@ -272,8 +270,8 @@ namespace Bombarder
             } 
             public static void EnactMovement(Entity Entity, Player Player)
             {
-                float Distance = GetDistanceBetween(new Vector2(Entity.X, Entity.Y),
-                                                    Player.Position);
+                float Distance = Vector2.Distance(Entity.Position,
+                                                   Player.Position);
 
                 if (Distance > PreferredDistance)
                 {
@@ -291,14 +289,13 @@ namespace Bombarder
                 {
                     float SpawnAngle = Game1.random.Next(0, 360) * (float)(Math.PI / 180);
                     int SpawnDistance = Game1.random.Next(SpawnDistanceMin, SpawnDistanceMax);
-                    Vector2 SpawnPoint = new Vector2(Entity.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
-                                                        Entity.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
+                    Vector2 SpawnPoint = new Vector2(Entity.Position.X + (SpawnDistance * (float)Math.Cos(SpawnAngle)),
+                                                        Entity.Position.Y + (SpawnDistance * (float)Math.Sin(SpawnAngle)));
 
                     //Red Cube
                     Game1.EntitiesToAdd.Add(new Entity(new Entity.RedCube())
                     {
-                        X = SpawnPoint.X,
-                        Y = SpawnPoint.Y
+                        Position = new Vector2(SpawnPoint.X, SpawnPoint.Y)
                     });
 
                     Mother.NextSpawnFrame = (uint)(Game1.GameTick + Game1.random.Next(SpawnIntervalMin, SpawnIntervalMax));
@@ -348,10 +345,10 @@ namespace Bombarder
                 DemonEye Eye = (DemonEye)Entity.EntityObj;
                 if (Game1.GameTick - Eye.LastDamageFrame >= DamageInterval)
                 {
-                    Point TopLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y);
-                    Point TopRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y);
-                    Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
-                    Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+                    Point TopLeft = new Point((int)Entity.Position.X + HitboxOffset.X, (int)Entity.Position.Y + HitboxOffset.Y);
+                    Point TopRight = new Point((int)Entity.Position.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Position.Y + HitboxOffset.Y);
+                    Point BottomLeft = new Point((int)Entity.Position.X + HitboxOffset.X, (int)Entity.Position.Y + HitboxOffset.Y + HitboxSize.Y);
+                    Point BottomRight = new Point((int)Entity.Position.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Position.Y + HitboxOffset.Y + HitboxSize.Y);
 
                     Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
                     Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
@@ -450,8 +447,8 @@ namespace Bombarder
 
                 if (spider.NextJumpFrame <= Game1.GameTick)
                 {
-                    float XDiff = Entity.X - Player.Position.X;
-                    float YDiff = Entity.Y - Player.Position.Y;
+                    float XDiff = Entity.Position.X - Player.Position.X;
+                    float YDiff = Entity.Position.Y - Player.Position.Y;
                     float Angle = (float)Math.Atan2(YDiff, XDiff);
                     float Velocity;
 
@@ -486,8 +483,11 @@ namespace Bombarder
 
                 if (spider.Velocity > 0)
                 {
-                    Entity.X -= spider.Velocity * (float)Math.Cos(spider.Angle);
-                    Entity.Y -= spider.Velocity * (float)Math.Sin(spider.Angle);
+                    Vector2 PositionChange = new Vector2(
+                        spider.Velocity * (float)Math.Cos(spider.Angle),
+                        spider.Velocity * (float)Math.Sin(spider.Angle)
+                        );
+                    Entity.Position -= PositionChange;
 
                     spider.Velocity *= VelocityMultiplier;
                     if (spider.Velocity <= 1)
@@ -502,10 +502,10 @@ namespace Bombarder
 
                 if (Game1.GameTick - spider.LastDamageFrame >= DamageInterval)
                 {
-                    Point TopLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y);
-                    Point TopRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y);
-                    Point BottomLeft = new Point((int)Entity.X + HitboxOffset.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
-                    Point BottomRight = new Point((int)Entity.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Y + HitboxOffset.Y + HitboxSize.Y);
+                    Point TopLeft = new Point((int)Entity.Position.X + HitboxOffset.X, (int)Entity.Position.Y + HitboxOffset.Y);
+                    Point TopRight = new Point((int)Entity.Position.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Position.Y + HitboxOffset.Y);
+                    Point BottomLeft = new Point((int)Entity.Position.X + HitboxOffset.X, (int)Entity.Position.Y + HitboxOffset.Y + HitboxSize.Y);
+                    Point BottomRight = new Point((int)Entity.Position.X + HitboxOffset.X + HitboxSize.X, (int)Entity.Position.Y + HitboxOffset.Y + HitboxSize.Y);
 
                     Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
                     Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2), (int)Player.Position.Y - (Player.Height / 2));
@@ -550,33 +550,31 @@ namespace Bombarder
 
         public static void MoveTowards( Vector2 Goal, Entity Entity, float Speed )
         {
-            float XDifference = Entity.X - Goal.X;
-            float YDifference = Entity.Y - Goal.Y;
+            float XDifference = Entity.Position.X - Goal.X;
+            float YDifference = Entity.Position.Y - Goal.Y;
             float Angle = (float)(Math.Atan2(YDifference, XDifference));
 
             Entity.Direction = Angle;
+            Vector2 PositionChange = new Vector2(
+                Speed * (float)Math.Cos(Angle),
+                Speed * (float)Math.Sin(Angle)
+                );
 
-            Entity.X -= Speed * (float)Math.Cos(Angle);
-            Entity.Y -= Speed * (float)Math.Sin(Angle);
+            Entity.Position -= PositionChange;
         }
         public static void MoveAwayFrom( Vector2 Position, Entity Entity, float Speed)
         {
-            float XDifference = Entity.X - Position.X;
-            float YDifference = Entity.Y - Position.Y;
+            float XDifference = Entity.Position.X - Position.X;
+            float YDifference = Entity.Position.Y - Position.Y;
             float Angle = (float)(Math.Atan2(YDifference, XDifference));
 
             Entity.Direction = Angle;
+            Vector2 PositionChange = new Vector2(
+                Speed * (float)Math.Cos(Angle),
+                Speed * (float)Math.Sin(Angle)
+                );
 
-            Entity.X += Speed * (float)Math.Cos(Angle);
-            Entity.Y += Speed * (float)Math.Sin(Angle);
-        }
-        public static float GetDistanceBetween(Vector2 Point1, Vector2 Point2)
-        {
-            float XDiff = Math.Abs(Point1.X - Point2.X);
-            float YDiff = Math.Abs(Point1.Y - Point2.Y);
-            float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-
-            return Distance;
+            Entity.Position += PositionChange;
         }
         public void GiveDamage(int Damage)
         {
@@ -588,8 +586,8 @@ namespace Bombarder
         {
             if (Math.Abs(Game1.GameTick - LastHitMarkerFrame) > 20)
             {
-                int x = Game1.random.Next((int)X + HitboxOffset.X, (int)X + HitboxOffset.X + HitboxSize.X);
-                int y = Game1.random.Next((int)Y + HitboxOffset.Y, (int)Y + HitboxOffset.Y + HitboxSize.Y);
+                int x = Game1.random.Next((int)Position.X + HitboxOffset.X, (int)Position.X + HitboxOffset.X + HitboxSize.X);
+                int y = Game1.random.Next((int)Position.Y + HitboxOffset.Y, (int)Position.Y + HitboxOffset.Y + HitboxSize.Y);
 
                 Game1.Particles.Add(new Particle(x, y)
                 {

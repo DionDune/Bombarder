@@ -52,7 +52,7 @@ namespace Bombarder
         }
         public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)
         {
-            Vector2 HitboxStart = new Vector2(Entity.X + Entity.HitboxOffset.X, Entity.Y + Entity.HitboxOffset.Y);
+            Vector2 HitboxStart = new Vector2(Entity.Position.X + Entity.HitboxOffset.X, Entity.Position.Y + Entity.HitboxOffset.Y);
 
 
             // Effect Hitbox is smaller than the Entity Hitbox
@@ -271,8 +271,8 @@ namespace Bombarder
             {
                 foreach (Entity Entity in Entites)
                 {
-                    float XDiff = Math.Abs(Effect.X - Entity.X);
-                    float YDiff = Math.Abs(Effect.Y - Entity.Y);
+                    float XDiff = Math.Abs(Effect.X - Entity.Position.X);
+                    float YDiff = Math.Abs(Effect.Y - Entity.Position.Y);
                     float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
                     if (Math.Abs(((DissapationWave)Effect.MagicObj).Radius - Distance) <= EdgeEffectWith)
@@ -326,19 +326,23 @@ namespace Bombarder
 
                 foreach (Entity Entity in Entites)
                 {
-                    float XDiff = Math.Abs(Effect.X - Entity.X);
-                    float YDiff = Math.Abs(Effect.Y - Entity.Y);
+                    float XDiff = Math.Abs(Effect.X - Entity.Position.X);
+                    float YDiff = Math.Abs(Effect.Y - Entity.Position.Y);
                     float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
                     
                     if (Distance <= Wave.Radius)
                     {
-                        float xDiff = Entity.X - Effect.X;
-                        float yDiff = Entity.Y - Effect.Y;
+                        float xDiff = Entity.Position.X - Effect.X;
+                        float yDiff = Entity.Position.Y - Effect.Y;
                         float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                         float AngleRadians = Angle * (float)(Math.PI / 180);
 
-                        Entity.X += (Wave.Radius - Distance) * (float)Math.Cos(AngleRadians);
-                        Entity.Y += (Wave.Radius - Distance) * (float)Math.Sin(AngleRadians);
+                        Vector2 PositionChange = new Vector2(
+                            (Wave.Radius - Distance) * (float)Math.Cos(AngleRadians),
+                            (Wave.Radius - Distance) * (float)Math.Sin(AngleRadians)
+                            );
+
+                        Entity.Position += PositionChange;
                     }
                 }
             }
@@ -462,8 +466,8 @@ namespace Bombarder
                     {
                         if (!Container.ContainedEntities.Contains(Entity))
                         {
-                            XDiff = Math.Abs(Effect.X - Entity.X);
-                            YDiff = Math.Abs(Effect.Y - Entity.Y);
+                            XDiff = Math.Abs(Effect.X - Entity.Position.X);
+                            YDiff = Math.Abs(Effect.Y - Entity.Position.Y);
                             Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
                             if (Distance <= Container.CurrentRadius)
@@ -476,19 +480,23 @@ namespace Bombarder
                     //Keep all contained entites within confines
                     foreach (Entity Entity in Container.ContainedEntities)
                     {
-                        XDiff = Math.Abs(Effect.X - Entity.X);
-                        YDiff = Math.Abs(Effect.Y - Entity.Y);
+                        XDiff = Math.Abs(Effect.X - Entity.Position.X);
+                        YDiff = Math.Abs(Effect.Y - Entity.Position.Y);
                         Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
                         if (Distance >= Container.CurrentRadius - EdgeEffectWith)
                         {
-                            float xDiff = Entity.X - Effect.X;
-                            float yDiff = Entity.Y - Effect.Y;
+                            float xDiff = Entity.Position.X - Effect.X;
+                            float yDiff = Entity.Position.Y - Effect.Y;
                             float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
                             float AngleRadians = Angle * (float)(Math.PI / 180);
 
-                            Entity.X -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Cos(AngleRadians);
-                            Entity.Y -= Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Sin(AngleRadians);
+                            Vector2 PositionChange = new Vector2(
+                                Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Cos(AngleRadians),
+                                Math.Abs((Container.CurrentRadius - EdgeEffectWith) - Distance) * (float)Math.Sin(AngleRadians)
+                                );
+
+                            Entity.Position -= PositionChange;
                         }
                     }
                 }
@@ -575,8 +583,8 @@ namespace Bombarder
 
                     foreach (Entity Entity in Entites)
                     {
-                        XDiff = Math.Abs(Effect.X - Entity.X);
-                        YDiff = Math.Abs(Effect.Y - Entity.Y);
+                        XDiff = Math.Abs(Effect.X - Entity.Position.X);
+                        YDiff = Math.Abs(Effect.Y - Entity.Position.Y);
                         Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
                         if (Distance < Range)
@@ -586,8 +594,8 @@ namespace Bombarder
                             RotatedX = Effect.X + (Distance * (float)Math.Cos(AngleRadians));
                             RotatedY = Effect.Y + (Distance * (float)Math.Sin(AngleRadians));
 
-                            EntityStartX = Entity.X + Entity.HitboxOffset.X;
-                            EntityStartY = Entity.Y + Entity.HitboxOffset.Y;
+                            EntityStartX = Entity.Position.X + Entity.HitboxOffset.X;
+                            EntityStartY = Entity.Position.Y + Entity.HitboxOffset.Y;
 
                             //Calculate radius of the Lazers Current spread
                             CurrentLazerWidth = (SpreadValue * Distance) * TrueSpreadMultiplier;

@@ -740,14 +740,13 @@ namespace Bombarder
                     {
                         Type = "Button",
 
-                        X = -200,
-                        Y = -75,
-
-                        Width = 400,
+                        Orientation = "Bottom",
+                        X = -300,
+                        Y = -225,
+                        Width = 600,
                         Height = 150,
-
-                        CentreX = -200 + (400 / 2),
-                        CentreY = -75 + (150 / 2),
+                        CentreX = -300 + 300,
+                        CentreY = -225 + 75,
 
                         BorderWidth = 5,
                         BorderColor = Color.Green,
