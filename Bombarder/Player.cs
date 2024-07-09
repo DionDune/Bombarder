@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using Bombarder.Entities;
 
 namespace Bombarder
 {
@@ -26,7 +27,6 @@ namespace Bombarder
         public const int HealthRegainDefault = 4;
         public int HealthRegain = HealthRegainDefault;
 
-        
 
         public int Mana { get; set; }
         public int ManaMax { get; set; }
@@ -48,10 +48,6 @@ namespace Bombarder
         public bool HealthBarVisible { get; set; }
 
 
-
-
-
-
         public Player()
         {
             Position = new Vector2();
@@ -61,7 +57,7 @@ namespace Bombarder
 
             Health = 130;
             HealthMax = 150;
-            
+
             Mana = 0;
             ManaMax = 750;
 
@@ -73,7 +69,7 @@ namespace Bombarder
             Acceleration = 0.45F;
             Slowdown = 0.75F;
 
-            
+
             ManaBarDimentions = new Point(25, 450);
             ManaBarScreenOrientation = "Bottom Left";
             ManaBarOffset = new Point(20, -20);
@@ -84,6 +80,7 @@ namespace Bombarder
             HealthBarOffset = new Point(75, -20);
             HealthBarVisible = true;
         }
+
         public static void SetDefaultStats(Player Player)
         {
             Player.Health = Player.HealthMax;
@@ -91,10 +88,12 @@ namespace Bombarder
 
             Player.Momentum = new Vector2();
         }
+
         public static void ResetPosition(Player Player)
         {
             Player.Position = new Vector2();
         }
+
         public static void SetRandomLocalPosition(Player Player, int MinDistance, int MaxDistance)
         {
             int Angle = Game1.random.Next(0, 360);
@@ -125,11 +124,13 @@ namespace Bombarder
                     Health += HealthRegain;
                 }
             }
+
             if (Health <= 0)
             {
                 IsDead = true;
             }
         }
+
         public void GiveDamage(int Damage)
         {
             if (!IsImmune)
@@ -142,6 +143,7 @@ namespace Bombarder
                 }
             }
         }
+
         public void GiveHealth(int Amount)
         {
             Health += Amount;
@@ -166,6 +168,7 @@ namespace Bombarder
                 }
             }
         }
+
         public bool CheckUseMana(int Cost)
         {
             if (ManaInfinite)
@@ -174,16 +177,16 @@ namespace Bombarder
             }
 
 
-            if (Mana > Cost)
-            {
-                Mana -= Cost;
-                return true;
-            }
-            else
+            if (Mana <= Cost)
             {
                 return false;
             }
+
+            Mana -= Cost;
+
+            return true;
         }
+
         public void GiveMana(int Amount)
         {
             Mana += Amount;
@@ -196,32 +199,7 @@ namespace Bombarder
 
         public void GiveKillReward(Entity Entity)
         {
-            int HealthGain = 0;
-            int ManaGain = 0;
-
-            switch (Entity.EntityObj)
-            {
-                case Entity.RedCube:
-                    HealthGain = Entity.RedCube.killHealthReward;
-                    ManaGain = Entity.RedCube.killManaReward;
-                    break;
-                case Entity.DemonEye:
-                    HealthGain = Entity.DemonEye.killHealthReward;
-                    ManaGain = Entity.DemonEye.killManaReward;
-                    break;
-                case Entity.CubeMother:
-                    HealthGain = Entity.CubeMother.killHealthReward;
-                    ManaGain = Entity.CubeMother.killManaReward;
-                    break;
-                case Entity.Spider:
-                    HealthGain = Entity.Spider.killHealthReward;
-                    ManaGain = Entity.Spider.killManaReward;
-                    break;
-            }
-
-
-            GiveHealth(HealthGain);
-            GiveMana(ManaGain);
+            Entity.GiveKillReward(this);
         }
     }
 }

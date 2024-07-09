@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using Bombarder.Entities;
 
 namespace Bombarder
 {
@@ -52,30 +53,30 @@ namespace Bombarder
         }
         public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)
         {
-            Vector2 HitboxStart = new Vector2(Entity.Position.X + Entity.HitboxOffset.X, Entity.Position.Y + Entity.HitboxOffset.Y);
+            Vector2 HitboxStart = new Vector2(Entity.Position.X + Entity.HitBoxOffset.X, Entity.Position.Y + Entity.HitBoxOffset.Y);
 
 
             // Effect Hitbox is smaller than the Entity Hitbox
-            if (Coord2.X - Coord1.X < Entity.HitboxSize.X &&
-                Coord2.Y - Coord1.Y < Entity.HitboxSize.Y)
+            if (Coord2.X - Coord1.X < Entity.HitBoxSize.X &&
+                Coord2.Y - Coord1.Y < Entity.HitBoxSize.Y)
             {
-                if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitboxSize.X &&
-                    Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitBoxSize.X &&
+                    Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
                 {
                     return true;
                 }
-                if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitboxSize.X &&
-                    Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitBoxSize.X &&
+                    Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
                 {
                     return true;
                 }
-                if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitboxSize.X &&
-                    Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitBoxSize.X &&
+                    Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
                 {
                     return true;
                 }
-                if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitboxSize.X &&
-                    Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitboxSize.Y)
+                if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitBoxSize.X &&
+                    Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
                 {
                     return true;
                 }
@@ -88,18 +89,18 @@ namespace Bombarder
                 {
                     return true;
                 }
-                else if (HitboxStart.X + Entity.HitboxSize.X >= Coord1.X && HitboxStart.X + Entity.HitboxSize.X <= Coord2.X &&
+                else if (HitboxStart.X + Entity.HitBoxSize.X >= Coord1.X && HitboxStart.X + Entity.HitBoxSize.X <= Coord2.X &&
                          HitboxStart.Y >= Coord1.Y && HitboxStart.Y <= Coord2.Y)
                 {
                     return true;
                 }
-                else if (HitboxStart.X + Entity.HitboxSize.X >= Coord1.X && HitboxStart.X + Entity.HitboxSize.X <= Coord2.X &&
-                         HitboxStart.Y + Entity.HitboxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitboxSize.Y <= Coord2.Y)
+                else if (HitboxStart.X + Entity.HitBoxSize.X >= Coord1.X && HitboxStart.X + Entity.HitBoxSize.X <= Coord2.X &&
+                         HitboxStart.Y + Entity.HitBoxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitBoxSize.Y <= Coord2.Y)
                 {
                     return true;
                 }
                 else if (HitboxStart.X >= Coord1.X && HitboxStart.X <= Coord2.X &&
-                         HitboxStart.Y + Entity.HitboxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitboxSize.Y <= Coord2.Y)
+                         HitboxStart.Y + Entity.HitBoxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitBoxSize.Y <= Coord2.Y)
                 {
                     return true;
                 }
@@ -594,14 +595,14 @@ namespace Bombarder
                             RotatedX = Effect.X + (Distance * (float)Math.Cos(AngleRadians));
                             RotatedY = Effect.Y + (Distance * (float)Math.Sin(AngleRadians));
 
-                            EntityStartX = Entity.Position.X + Entity.HitboxOffset.X;
-                            EntityStartY = Entity.Position.Y + Entity.HitboxOffset.Y;
+                            EntityStartX = Entity.Position.X + Entity.HitBoxOffset.X;
+                            EntityStartY = Entity.Position.Y + Entity.HitBoxOffset.Y;
 
                             //Calculate radius of the Lazers Current spread
                             CurrentLazerWidth = (SpreadValue * Distance) * TrueSpreadMultiplier;
 
-                            if (RotatedX >= EntityStartX - CurrentLazerWidth && RotatedX <= EntityStartX + Entity.HitboxSize.X + CurrentLazerWidth &&
-                                RotatedY >= EntityStartY - CurrentLazerWidth && RotatedY <= EntityStartY + Entity.HitboxSize.Y + CurrentLazerWidth)
+                            if (RotatedX >= EntityStartX - CurrentLazerWidth && RotatedX <= EntityStartX + Entity.HitBoxSize.X + CurrentLazerWidth &&
+                                RotatedY >= EntityStartY - CurrentLazerWidth && RotatedY <= EntityStartY + Entity.HitBoxSize.Y + CurrentLazerWidth)
                             {
                                 Entity.GiveDamage((int)WideLazer.Damage);
                             }

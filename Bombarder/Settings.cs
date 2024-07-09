@@ -1,49 +1,48 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Bombarder
+namespace Bombarder;
+
+public class Settings
 {
-    internal class Settings
+    public float CursorSizeMultiplier { get; set; }
+    public bool ShowGrid { get; set; }
+    public float GridOpacityMultiplier { get; set; }
+    public float GridSizeMultiplier { get; set; }
+    public Color GridColor { get; set; }
+    public Color BackgroundColor { get; set; }
+    public int GridLineSizeMult { get; set; }
+
+    public bool ShowDamageRadii { get; set; }
+    public bool ShowHitBoxes { get; set; }
+
+    public bool TranceMode { get; set; }
+    public Color TranceModeGridColor { get; set; }
+    public int TranceModeGridLineMult { get; set; }
+    public bool TranceModeClearScreen { get; set; }
+
+    public bool RunEntityAI { get; set; }
+    public (int, int) EnemySpawnCountRange { get; set; }
+
+    public Settings()
     {
-        public float CursorSizeMultiplier { get; set; }
-        public bool ShowGrid { get; set; }
-        public float GridOpacityMultiplier { get; set; }
-        public float GridSizeMultiplier { get; set; }
-        public Color GridColor { get; set; }
-        public Color BackgroundColor { get; set; }
-        public int GridLineSizeMult { get; set; }
+        CursorSizeMultiplier = 1.66F;
 
-        public bool ShowDamageRadii { get; set; }
-        public bool ShowHitBoxes { get; set; }
+        ShowGrid = true;
+        GridOpacityMultiplier = 0.15F;
+        GridLineSizeMult = 1;
+        GridSizeMultiplier = 1;
+        GridColor = Color.White;
+        BackgroundColor = Color.Black;
 
-        public bool TranceMode { get; set; }
-        public Color TranceModeGridColor { get; set; }
-        public int TranceModeGridLineMult { get; set; }
-        public bool TranceModeClearScreen { get; set; }
+        ShowDamageRadii = false;
+        ShowHitBoxes = false;
 
-        public bool RunEntityAI { get; set; }
-        public (int, int) EnemySpawnCountRange { get; set; }
+        RunEntityAI = true;
+        EnemySpawnCountRange = (1, 3);
 
-        public Settings()
-        {
-            CursorSizeMultiplier = 1.66F;
-
-            ShowGrid = true;
-            GridOpacityMultiplier = 0.15F;
-            GridLineSizeMult = 1;
-            GridSizeMultiplier = 1;
-            GridColor = Color.White;
-            BackgroundColor = Color.Black;
-
-            ShowDamageRadii = false;
-            ShowHitBoxes = false;
-
-            RunEntityAI = true;
-            EnemySpawnCountRange = (1, 3);
-
-            TranceMode = false;
-            TranceModeGridColor = Color.Black;
-            TranceModeGridLineMult = 100;
-            TranceModeClearScreen = false;
-        }
+        TranceMode = false;
+        TranceModeGridColor = Color.Black;
+        TranceModeGridLineMult = 100;
+        TranceModeClearScreen = false;
     }
 }
