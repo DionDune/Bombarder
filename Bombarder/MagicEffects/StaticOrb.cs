@@ -41,22 +41,22 @@ public class StaticOrb : MagicEffect
         CreateParticles();
     }
 
-    public override void Draw(Game1 Game1)
+    public override void Draw(BombarderGame Game)
     {
     }
 
     private void CreateParticles()
     {
-        if (Math.Abs(Game1.GameTick - LastParticleFrame) <= Impact.DefaultFrequency)
+        if (Math.Abs(BombarderGame.GameTick - LastParticleFrame) <= Impact.DefaultFrequency)
         {
             return;
         }
 
-        Game1.Particles.Add(new Impact(new Vector2(Position.X, Position.Y))
+        BombarderGame.Particles.Add(new Impact(new Vector2(Position.X, Position.Y))
         {
             HasDuration = true,
         });
 
-        LastParticleFrame = Game1.GameTick;
+        LastParticleFrame = BombarderGame.GameTick;
     }
 }

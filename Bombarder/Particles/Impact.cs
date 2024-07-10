@@ -31,13 +31,13 @@ public class Impact : Particle
         EnactSpread();
     }
 
-    public override void Draw(Game1 Game1)
+    public override void Draw(BombarderGame Game)
     {
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.WhiteCircle,
+        Game.SpriteBatch.Draw(
+            Game.Textures.WhiteCircle,
             new Rectangle(
-                (int)(Position.X - Radius + Game1.Graphics.PreferredBackBufferWidth / 2F - Game1.Player.Position.X),
-                (int)(Position.Y - Radius + Game1.Graphics.PreferredBackBufferHeight / 2F - Game1.Player.Position.Y),
+                (int)(Position.X - Radius + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X),
+                (int)(Position.Y - Radius + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y),
                 (int)Radius * 2,
                 (int)Radius * 2
             ),

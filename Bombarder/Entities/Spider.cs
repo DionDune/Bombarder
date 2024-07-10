@@ -60,7 +60,7 @@ public class Spider : Entity
 
     public void EnactJump(Player Player)
     {
-        if (NextJumpFrame > Game1.GameTick)
+        if (NextJumpFrame > BombarderGame.GameTick)
         {
             return;
         }
@@ -72,12 +72,12 @@ public class Spider : Entity
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
             ? JumpVelocityMax
-            : (float)Game1.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100;
+            : (float)BombarderGame.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100;
         Angle = (float)Math.Atan2(YDiff, XDiff);
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
-            ? Game1.GameTick + (uint)Game1.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
-            : Game1.GameTick + (uint)Game1.random.Next(JumpIntervalMin, JumpIntervalMax);
+            ? BombarderGame.GameTick + (uint)BombarderGame.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
+            : BombarderGame.GameTick + (uint)BombarderGame.random.Next(JumpIntervalMin, JumpIntervalMax);
     }
 
     public void EnactVelocity(Player Player)
@@ -102,7 +102,7 @@ public class Spider : Entity
 
     public void EnactDamage(Player Player)
     {
-        if (Game1.GameTick - LastDamageFrame < DamageInterval)
+        if (BombarderGame.GameTick - LastDamageFrame < DamageInterval)
         {
             return;
         }
@@ -155,25 +155,25 @@ public class Spider : Entity
         }
 
         Player.GiveDamage(Damage);
-        LastDamageFrame = Game1.GameTick;
+        LastDamageFrame = BombarderGame.GameTick;
     }
 
-    public override void DrawEntity(Game1 Game1)
+    public override void DrawEntity(BombarderGame Game)
     {
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     Parts[0].Offset.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X
                 ),
                 (int)(
                     Position.Y +
                     Parts[0].Offset.Y +
-                    Game1.Graphics.PreferredBackBufferHeight / 2F -
-                    Game1.Player.Position.Y
+                    Game.Graphics.PreferredBackBufferHeight / 2F -
+                    Game.Player.Position.Y
                 ),
                 Parts[0].Width,
                 Parts[0].Height

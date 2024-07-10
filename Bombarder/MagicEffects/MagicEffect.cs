@@ -127,5 +127,5 @@ public abstract class MagicEffect
     }
 
     public abstract void EnactEffect(Player Player, List<Entity> Entities, uint GameTick);
-    public abstract void Draw(Game1 Game1);
+    public abstract void Draw(BombarderGame Game);
 }

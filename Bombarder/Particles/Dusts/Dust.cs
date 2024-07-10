@@ -33,13 +33,13 @@ public class Dust : Particle
         EnactOpacityChange(Tick);
     }
 
-    public override void Draw(Game1 Game1)
+    public override void Draw(BombarderGame Game)
     {
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
-                (int)(Position.X + Game1.Graphics.PreferredBackBufferWidth / 2F - Game1.Player.Position.X),
-                (int)(Position.Y + Game1.Graphics.PreferredBackBufferHeight / 2F - Game1.Player.Position.Y),
+                (int)(Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X),
+                (int)(Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y),
                 Width,
                 Height
             ),
@@ -79,13 +79,13 @@ public class Dust : Particle
     public static void Spawn(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
     {
         if (Tick % SpawnInterval != 0) return;
-        for (int i = 0; i < Game1.random.Next(0, MaxSpawnCount); i++)
+        for (int i = 0; i < BombarderGame.random.Next(0, MaxSpawnCount); i++)
         {
             int NewRangeX = RangeX * 2;
             int NewRangeY = RangeY * 2;
 
-            int DustX = Game1.random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
-            int DustY = Game1.random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
+            int DustX = BombarderGame.random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
+            int DustY = BombarderGame.random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
 
             Particles.Add(GetRandom(new Vector2(DustX, DustY)));
         }
@@ -98,7 +98,7 @@ public class Dust : Particle
         const int redChance = 35;
         const int purpleChance = 2;
 
-        int TypeVal = Game1.random.Next(0, chanceRange);
+        int TypeVal = BombarderGame.random.Next(0, chanceRange);
 
         return TypeVal switch
         {

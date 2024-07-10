@@ -46,7 +46,7 @@ public class DemonEye : Entity
 
     public void EnactAttack(Player Player)
     {
-        if (Game1.GameTick - LastDamageFrame < DamageInterval)
+        if (BombarderGame.GameTick - LastDamageFrame < DamageInterval)
         {
             return;
         }
@@ -116,27 +116,27 @@ public class DemonEye : Entity
         }
 
         Player.GiveDamage(Damage);
-        LastDamageFrame = Game1.GameTick;
+        LastDamageFrame = BombarderGame.GameTick;
     }
 
-    public override void DrawEntity(Game1 Game1)
+    public override void DrawEntity(BombarderGame Game)
     {
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.DemonEye.Item1,
+        Game.SpriteBatch.Draw(
+            Game.Textures.DemonEye.Item1,
             new Rectangle(
                 (int)(
                     Position.X -
-                    Game1.Textures.DemonEye.Item1.Width * 0.8 / 2 +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X
+                    Game.Textures.DemonEye.Item1.Width * 0.8 / 2 +
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X
                 ),
                 (int)(
                     Position.Y -
-                    Game1.Textures.DemonEye.Item1.Height * 0.8 / 2
+                    Game.Textures.DemonEye.Item1.Height * 0.8 / 2
                 ) +
-                Game1.Graphics.PreferredBackBufferHeight / 2 - (int)Game1.Player.Position.Y,
-                (int)(Game1.Textures.DemonEye.Item1.Width * 0.8),
-                (int)(Game1.Textures.DemonEye.Item1.Height * 0.8)
+                Game.Graphics.PreferredBackBufferHeight / 2 - (int)Game.Player.Position.Y,
+                (int)(Game.Textures.DemonEye.Item1.Width * 0.8),
+                (int)(Game.Textures.DemonEye.Item1.Height * 0.8)
             ),
             Color.White
         );

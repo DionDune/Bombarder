@@ -137,14 +137,14 @@ public class RedCube : Entity
                     (
                         (float)Math.Atan2(YDifference, XDifference) *
                         (float)(180 / Math.PI) +
-                        Game1.random.Next(
+                        BombarderGame.random.Next(
                             (int)(-RedCubeSegment.AngleOffsetAllowance * 10),
                             (int)(RedCubeSegment.AngleOffsetAllowance * 10)
                         ) / 10F
                     ) *
                     (float)Math.PI / 180F;
 
-                Game1.Particles.Add(new RedCubeSegment(new Vector2(ParticleX, ParticleY), Angle)
+                BombarderGame.Particles.Add(new RedCubeSegment(new Vector2(ParticleX, ParticleY), Angle)
                 {
                     HasDuration = true
                 });
@@ -152,33 +152,33 @@ public class RedCube : Entity
         }
     }
 
-    public override void DrawEntity(Game1 Game1)
+    public override void DrawEntity(BombarderGame Game)
     {
         foreach (EntityBlock Block in Parts)
         {
             Color BlockColor = Block.Color;
-            Texture2D BlockTexture = Game1.Textures.White;
+            Texture2D BlockTexture = Game.Textures.White;
             if (Block.Textures != null)
             {
                 BlockColor = Color.White;
                 BlockTexture = Block.Textures.First();
             }
 
-            Game1.SpriteBatch.Draw(
+            Game.SpriteBatch.Draw(
                 BlockTexture,
                 new Rectangle(
                     (int)(
                         Position.X +
                         Block.Offset.X +
-                        Game1.Graphics.PreferredBackBufferWidth / 2F -
-                        Game1.Player.Position.X
+                        Game.Graphics.PreferredBackBufferWidth / 2F -
+                        Game.Player.Position.X
                     ),
                     (int)
                     (
                         Position.Y +
                         Block.Offset.Y +
-                        Game1.Graphics.PreferredBackBufferHeight / 2F -
-                        Game1.Player.Position.Y
+                        Game.Graphics.PreferredBackBufferHeight / 2F -
+                        Game.Player.Position.Y
                     ),
                     Block.Width,
                     Block.Height

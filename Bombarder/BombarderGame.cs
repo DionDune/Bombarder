@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Bombarder;
 
-public class Game1 : Game
+public class BombarderGame : Game
 {
     #region Variable Defenition
 
@@ -42,7 +42,7 @@ public class Game1 : Game
 
     #region Initialization
 
-    public Game1()
+    public BombarderGame()
     {
         Graphics = new GraphicsDeviceManager(this);
         Graphics.PreferredBackBufferWidth = 1800;

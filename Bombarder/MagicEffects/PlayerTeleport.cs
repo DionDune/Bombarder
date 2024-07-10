@@ -40,7 +40,7 @@ namespace Bombarder.MagicEffects;
             EnactDuration(Player);
         }
 
-        public override void Draw(Game1 Game1)
+        public override void Draw(BombarderGame Game)
         {
         }
 
@@ -88,9 +88,9 @@ namespace Bombarder.MagicEffects;
                 Count = ParticleCountMax;
             }
 
-            for (int i = 0; i < Game1.random.Next(ParticleCountMin, Count); i++)
+            for (int i = 0; i < BombarderGame.random.Next(ParticleCountMin, Count); i++)
             {
-                TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Position.X, Position.Y), new Vector2(Goal.X, Goal.Y));
+                TeleportLine.SpawnBetween(BombarderGame.Particles, new Vector2(Position.X, Position.Y), new Vector2(Goal.X, Goal.Y));
             }
         }
     }

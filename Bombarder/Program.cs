@@ -1,3 +1,3 @@
 ﻿
-using var game = new Bombarder.Game1();
+using var game = new Bombarder.BombarderGame();
 game.Run();

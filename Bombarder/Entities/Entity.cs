@@ -65,27 +65,27 @@ public abstract class Entity
 
     public void ApplyHitMarker()
     {
-        if (Math.Abs(Game1.GameTick - LastHitMarkerFrame) <= 20)
+        if (Math.Abs(BombarderGame.GameTick - LastHitMarkerFrame) <= 20)
         {
             return;
         }
 
-        int x = Game1.random.Next(
+        int x = BombarderGame.random.Next(
             (int)Position.X + HitBoxOffset.X,
             (int)Position.X + HitBoxOffset.X + HitBoxSize.X
         );
-        int y = Game1.random.Next(
+        int y = BombarderGame.random.Next(
             (int)Position.Y + HitBoxOffset.Y,
             (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
         );
 
-        Game1.Particles.Add(new HitMarker(new Vector2(x, y))
+        BombarderGame.Particles.Add(new HitMarker(new Vector2(x, y))
         {
             HasDuration = true,
             Duration = HitMarker.DefaultDuration
         });
 
-        LastHitMarkerFrame = Game1.GameTick;
+        LastHitMarkerFrame = BombarderGame.GameTick;
     }
 
     public static void PurgeDead(List<Entity> Entities, Player Player)
@@ -112,37 +112,37 @@ public abstract class Entity
 
     public abstract void EnactAI(Player Player);
 
-    public void Draw(Game1 Game1)
+    public void Draw(BombarderGame Game)
     {
-        DrawEntity(Game1);
-        DrawHitBoxes(Game1);
-        DrawHealthBar(Game1);
+        DrawEntity(Game);
+        DrawHitBoxes(Game);
+        DrawHealthBar(Game);
     }
 
-    public abstract void DrawEntity(Game1 Game1);
+    public abstract void DrawEntity(BombarderGame Game);
 
-    public void DrawHitBoxes(Game1 Game1)
+    public void DrawHitBoxes(BombarderGame Game)
     {
-        if (!Game1.Settings.ShowHitBoxes)
+        if (!Game.Settings.ShowHitBoxes)
         {
             return;
         }
 
         // Top Line
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     HitBoxOffset.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X
                 ),
                 (int)(
                     Position.Y +
                     HitBoxOffset.Y +
-                    Game1.Graphics.PreferredBackBufferHeight / 2F -
-                    Game1.Player.Position.Y
+                    Game.Graphics.PreferredBackBufferHeight / 2F -
+                    Game.Player.Position.Y
                 ),
                 HitBoxSize.X,
                 2
@@ -151,21 +151,21 @@ public abstract class Entity
         );
 
         // Bottom Line
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     HitBoxOffset.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X
                 ),
                 (int)(
                     Position.Y +
                     HitBoxOffset.Y +
                     HitBoxSize.Y +
-                    Game1.Graphics.PreferredBackBufferHeight / 2F -
-                    Game1.Player.Position.Y
+                    Game.Graphics.PreferredBackBufferHeight / 2F -
+                    Game.Player.Position.Y
                 ),
                 HitBoxSize.X,
                 2
@@ -174,19 +174,19 @@ public abstract class Entity
         );
 
         // Left Line
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     HitBoxOffset.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X
                 ),
                 (int)(Position.Y +
                       HitBoxOffset.Y +
-                      Game1.Graphics.PreferredBackBufferHeight / 2F -
-                      Game1.Player.Position.Y
+                      Game.Graphics.PreferredBackBufferHeight / 2F -
+                      Game.Player.Position.Y
                 ),
                 2,
                 HitBoxSize.Y
@@ -195,20 +195,20 @@ public abstract class Entity
         );
 
         // Right Line
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     HitBoxOffset.X +
                     HitBoxSize.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X),
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X),
                 (int)(
                     Position.Y +
                     HitBoxOffset.Y +
-                    Game1.Graphics.PreferredBackBufferHeight / 2F -
-                    Game1.Player.Position.Y
+                    Game.Graphics.PreferredBackBufferHeight / 2F -
+                    Game.Player.Position.Y
                 ),
                 2,
                 HitBoxSize.Y
@@ -217,7 +217,7 @@ public abstract class Entity
         );
     }
 
-    public void DrawHealthBar(Game1 Game1)
+    public void DrawHealthBar(BombarderGame Game)
     {
         if (!HealthBarVisible)
         {
@@ -225,20 +225,20 @@ public abstract class Entity
         }
 
         // Empty Health Bar
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     HealthBarOffset.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X
                 ),
                 (int)(
                     Position.Y +
                     HealthBarOffset.Y +
-                    Game1.Graphics.PreferredBackBufferHeight / 2F -
-                    Game1.Player.Position.Y
+                    Game.Graphics.PreferredBackBufferHeight / 2F -
+                    Game.Player.Position.Y
                 ),
                 HealthBarDimensions.X,
                 HealthBarDimensions.Y
@@ -247,20 +247,20 @@ public abstract class Entity
         );
 
         // Filled Health Bar
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     HealthBarOffset.X +
-                    Game1.Graphics.PreferredBackBufferWidth / 2F -
-                    Game1.Player.Position.X + 2
+                    Game.Graphics.PreferredBackBufferWidth / 2F -
+                    Game.Player.Position.X + 2
                 ),
                 (int)(
                     Position.Y +
                     HealthBarOffset.Y +
-                    Game1.Graphics.PreferredBackBufferHeight / 2F -
-                    Game1.Player.Position.Y + 2
+                    Game.Graphics.PreferredBackBufferHeight / 2F -
+                    Game.Player.Position.Y + 2
                 ),
                 (int)(
                     (HealthBarDimensions.X - 4) * (Health / HealthMax)

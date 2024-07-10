@@ -31,9 +31,9 @@ public class LaserLine : Particle
     public LaserLine(Vector2 Position, float Direction) : base(Position)
     {
         this.Direction = Direction;
-        Length = Game1.random.Next(LengthMin, LengthMax);
-        Thickness = Game1.random.Next(ThicknessMin, ThicknessMax);
-        Speed = Game1.random.Next(SpeedMin, SpeedMax);
+        Length = BombarderGame.random.Next(LengthMin, LengthMax);
+        Thickness = BombarderGame.random.Next(ThicknessMin, ThicknessMax);
+        Speed = BombarderGame.random.Next(SpeedMin, SpeedMax);
         Colour = Color.Turquoise;
         DrawLater = true;
     }
@@ -43,13 +43,13 @@ public class LaserLine : Particle
         EnactMovement();
     }
 
-    public override void Draw(Game1 Game1)
+    public override void Draw(BombarderGame Game)
     {
         Vector2 DrawPosition = new(
-            Position.X + Game1.Graphics.PreferredBackBufferWidth / 2F - Game1.Player.Position.X,
-            Position.Y + Game1.Graphics.PreferredBackBufferHeight / 2F - Game1.Player.Position.Y
+            Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X,
+            Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y
         );
-        Game1.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
+        Game.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
     }
 
     public void EnactMovement()

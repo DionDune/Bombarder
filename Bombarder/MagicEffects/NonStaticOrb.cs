@@ -42,7 +42,7 @@ public class NonStaticOrb : MagicEffect
         }
     }
 
-    public override void Draw(Game1 Game1)
+    public override void Draw(BombarderGame Game)
     {
     }
 

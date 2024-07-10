@@ -23,14 +23,14 @@ public class RedCubeSegment : Particle
 
     public RedCubeSegment(Vector2 Position, float Angle) : base(Position)
     {
-        Duration = Game1.random.Next(DurationMin, DurationMax);
+        Duration = BombarderGame.random.Next(DurationMin, DurationMax);
         this.Angle = Angle;
 
-        Velocity = (float)Game1.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10;
+        Velocity = (float)BombarderGame.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10;
 
-        if (Game1.random.Next(0, 4) == 0)
+        if (BombarderGame.random.Next(0, 4) == 0)
         {
-            Velocity = (float)Game1.random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10;
+            Velocity = (float)BombarderGame.random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10;
         }
     }
 
@@ -39,13 +39,13 @@ public class RedCubeSegment : Particle
         EnactMovement();
     }
 
-    public override void Draw(Game1 Game1)
+    public override void Draw(BombarderGame Game)
     {
-        Game1.SpriteBatch.Draw(
-            Game1.Textures.White,
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
             new Rectangle(
-                (int)(Position.X + Game1.Graphics.PreferredBackBufferWidth / 2F - Game1.Player.Position.X),
-                (int)(Position.Y + Game1.Graphics.PreferredBackBufferHeight / 2F - Game1.Player.Position.Y),
+                (int)(Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X),
+                (int)(Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y),
                 Width,
                 Height
             ),

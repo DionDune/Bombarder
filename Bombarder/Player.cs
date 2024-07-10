@@ -96,9 +96,9 @@ namespace Bombarder
 
         public static void SetRandomLocalPosition(Player Player, int MinDistance, int MaxDistance)
         {
-            int Angle = Game1.random.Next(0, 360);
+            int Angle = BombarderGame.random.Next(0, 360);
             float AngleRadians = (float)Angle * (float)(Math.PI / 180);
-            int Distance = Game1.random.Next(MinDistance, MaxDistance);
+            int Distance = BombarderGame.random.Next(MinDistance, MaxDistance);
 
             Player.Position += new Vector2(
                 (int)(Distance * (float)Math.Cos(AngleRadians)),
@@ -113,7 +113,7 @@ namespace Bombarder
 
         private void HealthHandler()
         {
-            if (Health < HealthMax && Game1.GameTick % HealthRegainInterval == 0)
+            if (Health < HealthMax && BombarderGame.GameTick % HealthRegainInterval == 0)
             {
                 if (HealthMax - Health < HealthRegain)
                 {
@@ -158,7 +158,7 @@ namespace Bombarder
 
         public void ManaHandler()
         {
-            if (Mana >= ManaMax || Game1.GameTick % ManaRegainInterval != 0)
+            if (Mana >= ManaMax || BombarderGame.GameTick % ManaRegainInterval != 0)
             {
                 return;
             }

@@ -65,5 +65,5 @@ public abstract class Particle
     {
     }
 
-    public abstract void Draw(Game1 Game1);
+    public abstract void Draw(BombarderGame Game);
 }
