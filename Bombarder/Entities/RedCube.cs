@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -73,20 +74,20 @@ public class RedCube : Entity
         );
 
         Point PlayerTopLeft = new Point(
-            (int)Player.Position.X - (Player.Width / 2),
-            (int)Player.Position.Y - (Player.Height / 2)
+            (int)Player.Position.X - Player.Width / 2,
+            (int)Player.Position.Y - Player.Height / 2
         );
         Point PlayerTopRight = new Point(
-            (int)Player.Position.X + (Player.Width / 2),
-            (int)Player.Position.Y - (Player.Height / 2)
+            (int)Player.Position.X + Player.Width / 2,
+            (int)Player.Position.Y - Player.Height / 2
         );
         Point PlayerBottomLeft = new Point(
-            (int)Player.Position.X - (Player.Width / 2),
-            (int)Player.Position.Y + (Player.Height / 2)
+            (int)Player.Position.X - Player.Width / 2,
+            (int)Player.Position.Y + Player.Height / 2
         );
         Point PlayerBottomRight = new Point(
-            (int)Player.Position.X + (Player.Width / 2),
-            (int)Player.Position.Y + (Player.Height / 2)
+            (int)Player.Position.X + Player.Width / 2,
+            (int)Player.Position.Y + Player.Height / 2
         );
 
         if (TopLeft.X >= PlayerTopLeft.X && TopLeft.X <= PlayerTopRight.X &&
@@ -123,12 +124,12 @@ public class RedCube : Entity
             Position.Y + Block.Offset.Y
         );
 
-        for (int y = 0; y < Block.Height / Particle.RedCubeSegment.Height; y++)
+        for (int y = 0; y < Block.Height / RedCubeSegment.Height; y++)
         {
-            for (int x = 0; x < Block.Width / Particle.RedCubeSegment.Width; x++)
+            for (int x = 0; x < Block.Width / RedCubeSegment.Width; x++)
             {
-                float ParticleX = StartPoint.X + (x * Particle.RedCubeSegment.Width);
-                float ParticleY = StartPoint.Y + (y * Particle.RedCubeSegment.Height);
+                float ParticleX = StartPoint.X + (x * RedCubeSegment.Width);
+                float ParticleY = StartPoint.Y + (y * RedCubeSegment.Height);
 
                 var XDifference = ParticleX - Position.X;
                 var YDifference = ParticleY - Position.Y;
@@ -137,24 +138,15 @@ public class RedCube : Entity
                         (float)Math.Atan2(YDifference, XDifference) *
                         (float)(180 / Math.PI) +
                         Game1.random.Next(
-                            (int)(-Particle.RedCubeSegment.AngleOffsetAllowance * 10),
-                            (int)(Particle.RedCubeSegment.AngleOffsetAllowance * 10)
+                            (int)(-RedCubeSegment.AngleOffsetAllowance * 10),
+                            (int)(RedCubeSegment.AngleOffsetAllowance * 10)
                         ) / 10F
                     ) *
                     (float)Math.PI / 180F;
 
-                Game1.Particles.Add(new Particle((int)ParticleX, (int)ParticleY)
+                Game1.Particles.Add(new RedCubeSegment(new Vector2(ParticleX, ParticleY), Angle)
                 {
-                    HasDuration = true,
-                    Duration = Game1.random.Next(
-                        Particle.RedCubeSegment.DurationMin,
-                        Particle.RedCubeSegment.DurationMax
-                    ),
-
-                    ParticleObj = new Particle.RedCubeSegment
-                    {
-                        Angle = Angle
-                    }
+                    HasDuration = true
                 });
             }
         }

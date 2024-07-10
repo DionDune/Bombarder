@@ -119,7 +119,7 @@ public class ForceContainer : MagicEffect
             YDiff = Math.Abs(Position.Y - Entity.Position.Y);
             Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
-            if (!(Distance >= CurrentRadius - EdgeEffectWith))
+            if (Distance < CurrentRadius - EdgeEffectWith)
             {
                 continue;
             }

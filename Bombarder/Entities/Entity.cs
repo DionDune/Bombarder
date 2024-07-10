@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
 namespace Bombarder.Entities;
@@ -78,11 +79,10 @@ public abstract class Entity
             (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
         );
 
-        Game1.Particles.Add(new Particle(x, y)
+        Game1.Particles.Add(new HitMarker(new Vector2(x, y))
         {
             HasDuration = true,
-            Duration = Particle.HitMarker.DefaultDuration,
-            ParticleObj = new Particle.HitMarker()
+            Duration = HitMarker.DefaultDuration
         });
 
         LastHitMarkerFrame = Game1.GameTick;

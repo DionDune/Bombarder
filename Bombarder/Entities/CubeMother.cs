@@ -73,7 +73,7 @@ public class CubeMother : Entity
                 break;
         }
     }
-
+    
     public void EnactSpawn()
     {
         if (NextSpawnFrame != Game1.GameTick && Game1.GameTick <= NextSpawnFrame)

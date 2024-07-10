@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bombarder.Entities;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
 namespace Bombarder.MagicEffects;
@@ -42,21 +43,14 @@ public class StaticOrb : MagicEffect
 
     private void CreateParticles()
     {
-        if (Math.Abs(Game1.GameTick - LastParticleFrame) <= Particle.Impact.DefaultFrequency)
+        if (Math.Abs(Game1.GameTick - LastParticleFrame) <= Impact.DefaultFrequency)
         {
             return;
         }
 
-        Game1.Particles.Add(new Particle((int)Position.X, (int)Position.Y)
+        Game1.Particles.Add(new Impact(new Vector2(Position.X, Position.Y))
         {
             HasDuration = true,
-            Duration = Particle.Impact.DurationDefault,
-
-            ParticleObj = new Particle.Impact(1)
-            {
-                Radius = Particle.Impact.DefaultRadius,
-                Opacity = Particle.Impact.DefaultOpacity
-            }
         });
 
         LastParticleFrame = Game1.GameTick;

@@ -544,14 +544,14 @@ namespace Bombarder
             List<UIPage> Pages = new List<UIPage>();
 
             //Start Page
-            Pages.Add(new UIPage()
+            Pages.Add(new UIPage
             {
                 Type = "Start",
 
-                UIItems = new List<UIItem>()
+                UIItems = new List<UIItem>
                 {
                     //Start Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -566,17 +566,17 @@ namespace Bombarder
                         BorderColor = Color.Green,
                         BaseColor = Color.PaleGreen,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("START"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Start New" }
+                        Data = new List<string> { "Start New" }
                     },
                     //Quit Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -593,17 +593,17 @@ namespace Bombarder
                         BorderColor = Color.DarkRed,
                         BaseColor = Color.Red,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("QUIT"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Quit" }
+                        Data = new List<string> { "Quit" }
                     },
                     //Start Message
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Text",
                         X = 0,
@@ -611,7 +611,7 @@ namespace Bombarder
                         CentreX = 0,
                         CentreY = -250,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("BOMBARDER"),
                             ElementSize = 16,
@@ -621,14 +621,14 @@ namespace Bombarder
                 }
             });
             //Pause Page
-            Pages.Add(new UIPage()
+            Pages.Add(new UIPage
             {
                 Type = "Pause",
 
-                UIItems = new List<UIItem>()
+                UIItems = new List<UIItem>
                 {
                     //Resume Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -645,7 +645,7 @@ namespace Bombarder
                         BorderColor = Color.Green,
                         BaseColor = Color.PaleGreen,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Text = "RESUME",
                             Elements = TextElement.GetString("RESUME"),
@@ -653,10 +653,10 @@ namespace Bombarder
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Resume" }
+                        Data = new List<string> { "Resume" }
                     },
                     //Settings Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
                         X = -200,
@@ -672,7 +672,7 @@ namespace Bombarder
                         BorderColor = Color.Blue,
                         BaseColor = Color.Turquoise,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Text = "SETTINGS",
                             Elements = TextElement.GetString("SETTINGS"),
@@ -680,10 +680,10 @@ namespace Bombarder
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Settings" }
+                        Data = new List<string> { "Settings" }
                     },
                     //Pause Quit Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -700,7 +700,7 @@ namespace Bombarder
                         BorderColor = Color.DarkRed,
                         BaseColor = Color.Red,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Text = "QUIT",
                             Elements = TextElement.GetString("QUIT"),
@@ -708,10 +708,10 @@ namespace Bombarder
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Quit" }
+                        Data = new List<string> { "Quit" }
                     },
                     //Title Message
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Text",
                         X = 0,
@@ -719,7 +719,7 @@ namespace Bombarder
                         CentreX = 0,
                         CentreY = -250,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("BOMBARDER"),
                             ElementSize = 16,
@@ -729,14 +729,14 @@ namespace Bombarder
                 }
             });
             //Settings Page
-            Pages.Add(new UIPage()
+            Pages.Add(new UIPage
             {
                 Type = "Settings",
 
-                UIItems = new List<UIItem>()
+                UIItems = new List<UIItem>
                 {
                     //Resume Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -752,7 +752,7 @@ namespace Bombarder
                         BorderColor = Color.Green,
                         BaseColor = Color.PaleGreen,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Text = "RESUME",
                             Elements = TextElement.GetString("RESUME"),
@@ -760,10 +760,10 @@ namespace Bombarder
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Resume" }
+                        Data = new List<string> { "Resume" }
                     },
                     //Player Invincibility Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -779,24 +779,24 @@ namespace Bombarder
                         BorderColor = Color.Purple,
                         BaseColor = Color.BlueViolet,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("INVINCIBLE"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "PLAYER INVINCIBLE" }
+                        Data = new List<string> { "PLAYER INVINCIBLE" }
                     },
                     //Title Message
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Text",
                         CentreX = 0,
                         CentreY = 100,
                         Orientation = "Top",
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("SETTINGS"),
                             ElementSize = 16,
@@ -807,14 +807,14 @@ namespace Bombarder
             });
 
             //Death Screen
-            Pages.Add(new UIPage()
+            Pages.Add(new UIPage
             {
                 Type = "Death",
 
-                UIItems = new List<UIItem>()
+                UIItems = new List<UIItem>
                 {
                     //Respawn Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -831,17 +831,17 @@ namespace Bombarder
                         BorderColor = Color.Green,
                         BaseColor = Color.PaleGreen,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("RESPAWN"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Respawn" }
+                        Data = new List<string> { "Respawn" }
                     },
                     //Resurrect Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -858,17 +858,17 @@ namespace Bombarder
                         BorderColor = Color.Purple,
                         BaseColor = Color.BlueViolet,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("RESURRECT"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Resurrect" }
+                        Data = new List<string> { "Resurrect" }
                     },
                     //Pause Quit Button
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Button",
 
@@ -885,17 +885,17 @@ namespace Bombarder
                         BorderColor = Color.DarkRed,
                         BaseColor = Color.Red,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("QUIT"),
                             ElementSize = 8,
                             Color = Color.Black
                         },
 
-                        Data = new List<string>() { "Quit" }
+                        Data = new List<string> { "Quit" }
                     },
                     //Title Message
-                    new UIItem()
+                    new UIItem
                     {
                         Type = "Text",
                         X = 0,
@@ -903,7 +903,7 @@ namespace Bombarder
                         CentreX = 0,
                         CentreY = -250,
 
-                        Text = new TextElement()
+                        Text = new TextElement
                         {
                             Elements = TextElement.GetString("YOU FUCKING DIED"),
                             ElementSize = 16,
@@ -914,14 +914,10 @@ namespace Bombarder
             });
 
             //InGame
-            Pages.Add(new UIPage()
+            Pages.Add(new UIPage
             {
                 Type = "Play",
-
                 UIItems = new List<UIItem>()
-                {
-
-                }
             });
 
             return Pages;

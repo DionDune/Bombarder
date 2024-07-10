@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bombarder.Entities;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
 namespace Bombarder.MagicEffects;
@@ -72,9 +73,9 @@ namespace Bombarder.MagicEffects;
         }
         public void CreateParticles()
         {
-            float xDiff = Position.X - Goal.X;
-            float yDiff = Position.Y - Goal.Y;
-            float Distance = (float)Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
+            float XDiff = Position.X - Goal.X;
+            float YDiff = Position.Y - Goal.Y;
+            float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
             int Count = ParticleCountMed;
             if (Distance > ParticleCountMaxDistanceThreshold)
@@ -84,7 +85,7 @@ namespace Bombarder.MagicEffects;
 
             for (int i = 0; i < Game1.random.Next(ParticleCountMin, Count); i++)
             {
-                Particle.TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Position.X, Position.Y), new Vector2(Goal.X, Goal.Y));
+                TeleportLine.SpawnBetween(Game1.Particles, new Vector2(Position.X, Position.Y), new Vector2(Goal.X, Goal.Y));
             }
         }
     }

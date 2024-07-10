@@ -45,7 +45,7 @@ public class ForceWave : MagicEffect
             float YDiff = Math.Abs(Position.Y - Entity.Position.Y);
             float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
 
-            if (!(Distance <= Radius))
+            if (Distance > Radius)
             {
                 continue;
             }

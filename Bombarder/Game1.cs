@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bombarder.Entities;
 using Bombarder.MagicEffects;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,10 +32,9 @@ public class Game1 : Game
     InputStates Input;
     public Player Player { get; private set; }
 
-    public static List<Entity> Entities = new();
-    public static List<Entity> EntitiesToAdd = new();
-    public static GameObject.ObjectContainer Objects = new();
-    public static List<Particle> Particles = new();
+    public static readonly List<Entity> Entities = new();
+    public static readonly List<Entity> EntitiesToAdd = new();
+    public static readonly List<Particle> Particles = new();
     List<MagicEffect> MagicEffects = new();
     List<MagicEffect> SelectedEffects = new();
 
@@ -85,7 +85,7 @@ public class Game1 : Game
 
         //Procedurally Creating and Assigning a 1x1 white texture to Color_White
         Textures.White = new Texture2D(GraphicsDevice, 1, 1);
-        Textures.White.SetData(new Color[1] { Color.White });
+        Textures.White.SetData(new[] { Color.White });
 
         Textures.WhiteCircle = Content.Load<Texture2D>("Circle");
         Textures.HalfWhiteCirlce = Content.Load<Texture2D>("HalfCircle");
@@ -98,7 +98,7 @@ public class Game1 : Game
         Textures.DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
     }
 
-    void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
+    private void MediaPlayer_MediaStateChanged(object Sender, EventArgs E)
     {
         // 0.0f is silent, 1.0f is full volume
         MediaPlayer.Volume -= 0.1f;
@@ -116,7 +116,6 @@ public class Game1 : Game
         Entities.Clear();
         EntitiesToAdd.Clear();
 
-        Objects.GeneralObjects.Clear();
         Particles.Clear();
 
         MagicEffects.Clear();
@@ -346,7 +345,7 @@ public class Game1 : Game
 
         // Clamp momentum magnitude if it is greater than max speed
         float LengthSquared = Player.Momentum.LengthSquared();
-        if (!(LengthSquared > Speed * Speed))
+        if (LengthSquared <= Speed * Speed)
         {
             return;
         }
@@ -800,59 +799,63 @@ public class Game1 : Game
 
     private void DrawGrid()
     {
-        if (Settings.ShowGrid)
+        if (!Settings.ShowGrid)
         {
-            int BigLineWidth = 2 * Settings.GridLineSizeMult;
-            int ThinLineWidth = 1 * Settings.GridLineSizeMult;
-            Color GridColor = Settings.GridColor;
+            return;
+        }
 
-            if (Settings.TranceMode)
+        int BigLineWidth = 2 * Settings.GridLineSizeMult;
+        int ThinLineWidth = 1 * Settings.GridLineSizeMult;
+        Color GridColor = Settings.GridColor;
+
+        if (Settings.TranceMode)
+        {
+            BigLineWidth = 2 * Settings.TranceModeGridLineMult;
+            ThinLineWidth = 1 * Settings.TranceModeGridLineMult;
+            GridColor = Settings.TranceModeGridColor;
+        }
+
+        Point ScreenStart = new Point(
+            (int)(Player.Position.X - Graphics.PreferredBackBufferWidth / 2F),
+            (int)(Player.Position.Y - Graphics.PreferredBackBufferHeight / 2F)
+        );
+
+        for (int y = 0; y < Graphics.PreferredBackBufferHeight; y++)
+        {
+            if ((y + ScreenStart.Y) % (300 * Settings.GridSizeMultiplier) == 0)
             {
-                BigLineWidth = 2 * Settings.TranceModeGridLineMult;
-                ThinLineWidth = 1 * Settings.TranceModeGridLineMult;
-                GridColor = Settings.TranceModeGridColor;
+                SpriteBatch.Draw(Textures.White,
+                    new Rectangle(0, y - 1, Graphics.PreferredBackBufferWidth, BigLineWidth),
+                    GridColor * 0.7F * Settings.GridOpacityMultiplier);
             }
 
-
-            Point ScreenStart = new Point((int)Player.Position.X - (Graphics.PreferredBackBufferWidth / 2),
-                (int)Player.Position.Y - (Graphics.PreferredBackBufferHeight / 2));
-            for (int y = 0; y < Graphics.PreferredBackBufferHeight; y++)
+            if ((y + ScreenStart.Y) % (100 * Settings.GridSizeMultiplier) == 0)
             {
-                if ((y + ScreenStart.Y) % (300 * Settings.GridSizeMultiplier) == 0)
-                {
-                    SpriteBatch.Draw(Textures.White,
-                        new Rectangle(0, y - 1, Graphics.PreferredBackBufferWidth, BigLineWidth),
-                        GridColor * 0.7F * Settings.GridOpacityMultiplier);
-                }
+                SpriteBatch.Draw(Textures.White,
+                    new Rectangle(0, y, Graphics.PreferredBackBufferWidth, ThinLineWidth),
+                    GridColor * 0.45F * Settings.GridOpacityMultiplier);
+            }
+        }
 
-                if ((y + ScreenStart.Y) % (100 * Settings.GridSizeMultiplier) == 0)
-                {
-                    SpriteBatch.Draw(Textures.White,
-                        new Rectangle(0, y, Graphics.PreferredBackBufferWidth, ThinLineWidth),
-                        GridColor * 0.45F * Settings.GridOpacityMultiplier);
-                }
+        for (int x = 0; x < Graphics.PreferredBackBufferWidth; x++)
+        {
+            if ((x + ScreenStart.X) % (300 * Settings.GridSizeMultiplier) == 0)
+            {
+                SpriteBatch.Draw(Textures.White,
+                    new Rectangle(x - 1, 0, BigLineWidth, Graphics.PreferredBackBufferWidth),
+                    GridColor * 0.7F * Settings.GridOpacityMultiplier);
             }
 
-            for (int x = 0; x < Graphics.PreferredBackBufferWidth; x++)
+            if ((x + ScreenStart.X) % (100 * Settings.GridSizeMultiplier) == 0)
             {
-                if ((x + ScreenStart.X) % (300 * Settings.GridSizeMultiplier) == 0)
-                {
-                    SpriteBatch.Draw(Textures.White,
-                        new Rectangle(x - 1, 0, BigLineWidth, Graphics.PreferredBackBufferWidth),
-                        GridColor * 0.7F * Settings.GridOpacityMultiplier);
-                }
-
-                if ((x + ScreenStart.X) % (100 * Settings.GridSizeMultiplier) == 0)
-                {
-                    SpriteBatch.Draw(Textures.White,
-                        new Rectangle(x, 0, ThinLineWidth, Graphics.PreferredBackBufferWidth),
-                        GridColor * 0.45F * Settings.GridOpacityMultiplier);
-                }
+                SpriteBatch.Draw(Textures.White,
+                    new Rectangle(x, 0, ThinLineWidth, Graphics.PreferredBackBufferWidth),
+                    GridColor * 0.45F * Settings.GridOpacityMultiplier);
             }
         }
     }
 
-    void DrawLine(Vector2 point, float Length, float Angle, Color Color, float Thickness)
+    public void DrawLine(Vector2 point, float Length, float Angle, Color Color, float Thickness)
     {
         var Origin = new Vector2(0f, 0.5f);
         var Scale = new Vector2(Length, Thickness);
@@ -866,8 +869,7 @@ public class Game1 : Game
         float AngleRadians = Angle * (float)(Math.PI / 180);
 
         var Origin = new Vector2(0f, 0.5f);
-        Vector2 Scale;
-        Scale = new Vector2(Width, Height);
+        Vector2 Scale = new Vector2(Width, Height);
 
         if (!Centered)
         {
@@ -909,11 +911,10 @@ public class Game1 : Game
             MagicEffect.EnactDuration(MagicEffects);
         }
 
-
         base.Update(gameTime);
     }
 
-    protected override void Draw(GameTime gameTime)
+    protected override void Draw(GameTime GameTime)
     {
         if (!Settings.TranceMode || (Settings.TranceMode && Settings.TranceModeClearScreen))
             GraphicsDevice.Clear(Settings.BackgroundColor);
@@ -929,32 +930,9 @@ public class Game1 : Game
 
 
         //Particles
-        List<Particle> LaterParticles = new List<Particle>();
-        foreach (Particle Particle in Particles)
+        foreach (var Particle in Particles.Where(Particle => !Particle.DrawLater))
         {
-            switch (Particle.ParticleObj)
-            {
-                case Particle.HitMarker:
-                case Particle.LaserLine:
-                case Particle.TeleportLine:
-                case Particle.Impact:
-                    LaterParticles.Add(Particle);
-                    break;
-                case Particle.Dust Dust:
-                {
-                    SpriteBatch.Draw(Textures.White, new Rectangle(
-                        (int)Particle.X + Graphics.PreferredBackBufferWidth / 2 - (int)Player.Position.X,
-                        (int)Particle.Y + Graphics.PreferredBackBufferHeight / 2 - (int)Player.Position.Y,
-                        Dust.Width, Dust.Height), Dust.Colour * Dust.Opacity);
-                    break;
-                }
-                case Particle.RedCubeSegment:
-                    SpriteBatch.Draw(Textures.White, new Rectangle(
-                        (int)Particle.X + Graphics.PreferredBackBufferWidth / 2 - (int)Player.Position.X,
-                        (int)Particle.Y + Graphics.PreferredBackBufferHeight / 2 - (int)Player.Position.Y,
-                        Particle.RedCubeSegment.Width, Particle.RedCubeSegment.Height), Particle.RedCubeSegment.Colour);
-                    break;
-            }
+            Particle.Draw(this);
         }
 
 
@@ -1176,44 +1154,9 @@ public class Game1 : Game
         }
 
         //Later Particles
-        foreach (Particle Particle in LaterParticles)
+        foreach (var Particle in Particles.Where(Particle => Particle.DrawLater))
         {
-            switch (Particle.ParticleObj)
-            {
-                case Particle.HitMarker:
-                    SpriteBatch.Draw(Textures.HitMarker, new Rectangle(
-                        (int)Particle.X + Graphics.PreferredBackBufferWidth / 2 - (int)Player.Position.X,
-                        (int)Particle.Y + Graphics.PreferredBackBufferHeight / 2 - (int)Player.Position.Y,
-                        Particle.HitMarker.Width, Particle.HitMarker.Height), Color.White);
-                    break;
-                case Particle.LaserLine LaserLine:
-                {
-                    Vector2 Position =
-                        new Vector2(Particle.X + Graphics.PreferredBackBufferWidth / 2F - (int)Player.Position.X,
-                            Particle.Y + Graphics.PreferredBackBufferHeight / 2F - (int)Player.Position.Y);
-                    DrawLine(Position, LaserLine.Length, LaserLine.Direction, LaserLine.Colour, LaserLine.Thickness);
-                    break;
-                }
-                case Particle.TeleportLine TeleportLine:
-                {
-                    Vector2 Position =
-                        new Vector2(Particle.X + Graphics.PreferredBackBufferWidth / 2F - (int)Player.Position.X,
-                            Particle.Y + Graphics.PreferredBackBufferHeight / 2F - (int)Player.Position.Y);
-                    DrawLine(Position, TeleportLine.Length, TeleportLine.Direction,
-                        TeleportLine.Colour * TeleportLine.Opacity, TeleportLine.Thickness);
-                    break;
-                }
-                case Particle.Impact Impact:
-                {
-                    SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
-                        (int)(Particle.X - Impact.Radius) + (Graphics.PreferredBackBufferWidth / 2) -
-                        (int)Player.Position.X,
-                        (int)(Particle.Y - Impact.Radius) + (Graphics.PreferredBackBufferHeight / 2) -
-                        (int)Player.Position.Y,
-                        (int)(Impact.Radius * 2), (int)(Impact.Radius * 2)), Particle.Impact.Colour * Impact.Opacity);
-                    break;
-                }
-            }
+            Particle.Draw(this);
         }
 
 
@@ -1234,7 +1177,7 @@ public class Game1 : Game
         SpriteBatch.End();
         // END Draw ------
 
-        base.Draw(gameTime);
+        base.Draw(GameTime);
     }
 
     #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bombarder.Entities;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
 namespace Bombarder.MagicEffects;
@@ -29,7 +30,7 @@ public class WideLaser : MagicEffect
     public const int DefaultDuration = -1;
 
     public float Angle { get; set; }
-    
+
     public WideLaser(Vector2 Position, float Angle) : base(Position)
     {
         this.Angle = Angle;
@@ -108,39 +109,27 @@ public class WideLaser : MagicEffect
         int Count = Game1.random.Next(1, 4);
 
         // Central Laser
-        AngleRadians = (Angle + ((float)Game1.random.Next(-Spread * 10, Spread * 10) / 10)) *
-                       (float)(Math.PI / 180);
-        Game1.Particles.Add(new Particle((int)Position.X, (int)Position.Y)
+        AngleRadians = (Angle + (float)Game1.random.Next(-Spread * 10, Spread * 10) / 10) * (float)(Math.PI / 180);
+        Game1.Particles.Add(new LaserLine(new Vector2(Position.X, Position.Y), AngleRadians)
         {
             HasDuration = true,
-            Duration = Particle.LaserLine.DurationMin,
-
-            ParticleObj = new Particle.LaserLine
-            {
-                Length = Particle.LaserLine.LengthMax,
-                Thickness = Particle.LaserLine.ThicknessMax,
-                Direction = AngleRadians,
-                Speed = Particle.LaserLine.SpeedMax * 2,
-                Colour = Particle.LaserLine.CentralLaserColor
-            }
+            Duration = LaserLine.DurationMin,
+            Length = LaserLine.LengthMax,
+            Thickness = LaserLine.ThicknessMax,
+            Speed = LaserLine.SpeedMax * 2,
+            Colour = LaserLine.CentralLaserColor
         });
 
         //Others
         for (int i = 0; i < Count; i++)
         {
-            AngleRadians =
-                (Angle + Game1.random.Next(-Particle.LaserLine.AngleSpreadRange,
-                    Particle.LaserLine.AngleSpreadRange)) * (float)(Math.PI / 180);
+            AngleRadians = (Angle + Game1.random.Next(-LaserLine.AngleSpreadRange, LaserLine.AngleSpreadRange)) *
+                           (float)(Math.PI / 180);
 
-            Game1.Particles.Add(new Particle((int)Position.X, (int)Position.Y)
+            Game1.Particles.Add(new LaserLine(new Vector2(Position.X, Position.Y), AngleRadians)
             {
                 HasDuration = true,
-                Duration = Game1.random.Next(Particle.LaserLine.DurationMin, Particle.LaserLine.DurationMax),
-
-                ParticleObj = new Particle.LaserLine
-                {
-                    Direction = AngleRadians
-                }
+                Duration = Game1.random.Next(LaserLine.DurationMin, LaserLine.DurationMax)
             });
         }
     }
