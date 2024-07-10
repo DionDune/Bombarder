@@ -42,6 +42,10 @@ public class NonStaticOrb : MagicEffect
         }
     }
 
+    public override void Draw(Game1 Game1)
+    {
+    }
+
     private void EnactVelocity()
     {
         float AngleRadians = Angle * (float)(Math.PI / 180);

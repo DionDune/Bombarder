@@ -24,7 +24,7 @@ public class DissipationWave : MagicEffect
     public float Opacity { get; set; }
     private const float DefaultOpacity = 0.95F;
     private const float OpacityMultiplier = 0.98F;
-    
+
     public DissipationWave(Vector2 Position) : base(Position)
     {
         Damage = DefaultDamage;
@@ -39,6 +39,20 @@ public class DissipationWave : MagicEffect
     {
         EnactSpread();
         EnactDamage(Entities);
+    }
+
+    public override void Draw(Game1 Game1)
+    {
+        Game1.SpriteBatch.Draw(
+            Game1.Textures.WhiteCircle,
+            new Rectangle(
+                (int)(Position.X - Radius + Game1.Graphics.PreferredBackBufferWidth / 2F - Game1.Player.Position.X),
+                (int)(Position.Y - Radius + Game1.Graphics.PreferredBackBufferHeight / 2F - Game1.Player.Position.Y),
+                (int)Radius * 2,
+                (int)Radius * 2
+            ),
+            Colour * Opacity
+        );
     }
 
     private void EnactDamage(List<Entity> Entities)

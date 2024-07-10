@@ -863,7 +863,7 @@ public class Game1 : Game
         SpriteBatch.Draw(Textures.White, point, null, Color, Angle, Origin, Scale, SpriteEffects.None, 0);
     }
 
-    void DrawRotatedTexture(Vector2 Point, Texture2D Texture, float Width, float Height, float Angle, bool Centered,
+    public void DrawRotatedTexture(Vector2 Point, Texture2D Texture, float Width, float Height, float Angle, bool Centered,
         Color Color)
     {
         float AngleRadians = Angle * (float)(Math.PI / 180);
@@ -961,149 +961,52 @@ public class Game1 : Game
             //Magic
             foreach (MagicEffect Effect in MagicEffects)
             {
-                switch (Effect)
+                Effect.Draw(this);
+
+                if (!Settings.ShowDamageRadii)
                 {
-                    case DissipationWave DissipationWave:
-                        SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
-                                (int)(DissipationWave.Position.X - DissipationWave.Radius +
-                                    Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
-                                (int)(DissipationWave.Position.Y - DissipationWave.Radius +
-                                    Graphics.PreferredBackBufferHeight / 2F - (int)Player.Position.Y),
-                                (int)DissipationWave.Radius * 2, (int)DissipationWave.Radius * 2),
-                            DissipationWave.Colour * DissipationWave.Opacity);
-                        break;
-                    case ForceWave ForceWave:
-                    {
-                        SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
-                            (int)(ForceWave.Position.X - ForceWave.Radius + Graphics.PreferredBackBufferWidth / 2F -
-                                  Player.Position.X),
-                            (int)(ForceWave.Position.Y - ForceWave.Radius + Graphics.PreferredBackBufferHeight / 2F -
-                                  Player.Position.Y),
-                            (int)(ForceWave.Radius * 2), (int)(ForceWave.Radius * 2)), ForceWave.Colour * 0.3F);
-                        for (int i = 0; i < ForceWave.BorderWidth; i++)
-                        {
-                            SpriteBatch.Draw(Textures.HollowCircle, new Rectangle(
-                                    (int)(ForceWave.Position.X - ForceWave.Radius + i +
-                                        Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
-                                    (int)(ForceWave.Position.Y - ForceWave.Radius + i +
-                                        Graphics.PreferredBackBufferHeight / 2F - (int)Player.Position.Y),
-                                    (int)(ForceWave.Radius * 2) - i * 2, (int)(ForceWave.Radius * 2) - i * 2),
-                                ForceWave.Colour * 0.7F);
-                        }
-
-                        break;
-                    }
-                    case ForceContainer Container:
-                        SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
-                                (int)(Container.Position.X - Container.CurrentRadius +
-                                    (Graphics.PreferredBackBufferWidth / 2F) - Player.Position.X),
-                                (int)(Container.Position.Y - Container.CurrentRadius +
-                                    Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
-                                (int)Container.CurrentRadius * 2, (int)Container.CurrentRadius * 2),
-                            Container.Colour * Container.Opacity);
-                        break;
-                    case WideLaser Laser:
-                    {
-                        //Old
-                        // if (Settings.ShowDamageRadii)
-                        // {
-                        //     float AngleRadians = Laser.Angle * (float)(Math.PI / 180);
-                        //     float RightAngleRadians = (Laser.Angle + 90) * (float)(Math.PI / 180);
-                        //
-                        //     Vector2 LeftLine = new Vector2(
-                        //         Graphics.PreferredBackBufferWidth / 2F -
-                        //         WideLaser.Width / 2F * (float)Math.Cos(RightAngleRadians),
-                        //         Graphics.PreferredBackBufferHeight / 2F -
-                        //         WideLaser.Width / 2F * (float)Math.Sin(RightAngleRadians)
-                        //     );
-                        //     LeftLine.X += WideLaser.InitialDistance * (float)Math.Cos(AngleRadians);
-                        //     LeftLine.Y += WideLaser.InitialDistance * (float)Math.Sin(AngleRadians);
-                        //     Vector2 RightLine = new Vector2(
-                        //         Graphics.PreferredBackBufferWidth / 2F +
-                        //         (WideLaser.Width / 2F - 5) * (float)Math.Cos(RightAngleRadians),
-                        //         Graphics.PreferredBackBufferHeight / 2F +
-                        //         (WideLaser.Width / 2F - 5) * (float)Math.Sin(RightAngleRadians)
-                        //     );
-                        //     RightLine.X += WideLaser.InitialDistance * (float)Math.Cos(AngleRadians);
-                        //     RightLine.Y += WideLaser.InitialDistance * (float)Math.Sin(AngleRadians);
-                        //
-                        //
-                        //     DrawRotatedTexture(LeftLine, Textures.White, WideLaser.Width,
-                        //         WideLaser.Range, Laser.Angle + 90, false,
-                        //         Laser.PrimaryColor * WideLaser.Opacity);
-                        //     DrawRotatedTexture(LeftLine, Textures.White, 5, WideLaser.Range,
-                        //         Laser.Angle + 90, false, Laser.SecondaryColor);
-                        //     DrawRotatedTexture(RightLine, Textures.White, 5, WideLaser.Range,
-                        //         Laser.Angle + 90, false, Laser.SecondaryColor);
-                        //
-                        //     float Scale = (float)WideLaser.Width / Textures.HalfWhiteCirlce.Width;
-                        //     DrawRotatedTexture(LeftLine, Textures.HalfWhiteCirlce, Scale, Scale, Laser.Angle + 90, true,
-                        //         Laser.PrimaryColor * WideLaser.Opacity);
-                        // }
-
-                        //New accounting for Laser Spread
-                        if (Settings.ShowDamageRadii)
-                        {
-                            float TrueSpread = WideLaser.Spread * WideLaser.TrueSpreadMultiplier;
-                            float AngleRadians = Laser.Angle * (float)(Math.PI / 180);
-                            float AngleRadiansLeft = (Laser.Angle - TrueSpread) * (float)(Math.PI / 180);
-                            float AngleRadiansRight = (Laser.Angle + TrueSpread) * (float)(Math.PI / 180);
-
-                            Vector2 Start = new Vector2(
-                                Laser.Position.X + Graphics.PreferredBackBufferWidth / 2F - (int)Player.Position.X,
-                                Laser.Position.Y + Graphics.PreferredBackBufferHeight / 2F - (int)Player.Position.Y);
-
-                            DrawLine(Start, WideLaser.Range, AngleRadiansLeft, Laser.SecondaryColor, 10);
-                            DrawLine(Start, WideLaser.Range, AngleRadians, Laser.MarkerColor, 10);
-                            DrawLine(Start, WideLaser.Range, AngleRadiansRight, Laser.SecondaryColor, 10);
-                        }
-
-                        break;
-                    }
+                    continue;
                 }
 
-                if (Settings.ShowDamageRadii)
+                if (Effect.RadiusIsCircle)
                 {
-                    if (Effect.RadiusIsCircle)
-                    {
-                        SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
-                            (int)(Effect.Position.X - Effect.DamageRadius + Graphics.PreferredBackBufferWidth / 2F -
-                                  Player.Position.X),
-                            (int)(Effect.Position.Y - Effect.DamageRadius + Graphics.PreferredBackBufferHeight / 2F -
-                                  Player.Position.Y),
-                            (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed);
-                    }
-                    else
-                    {
-                        //Top Line
-                        SpriteBatch.Draw(Textures.White, new Rectangle(
-                            (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
-                                  Player.Position.X),
-                            (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
-                                  Player.Position.Y),
-                            Effect.RadiusSize.X * 2, 2), Color.White);
-                        //Bottom Line
-                        SpriteBatch.Draw(Textures.White, new Rectangle(
-                            (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
-                                  Player.Position.X),
-                            (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 +
-                                Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
-                            Effect.RadiusSize.X * 2, 2), Color.White);
-                        //Left Line
-                        SpriteBatch.Draw(Textures.White, new Rectangle(
-                            (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
-                                  Player.Position.X),
-                            (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
-                                  Player.Position.Y),
-                            2, Effect.RadiusSize.Y * 2), Color.White);
-                        //Right Line
-                        SpriteBatch.Draw(Textures.White, new Rectangle(
-                            (int)(Effect.Position.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 +
-                                Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
-                            (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
-                                  Player.Position.Y),
-                            2, Effect.RadiusSize.Y * 2), Color.White);
-                    }
+                    SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
+                        (int)(Effect.Position.X - Effect.DamageRadius + Graphics.PreferredBackBufferWidth / 2F -
+                              Player.Position.X),
+                        (int)(Effect.Position.Y - Effect.DamageRadius + Graphics.PreferredBackBufferHeight / 2F -
+                              Player.Position.Y),
+                        (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed);
+                }
+                else
+                {
+                    //Top Line
+                    SpriteBatch.Draw(Textures.White, new Rectangle(
+                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
+                              Player.Position.X),
+                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
+                              Player.Position.Y),
+                        Effect.RadiusSize.X * 2, 2), Color.White);
+                    //Bottom Line
+                    SpriteBatch.Draw(Textures.White, new Rectangle(
+                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
+                              Player.Position.X),
+                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 +
+                            Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
+                        Effect.RadiusSize.X * 2, 2), Color.White);
+                    //Left Line
+                    SpriteBatch.Draw(Textures.White, new Rectangle(
+                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
+                              Player.Position.X),
+                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
+                              Player.Position.Y),
+                        2, Effect.RadiusSize.Y * 2), Color.White);
+                    //Right Line
+                    SpriteBatch.Draw(Textures.White, new Rectangle(
+                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 +
+                            Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
+                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
+                              Player.Position.Y),
+                        2, Effect.RadiusSize.Y * 2), Color.White);
                 }
             }
 

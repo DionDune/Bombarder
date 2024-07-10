@@ -123,10 +123,9 @@ public abstract class MagicEffect
         RadiusOffset = new Point(-24, -24);
         RadiusSize = new Point(24, 24);
 
-        Duration = StaticOrb.DefaultDuration;
-
         Pieces = new List<MagicEffectPiece> { new() { LifeSpan = DamageDuration } };
     }
 
     public abstract void EnactEffect(Player Player, List<Entity> Entities, uint GameTick);
+    public abstract void Draw(Game1 Game1);
 }

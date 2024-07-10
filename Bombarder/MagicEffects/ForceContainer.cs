@@ -50,6 +50,30 @@ public class ForceContainer : MagicEffect
         EnactDuration();
     }
 
+    public override void Draw(Game1 Game1)
+    {
+        Game1.SpriteBatch.Draw(
+            Game1.Textures.WhiteCircle,
+            new Rectangle(
+                (int)(
+                    Position.X -
+                    CurrentRadius +
+                    Game1.Graphics.PreferredBackBufferWidth / 2F -
+                    Game1.Player.Position.X
+                ),
+                (int)(
+                    Position.Y -
+                    CurrentRadius +
+                    Game1.Graphics.PreferredBackBufferHeight / 2F -
+                    Game1.Player.Position.Y
+                ),
+                (int)CurrentRadius * 2,
+                (int)CurrentRadius * 2
+            ),
+            Colour * Opacity
+        );
+    }
+
     public void EnactMovement()
     {
         if (!DestinationReached)

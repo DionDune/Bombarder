@@ -41,6 +41,10 @@ public class StaticOrb : MagicEffect
         CreateParticles();
     }
 
+    public override void Draw(Game1 Game1)
+    {
+    }
+
     private void CreateParticles()
     {
         if (Math.Abs(Game1.GameTick - LastParticleFrame) <= Impact.DefaultFrequency)

@@ -39,6 +39,11 @@ namespace Bombarder.MagicEffects;
             EnactMovement(Player);
             EnactDuration(Player);
         }
+
+        public override void Draw(Game1 Game1)
+        {
+        }
+
         public void EnactMovement(Player Player)
         {
             float xDiff = Player.Position.X - Goal.X;

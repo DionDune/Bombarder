@@ -133,14 +133,16 @@ namespace Bombarder
 
         public void GiveDamage(int Damage)
         {
-            if (!IsImmune)
+            if (IsImmune)
             {
-                Health -= Damage;
+                return;
+            }
 
-                if (Health <= 0)
-                {
-                    IsDead = true;
-                }
+            Health -= Damage;
+
+            if (Health <= 0)
+            {
+                IsDead = true;
             }
         }
 
@@ -156,16 +158,18 @@ namespace Bombarder
 
         public void ManaHandler()
         {
-            if (Mana < ManaMax && Game1.GameTick % ManaRegainInterval == 0)
+            if (Mana >= ManaMax || Game1.GameTick % ManaRegainInterval != 0)
             {
-                if (ManaMax - Mana < ManaRegain)
-                {
-                    Mana = ManaMax;
-                }
-                else
-                {
-                    Mana += ManaRegain;
-                }
+                return;
+            }
+
+            if (ManaMax - Mana < ManaRegain)
+            {
+                Mana = ManaMax;
+            }
+            else
+            {
+                Mana += ManaRegain;
             }
         }
 

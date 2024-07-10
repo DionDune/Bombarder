@@ -37,6 +37,36 @@ public class ForceWave : MagicEffect
         EnactDuration();
     }
 
+    public override void Draw(Game1 Game1)
+    {
+        Game1.SpriteBatch.Draw(
+            Game1.Textures.WhiteCircle,
+            new Rectangle(
+                (int)(Position.X - Radius + Game1.Graphics.PreferredBackBufferWidth / 2F - Game1.Player.Position.X),
+                (int)(Position.Y - Radius + Game1.Graphics.PreferredBackBufferHeight / 2F - Game1.Player.Position.Y),
+                (int)Radius * 2,
+                (int)Radius * 2
+            ),
+            Colour * 0.3F
+        );
+
+        for (int i = 0; i < BorderWidth; i++)
+        {
+            Game1.SpriteBatch.Draw(
+                Game1.Textures.HollowCircle,
+                new Rectangle(
+                    (int)(Position.X - Radius + i + Game1.Graphics.PreferredBackBufferWidth / 2F -
+                          Game1.Player.Position.X),
+                    (int)(Position.Y - Radius + i + Game1.Graphics.PreferredBackBufferHeight / 2F -
+                          Game1.Player.Position.Y),
+                    (int)Radius * 2 - i * 2,
+                    (int)Radius * 2 - i * 2
+                ),
+                Colour * 0.7F
+            );
+        }
+    }
+
     private void EnactForce(List<Entity> Entities)
     {
         foreach (Entity Entity in Entities)
