@@ -46,7 +46,7 @@ public class DemonEye : Entity
 
     public void EnactAttack(Player Player)
     {
-        if (BombarderGame.GameTick - LastDamageFrame < DamageInterval)
+        if (BombarderGame.Instance.GameTick - LastDamageFrame < DamageInterval)
         {
             return;
         }
@@ -116,27 +116,29 @@ public class DemonEye : Entity
         }
 
         Player.GiveDamage(Damage);
-        LastDamageFrame = BombarderGame.GameTick;
+        LastDamageFrame = BombarderGame.Instance.GameTick;
     }
 
-    public override void DrawEntity(BombarderGame Game)
+    public override void DrawEntity()
     {
-        Game.SpriteBatch.Draw(
-            Game.Textures.DemonEye.Item1,
+        BombarderGame.Instance.SpriteBatch.Draw(
+            BombarderGame.Instance.Textures.DemonEye.Item1,
             new Rectangle(
                 (int)(
                     Position.X -
-                    Game.Textures.DemonEye.Item1.Width * 0.8 / 2 +
-                    Game.Graphics.PreferredBackBufferWidth / 2F -
-                    Game.Player.Position.X
+                    BombarderGame.Instance.Textures.DemonEye.Item1.Width * 0.8 / 2 +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                    BombarderGame.Instance.Player.Position.X
                 ),
                 (int)(
                     Position.Y -
-                    Game.Textures.DemonEye.Item1.Height * 0.8 / 2
-                ) +
-                Game.Graphics.PreferredBackBufferHeight / 2 - (int)Game.Player.Position.Y,
-                (int)(Game.Textures.DemonEye.Item1.Width * 0.8),
-                (int)(Game.Textures.DemonEye.Item1.Height * 0.8)
+                    BombarderGame.Instance.Textures.DemonEye.Item1.Height * 0.8 / 2
+                    +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                    BombarderGame.Instance.Player.Position.Y
+                ),
+                (int)(BombarderGame.Instance.Textures.DemonEye.Item1.Width * 0.8),
+                (int)(BombarderGame.Instance.Textures.DemonEye.Item1.Height * 0.8)
             ),
             Color.White
         );

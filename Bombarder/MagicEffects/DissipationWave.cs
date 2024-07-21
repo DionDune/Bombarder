@@ -41,13 +41,23 @@ public class DissipationWave : MagicEffect
         EnactDamage(Entities);
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
-        Game.SpriteBatch.Draw(
-            Game.Textures.WhiteCircle,
+        BombarderGame.Instance.SpriteBatch.Draw(
+            BombarderGame.Instance.Textures.WhiteCircle,
             new Rectangle(
-                (int)(Position.X - Radius + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X),
-                (int)(Position.Y - Radius + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y),
+                (int)(
+                    Position.X -
+                    Radius +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                    BombarderGame.Instance.Player.Position.X
+                ),
+                (int)(
+                    Position.Y -
+                    Radius +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                    BombarderGame.Instance.Player.Position.Y
+                ),
                 (int)Radius * 2,
                 (int)Radius * 2
             ),

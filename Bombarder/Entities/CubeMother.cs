@@ -76,7 +76,7 @@ public class CubeMother : Entity
 
     public void EnactSpawn()
     {
-        if (NextSpawnFrame != BombarderGame.GameTick && BombarderGame.GameTick <= NextSpawnFrame)
+        if (NextSpawnFrame != BombarderGame.Instance.GameTick && BombarderGame.Instance.GameTick <= NextSpawnFrame)
         {
             return;
         }
@@ -88,41 +88,41 @@ public class CubeMother : Entity
             Position.Y + SpawnDistance * (float)Math.Sin(SpawnAngle)
         );
 
-        //Red Cube
-        BombarderGame.EntitiesToAdd.Add(new RedCube
+        // Red Cube
+        BombarderGame.Instance.EntitiesToAdd.Add(new RedCube
         {
             Position = SpawnPoint.Copy()
         });
 
-        NextSpawnFrame = (uint)(BombarderGame.GameTick + BombarderGame.random.Next(SpawnIntervalMin, SpawnIntervalMax));
+        NextSpawnFrame = (uint)(BombarderGame.Instance.GameTick + BombarderGame.random.Next(SpawnIntervalMin, SpawnIntervalMax));
     }
 
-    public override void DrawEntity(BombarderGame Game)
+    public override void DrawEntity()
     {
         foreach (EntityBlock Block in Parts)
         {
             Color BlockColor = Block.Color;
-            Texture2D BlockTexture = Game.Textures.White;
+            Texture2D BlockTexture = BombarderGame.Instance.Textures.White;
             if (Block.Textures != null)
             {
                 BlockColor = Color.White;
                 BlockTexture = Block.Textures.First();
             }
 
-            Game.SpriteBatch.Draw(
+            BombarderGame.Instance.SpriteBatch.Draw(
                 BlockTexture,
                 new Rectangle(
                     (int)(
                         Position.X +
                         Block.Offset.X +
-                        Game.Graphics.PreferredBackBufferWidth / 2F -
-                        Game.Player.Position.X
+                        BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                        BombarderGame.Instance.Player.Position.X
                     ),
                     (int)(
                         Position.Y +
                         Block.Offset.Y +
-                        Game.Graphics.PreferredBackBufferHeight / 2F -
-                        Game.Player.Position.Y
+                        BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                        BombarderGame.Instance.Player.Position.Y
                     ),
                     Block.Width,
                     Block.Height

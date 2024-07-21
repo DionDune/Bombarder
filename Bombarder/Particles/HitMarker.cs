@@ -16,13 +16,21 @@ public class HitMarker : Particle
         Duration = DefaultDuration;
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
-        Game.SpriteBatch.Draw(
-            Game.Textures.HitMarker,
+        BombarderGame.Instance.SpriteBatch.Draw(
+            BombarderGame.Instance.Textures.HitMarker,
             new Rectangle(
-                (int)(Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X),
-                (int)(Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y),
+                (int)(
+                    Position.X +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                    BombarderGame.Instance.Player.Position.X
+                ),
+                (int)(
+                    Position.Y +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                    BombarderGame.Instance.Player.Position.Y
+                ),
                 Width,
                 Height
             ),

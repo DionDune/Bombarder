@@ -13,15 +13,13 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Bombarder;
 
-public class BombarderGame : Game
+public sealed class BombarderGame : Game
 {
-    #region Variable Defenition
-
     public GraphicsDeviceManager Graphics { get; }
     public SpriteBatch SpriteBatch { get; private set; }
 
     public static readonly Random random = new();
-    public static uint GameTick;
+    public uint GameTick;
 
     List<UIPage> UIPages = new();
     UIPage UIPage_Current;
@@ -34,17 +32,17 @@ public class BombarderGame : Game
     InputStates Input;
     public Player Player { get; private set; }
 
-    public static readonly List<Entity> Entities = new();
-    public static readonly List<Entity> EntitiesToAdd = new();
-    public static readonly List<Particle> Particles = new();
-    List<MagicEffect> MagicEffects = new();
+    public readonly List<Entity> Entities = new();
+    public readonly List<Entity> EntitiesToAdd = new();
+    public readonly List<Particle> Particles = new();
+    public readonly List<MagicEffect> MagicEffects = new();
     List<MagicEffect> SelectedEffects = new();
 
-    #endregion
+    public static readonly BombarderGame Instance = new();
 
     #region Initialization
 
-    public BombarderGame()
+    private BombarderGame()
     {
         Graphics = new GraphicsDeviceManager(this);
         Graphics.PreferredBackBufferWidth = 1800;
@@ -462,77 +460,6 @@ public class BombarderGame : Game
 
     #endregion
 
-    /////////////////////////////////////////
-
-    #region Magic Interaction
-
-    private void CreateMagic(Vector2 Position, Type MagicType)
-    {
-        if (MagicType == typeof(StaticOrb))
-        {
-            if (Player.CheckUseMana(StaticOrb.ManaCost))
-            {
-                MagicEffects.Add(new StaticOrb(Position.Copy()));
-            }
-        }
-        else if (MagicType == typeof(NonStaticOrb))
-        {
-            // Calculating Angle
-            Vector2 Diff = Position - Player.Position;
-            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
-
-            MagicEffects.Add(new NonStaticOrb(Player.Position.Copy(), Angle));
-        }
-        else if (MagicType == typeof(DissipationWave))
-        {
-            if (Player.CheckUseMana(DissipationWave.ManaCost))
-            {
-                MagicEffects.Add(new DissipationWave(Position.Copy()));
-            }
-        }
-        else if (MagicType == typeof(ForceWave))
-        {
-            if (Player.CheckUseMana(ForceWave.ManaCost))
-            {
-                MagicEffects.Add(new ForceWave(Position.Copy()));
-            }
-        }
-        else if (MagicType == typeof(ForceContainer))
-        {
-            if (Player.CheckUseMana(ForceContainer.ManaCost))
-            {
-                MagicEffects.Add(new ForceContainer(Player.Position.Copy(), Position.Copy()));
-            }
-        }
-        else if (MagicType == typeof(WideLaser))
-        {
-            //Calculating Angle
-            Vector2 Diff = Position - Player.Position;
-            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
-
-            MagicEffects.Add(new WideLaser(Player.Position.Copy(), Angle));
-        }
-        else if (MagicType == typeof(PlayerTeleport))
-        {
-            if (Player.CheckUseMana(PlayerTeleport.ManaCost))
-            {
-                MagicEffects.Add(new PlayerTeleport(Player.Position.Copy(), Position));
-            }
-        }
-    }
-
-    private void EnactMagic()
-    {
-        foreach (MagicEffect Effect in MagicEffects)
-        {
-            Effect.EnactEffect(Player, Entities, GameTick);
-        }
-    }
-
-    #endregion
-
-    /////////////////////////////////////////
-
     #region UserInput
 
     #region Mouse
@@ -610,7 +537,7 @@ public class BombarderGame : Game
 
                 if (!UIClicked)
                 {
-                    CreateMagic(
+                    Player.CreateMagic(
                         new Vector2(
                             Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                             Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
@@ -634,7 +561,7 @@ public class BombarderGame : Game
             {
                 if (true)
                 {
-                    CreateMagic(
+                    Player.CreateMagic(
                         new Vector2(
                             Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                             Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
@@ -645,7 +572,7 @@ public class BombarderGame : Game
                 }
                 else
                 {
-                    CreateMagic(
+                    Player.CreateMagic(
                         new Vector2(
                             Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                             Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
@@ -691,7 +618,7 @@ public class BombarderGame : Game
         {
             if (!Input.IsClickingMiddle)
             {
-                CreateMagic(Player.Position.Copy(), typeof(DissipationWave));
+                Player.CreateMagic(Player.Position.Copy(), typeof(DissipationWave));
             }
 
             Input.IsClickingMiddle = true;
@@ -752,27 +679,29 @@ public class BombarderGame : Game
             //Magic Creation
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
             {
-                CreateMagic(Player.Position.Copy(), typeof(ForceWave));
+                Player.CreateMagic(Player.Position.Copy(), typeof(ForceWave));
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
             {
-                CreateMagic(
+                Player.CreateMagic(
                     new Vector2(
                         Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                         Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
                     ),
-                    typeof(ForceContainer));
+                    typeof(ForceContainer)
+                );
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
             {
-                CreateMagic(
+                Player.CreateMagic(
                     new Vector2(
                         Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                         Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
                     ),
-                    typeof(PlayerTeleport));
+                    typeof(PlayerTeleport)
+                );
             }
 
 
@@ -923,7 +852,7 @@ public class BombarderGame : Game
             Particle.SpawnParticles(Particles, Player.Position, Graphics, GameTick);
 
             //Magic Functions
-            EnactMagic();
+            MagicEffect.Update();
             MagicEffect.EnactDuration(MagicEffects);
         }
 
@@ -948,7 +877,7 @@ public class BombarderGame : Game
         //Particles
         foreach (var Particle in Particles.Where(Particle => !Particle.DrawLater))
         {
-            Particle.Draw(this);
+            Particle.Draw();
         }
 
 
@@ -971,13 +900,13 @@ public class BombarderGame : Game
             //Entities
             foreach (Entity Entity in Entities)
             {
-                Entity.Draw(this);
+                Entity.Draw();
             }
 
             //Magic
             foreach (MagicEffect Effect in MagicEffects)
             {
-                Effect.Draw(this);
+                Effect.Draw();
 
                 if (!Settings.ShowDamageRadii)
                 {
@@ -1126,7 +1055,7 @@ public class BombarderGame : Game
         //Later Particles
         foreach (var Particle in Particles.Where(Particle => Particle.DrawLater))
         {
-            Particle.Draw(this);
+            Particle.Draw();
         }
 
 

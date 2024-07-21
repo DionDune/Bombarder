@@ -47,20 +47,24 @@ public class TeleportLine : Particle
         EnactOpacityChange();
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
         Vector2 DrawPosition = new(
-            Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X,
-            Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y
+            Position.X +
+            BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+            BombarderGame.Instance.Player.Position.X,
+            Position.Y +
+            BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+            BombarderGame.Instance.Player.Position.Y
         );
-        Game.DrawLine(DrawPosition, Length, Direction, Colour * Opacity, Thickness);
+        BombarderGame.Instance.DrawLine(DrawPosition, Length, Direction, Colour * Opacity, Thickness);
     }
 
     private void EnactOpacityChange()
     {
         if (OpacityIncreasing)
         {
-            if (BombarderGame.GameTick % OpacityIncreaseInterval != 0)
+            if (BombarderGame.Instance.GameTick % OpacityIncreaseInterval != 0)
             {
                 return;
             }
@@ -74,7 +78,7 @@ public class TeleportLine : Particle
         }
         else
         {
-            if (BombarderGame.GameTick % OpacityDecreasingInterval != 0)
+            if (BombarderGame.Instance.GameTick % OpacityDecreasingInterval != 0)
             {
                 return;
             }
@@ -101,9 +105,13 @@ public class TeleportLine : Particle
         float AngleRadians = Angle * (float)(Math.PI / 180);
 
         int ParticleDistance = BombarderGame.random.Next(0, (int)Distance);
-        int X = (int)(Point1.X - ParticleDistance * (float)Math.Cos(AngleRadians)) +
+        int X = (int)(
+                    Point1.X - ParticleDistance * (float)Math.Cos(AngleRadians)
+                ) +
                 BombarderGame.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
-        int Y = (int)(Point1.Y - ParticleDistance * (float)Math.Sin(AngleRadians)) +
+        int Y = (int)(
+                    Point1.Y - ParticleDistance * (float)Math.Sin(AngleRadians)
+                ) +
                 BombarderGame.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
 
         Particles.Add(new TeleportLine(new Vector2(X, Y))
@@ -112,7 +120,8 @@ public class TeleportLine : Particle
             Duration = BombarderGame.random.Next(DurationMin, DurationMax),
             Length = BombarderGame.random.Next(LengthMin, LengthMax),
             Thickness = BombarderGame.random.Next(ThicknessMin, ThicknessMax),
-            Direction = (Angle + BombarderGame.random.Next(-AngleSpreadRange, AngleSpreadRange)) * (float)(Math.PI / 180),
+            Direction = (Angle + BombarderGame.random.Next(-AngleSpreadRange, AngleSpreadRange)) *
+                        (float)(Math.PI / 180F),
             Colour = Colours.First(),
             Opacity = OpacityDefault,
         });

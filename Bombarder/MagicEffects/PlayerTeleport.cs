@@ -41,7 +41,7 @@ public class PlayerTeleport : MagicEffect
         EnactDuration(Player);
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
     }
 
@@ -91,7 +91,7 @@ public class PlayerTeleport : MagicEffect
 
         for (int i = 0; i < BombarderGame.random.Next(ParticleCountMin, Count); i++)
         {
-            TeleportLine.SpawnBetween(BombarderGame.Particles, Position.Copy(), Goal.Copy());
+            TeleportLine.SpawnBetween(BombarderGame.Instance.Particles, Position.Copy(), Goal.Copy());
         }
     }
 }

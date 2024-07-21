@@ -60,7 +60,7 @@ public class Spider : Entity
 
     public void EnactJump(Player Player)
     {
-        if (NextJumpFrame > BombarderGame.GameTick)
+        if (NextJumpFrame > BombarderGame.Instance.GameTick)
         {
             return;
         }
@@ -75,8 +75,9 @@ public class Spider : Entity
         Angle = (float)Math.Atan2(Diff.Y, Diff.X);
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
-            ? BombarderGame.GameTick + (uint)BombarderGame.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
-            : BombarderGame.GameTick + (uint)BombarderGame.random.Next(JumpIntervalMin, JumpIntervalMax);
+            ? BombarderGame.Instance.GameTick +
+              (uint)BombarderGame.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
+            : BombarderGame.Instance.GameTick + (uint)BombarderGame.random.Next(JumpIntervalMin, JumpIntervalMax);
     }
 
     public void EnactVelocity(Player Player)
@@ -101,7 +102,7 @@ public class Spider : Entity
 
     public void EnactDamage(Player Player)
     {
-        if (BombarderGame.GameTick - LastDamageFrame < DamageInterval)
+        if (BombarderGame.Instance.GameTick - LastDamageFrame < DamageInterval)
         {
             return;
         }
@@ -154,25 +155,25 @@ public class Spider : Entity
         }
 
         Player.GiveDamage(Damage);
-        LastDamageFrame = BombarderGame.GameTick;
+        LastDamageFrame = BombarderGame.Instance.GameTick;
     }
 
-    public override void DrawEntity(BombarderGame Game)
+    public override void DrawEntity()
     {
-        Game.SpriteBatch.Draw(
-            Game.Textures.White,
+        BombarderGame.Instance.SpriteBatch.Draw(
+            BombarderGame.Instance.Textures.White,
             new Rectangle(
                 (int)(
                     Position.X +
                     Parts[0].Offset.X +
-                    Game.Graphics.PreferredBackBufferWidth / 2F -
-                    Game.Player.Position.X
+                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                    BombarderGame.Instance.Player.Position.X
                 ),
                 (int)(
                     Position.Y +
                     Parts[0].Offset.Y +
-                    Game.Graphics.PreferredBackBufferHeight / 2F -
-                    Game.Player.Position.Y
+                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                    BombarderGame.Instance.Player.Position.Y
                 ),
                 Parts[0].Width,
                 Parts[0].Height

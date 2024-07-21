@@ -48,9 +48,9 @@ public class WideLaser : MagicEffect
         CreateParticles();
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
-        if (!Game.Settings.ShowDamageRadii)
+        if (!BombarderGame.Instance.Settings.ShowDamageRadii)
         {
             return;
         }
@@ -60,25 +60,25 @@ public class WideLaser : MagicEffect
         // float RightAngleRadians = (Angle + 90) * (float)(Math.PI / 180);
         //
         // Vector2 LeftLine = new Vector2(
-        //     Game.Graphics.PreferredBackBufferWidth / 2F - Width / 2F * (float)Math.Cos(RightAngleRadians),
-        //     Game.Graphics.PreferredBackBufferHeight / 2F - Width / 2F * (float)Math.Sin(RightAngleRadians)
+        //     BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F - Width / 2F * (float)Math.Cos(RightAngleRadians),
+        //     BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F - Width / 2F * (float)Math.Sin(RightAngleRadians)
         // );
         // LeftLine.X += InitialDistance * (float)Math.Cos(AngleRadians);
         // LeftLine.Y += InitialDistance * (float)Math.Sin(AngleRadians);
         // Vector2 RightLine = new Vector2(
-        //     Game.Graphics.PreferredBackBufferWidth / 2F + (Width / 2F - 5) * (float)Math.Cos(RightAngleRadians),
-        //     Game.Graphics.PreferredBackBufferHeight / 2F + (Width / 2F - 5) * (float)Math.Sin(RightAngleRadians)
+        //     BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F + (Width / 2F - 5) * (float)Math.Cos(RightAngleRadians),
+        //     BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F + (Width / 2F - 5) * (float)Math.Sin(RightAngleRadians)
         // );
         // RightLine.X += InitialDistance * (float)Math.Cos(AngleRadians);
         // RightLine.Y += InitialDistance * (float)Math.Sin(AngleRadians);
         //
         //
-        // Game.DrawRotatedTexture(LeftLine, Game.Textures.White, Width, Range, Angle + 90, false, PrimaryColor * Opacity);
-        // Game.DrawRotatedTexture(LeftLine, Game.Textures.White, 5, Range, Angle + 90, false, SecondaryColor);
-        // Game.DrawRotatedTexture(RightLine, Game.Textures.White, 5, Range, Angle + 90, false, SecondaryColor);
+        // BombarderGame.Instance.DrawRotatedTexture(LeftLine, BombarderGame.Instance.Textures.White, Width, Range, Angle + 90, false, PrimaryColor * Opacity);
+        // BombarderGame.Instance.DrawRotatedTexture(LeftLine, BombarderGame.Instance.Textures.White, 5, Range, Angle + 90, false, SecondaryColor);
+        // BombarderGame.Instance.DrawRotatedTexture(RightLine, BombarderGame.Instance.Textures.White, 5, Range, Angle + 90, false, SecondaryColor);
         //
-        // float Scale = (float)Width / Game.Textures.HalfWhiteCirlce.Width;
-        // Game.DrawRotatedTexture(LeftLine, Game.Textures.HalfWhiteCirlce, Scale, Scale, Angle + 90, true, PrimaryColor * Opacity);
+        // float Scale = (float)Width / BombarderGame.Instance.Textures.HalfWhiteCirlce.Width;
+        // BombarderGame.Instance.DrawRotatedTexture(LeftLine, BombarderGame.Instance.Textures.HalfWhiteCirlce, Scale, Scale, Angle + 90, true, PrimaryColor * Opacity);
 
         // New accounting for Laser Spread
         float TrueSpread = Spread * TrueSpreadMultiplier;
@@ -87,13 +87,13 @@ public class WideLaser : MagicEffect
         float AngleRadiansRight = (Angle + TrueSpread) * (float)(Math.PI / 180);
 
         Vector2 Start = new(
-            Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X,
-            Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y
+            Position.X + BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F - BombarderGame.Instance.Player.Position.X,
+            Position.Y + BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F - BombarderGame.Instance.Player.Position.Y
         );
 
-        Game.DrawLine(Start, Range, AngleRadiansLeft, SecondaryColor, 10);
-        Game.DrawLine(Start, Range, AngleRadians, MarkerColor, 10);
-        Game.DrawLine(Start, Range, AngleRadiansRight, SecondaryColor, 10);
+        BombarderGame.Instance.DrawLine(Start, Range, AngleRadiansLeft, SecondaryColor, 10);
+        BombarderGame.Instance.DrawLine(Start, Range, AngleRadians, MarkerColor, 10);
+        BombarderGame.Instance.DrawLine(Start, Range, AngleRadiansRight, SecondaryColor, 10);
     }
 
     private void EnactDamage(Player Player, List<Entity> Entities, uint Tick)
@@ -158,7 +158,7 @@ public class WideLaser : MagicEffect
 
         // Central Laser
         AngleRadians = (Angle + (float)BombarderGame.random.Next(-Spread * 10, Spread * 10) / 10) * (float)(Math.PI / 180);
-        BombarderGame.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
+        BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
         {
             HasDuration = true,
             Duration = LaserLine.DurationMin,
@@ -168,13 +168,13 @@ public class WideLaser : MagicEffect
             Colour = LaserLine.CentralLaserColor
         });
 
-        //Others
+        // Others
         for (int i = 0; i < Count; i++)
         {
             AngleRadians = (Angle + BombarderGame.random.Next(-LaserLine.AngleSpreadRange, LaserLine.AngleSpreadRange)) *
                            (float)(Math.PI / 180);
 
-            BombarderGame.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
+            BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
             {
                 HasDuration = true,
                 Duration = BombarderGame.random.Next(LaserLine.DurationMin, LaserLine.DurationMax)

@@ -43,13 +43,17 @@ public class LaserLine : Particle
         EnactMovement();
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
         Vector2 DrawPosition = new(
-            Position.X + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X,
-            Position.Y + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y
+            Position.X +
+            BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+            BombarderGame.Instance.Player.Position.X,
+            Position.Y +
+            BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+            BombarderGame.Instance.Player.Position.Y
         );
-        Game.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
+        BombarderGame.Instance.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
     }
 
     public void EnactMovement()

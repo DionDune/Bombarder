@@ -37,13 +37,23 @@ public class ForceWave : MagicEffect
         EnactDuration();
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
-        Game.SpriteBatch.Draw(
-            Game.Textures.WhiteCircle,
+        BombarderGame.Instance.SpriteBatch.Draw(
+            BombarderGame.Instance.Textures.WhiteCircle,
             new Rectangle(
-                (int)(Position.X - Radius + Game.Graphics.PreferredBackBufferWidth / 2F - Game.Player.Position.X),
-                (int)(Position.Y - Radius + Game.Graphics.PreferredBackBufferHeight / 2F - Game.Player.Position.Y),
+                (int)(
+                    Position.X -
+                    Radius +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                    BombarderGame.Instance.Player.Position.X
+                ),
+                (int)(
+                    Position.Y -
+                    Radius +
+                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                    BombarderGame.Instance.Player.Position.Y
+                ),
                 (int)Radius * 2,
                 (int)Radius * 2
             ),
@@ -52,13 +62,23 @@ public class ForceWave : MagicEffect
 
         for (int i = 0; i < BorderWidth; i++)
         {
-            Game.SpriteBatch.Draw(
-                Game.Textures.HollowCircle,
+            BombarderGame.Instance.SpriteBatch.Draw(
+                BombarderGame.Instance.Textures.HollowCircle,
                 new Rectangle(
-                    (int)(Position.X - Radius + i + Game.Graphics.PreferredBackBufferWidth / 2F -
-                          Game.Player.Position.X),
-                    (int)(Position.Y - Radius + i + Game.Graphics.PreferredBackBufferHeight / 2F -
-                          Game.Player.Position.Y),
+                    (int)(
+                        Position.X -
+                        Radius +
+                        i +
+                        BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                        BombarderGame.Instance.Player.Position.X
+                    ),
+                    (int)(
+                        Position.Y -
+                        Radius +
+                        i +
+                        BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                        BombarderGame.Instance.Player.Position.Y
+                    ),
                     (int)Radius * 2 - i * 2,
                     (int)Radius * 2 - i * 2
                 ),

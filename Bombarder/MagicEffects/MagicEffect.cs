@@ -24,6 +24,18 @@ public abstract class MagicEffect
     public List<MagicEffectPiece> Pieces { get; set; }
 
 
+    public static void Update()
+    {
+        foreach (MagicEffect Effect in BombarderGame.Instance.MagicEffects)
+        {
+            Effect.EnactEffect(
+                BombarderGame.Instance.Player,
+                BombarderGame.Instance.Entities,
+                BombarderGame.Instance.GameTick
+            );
+        }
+    }
+
     public static void EnactDuration(List<MagicEffect> Effects)
     {
         List<MagicEffect> DeadEffects = new List<MagicEffect>();
@@ -126,5 +138,5 @@ public abstract class MagicEffect
     }
 
     public abstract void EnactEffect(Player Player, List<Entity> Entities, uint GameTick);
-    public abstract void Draw(BombarderGame Game);
+    public abstract void Draw();
 }

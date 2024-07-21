@@ -50,22 +50,22 @@ public class ForceContainer : MagicEffect
         EnactDuration();
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
-        Game.SpriteBatch.Draw(
-            Game.Textures.WhiteCircle,
+        BombarderGame.Instance.SpriteBatch.Draw(
+            BombarderGame.Instance.Textures.WhiteCircle,
             new Rectangle(
                 (int)(
                     Position.X -
                     CurrentRadius +
-                    Game.Graphics.PreferredBackBufferWidth / 2F -
-                    Game.Player.Position.X
+                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                    BombarderGame.Instance.Player.Position.X
                 ),
                 (int)(
                     Position.Y -
                     CurrentRadius +
-                    Game.Graphics.PreferredBackBufferHeight / 2F -
-                    Game.Player.Position.Y
+                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                    BombarderGame.Instance.Player.Position.Y
                 ),
                 (int)CurrentRadius * 2,
                 (int)CurrentRadius * 2

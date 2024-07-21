@@ -7,7 +7,6 @@ namespace Bombarder.MagicEffects;
 
 public class NonStaticOrb : MagicEffect
 {
-    const int Damage = 4;
     public const int DefaultDuration = 150;
     public float Angle { get; set; }
     public float Velocity { get; set; }
@@ -23,17 +22,14 @@ public class NonStaticOrb : MagicEffect
 
     public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
     {
-        Point EffectStart;
-        Point EffectEnd;
-
         //EnactVelocity
         EnactVelocity();
 
         //Enact Damage
         foreach (Entity Entity in Entities)
         {
-            EffectStart = Position.ToPoint() + RadiusOffset;
-            EffectEnd = EffectStart + RadiusSize;
+            Point EffectStart = Position.ToPoint() + RadiusOffset;
+            Point EffectEnd = EffectStart + RadiusSize;
 
             if (CheckCollision(EffectStart, EffectEnd, Entity))
             {
@@ -42,7 +38,7 @@ public class NonStaticOrb : MagicEffect
         }
     }
 
-    public override void Draw(BombarderGame Game)
+    public override void Draw()
     {
     }
 

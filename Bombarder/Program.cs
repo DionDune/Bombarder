@@ -1,4 +1,3 @@
 ﻿using Bombarder;
 
-using var Game = new BombarderGame();
-Game.Run();
+BombarderGame.Instance.Run();

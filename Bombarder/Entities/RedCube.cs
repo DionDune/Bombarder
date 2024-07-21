@@ -141,41 +141,43 @@ public class RedCube : Entity
                     ) *
                     (float)Math.PI / 180F;
 
-                BombarderGame.Particles.Add(new RedCubeSegment(new Vector2(ParticleX, ParticleY), Angle)
-                {
-                    HasDuration = true
-                });
+                BombarderGame.Instance.Particles.Add(
+                    new RedCubeSegment(new Vector2(ParticleX, ParticleY), Angle)
+                    {
+                        HasDuration = true
+                    }
+                );
             }
         }
     }
 
-    public override void DrawEntity(BombarderGame Game)
+    public override void DrawEntity()
     {
         foreach (EntityBlock Block in Parts)
         {
             Color BlockColor = Block.Color;
-            Texture2D BlockTexture = Game.Textures.White;
+            Texture2D BlockTexture = BombarderGame.Instance.Textures.White;
             if (Block.Textures != null)
             {
                 BlockColor = Color.White;
                 BlockTexture = Block.Textures.First();
             }
 
-            Game.SpriteBatch.Draw(
+            BombarderGame.Instance.SpriteBatch.Draw(
                 BlockTexture,
                 new Rectangle(
                     (int)(
                         Position.X +
                         Block.Offset.X +
-                        Game.Graphics.PreferredBackBufferWidth / 2F -
-                        Game.Player.Position.X
+                        BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
+                        BombarderGame.Instance.Player.Position.X
                     ),
                     (int)
                     (
                         Position.Y +
                         Block.Offset.Y +
-                        Game.Graphics.PreferredBackBufferHeight / 2F -
-                        Game.Player.Position.Y
+                        BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
+                        BombarderGame.Instance.Player.Position.Y
                     ),
                     Block.Width,
                     Block.Height
