@@ -1,3 +1,4 @@
-﻿
-using var game = new Bombarder.BombarderGame();
-game.Run();
+﻿using Bombarder;
+
+using var Game = new BombarderGame();
+Game.Run();

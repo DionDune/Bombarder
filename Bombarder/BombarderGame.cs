@@ -4,6 +4,8 @@ using System.Linq;
 using Bombarder.Entities;
 using Bombarder.MagicEffects;
 using Bombarder.Particles;
+using Bombarder.UI;
+using Bombarder.UI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,7 +20,7 @@ public class BombarderGame : Game
     public GraphicsDeviceManager Graphics { get; }
     public SpriteBatch SpriteBatch { get; private set; }
 
-    public static Random random = new();
+    public static readonly Random random = new();
     public static uint GameTick;
 
     List<UIPage> UIPages = new();
@@ -59,7 +61,7 @@ public class BombarderGame : Game
 
         UIPages = UIPage.GeneratePages();
         UIPage_Current = UIPages[0];
-        GameState = "Start";
+        GameState = "StartPage";
         UIState = "Default";
 
         Textures = new Textures();
@@ -129,37 +131,37 @@ public class BombarderGame : Game
     {
         Player.SetDefaultStats(Player);
         Player.SetRandomLocalPosition(Player, 500, 1000);
-        UI_ChangePage("Play");
+        UI_ChangePage("PlayPage");
     }
 
     public void ResumeGame()
     {
-        UI_ChangePage("Play");
+        UI_ChangePage("PlayPage");
     }
 
     public void StartNewGame()
     {
         ResetGame();
-        UI_ChangePage("Play");
+        UI_ChangePage("PlayPage");
     }
 
     private void TogglePause()
     {
         switch (GameState)
         {
-            case "Play":
-                UI_ChangePage("Pause");
+            case "PlayPage":
+                UI_ChangePage("PausePage");
                 break;
-            case "Pause":
-            case "Settings":
-                UI_ChangePage("Play");
+            case "PausePage":
+            case "SettingsPage":
+                UI_ChangePage("PlayPage");
                 break;
         }
     }
 
     public void OpenSettings()
     {
-        UI_ChangePage("Settings");
+        UI_ChangePage("SettingsPage");
     }
 
     #endregion
@@ -192,8 +194,8 @@ public class BombarderGame : Game
         {
             return;
         }
-
-        foreach (var Page in UIPages.Where(page => page.Type == GameState))
+        
+        foreach (var Page in UIPages.Where(Page => Page.GetType().Name == GameState))
         {
             UIPage_Current = Page;
         }
@@ -368,7 +370,7 @@ public class BombarderGame : Game
 
         Player.IsDead = false;
         Player.Health = Player.HealthMax;
-        UI_ChangePage("Death");
+        UI_ChangePage("DeathPage");
     }
 
     #endregion
@@ -554,12 +556,12 @@ public class BombarderGame : Game
 
         foreach (UIItem Item in UIPage_Current.UIItems)
         {
-            (Point, Point) ElementBounds = Item.getElementBounds(Graphics);
+            (Point, Point) ElementBounds = Item.GetElementBounds(Graphics);
             Point TopLeft = ElementBounds.Item1;
             Point BottomRight = ElementBounds.Item2;
 
 
-            if (Item.Type != "Button")
+            if (Item is not ButtonUIElement)
             {
                 continue;
             }
@@ -576,7 +578,7 @@ public class BombarderGame : Game
         }
     }
 
-    private void CheckMouseClick()
+    public void CheckMouseClick()
     {
         //Left Click
         if (Mouse.GetState().LeftButton == ButtonState.Pressed)
@@ -589,7 +591,7 @@ public class BombarderGame : Game
                 {
                     foreach (UIItem Item in UIPage_Current.UIItems)
                     {
-                        (Point, Point) ElementBounds = Item.getElementBounds(Graphics);
+                        (Point, Point) ElementBounds = Item.GetElementBounds(Graphics);
                         Point TopLeft = ElementBounds.Item1;
                         Point BottomRight = ElementBounds.Item2;
 
@@ -603,7 +605,7 @@ public class BombarderGame : Game
 
                         UIClicked = true;
 
-                        if (Item.Type == "Button")
+                        if (Item is ButtonUIElement)
                         {
                             UserControl_ButtonPress(Item.Data);
                         }
@@ -722,7 +724,7 @@ public class BombarderGame : Game
             TogglePause();
         }
 
-        if (GameState == "Play")
+        if (GameState == "PlayPage")
         {
             //Movement
             PlayerMovement_InputHandler(Keys_NewlyPressed);
@@ -891,7 +893,7 @@ public class BombarderGame : Game
         KeyboardHandler();
         MouseHandler();
 
-        if (GameState == "Play")
+        if (GameState == "PlayPage")
         {
             //Player Interaction
             PlayerMovement_EnactMomentum();
@@ -937,13 +939,13 @@ public class BombarderGame : Game
 
 
         //Grid
-        if (GameState == "Play" || Settings.TranceMode)
+        if (GameState == "PlayPage" || Settings.TranceMode)
         {
             DrawGrid();
         }
 
         //Ingame
-        if (GameState == "Play")
+        if (GameState == "PlayPage")
         {
             //Player
             SpriteBatch.Draw(Textures.White, new Rectangle(
@@ -1014,7 +1016,7 @@ public class BombarderGame : Game
             //Health Bar
             if (!Player.HealthInfinite && Player.Health < Player.HealthMax)
             {
-                Point OrientPos = UIItem.GetOritentationPosition(Graphics, Player.ManaBarScreenOrientation);
+                Point OrientPos = UIItem.GetOrientationPosition(Graphics, Player.ManaBarScreenOrientation);
                 float HealthPercent = (float)Player.Health / Player.HealthMax;
 
                 Point HealthBarContainerPos = new Point(OrientPos.X + Player.HealthBarOffset.X,
@@ -1037,7 +1039,7 @@ public class BombarderGame : Game
             //Mana Bar
             if (!Player.ManaInfinite && Player.Mana < Player.ManaMax)
             {
-                Point OrientPos = UIItem.GetOritentationPosition(Graphics, Player.ManaBarScreenOrientation);
+                Point OrientPos = UIItem.GetOrientationPosition(Graphics, Player.ManaBarScreenOrientation);
                 float ManaPercent = (float)Player.Mana / Player.ManaMax;
 
                 Point ManaContainerPos = new Point(OrientPos.X + Player.ManaBarOffset.X,
@@ -1063,11 +1065,7 @@ public class BombarderGame : Game
         }
 
 
-        //UI
-        foreach (var Page in UIPages.Where(Page => Page.Type == GameState))
-        {
-            UIPage.RenderElements(SpriteBatch, Graphics, Textures, Page.UIItems);
-        }
+        UIPage_Current.RenderElements(SpriteBatch, Graphics, Textures);
 
         //Cursor
         SpriteBatch.Draw(Textures.Cursor, new Rectangle(
