@@ -35,13 +35,13 @@ namespace Bombarder
         public const int ManaRegainDefault = 3;
         public int ManaRegain = ManaRegainDefault;
 
-        public Point ManaBarDimentions { get; set; }
+        public Point ManaBarDimensions { get; set; }
         public Orientation ManaBarScreenOrientation { get; set; }
         public Point ManaBarOffset { get; set; }
         public bool ManaBarHorizontalFill { get; set; }
         public bool ManaBarVisible { get; set; }
 
-        public Point HealthBarDimentions { get; set; }
+        public Point HealthBarDimensions { get; set; }
         public string HealthBarScreenOrientation { get; set; }
         public Point HealthBarOffset { get; set; }
         public bool HealthBarHorizontalFill { get; set; }
@@ -70,12 +70,12 @@ namespace Bombarder
             Slowdown = 0.75F;
 
 
-            ManaBarDimentions = new Point(25, 450);
+            ManaBarDimensions = new Point(25, 450);
             ManaBarScreenOrientation = Orientation.BOTTOM_LEFT;
             ManaBarOffset = new Point(20, -20);
             ManaBarHorizontalFill = false;
             ManaBarVisible = true;
-            HealthBarDimentions = new Point(25, 450);
+            HealthBarDimensions = new Point(25, 450);
             ManaBarScreenOrientation = Orientation.BOTTOM_LEFT;
             HealthBarOffset = new Point(75, -20);
             HealthBarVisible = true;
@@ -97,7 +97,7 @@ namespace Bombarder
         public static void SetRandomLocalPosition(Player Player, int MinDistance, int MaxDistance)
         {
             int Angle = BombarderGame.random.Next(0, 360);
-            float AngleRadians = (float)Angle * (float)(Math.PI / 180);
+            float AngleRadians = Angle * (float)(Math.PI / 180);
             int Distance = BombarderGame.random.Next(MinDistance, MaxDistance);
 
             Player.Position += new Vector2(

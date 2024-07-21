@@ -32,8 +32,8 @@ public class NonStaticOrb : MagicEffect
         //Enact Damage
         foreach (Entity Entity in Entities)
         {
-            EffectStart = new Point((int)Position.X + RadiusOffset.X, (int)Position.Y + RadiusOffset.Y);
-            EffectEnd = new Point(EffectStart.X + RadiusSize.X, EffectStart.Y + RadiusSize.Y);
+            EffectStart = Position.ToPoint() + RadiusOffset;
+            EffectEnd = EffectStart + RadiusSize;
 
             if (CheckCollision(EffectStart, EffectEnd, Entity))
             {

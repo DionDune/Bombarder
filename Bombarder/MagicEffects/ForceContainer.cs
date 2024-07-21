@@ -78,23 +78,22 @@ public class ForceContainer : MagicEffect
     {
         if (!DestinationReached)
         {
-            float XDiff = Destination.X - Position.X;
-            float YDiff = Destination.Y - Position.Y;
-            float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-            float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
+            Vector2 Diff = Destination - Position;
+            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
             float AngleRadians = Angle * (float)(Math.PI / 180);
 
             if (Distance <= MovementSpeed)
             {
-                Position = new Vector2(Destination.X, Destination.Y);
+                Position = Destination.Copy();
                 DestinationReached = true;
                 HasDuration = HasDuration_DestinationReached;
             }
             else
             {
                 Position += new Vector2(
-                    (int)(MovementSpeed * (float)Math.Cos(AngleRadians)),
-                    (int)(MovementSpeed * (float)Math.Sin(AngleRadians))
+                    MovementSpeed * (float)Math.Cos(AngleRadians),
+                    MovementSpeed * (float)Math.Sin(AngleRadians)
                 );
             }
         }
@@ -118,17 +117,12 @@ public class ForceContainer : MagicEffect
             return;
         }
 
-        float XDiff;
-        float YDiff;
-        float Distance;
 
-
-        //Store new entities in Container list
+        // Store new entities in Container list
         foreach (var Entity in Entities.Where(Entity => !ContainedEntities.Contains(Entity)))
         {
-            XDiff = Math.Abs(Position.X - Entity.Position.X);
-            YDiff = Math.Abs(Position.Y - Entity.Position.Y);
-            Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+            Vector2 Diff = Utils.Abs(Position - Entity.Position);
+            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
 
             if (Distance <= CurrentRadius)
             {
@@ -136,21 +130,19 @@ public class ForceContainer : MagicEffect
             }
         }
 
-        //Keep all contained entities within confines
+        // Keep all contained entities within confines
         foreach (Entity Entity in ContainedEntities)
         {
-            XDiff = Math.Abs(Position.X - Entity.Position.X);
-            YDiff = Math.Abs(Position.Y - Entity.Position.Y);
-            Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+            Vector2 Diff = Utils.Abs(Position - Entity.Position);
+            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
 
             if (Distance < CurrentRadius - EdgeEffectWith)
             {
                 continue;
             }
 
-            float xDiff = Entity.Position.X - Position.X;
-            float yDiff = Entity.Position.Y - Position.Y;
-            float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+            Vector2 InverseDiff = Entity.Position - Position;
+            float Angle = (float)(Math.Atan2(InverseDiff.Y, InverseDiff.X) * 180.0 / Math.PI);
             float AngleRadians = Angle * (float)(Math.PI / 180);
 
             Vector2 PositionChange = new Vector2(

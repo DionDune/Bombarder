@@ -194,7 +194,7 @@ public class BombarderGame : Game
         {
             return;
         }
-        
+
         foreach (var Page in UIPages.Where(Page => Page.GetType().Name == GameState))
         {
             UIPage_Current = Page;
@@ -466,61 +466,57 @@ public class BombarderGame : Game
 
     #region Magic Interaction
 
-    private void CreateMagic(int X, int Y, Type MagicType)
+    private void CreateMagic(Vector2 Position, Type MagicType)
     {
         if (MagicType == typeof(StaticOrb))
         {
             if (Player.CheckUseMana(StaticOrb.ManaCost))
             {
-                MagicEffects.Add(new StaticOrb(new Vector2(X, Y)));
+                MagicEffects.Add(new StaticOrb(Position.Copy()));
             }
         }
         else if (MagicType == typeof(NonStaticOrb))
         {
-            //Calculating Angle
-            float XDiff = X - Player.Position.X;
-            float YDiff = Y - Player.Position.Y;
-            float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
+            // Calculating Angle
+            Vector2 Diff = Position - Player.Position;
+            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
 
-            MagicEffects.Add(new NonStaticOrb(new Vector2(Player.Position.X, Player.Position.Y), Angle));
+            MagicEffects.Add(new NonStaticOrb(Player.Position.Copy(), Angle));
         }
         else if (MagicType == typeof(DissipationWave))
         {
             if (Player.CheckUseMana(DissipationWave.ManaCost))
             {
-                MagicEffects.Add(new DissipationWave(new Vector2(X, Y)));
+                MagicEffects.Add(new DissipationWave(Position.Copy()));
             }
         }
         else if (MagicType == typeof(ForceWave))
         {
             if (Player.CheckUseMana(ForceWave.ManaCost))
             {
-                MagicEffects.Add(new ForceWave(new Vector2(X, Y)));
+                MagicEffects.Add(new ForceWave(Position.Copy()));
             }
         }
         else if (MagicType == typeof(ForceContainer))
         {
             if (Player.CheckUseMana(ForceContainer.ManaCost))
             {
-                MagicEffects.Add(new ForceContainer(new Vector2(Player.Position.X, Player.Position.Y),
-                    new Vector2(X, Y)));
+                MagicEffects.Add(new ForceContainer(Player.Position.Copy(), Position.Copy()));
             }
         }
         else if (MagicType == typeof(WideLaser))
         {
             //Calculating Angle
-            float XDiff = X - Player.Position.X;
-            float YDiff = Y - Player.Position.Y;
-            float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
+            Vector2 Diff = Position - Player.Position;
+            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
 
-            MagicEffects.Add(new WideLaser(new Vector2((int)Player.Position.X, (int)Player.Position.Y), Angle));
+            MagicEffects.Add(new WideLaser(Player.Position.Copy(), Angle));
         }
         else if (MagicType == typeof(PlayerTeleport))
         {
             if (Player.CheckUseMana(PlayerTeleport.ManaCost))
             {
-                MagicEffects.Add(new PlayerTeleport(new Vector2(Player.Position.X, Player.Position.Y),
-                    new Vector2(X, Y)));
+                MagicEffects.Add(new PlayerTeleport(Player.Position.Copy(), Position));
             }
         }
     }
@@ -615,8 +611,10 @@ public class BombarderGame : Game
                 if (!UIClicked)
                 {
                     CreateMagic(
-                        (int)(Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X),
-                        (int)(Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y),
+                        new Vector2(
+                            Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                            Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                        ),
                         typeof(StaticOrb)
                     );
                 }
@@ -637,8 +635,10 @@ public class BombarderGame : Game
                 if (true)
                 {
                     CreateMagic(
-                        (int)(Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X),
-                        (int)(Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y),
+                        new Vector2(
+                            Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                            Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                        ),
                         typeof(WideLaser)
                     );
                     SelectedEffects.Add(MagicEffects.Last());
@@ -646,8 +646,10 @@ public class BombarderGame : Game
                 else
                 {
                     CreateMagic(
-                        (int)(Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X),
-                        (int)(Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y),
+                        new Vector2(
+                            Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                            Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                        ),
                         typeof(NonStaticOrb)
                     );
                 }
@@ -658,11 +660,11 @@ public class BombarderGame : Game
                 {
                     foreach (WideLaser Effect in SelectedEffects.OfType<WideLaser>())
                     {
-                        float xDiff = Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F;
-                        float yDiff = Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F;
-                        float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+                        float XDiff = Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F;
+                        float YDiff = Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F;
+                        float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
                         Effect.Angle = Angle;
-                        Effect.Position = new Vector2((int)Player.Position.X, (int)Player.Position.Y);
+                        Effect.Position = Player.Position.Copy();
                     }
                 }
             }
@@ -689,7 +691,7 @@ public class BombarderGame : Game
         {
             if (!Input.IsClickingMiddle)
             {
-                CreateMagic((int)Player.Position.X, (int)Player.Position.Y, typeof(DissipationWave));
+                CreateMagic(Player.Position.Copy(), typeof(DissipationWave));
             }
 
             Input.IsClickingMiddle = true;
@@ -750,20 +752,26 @@ public class BombarderGame : Game
             //Magic Creation
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
             {
-                CreateMagic((int)Player.Position.X, (int)Player.Position.Y, typeof(ForceWave));
+                CreateMagic(Player.Position.Copy(), typeof(ForceWave));
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
             {
-                CreateMagic((int)(Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X),
-                    (int)(Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y),
+                CreateMagic(
+                    new Vector2(
+                        Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                        Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                    ),
                     typeof(ForceContainer));
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
             {
-                CreateMagic((int)(Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X),
-                    (int)(Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y),
+                CreateMagic(
+                    new Vector2(
+                        Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                        Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                    ),
                     typeof(PlayerTeleport));
             }
 
@@ -865,7 +873,13 @@ public class BombarderGame : Game
         SpriteBatch.Draw(Textures.White, point, null, Color, Angle, Origin, Scale, SpriteEffects.None, 0);
     }
 
-    public void DrawRotatedTexture(Vector2 Point, Texture2D Texture, float Width, float Height, float Angle, bool Centered,
+    public void DrawRotatedTexture(
+        Vector2 Point,
+        Texture2D Texture,
+        float Width,
+        float Height,
+        float Angle,
+        bool Centered,
         Color Color)
     {
         float AngleRadians = Angle * (float)(Math.PI / 180);
@@ -1019,21 +1033,46 @@ public class BombarderGame : Game
                 Point OrientPos = Player.ManaBarScreenOrientation.ToPoint(Graphics);
                 float HealthPercent = (float)Player.Health / Player.HealthMax;
 
-                Point HealthBarContainerPos = new Point(OrientPos.X + Player.HealthBarOffset.X,
-                    OrientPos.Y + Player.HealthBarOffset.Y - Player.HealthBarDimentions.Y);
-                Point HealthBarPos = new Point(OrientPos.X + Player.HealthBarOffset.X,
-                    OrientPos.Y + Player.HealthBarOffset.Y - (int)(Player.HealthBarDimentions.Y * HealthPercent));
+                Point HealthBarContainerPos = new Point(
+                    OrientPos.X + Player.HealthBarOffset.X - 2,
+                    OrientPos.Y + Player.HealthBarOffset.Y - Player.HealthBarDimensions.Y - 2
+                );
+                Point HealthBarPos = new Point(
+                    OrientPos.X + Player.HealthBarOffset.X,
+                    OrientPos.Y + Player.HealthBarOffset.Y - (int)(Player.HealthBarDimensions.Y * HealthPercent)
+                );
+                Point HealthBarDimensionsWithOffset = new Point(
+                    Player.HealthBarDimensions.X + 4,
+                    Player.HealthBarDimensions.Y + 4
+                );
 
+                SpriteBatch.Draw(
+                    Textures.White,
+                    new Rectangle(HealthBarContainerPos, HealthBarDimensionsWithOffset),
+                    Color.White * 0.3F
+                );
 
-                SpriteBatch.Draw(Textures.White, new Rectangle(HealthBarContainerPos.X - 2,
-                    HealthBarContainerPos.Y - 2,
-                    Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
-                UIPage.RenderOutline(SpriteBatch, Textures.White, Color.White, HealthBarContainerPos.X - 2,
-                    HealthBarContainerPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2,
-                    1F);
+                UIPage.RenderOutline(
+                    SpriteBatch,
+                    Textures.White,
+                    Color.White,
+                    HealthBarContainerPos,
+                    HealthBarDimensionsWithOffset.X,
+                    HealthBarDimensionsWithOffset.Y,
+                    2,
+                    1F
+                );
 
-                SpriteBatch.Draw(Textures.White, new Rectangle(HealthBarPos.X, HealthBarPos.Y,
-                    Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * HealthPercent)), Color.Red);
+                SpriteBatch.Draw(
+                    Textures.White,
+                    new Rectangle(
+                        HealthBarPos.X,
+                        HealthBarPos.Y,
+                        Player.HealthBarDimensions.X,
+                        (int)(Player.HealthBarDimensions.Y * HealthPercent)
+                    ),
+                    Color.Red
+                );
             }
 
             //Mana Bar
@@ -1042,19 +1081,45 @@ public class BombarderGame : Game
                 Point OrientPos = Player.ManaBarScreenOrientation.ToPoint(Graphics);
                 float ManaPercent = (float)Player.Mana / Player.ManaMax;
 
-                Point ManaContainerPos = new Point(OrientPos.X + Player.ManaBarOffset.X,
-                    OrientPos.Y + Player.ManaBarOffset.Y - Player.ManaBarDimentions.Y);
-                Point ManaBarPos = new Point(OrientPos.X + Player.ManaBarOffset.X,
-                    OrientPos.Y + Player.ManaBarOffset.Y - (int)(Player.ManaBarDimentions.Y * ManaPercent));
+                Point ManaContainerPos = new Point(
+                    OrientPos.X + Player.ManaBarOffset.X - 2,
+                    OrientPos.Y + Player.ManaBarOffset.Y - Player.ManaBarDimensions.Y - 2
+                );
+                Point ManaBarPos = new Point(
+                    OrientPos.X + Player.ManaBarOffset.X,
+                    OrientPos.Y + Player.ManaBarOffset.Y - (int)(Player.ManaBarDimensions.Y * ManaPercent)
+                );
+                Point ManaBarDimensionsWithOffset = new Point(
+                    Player.ManaBarDimensions.X + 4,
+                    Player.ManaBarDimensions.Y + 4
+                );
 
+                SpriteBatch.Draw(
+                    Textures.White,
+                    new Rectangle(ManaContainerPos, ManaBarDimensionsWithOffset),
+                    Color.White * 0.3F
+                );
+                UIPage.RenderOutline(
+                    SpriteBatch,
+                    Textures.White,
+                    Color.White,
+                    ManaContainerPos,
+                    ManaBarDimensionsWithOffset.X,
+                    ManaBarDimensionsWithOffset.Y,
+                    2,
+                    1F
+                );
 
-                SpriteBatch.Draw(Textures.White, new Rectangle(ManaContainerPos.X - 2, ManaContainerPos.Y - 2,
-                    Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4), Color.White * 0.3F);
-                UIPage.RenderOutline(SpriteBatch, Textures.White, Color.White, ManaContainerPos.X - 2,
-                    ManaContainerPos.Y - 2, Player.ManaBarDimentions.X + 4, Player.ManaBarDimentions.Y + 4, 2, 1F);
-
-                SpriteBatch.Draw(Textures.White, new Rectangle(ManaBarPos.X, ManaBarPos.Y,
-                    Player.ManaBarDimentions.X, (int)(Player.ManaBarDimentions.Y * ManaPercent)), Color.Blue);
+                SpriteBatch.Draw(
+                    Textures.White,
+                    new Rectangle(
+                        ManaBarPos.X,
+                        ManaBarPos.Y,
+                        Player.ManaBarDimensions.X,
+                        (int)(Player.ManaBarDimensions.Y * ManaPercent)
+                    ),
+                    Color.Blue
+                );
             }
         }
 

@@ -71,18 +71,16 @@ public class ForceWave : MagicEffect
     {
         foreach (Entity Entity in Entities)
         {
-            float XDiff = Math.Abs(Position.X - Entity.Position.X);
-            float YDiff = Math.Abs(Position.Y - Entity.Position.Y);
-            float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+            Vector2 Diff = Utils.Abs(Position - Entity.Position);
+            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
 
             if (Distance > Radius)
             {
                 continue;
             }
 
-            float xDiff = Entity.Position.X - Position.X;
-            float yDiff = Entity.Position.Y - Position.Y;
-            float Angle = (float)(Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI);
+            Vector2 InverseDiff = Entity.Position - Position;
+            float Angle = (float)(Math.Atan2(InverseDiff.Y, InverseDiff.X) * 180.0 / Math.PI);
             float AngleRadians = Angle * (float)(Math.PI / 180);
 
             Vector2 PositionChange = new Vector2(

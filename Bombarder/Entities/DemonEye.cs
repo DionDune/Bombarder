@@ -33,7 +33,7 @@ public class DemonEye : Entity
                 Width = 0,
                 Height = 0,
                 Offset = new Vector2(0, 0),
-                Color = Color.White,
+                Color = Color.White
             }
         };
     }
@@ -69,20 +69,20 @@ public class DemonEye : Entity
         );
 
         Point PlayerTopLeft = new Point(
-            (int)Player.Position.X - (Player.Width / 2),
-            (int)Player.Position.Y - (Player.Height / 2)
+            (int)Player.Position.X - Player.Width / 2,
+            (int)Player.Position.Y - Player.Height / 2
         );
         Point PlayerTopRight = new Point(
-            (int)Player.Position.X + (Player.Width / 2),
-            (int)Player.Position.Y - (Player.Height / 2)
+            (int)Player.Position.X + Player.Width / 2,
+            (int)Player.Position.Y - Player.Height / 2
         );
         Point PlayerBottomLeft = new Point(
-            (int)Player.Position.X - (Player.Width / 2),
-            (int)Player.Position.Y + (Player.Height / 2)
+            (int)Player.Position.X - Player.Width / 2,
+            (int)Player.Position.Y + Player.Height / 2
         );
         Point PlayerBottomRight = new Point(
-            (int)Player.Position.X + (Player.Width / 2),
-            (int)Player.Position.Y + (Player.Height / 2)
+            (int)Player.Position.X + Player.Width / 2,
+            (int)Player.Position.Y + Player.Height / 2
         );
 
 

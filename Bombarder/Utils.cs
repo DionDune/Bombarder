@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Bombarder;
 
@@ -26,6 +27,7 @@ public static class Utils
     public static Point ToPoint(this Orientation Orientation, GraphicsDeviceManager Graphics) =>
         Orientation.ToPosition(Graphics).ToPoint();
 
-    public static Point ToPoint(this Vector2 Vector2) => new((int)Vector2.X, (int)Vector2.Y);
-    public static Vector2 ToVector2(this Point Point) => new(Point.X, Point.Y);
+    public static Vector2 Copy(this Vector2 Vector) => new(Vector.X, Vector.Y);
+    public static Point Copy(this Point Point) => new(Point.X, Point.Y);
+    public static Vector2 Abs(Vector2 Vector2) => new(Math.Abs(Vector2.X), Math.Abs(Vector2.Y));
 }

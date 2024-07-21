@@ -29,8 +29,8 @@ public class StaticOrb : MagicEffect
 
         foreach (Entity Entity in Entities)
         {
-            EffectStart = new Point((int)Position.X + RadiusOffset.X, (int)Position.Y + RadiusOffset.Y);
-            EffectEnd = new Point(EffectStart.X + RadiusSize.X, EffectStart.Y + RadiusSize.Y);
+            EffectStart = Position.ToPoint() + RadiusOffset;
+            EffectEnd = EffectStart + RadiusSize;
 
             if (CheckCollision(EffectStart, EffectEnd, Entity))
             {
@@ -52,7 +52,7 @@ public class StaticOrb : MagicEffect
             return;
         }
 
-        BombarderGame.Particles.Add(new Impact(new Vector2(Position.X, Position.Y))
+        BombarderGame.Particles.Add(new Impact(Position.Copy())
         {
             HasDuration = true,
         });

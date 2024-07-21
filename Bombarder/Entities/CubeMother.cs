@@ -73,7 +73,7 @@ public class CubeMother : Entity
                 break;
         }
     }
-    
+
     public void EnactSpawn()
     {
         if (NextSpawnFrame != BombarderGame.GameTick && BombarderGame.GameTick <= NextSpawnFrame)
@@ -91,7 +91,7 @@ public class CubeMother : Entity
         //Red Cube
         BombarderGame.EntitiesToAdd.Add(new RedCube
         {
-            Position = new Vector2(SpawnPoint.X, SpawnPoint.Y)
+            Position = SpawnPoint.Copy()
         });
 
         NextSpawnFrame = (uint)(BombarderGame.GameTick + BombarderGame.random.Next(SpawnIntervalMin, SpawnIntervalMax));
@@ -124,7 +124,10 @@ public class CubeMother : Entity
                         Game.Graphics.PreferredBackBufferHeight / 2F -
                         Game.Player.Position.Y
                     ),
-                    Block.Width, Block.Height), BlockColor
+                    Block.Width,
+                    Block.Height
+                ),
+                BlockColor
             );
         }
     }

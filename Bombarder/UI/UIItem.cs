@@ -54,7 +54,7 @@ public abstract class UIItem
     public (Point, Point) GetElementBounds(GraphicsDeviceManager Graphics)
     {
         Point OrientationPosition = Orientation.ToPoint(Graphics);
-        Point TopLeft = new Point(OrientationPosition.X + (int)Position.X, OrientationPosition.Y + (int)Position.Y);
+        Point TopLeft = OrientationPosition + Position.ToPoint();
         Point BottomRight = new Point(TopLeft.X + Width, TopLeft.Y + Height);
 
         return (TopLeft, BottomRight);

@@ -119,17 +119,14 @@ public class RedCube : Entity
     public void CreateDeathParticles()
     {
         EntityBlock Block = Parts.First();
-        Vector2 StartPoint = new Vector2(
-            Position.X + Block.Offset.X,
-            Position.Y + Block.Offset.Y
-        );
+        Vector2 StartPoint = Position + Block.Offset;
 
         for (int y = 0; y < Block.Height / RedCubeSegment.Height; y++)
         {
             for (int x = 0; x < Block.Width / RedCubeSegment.Width; x++)
             {
-                float ParticleX = StartPoint.X + (x * RedCubeSegment.Width);
-                float ParticleY = StartPoint.Y + (y * RedCubeSegment.Height);
+                float ParticleX = StartPoint.X + x * RedCubeSegment.Width;
+                float ParticleY = StartPoint.Y + y * RedCubeSegment.Height;
 
                 var XDifference = ParticleX - Position.X;
                 var YDifference = ParticleY - Position.Y;

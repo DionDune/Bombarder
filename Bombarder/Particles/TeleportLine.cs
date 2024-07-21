@@ -94,11 +94,10 @@ public class TeleportLine : Particle
 
     public static void SpawnBetween(List<Particle> Particles, Vector2 Point1, Vector2 Point2)
     {
-        float XDiff = Point1.X - Point2.X;
-        float YDiff = Point1.Y - Point2.Y;
+        Vector2 Diff = Point1 - Point2;
 
-        float Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
-        float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
+        float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+        float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
         float AngleRadians = Angle * (float)(Math.PI / 180);
 
         int ParticleDistance = BombarderGame.random.Next(0, (int)Distance);

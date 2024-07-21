@@ -48,8 +48,7 @@ public abstract class MagicEffect
 
     public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)
     {
-        Vector2 HitboxStart = new Vector2(Entity.Position.X + Entity.HitBoxOffset.X,
-            Entity.Position.Y + Entity.HitBoxOffset.Y);
+        Vector2 HitboxStart = Entity.Position + Entity.HitBoxOffset.ToVector2();
 
 
         // Effect Hitbox is smaller than the Entity Hitbox

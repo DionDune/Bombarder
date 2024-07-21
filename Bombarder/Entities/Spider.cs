@@ -65,15 +65,14 @@ public class Spider : Entity
             return;
         }
 
-        float XDiff = Position.X - Player.Position.X;
-        float YDiff = Position.Y - Player.Position.Y;
+        Vector2 Diff = Position - Player.Position;
 
-        float PlayerDistance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+        float PlayerDistance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
             ? JumpVelocityMax
             : (float)BombarderGame.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100;
-        Angle = (float)Math.Atan2(YDiff, XDiff);
+        Angle = (float)Math.Atan2(Diff.Y, Diff.X);
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
             ? BombarderGame.GameTick + (uint)BombarderGame.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
@@ -116,13 +115,13 @@ public class Spider : Entity
             (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y);
 
         Point PlayerTopLeft = new Point((int)Player.Position.X - (Player.Width / 2),
-            (int)Player.Position.Y - (Player.Height / 2));
+            (int)Player.Position.Y - Player.Height / 2);
         Point PlayerTopRight = new Point((int)Player.Position.X + (Player.Width / 2),
-            (int)Player.Position.Y - (Player.Height / 2));
+            (int)Player.Position.Y - Player.Height / 2);
         Point PlayerBottomLeft = new Point((int)Player.Position.X - (Player.Width / 2),
-            (int)Player.Position.Y + (Player.Height / 2));
+            (int)Player.Position.Y + Player.Height / 2);
         Point PlayerBottomRight = new Point((int)Player.Position.X + (Player.Width / 2),
-            (int)Player.Position.Y + (Player.Height / 2));
+            (int)Player.Position.Y + Player.Height / 2);
 
 
         bool Contact = false;

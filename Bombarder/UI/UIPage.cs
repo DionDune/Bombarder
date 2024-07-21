@@ -50,8 +50,7 @@ public abstract class UIPage
         SpriteBatch _spriteBatch,
         Texture2D Texture,
         Color color,
-        int X,
-        int Y,
+        Point Position,
         int Width,
         int Height,
         int BorderWidth,
@@ -59,22 +58,27 @@ public abstract class UIPage
     {
         _spriteBatch.Draw(
             Texture,
-            new Rectangle(X, Y, Width, BorderWidth),
+            new Rectangle(Position.X, Position.Y, Width, BorderWidth),
             color * BorderTransparency
         );
         _spriteBatch.Draw(
             Texture,
-            new Rectangle(X + Width - BorderWidth, Y + BorderWidth, BorderWidth, Height - BorderWidth),
+            new Rectangle(
+                Position.X + Width - BorderWidth,
+                Position.Y + BorderWidth,
+                BorderWidth,
+                Height - BorderWidth
+            ),
             color * BorderTransparency
         );
         _spriteBatch.Draw(
             Texture,
-            new Rectangle(X, Y + Height - BorderWidth, Width - BorderWidth, BorderWidth),
+            new Rectangle(Position.X, Position.Y + Height - BorderWidth, Width - BorderWidth, BorderWidth),
             color * BorderTransparency
         );
         _spriteBatch.Draw(
             Texture,
-            new Rectangle(X, Y + BorderWidth, BorderWidth, Height - BorderWidth * 2),
+            new Rectangle(Position.X, Position.Y + BorderWidth, BorderWidth, Height - BorderWidth * 2),
             color * BorderTransparency
         );
     }
