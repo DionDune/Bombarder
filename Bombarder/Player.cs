@@ -36,7 +36,7 @@ namespace Bombarder
         public int ManaRegain = ManaRegainDefault;
 
         public Point ManaBarDimentions { get; set; }
-        public string ManaBarScreenOrientation { get; set; }
+        public Orientation ManaBarScreenOrientation { get; set; }
         public Point ManaBarOffset { get; set; }
         public bool ManaBarHorizontalFill { get; set; }
         public bool ManaBarVisible { get; set; }
@@ -71,12 +71,12 @@ namespace Bombarder
 
 
             ManaBarDimentions = new Point(25, 450);
-            ManaBarScreenOrientation = "Bottom Left";
+            ManaBarScreenOrientation = Orientation.BOTTOM_LEFT;
             ManaBarOffset = new Point(20, -20);
             ManaBarHorizontalFill = false;
             ManaBarVisible = true;
             HealthBarDimentions = new Point(25, 450);
-            HealthBarScreenOrientation = "Bottom Left";
+            ManaBarScreenOrientation = Orientation.BOTTOM_LEFT;
             HealthBarOffset = new Point(75, -20);
             HealthBarVisible = true;
         }

@@ -13,7 +13,7 @@ public class SettingsPage : UIPage
             // Resume Button
             new ButtonUIElement
             {
-                Orientation = "Bottom",
+                Orientation = Orientation.BOTTOM,
                 Position = new Vector2(-300, -225),
                 Width = 600,
                 Height = 150,
@@ -35,7 +35,7 @@ public class SettingsPage : UIPage
             // Player Invincibility Button
             new ButtonUIElement
             {
-                Orientation = "Top Left",
+                Orientation = Orientation.TOP_LEFT,
                 Position = new Vector2(25, 250),
 
                 Width = 400,
@@ -57,7 +57,7 @@ public class SettingsPage : UIPage
             // Title Message
             new TextUIElement
             {
-                Orientation = "Top",
+                Orientation = Orientation.TOP,
                 Position = new Vector2(0, 100),
 
                 Text = new TextElement

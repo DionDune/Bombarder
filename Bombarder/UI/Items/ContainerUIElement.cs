@@ -9,7 +9,7 @@ public class ContainerUIElement : UIItem
         Vector2 Offset)
     {
         Vector2 OffsetPosition = Offset + Position;
-        
+
         //Border
         UIPage.RenderOutline(
             SpriteBatch,
@@ -41,42 +41,7 @@ public class ContainerUIElement : UIItem
 
         foreach (UIItem InnerItem in uIItems)
         {
-            int OrientatePosX = 0;
-            int OrientatePosY = 0;
-
-            switch (InnerItem.Orientation)
-            {
-                case "Bottom Left":
-                    OrientatePosX = 0;
-                    OrientatePosY = Graphics.PreferredBackBufferHeight;
-                    break;
-                case "Left":
-                    OrientatePosX = 0;
-                    break;
-                case "Top Left":
-                    OrientatePosX = 0;
-                    OrientatePosY = 0;
-                    break;
-                case "Top":
-                    OrientatePosY = 0;
-                    break;
-                case "Top Right":
-                    OrientatePosX = Graphics.PreferredBackBufferWidth;
-                    OrientatePosY = 0;
-                    break;
-                case "Right":
-                    OrientatePosX = Graphics.PreferredBackBufferWidth;
-                    break;
-                case "Bottom Right":
-                    OrientatePosX = Graphics.PreferredBackBufferWidth;
-                    OrientatePosY = Graphics.PreferredBackBufferHeight;
-                    break;
-                case "Bottom":
-                    OrientatePosY = Graphics.PreferredBackBufferHeight;
-                    break;
-            }
-
-            Vector2 InnerPosition = new Vector2(OrientatePosX, OrientatePosY) + InnerItem.Position;
+            Vector2 InnerPosition = InnerItem.Orientation.ToPosition(Graphics) + InnerItem.Position;
 
             if (InnerItem is ContainerSlotUIElement)
             {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Bombarder.UI.Pages;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,8 +7,6 @@ namespace Bombarder.UI;
 
 public abstract class UIPage
 {
-    public string Type { get; set; } = "Default";
-
     public List<UIItem> UIItems { get; set; } = new();
 
     protected UIPage()
@@ -43,41 +40,7 @@ public abstract class UIPage
     {
         foreach (UIItem Item in UIItems)
         {
-            int OrientatePosX = Graphics.PreferredBackBufferWidth / 2;
-            int OrientatePosY = Graphics.PreferredBackBufferHeight / 2;
-            switch (Item.Orientation)
-            {
-                case "Bottom Left":
-                    OrientatePosX = 0;
-                    OrientatePosY = Graphics.PreferredBackBufferHeight;
-                    break;
-                case "Left":
-                    OrientatePosX = 0;
-                    break;
-                case "Top Left":
-                    OrientatePosX = 0;
-                    OrientatePosY = 0;
-                    break;
-                case "Top":
-                    OrientatePosY = 0;
-                    break;
-                case "Top Right":
-                    OrientatePosX = Graphics.PreferredBackBufferWidth;
-                    OrientatePosY = 0;
-                    break;
-                case "Right":
-                    OrientatePosX = Graphics.PreferredBackBufferWidth;
-                    break;
-                case "Bottom Right":
-                    OrientatePosX = Graphics.PreferredBackBufferWidth;
-                    OrientatePosY = Graphics.PreferredBackBufferHeight;
-                    break;
-                case "Bottom":
-                    OrientatePosY = Graphics.PreferredBackBufferHeight;
-                    break;
-            }
-
-            Vector2 Offset = new Vector2(OrientatePosX, OrientatePosY);
+            Vector2 Offset = Item.Orientation.ToPosition(Graphics);
 
             Item.Draw(SpriteBatch, Graphics, Textures, Offset);
         }

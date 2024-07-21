@@ -8,7 +8,7 @@ public abstract class UIItem
 {
     public bool Highlighted { get; set; }
 
-    public string Orientation { get; set; } = "Centre";
+    public Orientation Orientation { get; set; } = Orientation.CENTER;
 
     public Vector2 Position { get; set; } = Vector2.Zero;
     public Vector2 Centre => Position + new Vector2(Width / 2F, Height / 2F);
@@ -51,27 +51,9 @@ public abstract class UIItem
         Highlighted = State;
     }
 
-
-    public static Point GetOrientationPosition(GraphicsDeviceManager Graphics, string Orientation)
-    {
-        return Orientation switch
-        {
-            "Top Left" => new Point(0, 0),
-            "Top" => new Point(Graphics.PreferredBackBufferWidth / 2, 0),
-            "Top Right" => new Point(Graphics.PreferredBackBufferWidth, 0),
-            "Middle Left" => new Point(0, Graphics.PreferredBackBufferHeight / 2),
-            "Middle" => new Point(Graphics.PreferredBackBufferWidth / 2, Graphics.PreferredBackBufferHeight / 2),
-            "Middle Right" => new Point(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight / 2),
-            "Bottom Left" => new Point(0, Graphics.PreferredBackBufferHeight),
-            "Bottom" => new Point(Graphics.PreferredBackBufferWidth / 2, Graphics.PreferredBackBufferHeight),
-            "Bottom Right" => new Point(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight),
-            _ => new Point(Graphics.PreferredBackBufferWidth / 2, Graphics.PreferredBackBufferHeight / 2)
-        };
-    }
-
     public (Point, Point) GetElementBounds(GraphicsDeviceManager Graphics)
     {
-        Point OrientationPosition = GetOrientationPosition(Graphics, Orientation);
+        Point OrientationPosition = Orientation.ToPoint(Graphics);
         Point TopLeft = new Point(OrientationPosition.X + (int)Position.X, OrientationPosition.Y + (int)Position.Y);
         Point BottomRight = new Point(TopLeft.X + Width, TopLeft.Y + Height);
 

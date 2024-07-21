@@ -1016,7 +1016,7 @@ public class BombarderGame : Game
             //Health Bar
             if (!Player.HealthInfinite && Player.Health < Player.HealthMax)
             {
-                Point OrientPos = UIItem.GetOrientationPosition(Graphics, Player.ManaBarScreenOrientation);
+                Point OrientPos = Player.ManaBarScreenOrientation.ToPoint(Graphics);
                 float HealthPercent = (float)Player.Health / Player.HealthMax;
 
                 Point HealthBarContainerPos = new Point(OrientPos.X + Player.HealthBarOffset.X,
@@ -1039,7 +1039,7 @@ public class BombarderGame : Game
             //Mana Bar
             if (!Player.ManaInfinite && Player.Mana < Player.ManaMax)
             {
-                Point OrientPos = UIItem.GetOrientationPosition(Graphics, Player.ManaBarScreenOrientation);
+                Point OrientPos = Player.ManaBarScreenOrientation.ToPoint(Graphics);
                 float ManaPercent = (float)Player.Mana / Player.ManaMax;
 
                 Point ManaContainerPos = new Point(OrientPos.X + Player.ManaBarOffset.X,
