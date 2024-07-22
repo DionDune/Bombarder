@@ -51,66 +51,7 @@ public class DemonEye : Entity
             return;
         }
 
-        Point TopLeft = new Point(
-            (int)Position.X + HitBoxOffset.X,
-            (int)Position.Y + HitBoxOffset.Y
-        );
-        Point TopRight = new Point(
-            (int)Position.X + HitBoxOffset.X + HitBoxSize.X,
-            (int)Position.Y + HitBoxOffset.Y
-        );
-        Point BottomLeft = new Point(
-            (int)Position.X + HitBoxOffset.X,
-            (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
-        );
-        Point BottomRight = new Point(
-            (int)Position.X + HitBoxOffset.X + HitBoxSize.X,
-            (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
-        );
-
-        Point PlayerTopLeft = new Point(
-            (int)Player.Position.X - Player.Width / 2,
-            (int)Player.Position.Y - Player.Height / 2
-        );
-        Point PlayerTopRight = new Point(
-            (int)Player.Position.X + Player.Width / 2,
-            (int)Player.Position.Y - Player.Height / 2
-        );
-        Point PlayerBottomLeft = new Point(
-            (int)Player.Position.X - Player.Width / 2,
-            (int)Player.Position.Y + Player.Height / 2
-        );
-        Point PlayerBottomRight = new Point(
-            (int)Player.Position.X + Player.Width / 2,
-            (int)Player.Position.Y + Player.Height / 2
-        );
-
-
-        bool Contact = false;
-
-        if (PlayerTopLeft.X >= TopLeft.X && PlayerTopLeft.X <= TopRight.X &&
-            PlayerTopLeft.Y >= TopLeft.Y && PlayerTopLeft.Y <= BottomRight.Y)
-        {
-            Contact = true;
-        }
-        else if (PlayerTopRight.X >= TopLeft.X && PlayerTopRight.X <= TopRight.X &&
-                 PlayerTopRight.Y >= TopLeft.Y && PlayerTopRight.Y <= BottomLeft.Y)
-        {
-            Contact = true;
-        }
-        else if (PlayerBottomLeft.X >= TopLeft.X && PlayerBottomLeft.X <= TopRight.X &&
-                 PlayerBottomLeft.Y >= TopLeft.Y && PlayerBottomLeft.Y <= BottomLeft.Y)
-        {
-            Contact = true;
-        }
-        else if (PlayerBottomRight.X >= TopLeft.X && PlayerBottomRight.X <= TopRight.X &&
-                 PlayerBottomRight.Y >= TopLeft.Y && PlayerBottomRight.Y <= BottomLeft.Y)
-        {
-            Contact = true;
-        }
-
-
-        if (!Contact)
+        if (!HitBox.Intersects(Player.HitBox))
         {
             return;
         }

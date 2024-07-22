@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bombarder.Entities;
 using Microsoft.Xna.Framework;
 
@@ -26,15 +27,9 @@ public class NonStaticOrb : MagicEffect
         EnactVelocity();
 
         //Enact Damage
-        foreach (Entity Entity in Entities)
+        foreach (var Entity in Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)))
         {
-            Point EffectStart = Position.ToPoint() + RadiusOffset;
-            Point EffectEnd = EffectStart + RadiusSize;
-
-            if (CheckCollision(EffectStart, EffectEnd, Entity))
-            {
-                Entity.GiveDamage(Damage);
-            }
+            Entity.GiveDamage(Damage);
         }
     }
 

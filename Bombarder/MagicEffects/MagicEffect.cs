@@ -20,6 +20,7 @@ public abstract class MagicEffect
 
     public bool HasDuration { get; set; }
     public int Duration { get; set; }
+    public Rectangle HitBox => new(Position.ToPoint() + RadiusOffset, RadiusSize + RadiusSize);
 
     public List<MagicEffectPiece> Pieces { get; set; }
 
@@ -57,71 +58,6 @@ public abstract class MagicEffect
             Effects.Remove(Effect);
         }
     }
-
-    public static bool CheckCollision(Point Coord1, Point Coord2, Entity Entity)
-    {
-        Vector2 HitboxStart = Entity.Position + Entity.HitBoxOffset.ToVector2();
-
-
-        // Effect Hitbox is smaller than the Entity Hitbox
-        if (Coord2.X - Coord1.X < Entity.HitBoxSize.X &&
-            Coord2.Y - Coord1.Y < Entity.HitBoxSize.Y)
-        {
-            if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitBoxSize.X &&
-                Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
-            {
-                return true;
-            }
-
-            if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitBoxSize.X &&
-                Coord1.Y >= HitboxStart.Y && Coord1.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
-            {
-                return true;
-            }
-
-            if (Coord2.X >= HitboxStart.X && Coord2.X <= HitboxStart.X + Entity.HitBoxSize.X &&
-                Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
-            {
-                return true;
-            }
-
-            if (Coord1.X >= HitboxStart.X && Coord1.X <= HitboxStart.X + Entity.HitBoxSize.X &&
-                Coord2.Y >= HitboxStart.Y && Coord2.Y <= HitboxStart.Y + Entity.HitBoxSize.Y)
-            {
-                return true;
-            }
-        }
-        // Effect Entity is smaller than the Effect Hitbox
-        else
-        {
-            if (HitboxStart.X >= Coord1.X && HitboxStart.X <= Coord2.X &&
-                HitboxStart.Y >= Coord1.Y && HitboxStart.Y <= Coord2.Y)
-            {
-                return true;
-            }
-
-            if (HitboxStart.X + Entity.HitBoxSize.X >= Coord1.X && HitboxStart.X + Entity.HitBoxSize.X <= Coord2.X &&
-                HitboxStart.Y >= Coord1.Y && HitboxStart.Y <= Coord2.Y)
-            {
-                return true;
-            }
-
-            if (HitboxStart.X + Entity.HitBoxSize.X >= Coord1.X && HitboxStart.X + Entity.HitBoxSize.X <= Coord2.X &&
-                HitboxStart.Y + Entity.HitBoxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitBoxSize.Y <= Coord2.Y)
-            {
-                return true;
-            }
-
-            if (HitboxStart.X >= Coord1.X && HitboxStart.X <= Coord2.X &&
-                HitboxStart.Y + Entity.HitBoxSize.Y >= Coord1.Y && HitboxStart.Y + Entity.HitBoxSize.Y <= Coord2.Y)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 
     protected MagicEffect(Vector2 Position)
     {

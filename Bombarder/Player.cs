@@ -17,7 +17,7 @@ public class Player
     public float BoostMultiplier { get; set; }
     public float Acceleration { get; set; }
     public float Slowdown { get; set; }
-
+    public Rectangle HitBox => new((int)Position.X - Width / 2, (int)Position.Y - Height / 2, Width, Height);
 
     public bool IsImmune = false;
     public bool IsDead = false;

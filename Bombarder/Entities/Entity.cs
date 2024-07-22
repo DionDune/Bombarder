@@ -25,12 +25,13 @@ public abstract class Entity
     public Point HealthBarDimensions { get; set; }
     public int KillHealthReward { get; protected set; }
     public int KillManaReward { get; protected set; }
+    public Rectangle HitBox => new(Position.ToPoint() + HitBoxOffset, HitBoxSize);
 
     public void MoveTowards(Vector2 Goal, float Speed)
     {
         float XDifference = Position.X - Goal.X;
         float YDifference = Position.Y - Goal.Y;
-        float Angle = (float)(Math.Atan2(YDifference, XDifference));
+        float Angle = (float)Math.Atan2(YDifference, XDifference);
 
         Direction = Angle;
         Vector2 PositionChange = new Vector2(

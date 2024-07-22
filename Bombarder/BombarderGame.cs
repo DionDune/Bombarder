@@ -479,25 +479,14 @@ public sealed class BombarderGame : Game
 
         foreach (UIItem Item in UIPage_Current.UIItems)
         {
-            (Point, Point) ElementBounds = Item.GetElementBounds(Graphics);
-            Point TopLeft = ElementBounds.Item1;
-            Point BottomRight = ElementBounds.Item2;
-
+            Rectangle ElementBounds = Item.GetElementBounds(Graphics);
 
             if (Item is not ButtonUIElement)
             {
                 continue;
             }
 
-            if (Mouse.GetState().X > TopLeft.X && Mouse.GetState().X < BottomRight.X &&
-                Mouse.GetState().Y > TopLeft.Y && Mouse.GetState().Y < BottomRight.Y)
-            {
-                Item.SetHighlight(true);
-            }
-            else
-            {
-                Item.SetHighlight(false);
-            }
+            Item.SetHighlight(ElementBounds.Contains(Mouse.GetState().Position));
         }
     }
 
@@ -514,14 +503,9 @@ public sealed class BombarderGame : Game
                 {
                     foreach (UIItem Item in UIPage_Current.UIItems)
                     {
-                        (Point, Point) ElementBounds = Item.GetElementBounds(Graphics);
-                        Point TopLeft = ElementBounds.Item1;
-                        Point BottomRight = ElementBounds.Item2;
+                        Rectangle ElementBounds = Item.GetElementBounds(Graphics);
 
-                        if (
-                            Mouse.GetState().X <= TopLeft.X || Mouse.GetState().X >= BottomRight.X ||
-                            Mouse.GetState().Y <= TopLeft.Y || Mouse.GetState().Y >= BottomRight.Y
-                        )
+                        if (!ElementBounds.Contains(Mouse.GetState().Position))
                         {
                             continue;
                         }

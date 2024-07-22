@@ -51,13 +51,12 @@ public abstract class UIItem
         Highlighted = State;
     }
 
-    public (Point, Point) GetElementBounds(GraphicsDeviceManager Graphics)
+    public Rectangle GetElementBounds(GraphicsDeviceManager Graphics)
     {
         Point OrientationPosition = Orientation.ToPoint(Graphics);
-        Point TopLeft = OrientationPosition + Position.ToPoint();
-        Point BottomRight = new Point(TopLeft.X + Width, TopLeft.Y + Height);
-
-        return (TopLeft, BottomRight);
+        Point StartPosition = OrientationPosition + Position.ToPoint();
+        
+        return new Rectangle(StartPosition, new Point(Width, Height));
     }
 
     public abstract void Draw(

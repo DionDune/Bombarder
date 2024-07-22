@@ -56,64 +56,13 @@ public class RedCube : Entity
 
     public void EnactAttack(Player Player)
     {
-        Point TopLeft = new Point(
-            (int)Position.X + HitBoxOffset.X,
-            (int)Position.Y + HitBoxOffset.Y
-        );
-        Point TopRight = new Point(
-            (int)Position.X + HitBoxOffset.X + HitBoxSize.X,
-            (int)Position.Y + HitBoxOffset.Y
-        );
-        Point BottomLeft = new Point(
-            (int)Position.X + HitBoxOffset.X,
-            (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
-        );
-        Point BottomRight = new Point(
-            (int)Position.X + HitBoxOffset.X + HitBoxSize.X,
-            (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
-        );
+        if (!HitBox.Intersects(Player.HitBox))
+        {
+            return;
+        }
 
-        Point PlayerTopLeft = new Point(
-            (int)Player.Position.X - Player.Width / 2,
-            (int)Player.Position.Y - Player.Height / 2
-        );
-        Point PlayerTopRight = new Point(
-            (int)Player.Position.X + Player.Width / 2,
-            (int)Player.Position.Y - Player.Height / 2
-        );
-        Point PlayerBottomLeft = new Point(
-            (int)Player.Position.X - Player.Width / 2,
-            (int)Player.Position.Y + Player.Height / 2
-        );
-        Point PlayerBottomRight = new Point(
-            (int)Player.Position.X + Player.Width / 2,
-            (int)Player.Position.Y + Player.Height / 2
-        );
-
-        if (TopLeft.X >= PlayerTopLeft.X && TopLeft.X <= PlayerTopRight.X &&
-            TopLeft.Y >= PlayerTopLeft.Y && TopLeft.Y <= PlayerBottomLeft.Y)
-        {
-            Player.GiveDamage(Damage);
-            GiveDamage(SelfDamage);
-        }
-        else if (TopRight.X >= PlayerTopLeft.X && TopRight.X <= PlayerTopRight.X &&
-                 TopRight.Y >= PlayerTopLeft.Y && TopRight.Y <= PlayerBottomLeft.Y)
-        {
-            Player.GiveDamage(Damage);
-            GiveDamage(SelfDamage);
-        }
-        else if (BottomLeft.X >= PlayerTopLeft.X && BottomLeft.X <= PlayerTopRight.X &&
-                 BottomLeft.Y >= PlayerTopLeft.Y && BottomLeft.Y <= PlayerBottomLeft.Y)
-        {
-            Player.GiveDamage(Damage);
-            GiveDamage(SelfDamage);
-        }
-        else if (BottomRight.X >= PlayerTopLeft.X && BottomRight.X <= PlayerTopRight.X &&
-                 BottomRight.Y >= PlayerTopLeft.Y && BottomRight.Y <= PlayerBottomLeft.Y)
-        {
-            Player.GiveDamage(Damage);
-            GiveDamage(SelfDamage);
-        }
+        Player.GiveDamage(Damage);
+        GiveDamage(SelfDamage);
     }
 
     public void CreateDeathParticles()

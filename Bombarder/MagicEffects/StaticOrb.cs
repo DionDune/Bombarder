@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bombarder.Entities;
 using Bombarder.Particles;
 using Microsoft.Xna.Framework;
@@ -24,18 +25,9 @@ public class StaticOrb : MagicEffect
 
     public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
     {
-        Point EffectStart;
-        Point EffectEnd;
-
-        foreach (Entity Entity in Entities)
+        foreach (var Entity in Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)))
         {
-            EffectStart = Position.ToPoint() + RadiusOffset;
-            EffectEnd = EffectStart + RadiusSize;
-
-            if (CheckCollision(EffectStart, EffectEnd, Entity))
-            {
-                Entity.GiveDamage(Damage);
-            }
+            Entity.GiveDamage(Damage);
         }
 
         CreateParticles();
