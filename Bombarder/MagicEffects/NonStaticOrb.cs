@@ -8,6 +8,7 @@ namespace Bombarder.MagicEffects;
 
 public class NonStaticOrb : MagicEffect
 {
+    public override int ManaCost { get; protected set; } = 0;
     public const int DefaultDuration = 150;
     public float Angle { get; set; }
     public float Velocity { get; set; }
@@ -17,6 +18,14 @@ public class NonStaticOrb : MagicEffect
     public NonStaticOrb(Vector2 Position, float Angle) : base(Position)
     {
         this.Angle = Angle;
+        Duration = DefaultDuration;
+        Velocity = DefaultVelocity;
+    }
+
+    public NonStaticOrb(Vector2 Position, Vector2 Destination) : base(Position)
+    {
+        Vector2 DestinationDiff = Destination - Position;
+        Angle = (float)(Math.Atan2(DestinationDiff.Y, DestinationDiff.X) * 180.0 / Math.PI);
         Duration = DefaultDuration;
         Velocity = DefaultVelocity;
     }

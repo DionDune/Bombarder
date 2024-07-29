@@ -8,9 +8,7 @@ namespace Bombarder.MagicEffects;
 public class DissipationWave : MagicEffect
 {
     public Color Colour = Color.MediumPurple;
-
-    public static readonly int ManaCost = 50;
-
+    public override int ManaCost { get; protected set; } = 50;
     public float Damage { get; set; }
     public const int DefaultDuration = 150;
     private const float DefaultDamage = 10;

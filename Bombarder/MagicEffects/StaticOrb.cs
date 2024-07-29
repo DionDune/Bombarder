@@ -10,10 +10,8 @@ namespace Bombarder.MagicEffects;
 public class StaticOrb : MagicEffect
 {
     const int Damage = 2;
-    public static readonly int ManaCost = 399;
-
+    public override int ManaCost { get; protected set; } = 399;
     public const int DefaultDuration = 150;
-
     public uint LastParticleFrame;
 
     public StaticOrb(Vector2 Position) : base(Position)

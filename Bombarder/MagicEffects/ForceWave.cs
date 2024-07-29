@@ -8,11 +8,8 @@ namespace Bombarder.MagicEffects;
 public class ForceWave : MagicEffect
 {
     public Color Colour = Color.Crimson;
-
-    public static readonly int ManaCost = 150;
-
+    public override int ManaCost { get; protected set; } = 150;
     public const int DefaultDuration = 200;
-
     public float Radius { get; set; }
     public const float RadiusMax = 200;
     private const float DefaultRadius = 5;

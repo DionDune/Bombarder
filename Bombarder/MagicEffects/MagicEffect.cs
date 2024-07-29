@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Bombarder.Entities;
 using Microsoft.Xna.Framework;
@@ -11,6 +12,7 @@ public abstract class MagicEffect
 
     public string? DamageTarget { get; set; }
     public int Damage { get; set; }
+    public abstract int ManaCost { get; protected set; }
 
     public bool RadiusIsCircle { get; set; }
     public float DamageRadius { get; set; }
@@ -24,6 +26,16 @@ public abstract class MagicEffect
 
     public List<MagicEffectPiece> Pieces { get; set; }
 
+    public static readonly Dictionary<string, Func<Vector2, Player, MagicEffect>> MagicEffectsFactory = new()
+    {
+        { "DissipationWave", (Position, _) => new DissipationWave(Position) },
+        { "ForceContainer", (Position, Player) => new ForceContainer(Player.Position, Position) },
+        { "ForceWave", (Position, _) => new ForceWave(Position) },
+        { "NonStaticOrb", (Position, Player) => new NonStaticOrb(Player.Position, Position) },
+        { "PlayerTeleport", (Position, _) => new PlayerTeleport(Position) },
+        { "StaticOrb", (Position, _) => new StaticOrb(Position) },
+        { "WideLaser", (Position, Player) => new WideLaser(Player.Position, Position) },
+    };
 
     public static void Update()
     {

@@ -10,8 +10,7 @@ public class ForceContainer : MagicEffect
 {
     public readonly Color Colour = Color.OrangeRed;
 
-    public static readonly int ManaCost = 150;
-
+    public override int ManaCost { get; protected set; } = 150;
     public const int DurationDefault = 350;
     public const float Radius = 250;
     public const float RadiusMoving = 50;
@@ -116,7 +115,6 @@ public class ForceContainer : MagicEffect
         {
             return;
         }
-
 
         // Store new entities in Container list
         foreach (var Entity in Entities.Where(Entity => !ContainedEntities.Contains(Entity)))

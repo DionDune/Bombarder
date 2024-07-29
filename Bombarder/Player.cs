@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Bombarder.Entities;
 using Bombarder.MagicEffects;
 using Microsoft.Xna.Framework;
@@ -81,7 +82,7 @@ public class Player
         HealthBarOffset = new Point(75, -20);
         HealthBarVisible = true;
     }
-    
+
     public void ToggleInvincibility()
     {
         IsInvincible = !IsInvincible;
@@ -215,56 +216,15 @@ public class Player
 
     public void CreateMagic(Vector2 SpawnPosition, Type MagicType)
     {
-        if (MagicType == typeof(StaticOrb))
-        {
-            if (CheckUseMana(StaticOrb.ManaCost))
-            {
-                BombarderGame.Instance.MagicEffects.Add(new StaticOrb(SpawnPosition.Copy()));
-            }
-        }
-        else if (MagicType == typeof(NonStaticOrb))
-        {
-            // Calculating Angle
-            Vector2 Diff = SpawnPosition - Position;
-            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
+        var Factory = MagicEffects.MagicEffect.MagicEffectsFactory.GetValueOrDefault(MagicType.Name);
 
-            BombarderGame.Instance.MagicEffects.Add(new NonStaticOrb(Position.Copy(), Angle));
-        }
-        else if (MagicType == typeof(DissipationWave))
-        {
-            if (CheckUseMana(DissipationWave.ManaCost))
-            {
-                BombarderGame.Instance.MagicEffects.Add(new DissipationWave(SpawnPosition.Copy()));
-            }
-        }
-        else if (MagicType == typeof(ForceWave))
-        {
-            if (CheckUseMana(ForceWave.ManaCost))
-            {
-                BombarderGame.Instance.MagicEffects.Add(new ForceWave(SpawnPosition.Copy()));
-            }
-        }
-        else if (MagicType == typeof(ForceContainer))
-        {
-            if (CheckUseMana(ForceContainer.ManaCost))
-            {
-                BombarderGame.Instance.MagicEffects.Add(new ForceContainer(Position.Copy(), SpawnPosition.Copy()));
-            }
-        }
-        else if (MagicType == typeof(WideLaser))
-        {
-            // Calculating Angle
-            Vector2 Diff = SpawnPosition - Position;
-            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
+        MagicEffect MagicEffect = Factory?.Invoke(SpawnPosition, this);
 
-            BombarderGame.Instance.MagicEffects.Add(new WideLaser(Position.Copy(), Angle));
-        }
-        else if (MagicType == typeof(PlayerTeleport))
+        if (MagicEffect == null || !CheckUseMana(MagicEffect.ManaCost))
         {
-            if (CheckUseMana(PlayerTeleport.ManaCost))
-            {
-                BombarderGame.Instance.MagicEffects.Add(new PlayerTeleport(Position.Copy(), SpawnPosition));
-            }
+            return;
         }
+
+        BombarderGame.Instance.MagicEffects.Add(MagicEffect);
     }
 }

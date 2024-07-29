@@ -8,13 +8,11 @@ namespace Bombarder.MagicEffects;
 
 public class PlayerTeleport : MagicEffect
 {
-    public const int ManaCost = 150;
-
+    public override int ManaCost { get; protected set; } = 150;
     public const int DefaultDuration = 2;
     public const bool HasDurationWhenReached = true;
 
     public const float Speed = 80;
-    public Vector2 Goal;
     public bool GoalReacted = false;
     public bool JustStarted = true;
 
@@ -23,9 +21,8 @@ public class PlayerTeleport : MagicEffect
     public const int ParticleCountMax = 150;
     public const int ParticleCountMaxDistanceThreshold = 400;
 
-    public PlayerTeleport(Vector2 Position, Vector2 Goal) : base(Position)
+    public PlayerTeleport(Vector2 Goal) : base(Goal)
     {
-        this.Goal = Goal;
         Duration = DefaultDuration;
         HasDuration = false;
     }
@@ -34,7 +31,7 @@ public class PlayerTeleport : MagicEffect
     {
         if (JustStarted)
         {
-            CreateParticles();
+            CreateParticles(Player);
         }
 
         EnactMovement(Player);
@@ -47,7 +44,7 @@ public class PlayerTeleport : MagicEffect
 
     public void EnactMovement(Player Player)
     {
-        Vector2 Diff = Player.Position - Goal;
+        Vector2 Diff = Player.Position - Position;
         float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
         float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
         float AngleRadians = Angle * (float)(Math.PI / 180);
@@ -78,9 +75,9 @@ public class PlayerTeleport : MagicEffect
         Player.IsInvincible = false;
     }
 
-    public void CreateParticles()
+    public void CreateParticles(Player Player)
     {
-        Vector2 Diff = Position - Goal;
+        Vector2 Diff = Player.Position - Position;
         float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
 
         int Count = ParticleCountMed;
@@ -91,7 +88,7 @@ public class PlayerTeleport : MagicEffect
 
         for (int i = 0; i < BombarderGame.random.Next(ParticleCountMin, Count); i++)
         {
-            TeleportLine.SpawnBetween(BombarderGame.Instance.Particles, Position.Copy(), Goal.Copy());
+            TeleportLine.SpawnBetween(BombarderGame.Instance.Particles, Player.Position.Copy(), Position.Copy());
         }
     }
 }

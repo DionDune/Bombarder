@@ -566,7 +566,7 @@ public sealed class BombarderGame : Game
             Input.IsClickingRight = false;
         }
 
-        //Middle Click
+        // Middle Click
         if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
         {
             if (!Input.IsClickingMiddle)
