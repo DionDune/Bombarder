@@ -38,7 +38,7 @@ public class LaserLine : Particle
         DrawLater = true;
     }
 
-    public override void EnactParticle(uint Tick)
+    public override void Update(uint Tick)
     {
         EnactMovement();
     }

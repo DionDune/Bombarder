@@ -109,7 +109,7 @@ public sealed class BombarderGame : Game
 
     /////////////////////////////////////////
 
-    #region Game/Player state interaction
+    #region GameState interaction
 
     public void ResetGame()
     {
@@ -184,7 +184,7 @@ public sealed class BombarderGame : Game
         Graphics.ToggleFullScreen();
     }
 
-    private void UI_ChangePage(string PageType)
+    public void UI_ChangePage(string PageType)
     {
         GameState = PageType;
 
@@ -197,150 +197,6 @@ public sealed class BombarderGame : Game
         {
             UIPage_Current = Page;
         }
-    }
-
-    #endregion
-
-    #region Player
-
-    private void PlayerMovement_InputHandler(List<Keys> NewPresses)
-    {
-        bool? HeadingUp = null;
-        bool? HeadingLeft = null;
-
-
-        const float unBoostDivider = 1.05f;
-
-        float Speed = Player.BaseSpeed;
-        if (NewPresses.Contains(Keys.LeftShift))
-        {
-            Speed = Player.BaseSpeed * Player.BoostMultiplier;
-        }
-        else if (Player.Momentum.LengthSquared() > Player.BaseSpeed * Player.BaseSpeed)
-        {
-            // Player is now slowing down from boost
-            Speed = Player.Momentum.Length() / unBoostDivider;
-        }
-
-        Vector2 AccelerationVector = new();
-
-        //Upward
-        if (NewPresses.Contains(Keys.W))
-        {
-            AccelerationVector -= Vector2.UnitY;
-
-            if (!NewPresses.Contains(Keys.S))
-            {
-                HeadingUp = true;
-            }
-        }
-
-        //Downward
-        if (NewPresses.Contains(Keys.S))
-        {
-            AccelerationVector += Vector2.UnitY;
-            if (!NewPresses.Contains(Keys.W))
-            {
-                HeadingUp = false;
-            }
-        }
-
-        //Left
-        if (NewPresses.Contains(Keys.A))
-        {
-            AccelerationVector -= Vector2.UnitX;
-            if (!NewPresses.Contains(Keys.D))
-            {
-                HeadingLeft = true;
-            }
-        }
-
-        //Right
-        if (NewPresses.Contains(Keys.D))
-        {
-            AccelerationVector += Vector2.UnitX;
-            if (!NewPresses.Contains(Keys.A))
-            {
-                HeadingLeft = false;
-            }
-        }
-
-        if (AccelerationVector != Vector2.Zero)
-        {
-            AccelerationVector.Normalize();
-            AccelerationVector *= Player.Acceleration;
-        }
-
-        Vector2 DecelerationVector = new();
-
-        //Slowdown
-        if (!NewPresses.Contains(Keys.W) && !NewPresses.Contains(Keys.S) && Player.Momentum.Y != 0)
-        {
-            DecelerationVector.Y = MathF.Sign(Player.Momentum.Y);
-        }
-
-        if (!NewPresses.Contains(Keys.A) && !NewPresses.Contains(Keys.D) && Player.Momentum.X != 0)
-        {
-            DecelerationVector.X = MathF.Sign(Player.Momentum.X);
-        }
-
-        if (DecelerationVector != Vector2.Zero)
-        {
-            DecelerationVector.Normalize();
-            DecelerationVector *= Player.Slowdown;
-            // Do not decelerate player past 0
-            if (MathF.Abs(DecelerationVector.X) > MathF.Abs(Player.Momentum.X))
-            {
-                DecelerationVector.X = Player.Momentum.X;
-            }
-
-            if (MathF.Abs(DecelerationVector.Y) > MathF.Abs(Player.Momentum.Y))
-            {
-                DecelerationVector.Y = Player.Momentum.Y;
-            }
-        }
-
-        Player.Momentum += AccelerationVector - DecelerationVector;
-
-        if (HeadingUp != null && HeadingLeft != null)
-        {
-            if ((HeadingUp == true && Player.Momentum.Y > 0) || (HeadingUp == false && Player.Momentum.Y < 0))
-            {
-                Player.Momentum += new Vector2(0, AccelerationVector.Y - DecelerationVector.Y);
-            }
-
-            if ((HeadingLeft == true && Player.Momentum.X > 0) || (HeadingLeft == false && Player.Momentum.X < 0))
-            {
-                Player.Momentum += new Vector2(AccelerationVector.X - DecelerationVector.X, 0);
-            }
-        }
-
-        // Clamp momentum magnitude if it is greater than max speed
-        float LengthSquared = Player.Momentum.LengthSquared();
-        if (LengthSquared <= Speed * Speed)
-        {
-            return;
-        }
-
-        Player.Momentum = Vector2.Normalize(Player.Momentum);
-        Player.Momentum *= Speed;
-    }
-
-    private void PlayerMovement_EnactMomentum()
-    {
-        Player.Position += Player.Momentum;
-    }
-
-    private void CheckEnactPlayerDeath()
-    {
-        if (!Player.IsDead)
-        {
-            return;
-        }
-
-        Player.IsDead = false;
-        Player.Health = Player.HealthMax;
-        UI_ChangePage("DeathPage");
     }
 
     #endregion
@@ -410,7 +266,7 @@ public sealed class BombarderGame : Game
             });
     }
 
-    private void EnactEntities()
+    private void UpdateEntities()
     {
         if (!Settings.RunEntityAI)
         {
@@ -421,12 +277,8 @@ public sealed class BombarderGame : Game
         {
             Entity.EnactAI(Player);
         }
-
-        foreach (var Entity in EntitiesToAdd)
-        {
-            Entities.Add(Entity);
-        }
-
+        
+        EntitiesToAdd.ForEach(Entities.Add);
         EntitiesToAdd.Clear();
     }
 
@@ -594,13 +446,13 @@ public sealed class BombarderGame : Game
         List<Keys> Keys_NewlyPressed = Keyboard.GetState().GetPressedKeys().ToList();
 
 
-        //Toggle Fullscreen
+        // Toggle Fullscreen
         if (IsNewlyPressed(Keys_NewlyPressed, Keys.F))
         {
             Window_ToggleFullscreen();
         }
 
-        //Toggle Pause
+        // Toggle Pause
         if (IsNewlyPressed(Keys_NewlyPressed, Keys.Escape))
         {
             TogglePause();
@@ -608,9 +460,8 @@ public sealed class BombarderGame : Game
 
         if (GameState == "PlayPage")
         {
-            //Movement
-            PlayerMovement_InputHandler(Keys_NewlyPressed);
-
+            // Movement
+            Player.HandleKeypress(Keys_NewlyPressed);
 
             //Enemy Spawning
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.V))
@@ -792,16 +643,14 @@ public sealed class BombarderGame : Game
         if (GameState == "PlayPage")
         {
             //Player Interaction
-            PlayerMovement_EnactMomentum();
-            Player.Handler();
-            CheckEnactPlayerDeath();
+            Player.Update();
 
             //Entity Functions
-            EnactEntities();
+            UpdateEntities();
             Entity.PurgeDead(Entities, Player);
             //Particles
             Particle.EnactDuration(Particles);
-            Particle.EnactParticles(Particles, GameTick);
+            Particle.Update(Particles, GameTick);
             Particle.SpawnParticles(Particles, Player.Position, Graphics, GameTick);
 
             //Magic Functions
@@ -814,7 +663,7 @@ public sealed class BombarderGame : Game
 
     protected override void Draw(GameTime GameTime)
     {
-        if (!Settings.TranceMode || (Settings.TranceMode && Settings.TranceModeClearScreen))
+        if (!Settings.TranceMode || Settings.TranceModeClearScreen)
             GraphicsDevice.Clear(Settings.BackgroundColor);
 
         // BEGIN Draw ----
@@ -827,36 +676,32 @@ public sealed class BombarderGame : Game
         );
 
 
-        //Particles
+        // Particles
         foreach (var Particle in Particles.Where(Particle => !Particle.DrawLater))
         {
             Particle.Draw();
         }
 
 
-        //Grid
+        // Grid
         if (GameState == "PlayPage" || Settings.TranceMode)
         {
             DrawGrid();
         }
 
-        //Ingame
+        // Ingame
         if (GameState == "PlayPage")
         {
-            //Player
-            SpriteBatch.Draw(Textures.White, new Rectangle(
-                Graphics.PreferredBackBufferWidth / 2 - Player.Width / 2,
-                Graphics.PreferredBackBufferHeight / 2 - Player.Height / 2,
-                Player.Width, Player.Height), Color.Red);
+            // Player
+            Player.Draw();
 
-
-            //Entities
+            // Entities
             foreach (Entity Entity in Entities)
             {
                 Entity.Draw();
             }
 
-            //Magic
+            // Magic
             foreach (MagicEffect Effect in MagicEffects)
             {
                 Effect.Draw();
@@ -877,28 +722,28 @@ public sealed class BombarderGame : Game
                 }
                 else
                 {
-                    //Top Line
+                    // Top Line
                     SpriteBatch.Draw(Textures.White, new Rectangle(
                         (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
                               Player.Position.X),
                         (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
                               Player.Position.Y),
                         Effect.RadiusSize.X * 2, 2), Color.White);
-                    //Bottom Line
+                    // Bottom Line
                     SpriteBatch.Draw(Textures.White, new Rectangle(
                         (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
                               Player.Position.X),
                         (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 +
                             Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
                         Effect.RadiusSize.X * 2, 2), Color.White);
-                    //Left Line
+                    // Left Line
                     SpriteBatch.Draw(Textures.White, new Rectangle(
                         (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
                               Player.Position.X),
                         (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
                               Player.Position.Y),
                         2, Effect.RadiusSize.Y * 2), Color.White);
-                    //Right Line
+                    // Right Line
                     SpriteBatch.Draw(Textures.White, new Rectangle(
                         (int)(Effect.Position.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 +
                             Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
@@ -908,104 +753,10 @@ public sealed class BombarderGame : Game
                 }
             }
 
-
-            //Health Bar
-            if (!Player.HealthInfinite && Player.Health < Player.HealthMax)
-            {
-                Point OrientPos = Player.ManaBarScreenOrientation.ToPoint(Graphics);
-                float HealthPercent = (float)Player.Health / Player.HealthMax;
-
-                Point HealthBarContainerPos = new Point(
-                    OrientPos.X + Player.HealthBarOffset.X - 2,
-                    OrientPos.Y + Player.HealthBarOffset.Y - Player.HealthBarDimensions.Y - 2
-                );
-                Point HealthBarPos = new Point(
-                    OrientPos.X + Player.HealthBarOffset.X,
-                    OrientPos.Y + Player.HealthBarOffset.Y - (int)(Player.HealthBarDimensions.Y * HealthPercent)
-                );
-                Point HealthBarDimensionsWithOffset = new Point(
-                    Player.HealthBarDimensions.X + 4,
-                    Player.HealthBarDimensions.Y + 4
-                );
-
-                SpriteBatch.Draw(
-                    Textures.White,
-                    new Rectangle(HealthBarContainerPos, HealthBarDimensionsWithOffset),
-                    Color.White * 0.3F
-                );
-
-                UIPage.RenderOutline(
-                    SpriteBatch,
-                    Textures.White,
-                    Color.White,
-                    HealthBarContainerPos,
-                    HealthBarDimensionsWithOffset.X,
-                    HealthBarDimensionsWithOffset.Y,
-                    2,
-                    1F
-                );
-
-                SpriteBatch.Draw(
-                    Textures.White,
-                    new Rectangle(
-                        HealthBarPos.X,
-                        HealthBarPos.Y,
-                        Player.HealthBarDimensions.X,
-                        (int)(Player.HealthBarDimensions.Y * HealthPercent)
-                    ),
-                    Color.Red
-                );
-            }
-
-            //Mana Bar
-            if (!Player.ManaInfinite && Player.Mana < Player.ManaMax)
-            {
-                Point OrientPos = Player.ManaBarScreenOrientation.ToPoint(Graphics);
-                float ManaPercent = (float)Player.Mana / Player.ManaMax;
-
-                Point ManaContainerPos = new Point(
-                    OrientPos.X + Player.ManaBarOffset.X - 2,
-                    OrientPos.Y + Player.ManaBarOffset.Y - Player.ManaBarDimensions.Y - 2
-                );
-                Point ManaBarPos = new Point(
-                    OrientPos.X + Player.ManaBarOffset.X,
-                    OrientPos.Y + Player.ManaBarOffset.Y - (int)(Player.ManaBarDimensions.Y * ManaPercent)
-                );
-                Point ManaBarDimensionsWithOffset = new Point(
-                    Player.ManaBarDimensions.X + 4,
-                    Player.ManaBarDimensions.Y + 4
-                );
-
-                SpriteBatch.Draw(
-                    Textures.White,
-                    new Rectangle(ManaContainerPos, ManaBarDimensionsWithOffset),
-                    Color.White * 0.3F
-                );
-                UIPage.RenderOutline(
-                    SpriteBatch,
-                    Textures.White,
-                    Color.White,
-                    ManaContainerPos,
-                    ManaBarDimensionsWithOffset.X,
-                    ManaBarDimensionsWithOffset.Y,
-                    2,
-                    1F
-                );
-
-                SpriteBatch.Draw(
-                    Textures.White,
-                    new Rectangle(
-                        ManaBarPos.X,
-                        ManaBarPos.Y,
-                        Player.ManaBarDimensions.X,
-                        (int)(Player.ManaBarDimensions.Y * ManaPercent)
-                    ),
-                    Color.Blue
-                );
-            }
+            Player.DrawBars();
         }
 
-        //Later Particles
+        // Later Particles
         foreach (var Particle in Particles.Where(Particle => Particle.DrawLater))
         {
             Particle.Draw();
@@ -1014,7 +765,7 @@ public sealed class BombarderGame : Game
 
         UIPage_Current.RenderElements(SpriteBatch, Graphics, Textures);
 
-        //Cursor
+        // Cursor
         SpriteBatch.Draw(Textures.Cursor, new Rectangle(
             Mouse.GetState().X - (int)(Textures.Cursor.Width / 2F * Settings.CursorSizeMultiplier),
             Mouse.GetState().Y - (int)(Textures.Cursor.Height / 2F * Settings.CursorSizeMultiplier),

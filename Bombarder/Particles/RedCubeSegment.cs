@@ -34,7 +34,7 @@ public class RedCubeSegment : Particle
         }
     }
 
-    public override void EnactParticle(uint Tick)
+    public override void Update(uint Tick)
     {
         EnactMovement();
     }

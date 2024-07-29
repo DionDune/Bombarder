@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Bombarder.Entities;
 using Bombarder.MagicEffects;
+using Bombarder.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Bombarder;
 
@@ -44,7 +45,7 @@ public class Player
     public bool ManaBarVisible { get; set; }
 
     public Point HealthBarDimensions { get; set; }
-    public string HealthBarScreenOrientation { get; set; }
+    public Orientation HealthBarScreenOrientation { get; set; }
     public Point HealthBarOffset { get; set; }
     public bool HealthBarHorizontalFill { get; set; }
     public bool HealthBarVisible { get; set; }
@@ -77,17 +78,291 @@ public class Player
         ManaBarOffset = new Point(20, -20);
         ManaBarHorizontalFill = false;
         ManaBarVisible = true;
+
         HealthBarDimensions = new Point(25, 450);
-        ManaBarScreenOrientation = Orientation.BOTTOM_LEFT;
+        HealthBarScreenOrientation = Orientation.BOTTOM_LEFT;
         HealthBarOffset = new Point(75, -20);
+        HealthBarHorizontalFill = false;
         HealthBarVisible = true;
+    }
+
+    public void Update()
+    {
+        Position += Momentum;
+        UpdateMana();
+        UpdateHealth();
+        CheckDeath();
+    }
+
+    public void Draw()
+    {
+        var Game = BombarderGame.Instance;
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            new Rectangle(
+                Game.Graphics.PreferredBackBufferWidth / 2 - Width / 2,
+                Game.Graphics.PreferredBackBufferHeight / 2 - Height / 2,
+                Width,
+                Height
+            ),
+            Color.Red
+        );
+    }
+    
+    public void DrawBars()
+    {
+        DrawHealthBar();
+        DrawManaBar();
+    }
+
+    public void DrawHealthBar()
+    {
+        if (HealthInfinite || Health >= HealthMax)
+        {
+            return;
+        }
+
+        var Game = BombarderGame.Instance;
+
+        Point OrientPos = ManaBarScreenOrientation.ToPoint(Game.Graphics);
+        float HealthPercent = (float)Health / HealthMax;
+
+        Point HealthBarContainerPos = new Point(
+            OrientPos.X + HealthBarOffset.X - 2,
+            OrientPos.Y + HealthBarOffset.Y - HealthBarDimensions.Y - 2
+        );
+        Point HealthBarPos = new Point(
+            OrientPos.X + HealthBarOffset.X,
+            OrientPos.Y + HealthBarOffset.Y - (int)(HealthBarDimensions.Y * HealthPercent)
+        );
+        Point HealthBarDimensionsWithOffset = new Point(
+            HealthBarDimensions.X + 4,
+            HealthBarDimensions.Y + 4
+        );
+        
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            new Rectangle(HealthBarContainerPos, HealthBarDimensionsWithOffset),
+            Color.White * 0.3F
+        );
+
+        UIPage.RenderOutline(
+            Game.SpriteBatch,
+            Game.Textures.White,
+            Color.White,
+            HealthBarContainerPos,
+            HealthBarDimensionsWithOffset.X,
+            HealthBarDimensionsWithOffset.Y,
+            2,
+            1F
+        );
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            new Rectangle(
+                HealthBarPos.X,
+                HealthBarPos.Y,
+                HealthBarDimensions.X,
+                (int)(HealthBarDimensions.Y * HealthPercent)
+            ),
+            Color.Red
+        );
+    }
+
+    public void DrawManaBar()
+    {
+        if (ManaInfinite || Mana >= ManaMax)
+        {
+            return;
+        }
+
+        var Game = BombarderGame.Instance;
+
+        Point OrientPos = ManaBarScreenOrientation.ToPoint(Game.Graphics);
+        float ManaPercent = (float)Mana / ManaMax;
+
+        Point ManaContainerPos = new Point(
+            OrientPos.X + ManaBarOffset.X - 2,
+            OrientPos.Y + ManaBarOffset.Y - ManaBarDimensions.Y - 2
+        );
+        Point ManaBarPos = new Point(
+            OrientPos.X + ManaBarOffset.X,
+            OrientPos.Y + ManaBarOffset.Y - (int)(ManaBarDimensions.Y * ManaPercent)
+        );
+        Point ManaBarDimensionsWithOffset = new Point(
+            ManaBarDimensions.X + 4,
+            ManaBarDimensions.Y + 4
+        );
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            new Rectangle(ManaContainerPos, ManaBarDimensionsWithOffset),
+            Color.White * 0.3F
+        );
+        UIPage.RenderOutline(
+            Game.SpriteBatch,
+            Game.Textures.White,
+            Color.White,
+            ManaContainerPos,
+            ManaBarDimensionsWithOffset.X,
+            ManaBarDimensionsWithOffset.Y,
+            2,
+            1F
+        );
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            new Rectangle(
+                ManaBarPos.X,
+                ManaBarPos.Y,
+                ManaBarDimensions.X,
+                (int)(ManaBarDimensions.Y * ManaPercent)
+            ),
+            Color.Blue
+        );
+    }
+
+    public void HandleKeypress(List<Keys> NewPresses)
+    {
+        bool? HeadingUp = null;
+        bool? HeadingLeft = null;
+
+
+        const float unBoostDivider = 1.05f;
+
+        float Speed = BaseSpeed;
+        if (NewPresses.Contains(Keys.LeftShift))
+        {
+            Speed = BaseSpeed * BoostMultiplier;
+        }
+        else if (Momentum.LengthSquared() > BaseSpeed * BaseSpeed)
+        {
+            // Player is now slowing down from boost
+            Speed = Momentum.Length() / unBoostDivider;
+        }
+
+        Vector2 AccelerationVector = new();
+
+        // Upward
+        if (NewPresses.Contains(Keys.W))
+        {
+            AccelerationVector -= Vector2.UnitY;
+
+            if (!NewPresses.Contains(Keys.S))
+            {
+                HeadingUp = true;
+            }
+        }
+
+        // Downward
+        if (NewPresses.Contains(Keys.S))
+        {
+            AccelerationVector += Vector2.UnitY;
+            if (!NewPresses.Contains(Keys.W))
+            {
+                HeadingUp = false;
+            }
+        }
+
+        // Left
+        if (NewPresses.Contains(Keys.A))
+        {
+            AccelerationVector -= Vector2.UnitX;
+            if (!NewPresses.Contains(Keys.D))
+            {
+                HeadingLeft = true;
+            }
+        }
+
+        // Right
+        if (NewPresses.Contains(Keys.D))
+        {
+            AccelerationVector += Vector2.UnitX;
+            if (!NewPresses.Contains(Keys.A))
+            {
+                HeadingLeft = false;
+            }
+        }
+
+        if (AccelerationVector != Vector2.Zero)
+        {
+            AccelerationVector.Normalize();
+            AccelerationVector *= Acceleration;
+        }
+
+        Vector2 DecelerationVector = new();
+
+        // Slowdown
+        if (!NewPresses.Contains(Keys.W) && !NewPresses.Contains(Keys.S) && Momentum.Y != 0)
+        {
+            DecelerationVector.Y = MathF.Sign(Momentum.Y);
+        }
+
+        if (!NewPresses.Contains(Keys.A) && !NewPresses.Contains(Keys.D) && Momentum.X != 0)
+        {
+            DecelerationVector.X = MathF.Sign(Momentum.X);
+        }
+
+        if (DecelerationVector != Vector2.Zero)
+        {
+            DecelerationVector.Normalize();
+            DecelerationVector *= Slowdown;
+            // Do not decelerate player past 0
+            if (MathF.Abs(DecelerationVector.X) > MathF.Abs(Momentum.X))
+            {
+                DecelerationVector.X = Momentum.X;
+            }
+
+            if (MathF.Abs(DecelerationVector.Y) > MathF.Abs(Momentum.Y))
+            {
+                DecelerationVector.Y = Momentum.Y;
+            }
+        }
+
+        Momentum += AccelerationVector - DecelerationVector;
+
+        if (HeadingUp != null && HeadingLeft != null)
+        {
+            if ((HeadingUp == true && Momentum.Y > 0) || (HeadingUp == false && Momentum.Y < 0))
+            {
+                Momentum += new Vector2(0, AccelerationVector.Y - DecelerationVector.Y);
+            }
+
+            if ((HeadingLeft == true && Momentum.X > 0) || (HeadingLeft == false && Momentum.X < 0))
+            {
+                Momentum += new Vector2(AccelerationVector.X - DecelerationVector.X, 0);
+            }
+        }
+
+        // Clamp momentum magnitude if it is greater than max speed
+        float LengthSquared = Momentum.LengthSquared();
+        if (LengthSquared <= Speed * Speed)
+        {
+            return;
+        }
+
+        Momentum = Vector2.Normalize(Momentum);
+        Momentum *= Speed;
+    }
+
+    private void CheckDeath()
+    {
+        if (!IsDead)
+        {
+            return;
+        }
+
+        IsDead = false;
+        Health = HealthMax;
+        BombarderGame.Instance.UI_ChangePage("DeathPage");
     }
 
     public void ToggleInvincibility()
     {
         IsInvincible = !IsInvincible;
     }
-    
+
     public void ToggleInfiniteMana()
     {
         ManaInfinite = !ManaInfinite;
@@ -118,13 +393,7 @@ public class Player
         );
     }
 
-    public void Handler()
-    {
-        ManaHandler();
-        HealthHandler();
-    }
-
-    private void HealthHandler()
+    private void UpdateHealth()
     {
         if (Health < HealthMax && BombarderGame.Instance.GameTick % HealthRegainInterval == 0)
         {
@@ -169,7 +438,7 @@ public class Player
         }
     }
 
-    public void ManaHandler()
+    public void UpdateMana()
     {
         if (Mana >= ManaMax || BombarderGame.Instance.GameTick % ManaRegainInterval != 0)
         {

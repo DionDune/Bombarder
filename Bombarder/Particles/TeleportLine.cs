@@ -42,7 +42,7 @@ public class TeleportLine : Particle
         DrawLater = true;
     }
 
-    public override void EnactParticle(uint Tick)
+    public override void Update(uint Tick)
     {
         EnactOpacityChange();
     }

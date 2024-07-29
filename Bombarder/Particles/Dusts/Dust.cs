@@ -28,7 +28,7 @@ public class Dust : Particle
     }
 
 
-    public override void EnactParticle(uint Tick)
+    public override void Update(uint Tick)
     {
         EnactOpacityChange(Tick);
     }

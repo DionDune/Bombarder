@@ -44,11 +44,11 @@ public abstract class Particle
         }
     }
 
-    public static void EnactParticles(List<Particle> Particles, uint Tick)
+    public static void Update(List<Particle> Particles, uint Tick)
     {
         foreach (Particle Particle in Particles)
         {
-            Particle.EnactParticle(Tick);
+            Particle.Update(Tick);
         }
     }
 
@@ -61,7 +61,7 @@ public abstract class Particle
         Dust.Spawn(Particles, PlayerPos, ClutterSpawnRangeX, ClutterSpawnRangeY, Tick);
     }
 
-    public virtual void EnactParticle(uint Tick)
+    public virtual void Update(uint Tick)
     {
     }
 
