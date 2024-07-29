@@ -46,8 +46,7 @@ public class PlayerTeleport : MagicEffect
     {
         Vector2 Diff = Player.Position - Position;
         float Distance = Utils.HypotF(Diff);
-        float Angle = MathF.Atan2(Diff.Y, Diff.X) * 180F / MathF.PI;
-        float AngleRadians = Angle * (MathF.PI / 180F);
+        float Angle = MathF.Atan2(Diff.Y, Diff.X);
 
         float DistanceToMove = Speed;
 
@@ -57,8 +56,7 @@ public class PlayerTeleport : MagicEffect
             GoalReacted = true;
         }
 
-        Player.Position -=
-            new Vector2(DistanceToMove * MathF.Cos(AngleRadians), DistanceToMove * MathF.Sin(AngleRadians));
+        Player.Position -= new Vector2(DistanceToMove * MathF.Cos(Angle), DistanceToMove * MathF.Sin(Angle));
         Player.IsInvincible = true;
 
         JustStarted = false;

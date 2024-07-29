@@ -97,12 +97,11 @@ public class ForceWave : MagicEffect
             }
 
             Vector2 InverseDiff = Entity.Position - Position;
-            float Angle = (MathF.Atan2(InverseDiff.Y, InverseDiff.X) * 180F / MathF.PI);
-            float AngleRadians = Angle * MathF.PI / 180F;
+            float Angle = MathF.Atan2(InverseDiff.Y, InverseDiff.X);
 
             Vector2 PositionChange = new Vector2(
-                (Radius - Distance) * MathF.Cos(AngleRadians),
-                (Radius - Distance) * MathF.Sin(AngleRadians)
+                (Radius - Distance) * MathF.Cos(Angle),
+                (Radius - Distance) * MathF.Sin(Angle)
             );
 
             Entity.Position += PositionChange;

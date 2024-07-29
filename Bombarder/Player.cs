@@ -384,7 +384,7 @@ public class Player
     public void SetRandomLocalPosition(int MinDistance, int MaxDistance)
     {
         int Angle = BombarderGame.random.Next(0, 360);
-        float AngleRadians = Angle * (MathF.PI / 180F);
+        float AngleRadians = Utils.ToRadians(Angle);
         int Distance = BombarderGame.random.Next(MinDistance, MaxDistance);
 
         Position += new Vector2(

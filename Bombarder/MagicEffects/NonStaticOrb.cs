@@ -25,7 +25,7 @@ public class NonStaticOrb : MagicEffect
     public NonStaticOrb(Vector2 Position, Vector2 Destination) : base(Position)
     {
         Vector2 DestinationDiff = Destination - Position;
-        Angle = MathF.Atan2(DestinationDiff.Y, DestinationDiff.X) * 180F / MathF.PI;
+        Angle = Utils.ToDegrees(MathF.Atan2(DestinationDiff.Y, DestinationDiff.X));
         Duration = DefaultDuration;
         Velocity = DefaultVelocity;
     }
@@ -48,7 +48,7 @@ public class NonStaticOrb : MagicEffect
 
     private void EnactVelocity()
     {
-        float AngleRadians = Angle * MathF.PI / 180F;
+        float AngleRadians = Utils.ToRadians(Angle);
 
         Position += new Vector2(
             Velocity * MathF.Cos(AngleRadians),

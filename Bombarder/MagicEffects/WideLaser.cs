@@ -33,7 +33,7 @@ public class WideLaser : MagicEffect
     public WideLaser(Vector2 Position, Vector2 Destination) : base(Position)
     {
         Vector2 DestinationDiff = Destination - Position;
-        Angle = MathF.Atan2(DestinationDiff.Y, DestinationDiff.X) * 180F / MathF.PI;
+        Angle = Utils.ToDegrees(MathF.Atan2(DestinationDiff.Y, DestinationDiff.X));
         Duration = DefaultDuration;
     }
 
@@ -62,8 +62,8 @@ public class WideLaser : MagicEffect
         }
 
         // Old
-        // float AngleRadians = Angle * (MathF.PI / 180F);
-        // float RightAngleRadians = (Angle + 90) * (MathF.PI / 180F);
+        // float AngleRadians = Utils.ToRadians(Angle);
+        // float RightAngleRadians = Utils.ToRadians(Angle + 90);
         //
         // Vector2 LeftLine = new Vector2(
         //     BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F - Width / 2F * MathF.Cos(RightAngleRadians),
@@ -88,9 +88,9 @@ public class WideLaser : MagicEffect
 
         // New accounting for Laser Spread
         float TrueSpread = Spread * TrueSpreadMultiplier;
-        float AngleRadians = Angle * (MathF.PI / 180F);
-        float AngleRadiansLeft = (Angle - TrueSpread) * MathF.PI / 180F;
-        float AngleRadiansRight = (Angle + TrueSpread) * MathF.PI / 180F;
+        float AngleRadians = Utils.ToRadians(Angle);
+        float AngleRadiansLeft = Utils.ToRadians(Angle - TrueSpread);
+        float AngleRadiansRight = Utils.ToRadians(Angle + TrueSpread);
 
         Vector2 Start = new(
             Position.X + BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
@@ -106,7 +106,7 @@ public class WideLaser : MagicEffect
 
     private void EnactDamage(Player Player, List<Entity> Entities, uint Tick)
     {
-        float AngleRadians = Angle * MathF.PI / 180F;
+        float AngleRadians = Utils.ToRadians(Angle);
 
         float XDiff;
         float YDiff;
@@ -125,7 +125,7 @@ public class WideLaser : MagicEffect
         }
 
         //Calculate radius of the Lasers Spread every 1 Distance
-        float SpreadValue = MathF.Sin(Spread * MathF.PI / 180F);
+        float SpreadValue = MathF.Sin(Utils.ToRadians(Spread));
 
         foreach (Entity Entity in Entities)
         {
@@ -165,7 +165,7 @@ public class WideLaser : MagicEffect
         int Count = BombarderGame.random.Next(1, 4);
 
         // Central Laser
-        AngleRadians = (Angle + (float)BombarderGame.random.Next(-Spread * 10, Spread * 10) / 10) * MathF.PI / 180F;
+        AngleRadians = Utils.ToRadians(Angle + (float)BombarderGame.random.Next(-Spread * 10, Spread * 10) / 10);
         BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
         {
             HasDuration = true,
@@ -179,9 +179,9 @@ public class WideLaser : MagicEffect
         // Others
         for (int i = 0; i < Count; i++)
         {
-            AngleRadians =
-                (Angle + BombarderGame.random.Next(-LaserLine.AngleSpreadRange, LaserLine.AngleSpreadRange)) *
-                MathF.PI / 180F;
+            AngleRadians = Utils.ToRadians(
+                Angle + BombarderGame.random.Next(-LaserLine.AngleSpreadRange, LaserLine.AngleSpreadRange)
+            );
 
             BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
             {

@@ -229,7 +229,7 @@ public sealed class BombarderGame : Game
         if (RandomLocation)
             //Spawns randomly from edges of screen
         {
-            float SpawnAngle = random.Next(0, 360) * MathF.PI / 180F;
+            float SpawnAngle = Utils.ToRadians(random.Next(0, 360));
             int SpawnDistance = random.Next(
                 (int)(Graphics.PreferredBackBufferWidth * 0.6F),
                 (int)(Graphics.PreferredBackBufferWidth * 1.2)
@@ -394,8 +394,7 @@ public sealed class BombarderGame : Game
                     {
                         float XDiff = Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F;
                         float YDiff = Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F;
-                        float Angle = MathF.Atan2(YDiff, XDiff) * 180F / MathF.PI;
-                        Effect.Angle = Angle;
+                        Effect.Angle = Utils.ToDegrees(MathF.Atan2(YDiff, XDiff));
                         Effect.Position = Player.Position.Copy();
                     }
                 }
@@ -615,7 +614,7 @@ public sealed class BombarderGame : Game
         bool Centered,
         Color Color)
     {
-        float AngleRadians = Angle * MathF.PI / 180F;
+        float AngleRadians = Utils.ToRadians(Angle);
 
         var Origin = new Vector2(0f, 0.5f);
         Vector2 Scale = new Vector2(Width, Height);

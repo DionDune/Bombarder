@@ -79,8 +79,7 @@ public class ForceContainer : MagicEffect
         {
             Vector2 Diff = Destination - Position;
             float Distance = Utils.HypotF(Diff);
-            float Angle = MathF.Atan2(Diff.Y, Diff.X) * 180F / MathF.PI;
-            float AngleRadians = Angle * MathF.PI / 180F;
+            float Angle = MathF.Atan2(Diff.Y, Diff.X);
 
             if (Distance <= MovementSpeed)
             {
@@ -91,8 +90,8 @@ public class ForceContainer : MagicEffect
             else
             {
                 Position += new Vector2(
-                    MovementSpeed * MathF.Cos(AngleRadians),
-                    MovementSpeed * MathF.Sin(AngleRadians)
+                    MovementSpeed * MathF.Cos(Angle),
+                    MovementSpeed * MathF.Sin(Angle)
                 );
             }
         }
@@ -140,12 +139,11 @@ public class ForceContainer : MagicEffect
             }
 
             Vector2 InverseDiff = Entity.Position - Position;
-            float Angle = MathF.Atan2(InverseDiff.Y, InverseDiff.X) * 180F / MathF.PI;
-            float AngleRadians = Angle * MathF.PI / 180F;
+            float Angle = MathF.Atan2(InverseDiff.Y, InverseDiff.X);
 
             Vector2 PositionChange = new Vector2(
-                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * MathF.Cos(AngleRadians),
-                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * MathF.Sin(AngleRadians)
+                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * MathF.Cos(Angle),
+                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * MathF.Sin(Angle)
             );
 
             Entity.Position -= PositionChange;

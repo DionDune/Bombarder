@@ -81,7 +81,7 @@ public class CubeMother : Entity
             return;
         }
 
-        float SpawnAngle = BombarderGame.random.Next(0, 360) * (MathF.PI / 180F);
+        float SpawnAngle = Utils.ToRadians(BombarderGame.random.Next(0, 360));
         int SpawnDistance = BombarderGame.random.Next(SpawnDistanceMin, SpawnDistanceMax);
         Vector2 SpawnPoint = new Vector2(
             Position.X + SpawnDistance * MathF.Cos(SpawnAngle),

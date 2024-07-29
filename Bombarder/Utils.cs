@@ -37,4 +37,10 @@ public static class Utils
     public static float HypotF(params double[] Values) => (float)Hypot(Values);
     public static float HypotF(params Vector2[] Vectors) => (float)Hypot(Vectors);
     public static float HypotF(params Point[] Points) => (float)Hypot(Points);
+
+    public const double Radian = Math.PI / 180;
+    public static double ToRadians(double Degree) => Degree * Radian;
+    public static float ToRadians(float Degree) => Degree * (float)Radian;
+    public static double ToDegrees(double Radians) => Radians / Radian;
+    public static float ToDegrees(float Radians) => Radians / (float)Radian;
 }
