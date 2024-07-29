@@ -100,8 +100,8 @@ public abstract class Entity
                 RedCube.CreateDeathParticles();
             }
 
+            Entity.GiveKillReward(Player);
             Entities.Remove(Entity);
-            Player.GiveKillReward(Entity);
         }
     }
 

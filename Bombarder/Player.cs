@@ -88,26 +88,26 @@ public class Player
         IsInvincible = !IsInvincible;
     }
 
-    public static void SetDefaultStats(Player Player)
+    public void SetDefaultStats()
     {
-        Player.Health = Player.HealthMax;
-        Player.Mana = Player.ManaMax;
+        Health = HealthMax;
+        Mana = ManaMax;
 
-        Player.Momentum = new Vector2();
+        Momentum = new Vector2();
     }
 
-    public static void ResetPosition(Player Player)
+    public void ResetPosition()
     {
-        Player.Position = new Vector2();
+        Position = new Vector2();
     }
 
-    public static void SetRandomLocalPosition(Player Player, int MinDistance, int MaxDistance)
+    public void SetRandomLocalPosition(int MinDistance, int MaxDistance)
     {
         int Angle = BombarderGame.random.Next(0, 360);
         float AngleRadians = Angle * (float)(Math.PI / 180);
         int Distance = BombarderGame.random.Next(MinDistance, MaxDistance);
 
-        Player.Position += new Vector2(
+        Position += new Vector2(
             (int)(Distance * (float)Math.Cos(AngleRadians)),
             (int)(Distance * (float)Math.Sin(AngleRadians))
         );
@@ -207,11 +207,6 @@ public class Player
         {
             Mana = ManaMax;
         }
-    }
-
-    public void GiveKillReward(Entity Entity)
-    {
-        Entity.GiveKillReward(this);
     }
 
     public void CreateMagic(Vector2 SpawnPosition, Type MagicType)

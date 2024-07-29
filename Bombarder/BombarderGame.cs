@@ -121,14 +121,14 @@ public sealed class BombarderGame : Game
         MagicEffects.Clear();
         SelectedEffects.Clear();
 
-        Player.SetDefaultStats(Player);
-        Player.ResetPosition(Player);
+        Player.SetDefaultStats();
+        Player.ResetPosition();
     }
 
     public void ResurrectPlayer()
     {
-        Player.SetDefaultStats(Player);
-        Player.SetRandomLocalPosition(Player, 500, 1000);
+        Player.SetDefaultStats();
+        Player.SetRandomLocalPosition(500, 1000);
         UI_ChangePage("PlayPage");
     }
 
