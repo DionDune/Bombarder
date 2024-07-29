@@ -1,10 +1,26 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Bombarder.UI.Items;
 
 public class ButtonUIElement : UIItem
 {
+    public Action[] Functions { get; set; }
+
+    public ButtonUIElement(params Action[] Functions)
+    {
+        this.Functions = Functions;
+    }
+
+    public override void Click()
+    {
+        foreach (Action Function in Functions)
+        {
+            Function();
+        }
+    }
+
     public override void Draw(
         SpriteBatch SpriteBatch,
         GraphicsDeviceManager Graphics,

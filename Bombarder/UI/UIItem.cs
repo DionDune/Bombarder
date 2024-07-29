@@ -35,7 +35,6 @@ public abstract class UIItem
     public int MaxValue { get; set; } = 1;
     public int Value { get; set; } = 0;
 
-    public List<string> Data { get; set; } = null;
     public List<int> NumericalData { get; set; } = null;
 
 
@@ -57,6 +56,11 @@ public abstract class UIItem
         Point StartPosition = OrientationPosition + Position.ToPoint();
         
         return new Rectangle(StartPosition, new Point(Width, Height));
+    }
+
+    public virtual void Click()
+    {
+        
     }
 
     public abstract void Draw(

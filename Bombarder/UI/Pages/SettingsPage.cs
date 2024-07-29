@@ -11,7 +11,7 @@ public class SettingsPage : UIPage
         UIItems = new List<UIItem>
         {
             // Resume Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.ResumeGame())
             {
                 Orientation = Orientation.BOTTOM,
                 Position = new Vector2(-300, -225),
@@ -29,11 +29,9 @@ public class SettingsPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Resume" }
             },
             // Player Invincibility Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.Player.ToggleInvincibility())
             {
                 Orientation = Orientation.TOP_LEFT,
                 Position = new Vector2(25, 250),
@@ -51,8 +49,6 @@ public class SettingsPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "PLAYER INVINCIBLE" }
             },
             // Title Message
             new TextUIElement

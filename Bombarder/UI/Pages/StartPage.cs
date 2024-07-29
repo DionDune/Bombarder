@@ -11,7 +11,7 @@ public class StartPage : UIPage
         UIItems = new List<UIItem>
         {
             // Start Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.StartNewGame())
             {
                 Position = new Vector2(-200, -75),
 
@@ -28,11 +28,9 @@ public class StartPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Start New" }
             },
             // Quit Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.Exit())
             {
                 Position = new Vector2(-200, 100),
 
@@ -49,8 +47,6 @@ public class StartPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Quit" }
             },
             // Start Message
             new TextUIElement

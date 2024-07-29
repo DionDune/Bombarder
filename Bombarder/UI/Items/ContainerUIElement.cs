@@ -84,7 +84,7 @@ public class ContainerUIElement : UIItem
             );
 
             // Hotbar Item
-            if (!Data.Contains("Hotbar") || InnerItem.NumericalData[0] <= 0)
+            if (InnerItem.NumericalData[0] <= 0)
             {
                 continue;
             }

@@ -11,7 +11,7 @@ public class PausePage : UIPage
         UIItems = new List<UIItem>
         {
             // Resume Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.ResumeGame())
             {
                 Position = new Vector2(-200, -75),
 
@@ -29,11 +29,9 @@ public class PausePage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Resume" }
             },
             // Settings Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.OpenSettings())
             {
                 Position = new Vector2(-200, 100),
 
@@ -51,11 +49,9 @@ public class PausePage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Settings" }
             },
             // Quit Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.Exit())
             {
                 Position = new Vector2(-200, 275),
 
@@ -73,8 +69,6 @@ public class PausePage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Quit" }
             },
             // Title Message
             new TextUIElement

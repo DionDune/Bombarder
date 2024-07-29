@@ -19,7 +19,7 @@ public class Player
     public float Slowdown { get; set; }
     public Rectangle HitBox => new((int)Position.X - Width / 2, (int)Position.Y - Height / 2, Width, Height);
 
-    public bool IsImmune = false;
+    public bool IsInvincible;
     public bool IsDead = false;
     public int Health { get; set; }
     public int HealthMax { get; set; }
@@ -81,6 +81,11 @@ public class Player
         HealthBarOffset = new Point(75, -20);
         HealthBarVisible = true;
     }
+    
+    public void ToggleInvincibility()
+    {
+        IsInvincible = !IsInvincible;
+    }
 
     public static void SetDefaultStats(Player Player)
     {
@@ -135,7 +140,7 @@ public class Player
 
     public void GiveDamage(int Damage)
     {
-        if (IsImmune)
+        if (IsInvincible)
         {
             return;
         }

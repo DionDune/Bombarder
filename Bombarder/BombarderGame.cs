@@ -199,34 +199,6 @@ public sealed class BombarderGame : Game
         }
     }
 
-    private void UserControl_ButtonPress(List<string> Data)
-    {
-        if (Data.Contains("Start New"))
-        {
-            StartNewGame();
-        }
-        else if (Data.Contains("Resume"))
-        {
-            ResumeGame();
-        }
-        else if (Data.Contains("Settings"))
-        {
-            OpenSettings();
-        }
-        else if (Data.Contains("Respawn"))
-        {
-            StartNewGame();
-        }
-        else if (Data.Contains("Resurrect"))
-        {
-            ResurrectPlayer();
-        }
-        else if (Data.Contains("Quit"))
-        {
-            Environment.Exit(0);
-        }
-    }
-
     #endregion
 
     #region Player
@@ -512,10 +484,7 @@ public sealed class BombarderGame : Game
 
                         UIClicked = true;
 
-                        if (Item is ButtonUIElement)
-                        {
-                            UserControl_ButtonPress(Item.Data);
-                        }
+                        Item.Click();
                     }
                 }
 

@@ -62,7 +62,7 @@ public class PlayerTeleport : MagicEffect
 
         Player.Position -= new Vector2(
             DistanceToMove * (float)Math.Cos(AngleRadians), DistanceToMove * (float)Math.Sin(AngleRadians));
-        Player.IsImmune = true;
+        Player.IsInvincible = true;
 
         JustStarted = false;
     }
@@ -75,7 +75,7 @@ public class PlayerTeleport : MagicEffect
         }
 
         HasDuration = true;
-        Player.IsImmune = false;
+        Player.IsInvincible = false;
     }
 
     public void CreateParticles()

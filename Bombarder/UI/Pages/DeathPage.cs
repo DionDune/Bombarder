@@ -11,7 +11,7 @@ public class DeathPage : UIPage
         UIItems = new List<UIItem>
         {
             // Respawn Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.StartNewGame())
             {
                 Position = new Vector2(-200, -75),
 
@@ -28,11 +28,9 @@ public class DeathPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Respawn" }
             },
             // Resurrect Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.ResurrectPlayer())
             {
                 Position = new Vector2(-200, 100),
 
@@ -49,11 +47,9 @@ public class DeathPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Resurrect" }
             },
             // Pause Quit Button
-            new ButtonUIElement
+            new ButtonUIElement(() => BombarderGame.Instance.Exit())
             {
                 Position = new Vector2(-200, 275),
 
@@ -70,8 +66,6 @@ public class DeathPage : UIPage
                     ElementSize = 8,
                     Color = Color.Black
                 },
-
-                Data = new List<string> { "Quit" }
             },
             // Title Message
             new TextUIElement
