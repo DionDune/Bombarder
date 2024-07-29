@@ -67,12 +67,12 @@ public class Spider : Entity
 
         Vector2 Diff = Position - Player.Position;
 
-        float PlayerDistance = (float)Utils.Hypot(Diff);
+        float PlayerDistance = Utils.HypotF(Diff);
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
             ? JumpVelocityMax
-            : (float)BombarderGame.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100;
-        Angle = (float)Math.Atan2(Diff.Y, Diff.X);
+            : BombarderGame.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100F;
+        Angle = MathF.Atan2(Diff.Y, Diff.X);
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
             ? BombarderGame.Instance.GameTick +
@@ -88,8 +88,8 @@ public class Spider : Entity
         }
 
         Vector2 PositionChange = new Vector2(
-            Velocity * (float)Math.Cos(Angle),
-            Velocity * (float)Math.Sin(Angle)
+            Velocity * MathF.Cos(Angle),
+            Velocity * MathF.Sin(Angle)
         );
         Position -= PositionChange;
 

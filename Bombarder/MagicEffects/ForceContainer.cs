@@ -78,9 +78,9 @@ public class ForceContainer : MagicEffect
         if (!DestinationReached)
         {
             Vector2 Diff = Destination - Position;
-            float Distance = (float)Utils.Hypot(Diff);
-            float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
-            float AngleRadians = Angle * (float)(Math.PI / 180);
+            float Distance = Utils.HypotF(Diff);
+            float Angle = MathF.Atan2(Diff.Y, Diff.X) * 180F / MathF.PI;
+            float AngleRadians = Angle * MathF.PI / 180F;
 
             if (Distance <= MovementSpeed)
             {
@@ -91,8 +91,8 @@ public class ForceContainer : MagicEffect
             else
             {
                 Position += new Vector2(
-                    MovementSpeed * (float)Math.Cos(AngleRadians),
-                    MovementSpeed * (float)Math.Sin(AngleRadians)
+                    MovementSpeed * MathF.Cos(AngleRadians),
+                    MovementSpeed * MathF.Sin(AngleRadians)
                 );
             }
         }
@@ -120,7 +120,7 @@ public class ForceContainer : MagicEffect
         foreach (var Entity in Entities.Where(Entity => !ContainedEntities.Contains(Entity)))
         {
             Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = (float)Utils.Hypot(Diff);
+            float Distance = Utils.HypotF(Diff);
 
             if (Distance <= CurrentRadius)
             {
@@ -132,7 +132,7 @@ public class ForceContainer : MagicEffect
         foreach (Entity Entity in ContainedEntities)
         {
             Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = (float)Utils.Hypot(Diff);
+            float Distance = Utils.HypotF(Diff);
 
             if (Distance < CurrentRadius - EdgeEffectWith)
             {
@@ -140,12 +140,12 @@ public class ForceContainer : MagicEffect
             }
 
             Vector2 InverseDiff = Entity.Position - Position;
-            float Angle = (float)(Math.Atan2(InverseDiff.Y, InverseDiff.X) * 180.0 / Math.PI);
-            float AngleRadians = Angle * (float)(Math.PI / 180);
+            float Angle = MathF.Atan2(InverseDiff.Y, InverseDiff.X) * 180F / MathF.PI;
+            float AngleRadians = Angle * MathF.PI / 180F;
 
             Vector2 PositionChange = new Vector2(
-                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * (float)Math.Cos(AngleRadians),
-                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * (float)Math.Sin(AngleRadians)
+                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * MathF.Cos(AngleRadians),
+                Math.Abs(CurrentRadius - EdgeEffectWith - Distance) * MathF.Sin(AngleRadians)
             );
 
             Entity.Position -= PositionChange;

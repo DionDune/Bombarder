@@ -229,14 +229,14 @@ public sealed class BombarderGame : Game
         if (RandomLocation)
             //Spawns randomly from edges of screen
         {
-            float SpawnAngle = random.Next(0, 360) * (float)(Math.PI / 180);
+            float SpawnAngle = random.Next(0, 360) * MathF.PI / 180F;
             int SpawnDistance = random.Next(
                 (int)(Graphics.PreferredBackBufferWidth * 0.6F),
                 (int)(Graphics.PreferredBackBufferWidth * 1.2)
             );
             SpawnPoint = new Vector2(
-                Player.Position.X + SpawnDistance * (float)Math.Cos(SpawnAngle),
-                Player.Position.Y + SpawnDistance * (float)Math.Sin(SpawnAngle)
+                Player.Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
+                Player.Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
             );
         }
 
@@ -394,7 +394,7 @@ public sealed class BombarderGame : Game
                     {
                         float XDiff = Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F;
                         float YDiff = Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F;
-                        float Angle = (float)(Math.Atan2(YDiff, XDiff) * 180.0 / Math.PI);
+                        float Angle = MathF.Atan2(YDiff, XDiff) * 180F / MathF.PI;
                         Effect.Angle = Angle;
                         Effect.Position = Player.Position.Copy();
                     }
@@ -615,15 +615,15 @@ public sealed class BombarderGame : Game
         bool Centered,
         Color Color)
     {
-        float AngleRadians = Angle * (float)(Math.PI / 180);
+        float AngleRadians = Angle * MathF.PI / 180F;
 
         var Origin = new Vector2(0f, 0.5f);
         Vector2 Scale = new Vector2(Width, Height);
 
         if (!Centered)
         {
-            Point.Y -= Texture.Width * Scale.Y / 2 * (float)Math.Cos(AngleRadians);
-            Point.X += Texture.Height * Scale.Y / 2 * (float)Math.Sin(AngleRadians);
+            Point.Y -= Texture.Width * Scale.Y / 2 * MathF.Cos(AngleRadians);
+            Point.X += Texture.Height * Scale.Y / 2 * MathF.Sin(AngleRadians);
         }
 
         SpriteBatch.Draw(Texture, Point, null, Color, AngleRadians, Origin, Scale, SpriteEffects.None, 0);

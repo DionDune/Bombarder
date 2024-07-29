@@ -81,11 +81,11 @@ public class CubeMother : Entity
             return;
         }
 
-        float SpawnAngle = BombarderGame.random.Next(0, 360) * (float)(Math.PI / 180);
+        float SpawnAngle = BombarderGame.random.Next(0, 360) * (MathF.PI / 180F);
         int SpawnDistance = BombarderGame.random.Next(SpawnDistanceMin, SpawnDistanceMax);
         Vector2 SpawnPoint = new Vector2(
-            Position.X + SpawnDistance * (float)Math.Cos(SpawnAngle),
-            Position.Y + SpawnDistance * (float)Math.Sin(SpawnAngle)
+            Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
+            Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
         );
 
         // Red Cube

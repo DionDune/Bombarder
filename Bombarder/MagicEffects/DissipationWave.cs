@@ -68,7 +68,7 @@ public class DissipationWave : MagicEffect
         foreach (Entity Entity in Entities)
         {
             Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = (float)Utils.Hypot(Diff);
+            float Distance = Utils.HypotF(Diff);
 
             if (Math.Abs(Radius - Distance) <= EdgeEffectWith)
             {

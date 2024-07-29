@@ -31,12 +31,12 @@ public abstract class Entity
     {
         float XDifference = Position.X - Goal.X;
         float YDifference = Position.Y - Goal.Y;
-        float Angle = (float)Math.Atan2(YDifference, XDifference);
+        float Angle = MathF.Atan2(YDifference, XDifference);
 
         Direction = Angle;
         Vector2 PositionChange = new Vector2(
-            Speed * (float)Math.Cos(Angle),
-            Speed * (float)Math.Sin(Angle)
+            Speed * MathF.Cos(Angle),
+            Speed * MathF.Sin(Angle)
         );
 
         Position -= PositionChange;
@@ -46,12 +46,12 @@ public abstract class Entity
     {
         float XDifference = Position.X - TargetPosition.X;
         float YDifference = Position.Y - TargetPosition.Y;
-        float Angle = (float)Math.Atan2(YDifference, XDifference);
+        float Angle = MathF.Atan2(YDifference, XDifference);
 
         Direction = Angle;
         Vector2 PositionChange = new Vector2(
-            Speed * (float)Math.Cos(Angle),
-            Speed * (float)Math.Sin(Angle)
+            Speed * MathF.Cos(Angle),
+            Speed * MathF.Sin(Angle)
         );
 
         Position += PositionChange;

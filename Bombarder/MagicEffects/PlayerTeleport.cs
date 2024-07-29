@@ -45,9 +45,9 @@ public class PlayerTeleport : MagicEffect
     public void EnactMovement(Player Player)
     {
         Vector2 Diff = Player.Position - Position;
-        float Distance = (float)Utils.Hypot(Diff);
-        float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
-        float AngleRadians = Angle * (float)(Math.PI / 180);
+        float Distance = Utils.HypotF(Diff);
+        float Angle = MathF.Atan2(Diff.Y, Diff.X) * 180F / MathF.PI;
+        float AngleRadians = Angle * (MathF.PI / 180F);
 
         float DistanceToMove = Speed;
 
@@ -57,8 +57,8 @@ public class PlayerTeleport : MagicEffect
             GoalReacted = true;
         }
 
-        Player.Position -= new Vector2(
-            DistanceToMove * (float)Math.Cos(AngleRadians), DistanceToMove * (float)Math.Sin(AngleRadians));
+        Player.Position -=
+            new Vector2(DistanceToMove * MathF.Cos(AngleRadians), DistanceToMove * MathF.Sin(AngleRadians));
         Player.IsInvincible = true;
 
         JustStarted = false;
@@ -78,7 +78,7 @@ public class PlayerTeleport : MagicEffect
     public void CreateParticles(Player Player)
     {
         Vector2 Diff = Player.Position - Position;
-        float Distance = (float)Utils.Hypot(Diff);
+        float Distance = Utils.HypotF(Diff);
 
         int Count = ParticleCountMed;
         if (Distance > ParticleCountMaxDistanceThreshold)

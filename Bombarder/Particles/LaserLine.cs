@@ -58,6 +58,6 @@ public class LaserLine : Particle
 
     public void EnactMovement()
     {
-        Position += new Vector2((float)Math.Cos(Direction), (float)Math.Sin(Direction)) * Speed;
+        Position += new Vector2(MathF.Cos(Direction), MathF.Sin(Direction)) * Speed;
     }
 }

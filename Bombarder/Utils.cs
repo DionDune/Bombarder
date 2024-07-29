@@ -34,4 +34,7 @@ public static class Utils
     public static double Hypot(params double[] Values) => Math.Sqrt(Values.Sum(Value => Math.Pow(Value, 2)));
     public static double Hypot(params Vector2[] Vectors) => Hypot(Array.ConvertAll(Vectors, Vector => Hypot(Vector.X, Vector.Y)));
     public static double Hypot(params Point[] Points) => Hypot(Array.ConvertAll(Points, Point => Hypot(Point.ToVector2())));
+    public static float HypotF(params double[] Values) => (float)Hypot(Values);
+    public static float HypotF(params Vector2[] Vectors) => (float)Hypot(Vectors);
+    public static float HypotF(params Point[] Points) => (float)Hypot(Points);
 }

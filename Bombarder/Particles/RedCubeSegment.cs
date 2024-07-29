@@ -26,11 +26,11 @@ public class RedCubeSegment : Particle
         Duration = BombarderGame.random.Next(DurationMin, DurationMax);
         this.Angle = Angle;
 
-        Velocity = (float)BombarderGame.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10;
+        Velocity = BombarderGame.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10F;
 
         if (BombarderGame.random.Next(0, 4) == 0)
         {
-            Velocity = (float)BombarderGame.random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10;
+            Velocity = BombarderGame.random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10F;
         }
     }
 
@@ -63,7 +63,7 @@ public class RedCubeSegment : Particle
 
     private void EnactMovement()
     {
-        Position += new Vector2((float)Math.Cos(Angle), (float)Math.Sin(Angle)) * Velocity;
+        Position += new Vector2(MathF.Cos(Angle), MathF.Sin(Angle)) * Velocity;
 
         Velocity *= VelocityMultiplier;
     }

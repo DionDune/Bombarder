@@ -100,17 +100,17 @@ public class TeleportLine : Particle
     {
         Vector2 Diff = Point1 - Point2;
 
-        float Distance = (float)Utils.Hypot(Diff);
-        float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
-        float AngleRadians = Angle * (float)(Math.PI / 180);
+        float Distance = Utils.HypotF(Diff);
+        float Angle = MathF.Atan2(Diff.Y, Diff.X) * 180F / MathF.PI;
+        float AngleRadians = Angle * MathF.PI / 180F;
 
         int ParticleDistance = BombarderGame.random.Next(0, (int)Distance);
         int X = (int)(
-                    Point1.X - ParticleDistance * (float)Math.Cos(AngleRadians)
+                    Point1.X - ParticleDistance * MathF.Cos(AngleRadians)
                 ) +
                 BombarderGame.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
         int Y = (int)(
-                    Point1.Y - ParticleDistance * (float)Math.Sin(AngleRadians)
+                    Point1.Y - ParticleDistance * MathF.Sin(AngleRadians)
                 ) +
                 BombarderGame.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
 
@@ -121,7 +121,7 @@ public class TeleportLine : Particle
             Length = BombarderGame.random.Next(LengthMin, LengthMax),
             Thickness = BombarderGame.random.Next(ThicknessMin, ThicknessMax),
             Direction = (Angle + BombarderGame.random.Next(-AngleSpreadRange, AngleSpreadRange)) *
-                        (float)(Math.PI / 180F),
+                        (MathF.PI / 180F),
             Colour = Colours.First(),
             Opacity = OpacityDefault,
         });
