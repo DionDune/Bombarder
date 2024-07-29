@@ -50,6 +50,26 @@ public class SettingsPage : UIPage
                     Color = Color.Black
                 },
             },
+            // Player Infinite Mana Button
+            new ButtonUIElement(() => BombarderGame.Instance.Player.ToggleInfiniteMana())
+            {
+                Orientation = Orientation.TOP_LEFT,
+                Position = new Vector2(450, 250),
+
+                Width = 400,
+                Height = 150,
+
+                BorderWidth = 3,
+                BorderColor = Color.Purple,
+                BaseColor = Color.BlueViolet,
+
+                Text = new TextElement
+                {
+                    Elements = TextElement.GetString("INFINITE MANA"),
+                    ElementSize = 8,
+                    Color = Color.Black
+                },
+            },
             // Title Message
             new TextUIElement
             {

@@ -87,6 +87,11 @@ public class Player
     {
         IsInvincible = !IsInvincible;
     }
+    
+    public void ToggleInfiniteMana()
+    {
+        ManaInfinite = !ManaInfinite;
+    }
 
     public void SetDefaultStats()
     {
