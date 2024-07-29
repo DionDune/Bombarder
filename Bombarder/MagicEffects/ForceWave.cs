@@ -89,7 +89,7 @@ public class ForceWave : MagicEffect
         foreach (Entity Entity in Entities)
         {
             Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+            float Distance = (float)Utils.Hypot(Diff);
 
             if (Distance > Radius)
             {

@@ -131,9 +131,9 @@ public class WideLaser : MagicEffect
         {
             XDiff = Math.Abs(Position.X - Entity.Position.X);
             YDiff = Math.Abs(Position.Y - Entity.Position.Y);
-            Distance = (float)Math.Sqrt(Math.Pow(XDiff, 2) + Math.Pow(YDiff, 2));
+            Distance = (float)Utils.Hypot(XDiff, YDiff);
 
-            if (!(Distance < Range))
+            if (Distance >= Range)
             {
                 continue;
             }

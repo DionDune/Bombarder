@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 
 namespace Bombarder;
@@ -30,4 +31,7 @@ public static class Utils
     public static Vector2 Copy(this Vector2 Vector) => new(Vector.X, Vector.Y);
     public static Point Copy(this Point Point) => new(Point.X, Point.Y);
     public static Vector2 Abs(Vector2 Vector2) => new(Math.Abs(Vector2.X), Math.Abs(Vector2.Y));
+    public static double Hypot(params double[] Values) => Math.Sqrt(Values.Sum(Value => Math.Pow(Value, 2)));
+    public static double Hypot(params Vector2[] Vectors) => Hypot(Array.ConvertAll(Vectors, Vector => Hypot(Vector.X, Vector.Y)));
+    public static double Hypot(params Point[] Points) => Hypot(Array.ConvertAll(Points, Point => Hypot(Point.ToVector2())));
 }

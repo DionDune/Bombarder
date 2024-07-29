@@ -45,7 +45,7 @@ public class PlayerTeleport : MagicEffect
     public void EnactMovement(Player Player)
     {
         Vector2 Diff = Player.Position - Position;
-        float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+        float Distance = (float)Utils.Hypot(Diff);
         float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
         float AngleRadians = Angle * (float)(Math.PI / 180);
 
@@ -78,7 +78,7 @@ public class PlayerTeleport : MagicEffect
     public void CreateParticles(Player Player)
     {
         Vector2 Diff = Player.Position - Position;
-        float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+        float Distance = (float)Utils.Hypot(Diff);
 
         int Count = ParticleCountMed;
         if (Distance > ParticleCountMaxDistanceThreshold)

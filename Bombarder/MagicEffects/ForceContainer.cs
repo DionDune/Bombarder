@@ -78,7 +78,7 @@ public class ForceContainer : MagicEffect
         if (!DestinationReached)
         {
             Vector2 Diff = Destination - Position;
-            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+            float Distance = (float)Utils.Hypot(Diff);
             float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
             float AngleRadians = Angle * (float)(Math.PI / 180);
 
@@ -120,7 +120,7 @@ public class ForceContainer : MagicEffect
         foreach (var Entity in Entities.Where(Entity => !ContainedEntities.Contains(Entity)))
         {
             Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+            float Distance = (float)Utils.Hypot(Diff);
 
             if (Distance <= CurrentRadius)
             {
@@ -132,7 +132,7 @@ public class ForceContainer : MagicEffect
         foreach (Entity Entity in ContainedEntities)
         {
             Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+            float Distance = (float)Utils.Hypot(Diff);
 
             if (Distance < CurrentRadius - EdgeEffectWith)
             {

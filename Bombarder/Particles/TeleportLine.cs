@@ -100,7 +100,7 @@ public class TeleportLine : Particle
     {
         Vector2 Diff = Point1 - Point2;
 
-        float Distance = (float)Math.Sqrt(Math.Pow(Diff.X, 2) + Math.Pow(Diff.Y, 2));
+        float Distance = (float)Utils.Hypot(Diff);
         float Angle = (float)(Math.Atan2(Diff.Y, Diff.X) * 180.0 / Math.PI);
         float AngleRadians = Angle * (float)(Math.PI / 180);
 
