@@ -483,9 +483,9 @@ public class Player
         }
     }
 
-    public void CreateMagic(Vector2 SpawnPosition, Type MagicType)
+    public void CreateMagic<T>(Vector2 SpawnPosition) where T : MagicEffect
     {
-        var Factory = MagicEffects.MagicEffect.MagicEffectsFactory.GetValueOrDefault(MagicType.Name);
+        var Factory = MagicEffects.MagicEffect.MagicEffectsFactories.GetValueOrDefault(typeof(T).Name);
 
         MagicEffect MagicEffect = Factory?.Invoke(SpawnPosition, this);
 

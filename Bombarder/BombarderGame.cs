@@ -203,7 +203,7 @@ public sealed class BombarderGame : Game
 
     #region Entity Interaction
 
-    private void SpawnRandomEnemy(bool OnFringe)
+    private void SpawnRandomEnemy()
     {
         int SpawnCount = random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
 
@@ -211,55 +211,44 @@ public sealed class BombarderGame : Game
         {
             if (random.Next(0, 4) == 0)
             {
-                //Demon Eye
-                SpawnEnemy(typeof(DemonEye), OnFringe, Vector2.Zero);
+                // Demon Eye
+                SpawnEnemy<DemonEye>();
             }
             else
             {
-                //Red Cube
-                SpawnEnemy(typeof(RedCube), OnFringe, Vector2.Zero);
+                // Red Cube
+                SpawnEnemy<RedCube>();
             }
         }
     }
 
-    private void SpawnEnemy(Type EnemyClass, bool RandomLocation, Vector2 Location)
+    private Vector2 GetRandomSpawnPoint()
     {
-        Vector2 SpawnPoint = Location;
+        //Spawns randomly from edges of screen
+        float SpawnAngle = Utils.ToRadians(random.Next(0, 360));
+        int SpawnDistance = random.Next(
+            (int)(Graphics.PreferredBackBufferWidth * 0.6F),
+            (int)(Graphics.PreferredBackBufferWidth * 1.2)
+        );
+        return new Vector2(
+            Player.Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
+            Player.Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
+        );
+    }
 
-        if (RandomLocation)
-            //Spawns randomly from edges of screen
+    private void SpawnEnemy<T>(Vector2? Location = null) where T : Entity
+    {
+        Vector2 SpawnPoint = Location ?? GetRandomSpawnPoint();
+        
+        var Factory = Entity.EntityFactories[typeof(T).Name];
+        var Enemy = Factory?.Invoke(SpawnPoint);
+        
+        if (Enemy == null)
         {
-            float SpawnAngle = Utils.ToRadians(random.Next(0, 360));
-            int SpawnDistance = random.Next(
-                (int)(Graphics.PreferredBackBufferWidth * 0.6F),
-                (int)(Graphics.PreferredBackBufferWidth * 1.2)
-            );
-            SpawnPoint = new Vector2(
-                Player.Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
-                Player.Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
-            );
+            return;
         }
-
-        if (EnemyClass == typeof(RedCube))
-        {
-            //Red Cube
-            Entities.Add(new RedCube(SpawnPoint));
-        }
-        else if (EnemyClass == typeof(DemonEye))
-        {
-            //Demon Eye
-            Entities.Add(new DemonEye(SpawnPoint));
-        }
-        else if (EnemyClass == typeof(CubeMother))
-        {
-            //Cube Mother
-            Entities.Add(new CubeMother(SpawnPoint));
-        }
-        else if (EnemyClass == typeof(Spider))
-        {
-            //Spider
-            Entities.Add(new Spider(SpawnPoint));
-        }
+        
+        EntitiesToAdd.Add(Enemy);
     }
 
     private void UpdateEntities()
@@ -338,12 +327,11 @@ public sealed class BombarderGame : Game
 
                 if (!UIClicked)
                 {
-                    Player.CreateMagic(
+                    Player.CreateMagic<StaticOrb>(
                         new Vector2(
                             Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                             Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                        ),
-                        typeof(StaticOrb)
+                        )
                     );
                 }
             }
@@ -362,23 +350,21 @@ public sealed class BombarderGame : Game
             {
                 if (true)
                 {
-                    Player.CreateMagic(
+                    Player.CreateMagic<WideLaser>(
                         new Vector2(
                             Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                             Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                        ),
-                        typeof(WideLaser)
+                        )
                     );
                     SelectedEffects.Add(MagicEffects.Last());
                 }
                 else
                 {
-                    Player.CreateMagic(
+                    Player.CreateMagic<NonStaticOrb>(
                         new Vector2(
                             Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                             Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                        ),
-                        typeof(NonStaticOrb)
+                        )
                     );
                 }
             }
@@ -418,7 +404,7 @@ public sealed class BombarderGame : Game
         {
             if (!Input.IsClickingMiddle)
             {
-                Player.CreateMagic(Player.Position.Copy(), typeof(DissipationWave));
+                Player.CreateMagic<DissipationWave>(Player.Position.Copy());
             }
 
             Input.IsClickingMiddle = true;
@@ -458,48 +444,46 @@ public sealed class BombarderGame : Game
             // Movement
             Player.HandleKeypress(Keys_NewlyPressed);
 
-            //Enemy Spawning
+            // Enemy Spawning
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.V))
             {
-                SpawnRandomEnemy(true);
+                SpawnRandomEnemy();
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.D1))
             {
-                SpawnEnemy(typeof(CubeMother), false, new Vector2(0, 0));
+                SpawnEnemy<CubeMother>(Vector2.Zero);
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.D2))
             {
-                SpawnEnemy(typeof(Spider), false, new Vector2(0, 0));
+                SpawnEnemy<Spider>(Vector2.Zero);
             }
 
 
-            //Magic Creation
+            // Magic Creation
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
             {
-                Player.CreateMagic(Player.Position.Copy(), typeof(ForceWave));
+                Player.CreateMagic<ForceWave>(Player.Position.Copy());
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
             {
-                Player.CreateMagic(
+                Player.CreateMagic<ForceContainer>(
                     new Vector2(
                         Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                         Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    ),
-                    typeof(ForceContainer)
+                    )
                 );
             }
 
             if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
             {
-                Player.CreateMagic(
+                Player.CreateMagic<PlayerTeleport>(
                     new Vector2(
                         Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
                         Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    ),
-                    typeof(PlayerTeleport)
+                    )
                 );
             }
 

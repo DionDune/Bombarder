@@ -26,7 +26,7 @@ public abstract class MagicEffect
 
     public List<MagicEffectPiece> Pieces { get; set; }
 
-    public static readonly Dictionary<string, Func<Vector2, Player, MagicEffect>> MagicEffectsFactory = new()
+    public static readonly Dictionary<string, Func<Vector2, Player, MagicEffect>> MagicEffectsFactories = new()
     {
         { "DissipationWave", (Position, _) => new DissipationWave(Position) },
         { "ForceContainer", (Position, Player) => new ForceContainer(Player.Position, Position) },

@@ -26,7 +26,14 @@ public abstract class Entity
     public int KillHealthReward { get; protected set; }
     public int KillManaReward { get; protected set; }
     public Rectangle HitBox => new(Position.ToPoint() + HitBoxOffset, HitBoxSize);
-    
+    public static readonly Dictionary<string, Func<Vector2, Entity>> EntityFactories = new()
+    {
+        { "CubeMother", Position => new CubeMother(Position) },
+        { "DemonEye", Position => new DemonEye(Position) },
+        { "RedCube", Position => new RedCube(Position) },
+        { "Spider", Position => new Spider(Position) },
+    };
+
     protected Entity(Vector2 Position)
     {
         this.Position = Position;
