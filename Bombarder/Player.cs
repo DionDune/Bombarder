@@ -88,6 +88,7 @@ public class Player
 
     public void Update()
     {
+        HandleKeypress();
         Position += Momentum;
         UpdateMana();
         UpdateHealth();
@@ -223,16 +224,17 @@ public class Player
         );
     }
 
-    public void HandleKeypress(List<Keys> NewPresses)
+    public void HandleKeypress()
     {
         bool? HeadingUp = null;
         bool? HeadingLeft = null;
 
+        var KeyboardInput = BombarderGame.Instance.KeyboardInput;
 
         const float unBoostDivider = 1.05f;
 
         float Speed = BaseSpeed;
-        if (NewPresses.Contains(Keys.LeftShift))
+        if (KeyboardInput.IsKeyDown(Keys.LeftShift))
         {
             Speed = BaseSpeed * BoostMultiplier;
         }
@@ -245,41 +247,41 @@ public class Player
         Vector2 AccelerationVector = new();
 
         // Upward
-        if (NewPresses.Contains(Keys.W))
+        if (KeyboardInput.IsKeyDown(Keys.W))
         {
             AccelerationVector -= Vector2.UnitY;
 
-            if (!NewPresses.Contains(Keys.S))
+            if (KeyboardInput.IsKeyUp(Keys.S))
             {
                 HeadingUp = true;
             }
         }
 
         // Downward
-        if (NewPresses.Contains(Keys.S))
+        if (KeyboardInput.IsKeyDown(Keys.S))
         {
             AccelerationVector += Vector2.UnitY;
-            if (!NewPresses.Contains(Keys.W))
+            if (KeyboardInput.IsKeyUp(Keys.W))
             {
                 HeadingUp = false;
             }
         }
 
         // Left
-        if (NewPresses.Contains(Keys.A))
+        if (KeyboardInput.IsKeyDown(Keys.A))
         {
             AccelerationVector -= Vector2.UnitX;
-            if (!NewPresses.Contains(Keys.D))
+            if (KeyboardInput.IsKeyUp(Keys.D))
             {
                 HeadingLeft = true;
             }
         }
 
         // Right
-        if (NewPresses.Contains(Keys.D))
+        if (KeyboardInput.IsKeyDown(Keys.D))
         {
             AccelerationVector += Vector2.UnitX;
-            if (!NewPresses.Contains(Keys.A))
+            if (KeyboardInput.IsKeyUp(Keys.A))
             {
                 HeadingLeft = false;
             }
@@ -294,12 +296,12 @@ public class Player
         Vector2 DecelerationVector = new();
 
         // Slowdown
-        if (!NewPresses.Contains(Keys.W) && !NewPresses.Contains(Keys.S) && Momentum.Y != 0)
+        if (KeyboardInput.IsKeyUp(Keys.W) && KeyboardInput.IsKeyUp(Keys.S) && Momentum.Y != 0)
         {
             DecelerationVector.Y = MathF.Sign(Momentum.Y);
         }
 
-        if (!NewPresses.Contains(Keys.A) && !NewPresses.Contains(Keys.D) && Momentum.X != 0)
+        if (KeyboardInput.IsKeyUp(Keys.A) && KeyboardInput.IsKeyUp(Keys.D) && Momentum.X != 0)
         {
             DecelerationVector.X = MathF.Sign(Momentum.X);
         }

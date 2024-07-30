@@ -30,6 +30,7 @@ public sealed class BombarderGame : Game
     public Textures Textures { get; private set; }
     public Settings Settings { get; private set; }
     InputStates Input;
+    public readonly KeyboardInput KeyboardInput;
     public Player Player { get; private set; }
 
     public readonly List<Entity> Entities = new();
@@ -51,10 +52,14 @@ public sealed class BombarderGame : Game
 
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        
+        KeyboardInput = new KeyboardInput();
     }
 
     protected override void Initialize()
     {
+        base.Initialize();
+
         GameTick = 0;
 
         UIPages = UIPage.GeneratePages();
@@ -69,7 +74,32 @@ public sealed class BombarderGame : Game
 
 
         IsMouseVisible = false;
-        base.Initialize();
+
+        KeyboardInput.AddKeyPressAction(Keys.F, ToggleFullscreen, "ToggleFullscreen");
+        KeyboardInput.AddKeyPressAction(Keys.Escape, TogglePause, "TogglePause");
+
+        // TODO: Add check for GameState
+        KeyboardInput.AddKeyPressAction(Keys.V, SpawnRandomEnemy, "SpawnRandomEnemy");
+        KeyboardInput.AddKeyPressAction(Keys.D1, () => SpawnEnemy<CubeMother>(Vector2.Zero), "SpawnCubeMother");
+        KeyboardInput.AddKeyPressAction(Keys.D2, () => SpawnEnemy<Spider>(Vector2.Zero), "SpawnSpider");
+        KeyboardInput.AddKeyPressAction(Keys.Q, () => Player.CreateMagic<ForceWave>(Player.Position.Copy()), "ForceWave");
+        KeyboardInput.AddKeyPressAction(Keys.Tab, () => Player.CreateMagic<ForceContainer>(
+            new Vector2(
+                Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+            )), "ForceContainer");
+        KeyboardInput.AddKeyPressAction(Keys.T, () => Player.CreateMagic<PlayerTeleport>(
+            new Vector2(
+                Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+            )), "PlayerTeleport");
+        KeyboardInput.AddKeyPressAction(Keys.I, () => Settings.RunEntityAI = !Settings.RunEntityAI, "ToggleEntityAI");
+        KeyboardInput.AddKeyPressAction(Keys.O, () =>
+        {
+            Settings.ShowHitBoxes = !Settings.ShowHitBoxes;
+            Settings.ShowDamageRadii = !Settings.ShowDamageRadii;
+        }, "ToggleHitboxes");
+        KeyboardInput.AddKeyPressAction(Keys.Back, () => Settings.TranceMode = !Settings.TranceMode, "ToggleTranceMode");
     }
 
     protected override void LoadContent()
@@ -166,7 +196,7 @@ public sealed class BombarderGame : Game
 
     #region UI
 
-    private void Window_ToggleFullscreen()
+    private void ToggleFullscreen()
     {
         if (!Graphics.IsFullScreen)
         {
@@ -239,15 +269,15 @@ public sealed class BombarderGame : Game
     private void SpawnEnemy<T>(Vector2? Location = null) where T : Entity
     {
         Vector2 SpawnPoint = Location ?? GetRandomSpawnPoint();
-        
+
         var Factory = Entity.EntityFactories[typeof(T).Name];
         var Enemy = Factory?.Invoke(SpawnPoint);
-        
+
         if (Enemy == null)
         {
             return;
         }
-        
+
         EntitiesToAdd.Add(Enemy);
     }
 
@@ -262,7 +292,7 @@ public sealed class BombarderGame : Game
         {
             Entity.EnactAI(Player);
         }
-        
+
         EntitiesToAdd.ForEach(Entities.Add);
         EntitiesToAdd.Clear();
     }
@@ -417,104 +447,6 @@ public sealed class BombarderGame : Game
 
     #endregion
 
-    #region Keyboard
-
-    private bool IsNewlyPressed(List<Keys> NewPresses, Keys Key) =>
-        NewPresses.Contains(Key) && !Input.PreviousKeys.Contains(Key);
-
-    private void KeyboardHandler()
-    {
-        List<Keys> Keys_NewlyPressed = Keyboard.GetState().GetPressedKeys().ToList();
-
-
-        // Toggle Fullscreen
-        if (IsNewlyPressed(Keys_NewlyPressed, Keys.F))
-        {
-            Window_ToggleFullscreen();
-        }
-
-        // Toggle Pause
-        if (IsNewlyPressed(Keys_NewlyPressed, Keys.Escape))
-        {
-            TogglePause();
-        }
-
-        if (GameState == "PlayPage")
-        {
-            // Movement
-            Player.HandleKeypress(Keys_NewlyPressed);
-
-            // Enemy Spawning
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.V))
-            {
-                SpawnRandomEnemy();
-            }
-
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.D1))
-            {
-                SpawnEnemy<CubeMother>(Vector2.Zero);
-            }
-
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.D2))
-            {
-                SpawnEnemy<Spider>(Vector2.Zero);
-            }
-
-
-            // Magic Creation
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.Q))
-            {
-                Player.CreateMagic<ForceWave>(Player.Position.Copy());
-            }
-
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.Tab))
-            {
-                Player.CreateMagic<ForceContainer>(
-                    new Vector2(
-                        Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                        Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    )
-                );
-            }
-
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.T))
-            {
-                Player.CreateMagic<PlayerTeleport>(
-                    new Vector2(
-                        Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                        Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    )
-                );
-            }
-
-
-            //Settings Changes
-            //  Entity AI
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.I))
-            {
-                Settings.RunEntityAI = !Settings.RunEntityAI;
-            }
-
-            //  Toggle Hitboxes
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.O))
-            {
-                Settings.ShowHitBoxes = !Settings.ShowHitBoxes;
-                Settings.ShowDamageRadii = !Settings.ShowDamageRadii;
-            }
-
-            //  Toggle Trance Mode
-            if (IsNewlyPressed(Keys_NewlyPressed, Keys.Back))
-            {
-                Settings.TranceMode = !Settings.TranceMode;
-            }
-        }
-
-
-        Input.PreviousKeys = Keys_NewlyPressed;
-    }
-
-    #endregion
-
     #endregion
 
     #region General Rendering Functions
@@ -616,7 +548,7 @@ public sealed class BombarderGame : Game
     {
         GameTick++;
 
-        KeyboardHandler();
+        KeyboardInput.Update();
         MouseHandler();
 
         if (GameState == "PlayPage")
