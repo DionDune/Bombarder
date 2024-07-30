@@ -26,6 +26,11 @@ public abstract class Entity
     public int KillHealthReward { get; protected set; }
     public int KillManaReward { get; protected set; }
     public Rectangle HitBox => new(Position.ToPoint() + HitBoxOffset, HitBoxSize);
+    
+    protected Entity(Vector2 Position)
+    {
+        this.Position = Position;
+    }
 
     public void MoveTowards(Vector2 Goal, float Speed)
     {

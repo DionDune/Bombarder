@@ -11,7 +11,7 @@ public class DemonEye : Entity
 
     public const float BaseSpeed = 4;
 
-    public DemonEye()
+    public DemonEye(Vector2 Position) : base(Position)
     {
         HealthMax = 150;
         Health = HealthMax;

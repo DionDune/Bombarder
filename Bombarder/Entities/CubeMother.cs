@@ -18,7 +18,7 @@ public class CubeMother : Entity
 
     public const float PreferredDistance = 3500;
 
-    public CubeMother()
+    public CubeMother(Vector2 Position) : base(Position)
     {
         HealthMax = 1500;
         Health = HealthMax;
@@ -89,10 +89,7 @@ public class CubeMother : Entity
         );
 
         // Red Cube
-        BombarderGame.Instance.EntitiesToAdd.Add(new RedCube
-        {
-            Position = SpawnPoint.Copy()
-        });
+        BombarderGame.Instance.EntitiesToAdd.Add(new RedCube(SpawnPoint.Copy()));
 
         NextSpawnFrame = (uint)(BombarderGame.Instance.GameTick + BombarderGame.random.Next(SpawnIntervalMin, SpawnIntervalMax));
     }

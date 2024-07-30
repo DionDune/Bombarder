@@ -241,29 +241,25 @@ public sealed class BombarderGame : Game
         }
 
         if (EnemyClass == typeof(RedCube))
+        {
             //Red Cube
-            Entities.Add(new RedCube
-            {
-                Position = SpawnPoint
-            });
+            Entities.Add(new RedCube(SpawnPoint));
+        }
         else if (EnemyClass == typeof(DemonEye))
+        {
             //Demon Eye
-            Entities.Add(new DemonEye
-            {
-                Position = SpawnPoint
-            });
+            Entities.Add(new DemonEye(SpawnPoint));
+        }
         else if (EnemyClass == typeof(CubeMother))
+        {
             //Cube Mother
-            Entities.Add(new CubeMother
-            {
-                Position = SpawnPoint
-            });
+            Entities.Add(new CubeMother(SpawnPoint));
+        }
         else if (EnemyClass == typeof(Spider))
+        {
             //Spider
-            Entities.Add(new Spider
-            {
-                Position = SpawnPoint
-            });
+            Entities.Add(new Spider(SpawnPoint));
+        }
     }
 
     private void UpdateEntities()

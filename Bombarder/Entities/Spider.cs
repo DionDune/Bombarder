@@ -25,7 +25,7 @@ public class Spider : Entity
     public float Velocity;
     public float Angle;
 
-    public Spider()
+    public Spider(Vector2 Position) : base(Position)
     {
         HealthMax = 650;
         Health = HealthMax;

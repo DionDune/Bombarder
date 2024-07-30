@@ -14,7 +14,7 @@ public class RedCube : Entity
 
     public const float BaseSpeed = 5;
 
-    public RedCube()
+    public RedCube(Vector2 Position) : base(Position)
     {
         HealthMax = 100;
         Health = HealthMax;
