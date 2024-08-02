@@ -87,13 +87,13 @@ public class Dust : Particle
     public static void Spawn(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
     {
         if (Tick % SpawnInterval != 0) return;
-        for (int i = 0; i < BombarderGame.random.Next(0, MaxSpawnCount); i++)
+        for (int i = 0; i < RngUtils.Random.Next(0, MaxSpawnCount); i++)
         {
             int NewRangeX = RangeX * 2;
             int NewRangeY = RangeY * 2;
 
-            int DustX = BombarderGame.random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
-            int DustY = BombarderGame.random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
+            int DustX = RngUtils.Random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
+            int DustY = RngUtils.Random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
 
             Particles.Add(GetRandom(new Vector2(DustX, DustY)));
         }
@@ -106,7 +106,7 @@ public class Dust : Particle
         const int redChance = 35;
         const int purpleChance = 2;
 
-        int TypeVal = BombarderGame.random.Next(0, chanceRange);
+        int TypeVal = RngUtils.Random.Next(0, chanceRange);
 
         return TypeVal switch
         {

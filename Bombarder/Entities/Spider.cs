@@ -71,13 +71,13 @@ public class Spider : Entity
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
             ? JumpVelocityMax
-            : BombarderGame.random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100F;
+            : RngUtils.Random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100F;
         Angle = MathF.Atan2(Diff.Y, Diff.X);
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
             ? BombarderGame.Instance.GameTick +
-              (uint)BombarderGame.random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
-            : BombarderGame.Instance.GameTick + (uint)BombarderGame.random.Next(JumpIntervalMin, JumpIntervalMax);
+              (uint)RngUtils.Random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
+            : BombarderGame.Instance.GameTick + (uint)RngUtils.Random.Next(JumpIntervalMin, JumpIntervalMax);
     }
 
     public void EnactVelocity(Player Player)

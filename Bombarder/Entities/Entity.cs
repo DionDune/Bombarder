@@ -83,11 +83,11 @@ public abstract class Entity
             return;
         }
 
-        int x = BombarderGame.random.Next(
+        int x = RngUtils.Random.Next(
             (int)Position.X + HitBoxOffset.X,
             (int)Position.X + HitBoxOffset.X + HitBoxSize.X
         );
-        int y = BombarderGame.random.Next(
+        int y = RngUtils.Random.Next(
             (int)Position.Y + HitBoxOffset.Y,
             (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
         );

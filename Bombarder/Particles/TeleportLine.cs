@@ -103,23 +103,19 @@ public class TeleportLine : Particle
         float Distance = MathUtils.HypotF(Diff);
         float Angle = MathF.Atan2(Diff.Y, Diff.X);
 
-        int ParticleDistance = BombarderGame.random.Next(0, (int)Distance);
-        int X = (int)(
-                    Point1.X - ParticleDistance * MathF.Cos(Angle)
-                ) +
-                BombarderGame.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
-        int Y = (int)(
-                    Point1.Y - ParticleDistance * MathF.Sin(Angle)
-                ) +
-                BombarderGame.random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
+        int ParticleDistance = RngUtils.Random.Next(0, (int)Distance);
+        int X = (int)(Point1.X - ParticleDistance * MathF.Cos(Angle)) +
+                RngUtils.Random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
+        int Y = (int)(Point1.Y - ParticleDistance * MathF.Sin(Angle)) +
+                RngUtils.Random.Next(-RandomDistanceAllowance, RandomDistanceAllowance);
 
         Particles.Add(new TeleportLine(new Vector2(X, Y))
         {
             HasDuration = false,
-            Duration = BombarderGame.random.Next(DurationMin, DurationMax),
-            Length = BombarderGame.random.Next(LengthMin, LengthMax),
-            Thickness = BombarderGame.random.Next(ThicknessMin, ThicknessMax),
-            Direction = Angle + MathUtils.ToRadians(BombarderGame.random.Next(-AngleSpreadRange, AngleSpreadRange)),
+            Duration = RngUtils.Random.Next(DurationMin, DurationMax),
+            Length = RngUtils.Random.Next(LengthMin, LengthMax),
+            Thickness = RngUtils.Random.Next(ThicknessMin, ThicknessMax),
+            Direction = Angle + MathUtils.ToRadians(RngUtils.Random.Next(-AngleSpreadRange, AngleSpreadRange)),
             Colour = Colours.First(),
             Opacity = OpacityDefault,
         });

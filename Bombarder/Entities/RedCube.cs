@@ -82,7 +82,7 @@ public class RedCube : Entity
                 var Angle =
                     MathF.Atan2(YDifference, XDifference) +
                     MathUtils.ToRadians(
-                        BombarderGame.random.Next(
+                        RngUtils.Random.Next(
                             (int)(-RedCubeSegment.AngleOffsetAllowance * 10),
                             (int)(RedCubeSegment.AngleOffsetAllowance * 10)
                         )

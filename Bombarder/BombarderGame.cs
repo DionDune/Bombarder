@@ -5,7 +5,6 @@ using Bombarder.Entities;
 using Bombarder.MagicEffects;
 using Bombarder.Particles;
 using Bombarder.UI;
-using Bombarder.UI.Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,7 +17,6 @@ public sealed class BombarderGame : Game
     public GraphicsDeviceManager Graphics { get; }
     public SpriteBatch SpriteBatch { get; private set; }
 
-    public static readonly Random random = new();
     public uint GameTick;
 
     List<UIPage> UIPages = new();
@@ -309,11 +307,11 @@ public sealed class BombarderGame : Game
 
     private void SpawnRandomEnemy()
     {
-        int SpawnCount = random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
+        int SpawnCount = RngUtils.Random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
 
         for (int i = 0; i < SpawnCount; i++)
         {
-            if (random.Next(0, 4) == 0)
+            if (RngUtils.Random.Next(0, 4) == 0)
             {
                 // Demon Eye
                 SpawnEnemy<DemonEye>();
@@ -326,24 +324,9 @@ public sealed class BombarderGame : Game
         }
     }
 
-    private Vector2 GetRandomSpawnPoint()
-    {
-        //Spawns randomly from edges of screen
-        float SpawnAngle = MathUtils.ToRadians(random.Next(0, 360));
-        int SpawnDistance = random.Next(
-            (int)(Graphics.PreferredBackBufferWidth * 0.6F),
-            (int)(Graphics.PreferredBackBufferWidth * 1.2)
-        );
-
-        return new Vector2(
-            Player.Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
-            Player.Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
-        );
-    }
-
     private void SpawnEnemy<T>(Vector2? Location = null) where T : Entity
     {
-        Vector2 SpawnPoint = Location ?? GetRandomSpawnPoint();
+        Vector2 SpawnPoint = Location ?? RngUtils.GetRandomSpawnPoint();
 
         var Factory = Entity.EntityFactories[typeof(T).Name];
         var Enemy = Factory?.Invoke(SpawnPoint);
@@ -354,22 +337,6 @@ public sealed class BombarderGame : Game
         }
 
         EntitiesToAdd.Add(Enemy);
-    }
-
-    private void UpdateEntities()
-    {
-        if (!Settings.RunEntityAI)
-        {
-            return;
-        }
-
-        foreach (Entity Entity in Entities)
-        {
-            Entity.EnactAI(Player);
-        }
-
-        EntitiesToAdd.ForEach(Entities.Add);
-        EntitiesToAdd.Clear();
     }
 
     #endregion
@@ -397,7 +364,12 @@ public sealed class BombarderGame : Game
             Player.Update();
 
             //Entity Functions
-            UpdateEntities();
+            if (Settings.RunEntityAI)
+            {
+                Entities.ForEach(Entity => Entity.EnactAI(Player));
+                EntitiesToAdd.ForEach(Entities.Add);
+                EntitiesToAdd.Clear();
+            }
             Entity.PurgeDead(Entities, Player);
             //Particles
             Particle.EnactDuration(Particles);

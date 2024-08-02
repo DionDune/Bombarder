@@ -23,14 +23,14 @@ public class RedCubeSegment : Particle
 
     public RedCubeSegment(Vector2 Position, float Angle) : base(Position)
     {
-        Duration = BombarderGame.random.Next(DurationMin, DurationMax);
+        Duration = RngUtils.Random.Next(DurationMin, DurationMax);
         this.Angle = Angle;
 
-        Velocity = BombarderGame.random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10F;
+        Velocity = RngUtils.Random.Next((int)(VelocityMin * 10), (int)(VelocityMax * 10)) / 10F;
 
-        if (BombarderGame.random.Next(0, 4) == 0)
+        if (RngUtils.Random.Next(0, 4) == 0)
         {
-            Velocity = BombarderGame.random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10F;
+            Velocity = RngUtils.Random.Next((int)((VelocityMin - 1) * 10), (int)(VelocityMin * 10)) / 10F;
         }
     }
 

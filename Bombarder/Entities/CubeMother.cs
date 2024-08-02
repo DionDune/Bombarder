@@ -81,8 +81,8 @@ public class CubeMother : Entity
             return;
         }
 
-        float SpawnAngle = MathUtils.ToRadians(BombarderGame.random.Next(0, 360));
-        int SpawnDistance = BombarderGame.random.Next(SpawnDistanceMin, SpawnDistanceMax);
+        float SpawnAngle = MathUtils.ToRadians(RngUtils.Random.Next(0, 360));
+        int SpawnDistance = RngUtils.Random.Next(SpawnDistanceMin, SpawnDistanceMax);
         Vector2 SpawnPoint = new Vector2(
             Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
             Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
@@ -91,7 +91,7 @@ public class CubeMother : Entity
         // Red Cube
         BombarderGame.Instance.EntitiesToAdd.Add(new RedCube(SpawnPoint.Copy()));
 
-        NextSpawnFrame = (uint)(BombarderGame.Instance.GameTick + BombarderGame.random.Next(SpawnIntervalMin, SpawnIntervalMax));
+        NextSpawnFrame = (uint)(BombarderGame.Instance.GameTick + RngUtils.Random.Next(SpawnIntervalMin, SpawnIntervalMax));
     }
 
     public override void DrawEntity()

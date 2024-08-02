@@ -31,9 +31,9 @@ public class LaserLine : Particle
     public LaserLine(Vector2 Position, float Direction) : base(Position)
     {
         this.Direction = Direction;
-        Length = BombarderGame.random.Next(LengthMin, LengthMax);
-        Thickness = BombarderGame.random.Next(ThicknessMin, ThicknessMax);
-        Speed = BombarderGame.random.Next(SpeedMin, SpeedMax);
+        Length = RngUtils.Random.Next(LengthMin, LengthMax);
+        Thickness = RngUtils.Random.Next(ThicknessMin, ThicknessMax);
+        Speed = RngUtils.Random.Next(SpeedMin, SpeedMax);
         Colour = Color.Turquoise;
         DrawLater = true;
     }
