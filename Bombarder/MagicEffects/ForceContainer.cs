@@ -42,8 +42,9 @@ public class ForceContainer : MagicEffect
         HasDuration = HasDuration_Moving;
     }
 
-    public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
+    public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
+        base.Update(Player, Entities, GameTick);
         EnactMovement();
         EnactForce(Entities);
         EnactDuration();

@@ -43,8 +43,9 @@ public class WideLaser : MagicEffect
         Duration = DefaultDuration;
     }
 
-    public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
+    public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
+        base.Update(Player, Entities, GameTick);
         if (!Player.CheckUseMana(ManaCost))
         {
             return;

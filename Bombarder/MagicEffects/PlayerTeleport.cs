@@ -27,8 +27,9 @@ public class PlayerTeleport : MagicEffect
         HasDuration = false;
     }
 
-    public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
+    public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
+        base.Update(Player, Entities, GameTick);
         if (JustStarted)
         {
             CreateParticles(Player);

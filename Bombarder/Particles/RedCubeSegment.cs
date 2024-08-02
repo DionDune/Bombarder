@@ -36,6 +36,7 @@ public class RedCubeSegment : Particle
 
     public override void Update(uint Tick)
     {
+        base.Update(Tick);
         EnactMovement();
     }
 

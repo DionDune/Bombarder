@@ -22,40 +22,10 @@ public abstract class Particle
         Duration = 0;
     }
 
-    public static void EnactDuration(List<Particle> Particles)
-    {
-        List<Particle> Dead = new List<Particle>();
-
-        foreach (var Particle in Particles.Where(Particle => Particle.HasDuration))
-        {
-            if (Particle.Duration <= 0)
-            {
-                Dead.Add(Particle);
-            }
-            else
-            {
-                Particle.Duration--;
-            }
-        }
-
-        foreach (Particle Particle in Dead)
-        {
-            Particles.Remove(Particle);
-        }
-    }
-
-    public static void Update(List<Particle> Particles, uint Tick)
-    {
-        foreach (Particle Particle in Particles)
-        {
-            Particle.Update(Tick);
-        }
-    }
-
     public static void SpawnParticles(List<Particle> Particles, Vector2 PlayerPos, uint Tick)
     {
         var Graphics = BombarderGame.Instance.Graphics;
-        
+
         int ClutterSpawnRangeX = Graphics.PreferredBackBufferWidth;
         int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
 
@@ -64,7 +34,16 @@ public abstract class Particle
 
     public virtual void Update(uint Tick)
     {
+        if (HasDuration)
+        {
+            Duration--;
+        }
     }
 
     public abstract void Draw();
+
+    public virtual bool ShouldDelete()
+    {
+        return HasDuration && Duration <= 0;
+    }
 }

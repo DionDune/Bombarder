@@ -28,6 +28,7 @@ public class Impact : Particle
 
     public override void Update(uint Tick)
     {
+        base.Update(Tick);
         EnactSpread();
     }
 

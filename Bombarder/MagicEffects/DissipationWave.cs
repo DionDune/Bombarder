@@ -33,8 +33,9 @@ public class DissipationWave : MagicEffect
     }
 
 
-    public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
+    public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
+        base.Update(Player, Entities, GameTick);
         EnactSpread();
         EnactDamage(Entities);
     }

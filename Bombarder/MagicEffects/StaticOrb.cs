@@ -21,13 +21,10 @@ public class StaticOrb : MagicEffect
         Duration = DefaultDuration;
     }
 
-    public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
+    public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
-        foreach (var Entity in Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)))
-        {
-            Entity.GiveDamage(Damage);
-        }
-
+        base.Update(Player, Entities, GameTick);
+        Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)).ToList().ForEach(Entity => Entity.GiveDamage(Damage));
         CreateParticles();
     }
 

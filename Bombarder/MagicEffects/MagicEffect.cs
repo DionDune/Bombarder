@@ -37,40 +37,6 @@ public abstract class MagicEffect
         { "WideLaser", (Position, Player) => new WideLaser(Player.Position, Position) },
     };
 
-    public static void Update()
-    {
-        foreach (MagicEffect Effect in BombarderGame.Instance.MagicEffects)
-        {
-            Effect.EnactEffect(
-                BombarderGame.Instance.Player,
-                BombarderGame.Instance.Entities,
-                BombarderGame.Instance.GameTick
-            );
-        }
-    }
-
-    public static void EnactDuration(List<MagicEffect> Effects)
-    {
-        List<MagicEffect> DeadEffects = new List<MagicEffect>();
-
-        foreach (var Effect in Effects.Where(Effect => Effect.HasDuration))
-        {
-            if (Effect.Duration == 0)
-            {
-                DeadEffects.Add(Effect);
-            }
-            else
-            {
-                Effect.Duration--;
-            }
-        }
-
-        foreach (MagicEffect Effect in DeadEffects)
-        {
-            Effects.Remove(Effect);
-        }
-    }
-
     protected MagicEffect(Vector2 Position)
     {
         this.Position = Position;
@@ -85,7 +51,13 @@ public abstract class MagicEffect
         Pieces = new List<MagicEffectPiece> { new() { LifeSpan = DamageDuration } };
     }
 
-    public abstract void EnactEffect(Player Player, List<Entity> Entities, uint GameTick);
+    public virtual void Update(Player Player, List<Entity> Entities, uint GameTick)
+    {
+        if (HasDuration)
+        {
+            Duration--;
+        }
+    }
     public abstract void DrawEffect();
 
     public void DrawDamageRadius()
@@ -155,5 +127,10 @@ public abstract class MagicEffect
     {
         DrawEffect();
         DrawDamageRadius();
+    }
+    
+    public bool ShouldDelete()
+    {
+        return HasDuration && Duration == 0;
     }
 }

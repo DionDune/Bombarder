@@ -30,6 +30,7 @@ public class Dust : Particle
 
     public override void Update(uint Tick)
     {
+        base.Update(Tick);
         EnactOpacityChange(Tick);
     }
 

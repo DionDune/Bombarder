@@ -372,13 +372,13 @@ public sealed class BombarderGame : Game
             }
             Entity.PurgeDead(Entities, Player);
             //Particles
-            Particle.EnactDuration(Particles);
-            Particle.Update(Particles, GameTick);
+            Particles.ForEach(Particle => Particle.Update(GameTick));
+            Particles.RemoveAll(Particle => Particle.ShouldDelete());
             Particle.SpawnParticles(Particles, Player.Position, GameTick);
 
             //Magic Functions
-            MagicEffect.Update();
-            MagicEffect.EnactDuration(MagicEffects);
+            MagicEffects.ForEach(Effect => Effect.Update(Player, Entities, GameTick));
+            MagicEffects.RemoveAll(MagicEffect => MagicEffect.ShouldDelete());
         }
 
         base.Update(gameTime);
@@ -403,7 +403,6 @@ public sealed class BombarderGame : Game
 
         // Particles
         Particles.Where(Particle => !Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
-
 
         // Grid
         if (GameState == "PlayPage" || Settings.TranceMode)

@@ -30,12 +30,13 @@ public class NonStaticOrb : MagicEffect
         Velocity = DefaultVelocity;
     }
 
-    public override void EnactEffect(Player Player, List<Entity> Entities, uint GameTick)
+    public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
-        //EnactVelocity
+        base.Update(Player, Entities, GameTick);
+        // EnactVelocity
         EnactVelocity();
 
-        //Enact Damage
+        // Enact Damage
         foreach (var Entity in Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)))
         {
             Entity.GiveDamage(Damage);
