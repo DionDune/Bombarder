@@ -49,7 +49,7 @@ public class ForceContainer : MagicEffect
         EnactDuration();
     }
 
-    public override void Draw()
+    public override void DrawEffect()
     {
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.WhiteCircle,
@@ -78,7 +78,7 @@ public class ForceContainer : MagicEffect
         if (!DestinationReached)
         {
             Vector2 Diff = Destination - Position;
-            float Distance = Utils.HypotF(Diff);
+            float Distance = MathUtils.HypotF(Diff);
             float Angle = MathF.Atan2(Diff.Y, Diff.X);
 
             if (Distance <= MovementSpeed)
@@ -118,8 +118,8 @@ public class ForceContainer : MagicEffect
         // Store new entities in Container list
         foreach (var Entity in Entities.Where(Entity => !ContainedEntities.Contains(Entity)))
         {
-            Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = Utils.HypotF(Diff);
+            Vector2 Diff = MathUtils.Abs(Position - Entity.Position);
+            float Distance = MathUtils.HypotF(Diff);
 
             if (Distance <= CurrentRadius)
             {
@@ -130,8 +130,8 @@ public class ForceContainer : MagicEffect
         // Keep all contained entities within confines
         foreach (Entity Entity in ContainedEntities)
         {
-            Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = Utils.HypotF(Diff);
+            Vector2 Diff = MathUtils.Abs(Position - Entity.Position);
+            float Distance = MathUtils.HypotF(Diff);
 
             if (Distance < CurrentRadius - EdgeEffectWith)
             {

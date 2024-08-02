@@ -5,11 +5,7 @@ namespace Bombarder.UI.Items;
 
 public class ContainerSlotUIElement : UIItem
 {
-    public override void Draw(
-        SpriteBatch SpriteBatch,
-        GraphicsDeviceManager Graphics,
-        Textures Textures,
-        Vector2 Offset)
+    public override void Draw(Textures Textures, Vector2 Offset)
     {
     }
 }

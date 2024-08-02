@@ -5,17 +5,13 @@ namespace Bombarder.UI.Items;
 
 public class FillbarUIItem : UIItem
 {
-    public override void Draw(
-        SpriteBatch SpriteBatch,
-        GraphicsDeviceManager Graphics,
-        Textures Textures,
-        Vector2 Offset)
+    public override void Draw(Textures Textures, Vector2 Offset)
     {
         Vector2 OffsetPosition = Offset + Position;
-
+        var SpriteBatch = BombarderGame.Instance.SpriteBatch;
+        
         //Border
-        UIPage.RenderOutline(
-            SpriteBatch,
+        RenderUtils.RenderOutline(
             Textures.White,
             BorderColor,
             OffsetPosition.ToPoint(),
@@ -24,7 +20,8 @@ public class FillbarUIItem : UIItem
             BorderWidth,
             BorderTransparency
         );
-        //Inner
+
+        // Inner
         SpriteBatch.Draw(
             Textures.White,
             new Rectangle(
@@ -35,7 +32,8 @@ public class FillbarUIItem : UIItem
             ),
             SubBorderColor * SubBorderTransparency
         );
-        //Bar
+
+        // Bar
         SpriteBatch.Draw(
             Textures.White,
             new Rectangle(

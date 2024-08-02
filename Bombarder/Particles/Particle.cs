@@ -52,9 +52,10 @@ public abstract class Particle
         }
     }
 
-    public static void SpawnParticles(List<Particle> Particles, Vector2 PlayerPos, GraphicsDeviceManager Graphics,
-        uint Tick)
+    public static void SpawnParticles(List<Particle> Particles, Vector2 PlayerPos, uint Tick)
     {
+        var Graphics = BombarderGame.Instance.Graphics;
+        
         int ClutterSpawnRangeX = Graphics.PreferredBackBufferWidth;
         int ClutterSpawnRangeY = Graphics.PreferredBackBufferHeight;
 

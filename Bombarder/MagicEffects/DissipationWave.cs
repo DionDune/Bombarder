@@ -39,7 +39,7 @@ public class DissipationWave : MagicEffect
         EnactDamage(Entities);
     }
 
-    public override void Draw()
+    public override void DrawEffect()
     {
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.WhiteCircle,
@@ -67,8 +67,8 @@ public class DissipationWave : MagicEffect
     {
         foreach (Entity Entity in Entities)
         {
-            Vector2 Diff = Utils.Abs(Position - Entity.Position);
-            float Distance = Utils.HypotF(Diff);
+            Vector2 Diff = MathUtils.Abs(Position - Entity.Position);
+            float Distance = MathUtils.HypotF(Diff);
 
             if (Math.Abs(Radius - Distance) <= EdgeEffectWith)
             {

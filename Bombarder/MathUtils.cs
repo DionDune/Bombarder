@@ -4,10 +4,13 @@ using Microsoft.Xna.Framework;
 
 namespace Bombarder;
 
-public static class Utils
+public static class MathUtils
 {
-    public static Vector2 ToPosition(this Orientation Orientation, GraphicsDeviceManager Graphics) =>
-        Orientation switch
+    public static Vector2 ToPosition(this Orientation Orientation)
+    {
+        var Graphics = BombarderGame.Instance.Graphics;
+
+        return Orientation switch
         {
             Orientation.TOP_LEFT => Vector2.Zero,
             Orientation.TOP => new Vector2(Graphics.PreferredBackBufferWidth / 2F, 0),
@@ -24,9 +27,9 @@ public static class Utils
                 Graphics.PreferredBackBufferHeight),
             _ => Vector2.Zero
         };
+    }
 
-    public static Point ToPoint(this Orientation Orientation, GraphicsDeviceManager Graphics) =>
-        Orientation.ToPosition(Graphics).ToPoint();
+    public static Point ToPoint(this Orientation Orientation) => Orientation.ToPosition().ToPoint();
 
     public static Vector2 Copy(this Vector2 Vector) => new(Vector.X, Vector.Y);
     public static Point Copy(this Point Point) => new(Point.X, Point.Y);

@@ -22,10 +22,8 @@ public class SettingsPage : UIPage
                 BorderColor = Color.Green,
                 BaseColor = Color.PaleGreen,
 
-                Text = new TextElement
+                Text = new TextElement("RESUME")
                 {
-                    Text = "RESUME",
-                    Elements = TextElement.GetString("RESUME"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -43,9 +41,8 @@ public class SettingsPage : UIPage
                 BorderColor = Color.Purple,
                 BaseColor = Color.BlueViolet,
 
-                Text = new TextElement
+                Text = new TextElement("INVINCIBLE")
                 {
-                    Elements = TextElement.GetString("INVINCIBLE"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -63,10 +60,9 @@ public class SettingsPage : UIPage
                 BorderColor = Color.Purple,
                 BaseColor = Color.BlueViolet,
 
-                Text = new TextElement
+                Text = new TextElement("INFINITE MANA")
                 {
-                    Elements = TextElement.GetString("INFINITE MANA"),
-                    ElementSize = 8,
+                    ElementSize = 6,
                     Color = Color.Black
                 },
             },
@@ -76,9 +72,8 @@ public class SettingsPage : UIPage
                 Orientation = Orientation.TOP,
                 Position = new Vector2(0, 100),
 
-                Text = new TextElement
+                Text = new TextElement("SETTINGS")
                 {
-                    Elements = TextElement.GetString("SETTINGS"),
                     ElementSize = 16,
                     Color = Color.White
                 }

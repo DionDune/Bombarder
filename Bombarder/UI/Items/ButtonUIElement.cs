@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Bombarder.UI.Items;
 
@@ -21,14 +20,12 @@ public class ButtonUIElement : UIItem
         }
     }
 
-    public override void Draw(
-        SpriteBatch SpriteBatch,
-        GraphicsDeviceManager Graphics,
-        Textures Textures,
-        Vector2 Offset)
+    public override void Draw(Textures Textures, Vector2 Offset)
     {
         Vector2 OffsetPosition = Offset + Position;
         Vector2 OffsetCentre = Offset + Centre;
+
+        var SpriteBatch = BombarderGame.Instance.SpriteBatch;
 
         SpriteBatch.Draw(
             Textures.White,
@@ -48,7 +45,7 @@ public class ButtonUIElement : UIItem
 
         if (Text != null)
         {
-            RenderTextElements(SpriteBatch, Textures, Text.Elements, OffsetCentre, Text.ElementSize, Text.Color);
+            RenderTextElements(Textures, Text.Elements, OffsetCentre, Text.ElementSize, Text.Color);
         }
     }
 }

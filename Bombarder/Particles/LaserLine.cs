@@ -53,7 +53,7 @@ public class LaserLine : Particle
             BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
             BombarderGame.Instance.Player.Position.Y
         );
-        BombarderGame.Instance.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
+        RenderUtils.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
     }
 
     public void EnactMovement()

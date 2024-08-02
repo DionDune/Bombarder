@@ -36,50 +36,13 @@ public abstract class UIPage
     }
 
 
-    public void RenderElements(SpriteBatch SpriteBatch, GraphicsDeviceManager Graphics, Textures Textures)
+    public void RenderElements(Textures Textures)
     {
         foreach (UIItem Item in UIItems)
         {
-            Vector2 Offset = Item.Orientation.ToPosition(Graphics);
+            Vector2 Offset = Item.Orientation.ToPosition();
 
-            Item.Draw(SpriteBatch, Graphics, Textures, Offset);
+            Item.Draw(Textures, Offset);
         }
-    }
-
-    public static void RenderOutline(
-        SpriteBatch _spriteBatch,
-        Texture2D Texture,
-        Color color,
-        Point Position,
-        int Width,
-        int Height,
-        int BorderWidth,
-        float BorderTransparency)
-    {
-        _spriteBatch.Draw(
-            Texture,
-            new Rectangle(Position.X, Position.Y, Width, BorderWidth),
-            color * BorderTransparency
-        );
-        _spriteBatch.Draw(
-            Texture,
-            new Rectangle(
-                Position.X + Width - BorderWidth,
-                Position.Y + BorderWidth,
-                BorderWidth,
-                Height - BorderWidth
-            ),
-            color * BorderTransparency
-        );
-        _spriteBatch.Draw(
-            Texture,
-            new Rectangle(Position.X, Position.Y + Height - BorderWidth, Width - BorderWidth, BorderWidth),
-            color * BorderTransparency
-        );
-        _spriteBatch.Draw(
-            Texture,
-            new Rectangle(Position.X, Position.Y + BorderWidth, BorderWidth, Height - BorderWidth * 2),
-            color * BorderTransparency
-        );
     }
 }

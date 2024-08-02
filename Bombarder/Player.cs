@@ -128,7 +128,7 @@ public class Player
 
         var Game = BombarderGame.Instance;
 
-        Point OrientPos = ManaBarScreenOrientation.ToPoint(Game.Graphics);
+        Point OrientPos = ManaBarScreenOrientation.ToPoint();
         float HealthPercent = (float)Health / HealthMax;
 
         Point HealthBarContainerPos = new Point(
@@ -150,8 +150,7 @@ public class Player
             Color.White * 0.3F
         );
 
-        UIPage.RenderOutline(
-            Game.SpriteBatch,
+        RenderUtils.RenderOutline(
             Game.Textures.White,
             Color.White,
             HealthBarContainerPos,
@@ -182,7 +181,7 @@ public class Player
 
         var Game = BombarderGame.Instance;
 
-        Point OrientPos = ManaBarScreenOrientation.ToPoint(Game.Graphics);
+        Point OrientPos = ManaBarScreenOrientation.ToPoint();
         float ManaPercent = (float)Mana / ManaMax;
 
         Point ManaContainerPos = new Point(
@@ -203,8 +202,7 @@ public class Player
             new Rectangle(ManaContainerPos, ManaBarDimensionsWithOffset),
             Color.White * 0.3F
         );
-        UIPage.RenderOutline(
-            Game.SpriteBatch,
+        RenderUtils.RenderOutline(
             Game.Textures.White,
             Color.White,
             ManaContainerPos,
@@ -241,7 +239,7 @@ public class Player
         {
             float XDiff = MouseInput.Position.X - Game.Graphics.PreferredBackBufferWidth / 2F;
             float YDiff = MouseInput.Position.Y - Game.Graphics.PreferredBackBufferHeight / 2F;
-            Effect.Angle = Utils.ToDegrees(MathF.Atan2(YDiff, XDiff));
+            Effect.Angle = MathUtils.ToDegrees(MathF.Atan2(YDiff, XDiff));
             Effect.Position = Position.Copy();
         }
     }
@@ -408,7 +406,7 @@ public class Player
     public void SetRandomLocalPosition(int MinDistance, int MaxDistance)
     {
         int Angle = BombarderGame.random.Next(0, 360);
-        float AngleRadians = Utils.ToRadians(Angle);
+        float AngleRadians = MathUtils.ToRadians(Angle);
         int Distance = BombarderGame.random.Next(MinDistance, MaxDistance);
 
         Position += new Vector2(

@@ -22,9 +22,8 @@ public class StartPage : UIPage
                 BorderColor = Color.Green,
                 BaseColor = Color.PaleGreen,
 
-                Text = new TextElement
+                Text = new TextElement("START")
                 {
-                    Elements = TextElement.GetString("START"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -41,9 +40,8 @@ public class StartPage : UIPage
                 BorderColor = Color.DarkRed,
                 BaseColor = Color.Red,
 
-                Text = new TextElement
+                Text = new TextElement("QUIT")
                 {
-                    Elements = TextElement.GetString("QUIT"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -53,9 +51,8 @@ public class StartPage : UIPage
             {
                 Position = new Vector2(0, -250),
 
-                Text = new TextElement
+                Text = new TextElement("BOMBARDER")
                 {
-                    Elements = TextElement.GetString("BOMBARDER"),
                     ElementSize = 16,
                     Color = Color.White
                 }

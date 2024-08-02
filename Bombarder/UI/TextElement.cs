@@ -9,9 +9,9 @@ public class TextElement
     public int XOffset { get; set; }
     public int YOffset { get; set; }
 
-    public string Text { get; set; }
+    public string Text { get; private set; }
 
-    public List<List<bool>> Elements { get; set; }
+    public List<List<bool>> Elements { get; private set; }
     public int ElementSize { get; set; }
 
     public Color Color { get; set; }
@@ -19,12 +19,12 @@ public class TextElement
 
     public bool hasBackground { get; set; }
 
-    public TextElement()
+    public TextElement(string Text)
     {
         XOffset = 0;
         YOffset = 0;
 
-        Text = "EXAMPLE";
+        this.Text = Text;
         Elements = GetString(Text);
         ElementSize = 5;
 

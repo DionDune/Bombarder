@@ -86,5 +86,74 @@ public abstract class MagicEffect
     }
 
     public abstract void EnactEffect(Player Player, List<Entity> Entities, uint GameTick);
-    public abstract void Draw();
+    public abstract void DrawEffect();
+
+    public void DrawDamageRadius()
+    {
+        var Game = BombarderGame.Instance;
+
+        if (!Game.Settings.ShowDamageRadii)
+        {
+            return;
+        }
+
+        var Player = Game.Player;
+        var Textures = Game.Textures;
+        var Graphics = Game.Graphics;
+        var SpriteBatch = Game.SpriteBatch;
+
+        if (RadiusIsCircle)
+        {
+            SpriteBatch.Draw(
+                Game.Textures.WhiteCircle,
+                new Rectangle(
+                    (int)(Position.X - DamageRadius + Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
+                    (int)(Position.Y - DamageRadius + Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
+                    (int)DamageRadius * 2, (int)DamageRadius * 2),
+                Color.DarkRed
+            );
+        }
+        else
+        {
+            // Top Line
+            SpriteBatch.Draw(Textures.White, new Rectangle(
+                (int)(Position.X + RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
+                (int)(Position.Y + RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
+                RadiusSize.X * 2, 2), Color.White);
+            // Bottom Line
+            SpriteBatch.Draw(Textures.White, new Rectangle(
+                    (int)(Position.X + RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
+                    (int)(Position.Y + RadiusOffset.Y + RadiusSize.Y * 2 + Graphics.PreferredBackBufferHeight / 2F -
+                          Player.Position.Y),
+                    RadiusSize.X * 2,
+                    2
+                ),
+                Color.White
+            );
+            // Left Line
+            SpriteBatch.Draw(Textures.White, new Rectangle(
+                    (int)(Position.X + RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
+                    (int)(Position.Y + RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
+                    2, RadiusSize.Y * 2
+                ),
+                Color.White
+            );
+            // Right Line
+            SpriteBatch.Draw(Textures.White, new Rectangle(
+                    (int)(Position.X + RadiusOffset.X + RadiusSize.X * 2 + Graphics.PreferredBackBufferWidth / 2F -
+                          Player.Position.X),
+                    (int)(Position.Y + RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
+                    2,
+                    RadiusSize.Y * 2
+                ),
+                Color.White
+            );
+        }
+    }
+
+    public void Draw()
+    {
+        DrawEffect();
+        DrawDamageRadius();
+    }
 }

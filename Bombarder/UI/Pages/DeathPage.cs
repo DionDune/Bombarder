@@ -22,9 +22,8 @@ public class DeathPage : UIPage
                 BorderColor = Color.Green,
                 BaseColor = Color.PaleGreen,
 
-                Text = new TextElement
+                Text = new TextElement("RESPAWN")
                 {
-                    Elements = TextElement.GetString("RESPAWN"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -41,9 +40,8 @@ public class DeathPage : UIPage
                 BorderColor = Color.Purple,
                 BaseColor = Color.BlueViolet,
 
-                Text = new TextElement
+                Text = new TextElement("RESSURECT")
                 {
-                    Elements = TextElement.GetString("RESURRECT"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -60,9 +58,8 @@ public class DeathPage : UIPage
                 BorderColor = Color.DarkRed,
                 BaseColor = Color.Red,
 
-                Text = new TextElement
+                Text = new TextElement("QUIT")
                 {
-                    Elements = TextElement.GetString("QUIT"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -72,9 +69,8 @@ public class DeathPage : UIPage
             {
                 Position = new Vector2(0, -250),
 
-                Text = new TextElement
+                Text = new TextElement("YOU FUCKING DIED")
                 {
-                    Elements = TextElement.GetString("YOU FUCKING DIED"),
                     ElementSize = 16,
                     Color = Color.White
                 }

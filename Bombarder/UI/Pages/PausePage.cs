@@ -22,10 +22,8 @@ public class PausePage : UIPage
                 BorderColor = Color.Green,
                 BaseColor = Color.PaleGreen,
 
-                Text = new TextElement
+                Text = new TextElement("RESUME")
                 {
-                    Text = "RESUME",
-                    Elements = TextElement.GetString("RESUME"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -42,10 +40,8 @@ public class PausePage : UIPage
                 BorderColor = Color.Blue,
                 BaseColor = Color.Turquoise,
 
-                Text = new TextElement
+                Text = new TextElement("SETTINGS")
                 {
-                    Text = "SETTINGS",
-                    Elements = TextElement.GetString("SETTINGS"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -62,10 +58,8 @@ public class PausePage : UIPage
                 BorderColor = Color.DarkRed,
                 BaseColor = Color.Red,
 
-                Text = new TextElement
+                Text = new TextElement("QUIT")
                 {
-                    Text = "QUIT",
-                    Elements = TextElement.GetString("QUIT"),
                     ElementSize = 8,
                     Color = Color.Black
                 },
@@ -75,9 +69,8 @@ public class PausePage : UIPage
             {
                 Position = new Vector2(0, -250),
 
-                Text = new TextElement
+                Text = new TextElement("BOMBARDER")
                 {
-                    Elements = TextElement.GetString("BOMBARDER"),
                     ElementSize = 16,
                     Color = Color.White
                 }

@@ -31,7 +31,7 @@ public class StaticOrb : MagicEffect
         CreateParticles();
     }
 
-    public override void Draw()
+    public override void DrawEffect()
     {
     }
 

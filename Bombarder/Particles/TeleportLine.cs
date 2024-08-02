@@ -57,7 +57,7 @@ public class TeleportLine : Particle
             BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
             BombarderGame.Instance.Player.Position.Y
         );
-        BombarderGame.Instance.DrawLine(DrawPosition, Length, Direction, Colour * Opacity, Thickness);
+        RenderUtils.DrawLine(DrawPosition, Length, Direction, Colour * Opacity, Thickness);
     }
 
     private void EnactOpacityChange()
@@ -100,7 +100,7 @@ public class TeleportLine : Particle
     {
         Vector2 Diff = Point1 - Point2;
 
-        float Distance = Utils.HypotF(Diff);
+        float Distance = MathUtils.HypotF(Diff);
         float Angle = MathF.Atan2(Diff.Y, Diff.X);
 
         int ParticleDistance = BombarderGame.random.Next(0, (int)Distance);
@@ -119,7 +119,7 @@ public class TeleportLine : Particle
             Duration = BombarderGame.random.Next(DurationMin, DurationMax),
             Length = BombarderGame.random.Next(LengthMin, LengthMax),
             Thickness = BombarderGame.random.Next(ThicknessMin, ThicknessMax),
-            Direction = Angle + Utils.ToRadians(BombarderGame.random.Next(-AngleSpreadRange, AngleSpreadRange)),
+            Direction = Angle + MathUtils.ToRadians(BombarderGame.random.Next(-AngleSpreadRange, AngleSpreadRange)),
             Colour = Colours.First(),
             Opacity = OpacityDefault,
         });

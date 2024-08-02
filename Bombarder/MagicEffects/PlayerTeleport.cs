@@ -38,14 +38,14 @@ public class PlayerTeleport : MagicEffect
         EnactDuration(Player);
     }
 
-    public override void Draw()
+    public override void DrawEffect()
     {
     }
 
     public void EnactMovement(Player Player)
     {
         Vector2 Diff = Player.Position - Position;
-        float Distance = Utils.HypotF(Diff);
+        float Distance = MathUtils.HypotF(Diff);
         float Angle = MathF.Atan2(Diff.Y, Diff.X);
 
         float DistanceToMove = Speed;
@@ -76,7 +76,7 @@ public class PlayerTeleport : MagicEffect
     public void CreateParticles(Player Player)
     {
         Vector2 Diff = Player.Position - Position;
-        float Distance = Utils.HypotF(Diff);
+        float Distance = MathUtils.HypotF(Diff);
 
         int Count = ParticleCountMed;
         if (Distance > ParticleCountMaxDistanceThreshold)

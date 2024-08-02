@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Bombarder;
 using Bombarder.UI;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 public abstract class UIItem
 {
@@ -52,13 +51,12 @@ public abstract class UIItem
 
     public Rectangle GetElementBounds()
     {
-        var Game = BombarderGame.Instance;
-        Point OrientationPosition = Orientation.ToPoint(Game.Graphics);
+        Point OrientationPosition = Orientation.ToPoint();
         Point StartPosition = OrientationPosition + Position.ToPoint();
-        
+
         return new Rectangle(StartPosition, new Point(Width, Height));
     }
-    
+
     public bool IsMouseOver()
     {
         var Game = BombarderGame.Instance;
@@ -69,20 +67,14 @@ public abstract class UIItem
 
     public virtual void Click()
     {
-        
     }
 
-    public abstract void Draw(
-        SpriteBatch SpriteBatch,
-        GraphicsDeviceManager Graphics,
-        Textures Textures,
-        Vector2 Offset
-    );
+    public abstract void Draw(Textures Textures, Vector2 Offset);
 
     public void Update()
     {
         SetHighlight(IsMouseOver());
-        
+
         if (BombarderGame.Instance.MouseInput.HasJustPressed(MouseButtons.Left) && IsMouseOver())
         {
             Click();
@@ -90,7 +82,6 @@ public abstract class UIItem
     }
 
     public static void RenderTextElements(
-        SpriteBatch SpriteBatch,
         Textures Textures,
         List<List<bool>> Elements,
         Vector2 Centre,
@@ -109,7 +100,8 @@ public abstract class UIItem
                     continue;
                 }
 
-                SpriteBatch.Draw(Textures.White,
+                BombarderGame.Instance.SpriteBatch.Draw(
+                    Textures.White,
                     new Rectangle(StartX + x * ElementSize, StartY + y * ElementSize, ElementSize, ElementSize),
                     ElementColor
                 );

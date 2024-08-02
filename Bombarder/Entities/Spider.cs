@@ -67,7 +67,7 @@ public class Spider : Entity
 
         Vector2 Diff = Position - Player.Position;
 
-        float PlayerDistance = Utils.HypotF(Diff);
+        float PlayerDistance = MathUtils.HypotF(Diff);
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
             ? JumpVelocityMax

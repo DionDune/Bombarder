@@ -33,7 +33,7 @@ public class WideLaser : MagicEffect
     public WideLaser(Vector2 Position, Vector2 Destination) : base(Position)
     {
         Vector2 DestinationDiff = Destination - Position;
-        Angle = Utils.ToDegrees(MathF.Atan2(DestinationDiff.Y, DestinationDiff.X));
+        Angle = MathUtils.ToDegrees(MathF.Atan2(DestinationDiff.Y, DestinationDiff.X));
         Duration = DefaultDuration;
     }
 
@@ -54,7 +54,7 @@ public class WideLaser : MagicEffect
         CreateParticles();
     }
 
-    public override void Draw()
+    public override void DrawEffect()
     {
         if (!BombarderGame.Instance.Settings.ShowDamageRadii)
         {
@@ -62,8 +62,8 @@ public class WideLaser : MagicEffect
         }
 
         // Old
-        // float AngleRadians = Utils.ToRadians(Angle);
-        // float RightAngleRadians = Utils.ToRadians(Angle + 90);
+        // float AngleRadians = MathUtils.ToRadians(Angle);
+        // float RightAngleRadians = MathUtils.ToRadians(Angle + 90);
         //
         // Vector2 LeftLine = new Vector2(
         //     BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F - Width / 2F * MathF.Cos(RightAngleRadians),
@@ -88,9 +88,9 @@ public class WideLaser : MagicEffect
 
         // New accounting for Laser Spread
         float TrueSpread = Spread * TrueSpreadMultiplier;
-        float AngleRadians = Utils.ToRadians(Angle);
-        float AngleRadiansLeft = Utils.ToRadians(Angle - TrueSpread);
-        float AngleRadiansRight = Utils.ToRadians(Angle + TrueSpread);
+        float AngleRadians = MathUtils.ToRadians(Angle);
+        float AngleRadiansLeft = MathUtils.ToRadians(Angle - TrueSpread);
+        float AngleRadiansRight = MathUtils.ToRadians(Angle + TrueSpread);
 
         Vector2 Start = new(
             Position.X + BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
@@ -99,14 +99,14 @@ public class WideLaser : MagicEffect
             BombarderGame.Instance.Player.Position.Y
         );
 
-        BombarderGame.Instance.DrawLine(Start, Range, AngleRadiansLeft, SecondaryColor, 10);
-        BombarderGame.Instance.DrawLine(Start, Range, AngleRadians, MarkerColor, 10);
-        BombarderGame.Instance.DrawLine(Start, Range, AngleRadiansRight, SecondaryColor, 10);
+        RenderUtils.DrawLine(Start, Range, AngleRadiansLeft, SecondaryColor, 10);
+        RenderUtils.DrawLine(Start, Range, AngleRadians, MarkerColor, 10);
+        RenderUtils.DrawLine(Start, Range, AngleRadiansRight, SecondaryColor, 10);
     }
 
     private void EnactDamage(Player Player, List<Entity> Entities, uint Tick)
     {
-        float AngleRadians = Utils.ToRadians(Angle);
+        float AngleRadians = MathUtils.ToRadians(Angle);
 
         float XDiff;
         float YDiff;
@@ -125,13 +125,13 @@ public class WideLaser : MagicEffect
         }
 
         //Calculate radius of the Lasers Spread every 1 Distance
-        float SpreadValue = MathF.Sin(Utils.ToRadians(Spread));
+        float SpreadValue = MathF.Sin(MathUtils.ToRadians(Spread));
 
         foreach (Entity Entity in Entities)
         {
             XDiff = Math.Abs(Position.X - Entity.Position.X);
             YDiff = Math.Abs(Position.Y - Entity.Position.Y);
-            Distance = Utils.HypotF(XDiff, YDiff);
+            Distance = MathUtils.HypotF(XDiff, YDiff);
 
             if (Distance >= Range)
             {
@@ -165,7 +165,7 @@ public class WideLaser : MagicEffect
         int Count = BombarderGame.random.Next(1, 4);
 
         // Central Laser
-        AngleRadians = Utils.ToRadians(Angle + (float)BombarderGame.random.Next(-Spread * 10, Spread * 10) / 10);
+        AngleRadians = MathUtils.ToRadians(Angle + (float)BombarderGame.random.Next(-Spread * 10, Spread * 10) / 10);
         BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
         {
             HasDuration = true,
@@ -179,7 +179,7 @@ public class WideLaser : MagicEffect
         // Others
         for (int i = 0; i < Count; i++)
         {
-            AngleRadians = Utils.ToRadians(
+            AngleRadians = MathUtils.ToRadians(
                 Angle + BombarderGame.random.Next(-LaserLine.AngleSpreadRange, LaserLine.AngleSpreadRange)
             );
 

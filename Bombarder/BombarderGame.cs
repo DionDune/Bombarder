@@ -329,7 +329,7 @@ public sealed class BombarderGame : Game
     private Vector2 GetRandomSpawnPoint()
     {
         //Spawns randomly from edges of screen
-        float SpawnAngle = Utils.ToRadians(random.Next(0, 360));
+        float SpawnAngle = MathUtils.ToRadians(random.Next(0, 360));
         int SpawnDistance = random.Next(
             (int)(Graphics.PreferredBackBufferWidth * 0.6F),
             (int)(Graphics.PreferredBackBufferWidth * 1.2)
@@ -374,99 +374,6 @@ public sealed class BombarderGame : Game
 
     #endregion
 
-    #region General Rendering Functions
-
-    private void DrawGrid()
-    {
-        if (!Settings.ShowGrid)
-        {
-            return;
-        }
-
-        int BigLineWidth = 2 * Settings.GridLineSizeMult;
-        int ThinLineWidth = 1 * Settings.GridLineSizeMult;
-        Color GridColor = Settings.GridColor;
-
-        if (Settings.TranceMode)
-        {
-            BigLineWidth = 2 * Settings.TranceModeGridLineMult;
-            ThinLineWidth = 1 * Settings.TranceModeGridLineMult;
-            GridColor = Settings.TranceModeGridColor;
-        }
-
-        Point ScreenStart = new Point(
-            (int)(Player.Position.X - Graphics.PreferredBackBufferWidth / 2F),
-            (int)(Player.Position.Y - Graphics.PreferredBackBufferHeight / 2F)
-        );
-
-        for (int y = 0; y < Graphics.PreferredBackBufferHeight; y++)
-        {
-            if ((y + ScreenStart.Y) % (300 * Settings.GridSizeMultiplier) == 0)
-            {
-                SpriteBatch.Draw(Textures.White,
-                    new Rectangle(0, y - 1, Graphics.PreferredBackBufferWidth, BigLineWidth),
-                    GridColor * 0.7F * Settings.GridOpacityMultiplier);
-            }
-
-            if ((y + ScreenStart.Y) % (100 * Settings.GridSizeMultiplier) == 0)
-            {
-                SpriteBatch.Draw(Textures.White,
-                    new Rectangle(0, y, Graphics.PreferredBackBufferWidth, ThinLineWidth),
-                    GridColor * 0.45F * Settings.GridOpacityMultiplier);
-            }
-        }
-
-        for (int x = 0; x < Graphics.PreferredBackBufferWidth; x++)
-        {
-            if ((x + ScreenStart.X) % (300 * Settings.GridSizeMultiplier) == 0)
-            {
-                SpriteBatch.Draw(Textures.White,
-                    new Rectangle(x - 1, 0, BigLineWidth, Graphics.PreferredBackBufferWidth),
-                    GridColor * 0.7F * Settings.GridOpacityMultiplier);
-            }
-
-            if ((x + ScreenStart.X) % (100 * Settings.GridSizeMultiplier) == 0)
-            {
-                SpriteBatch.Draw(Textures.White,
-                    new Rectangle(x, 0, ThinLineWidth, Graphics.PreferredBackBufferWidth),
-                    GridColor * 0.45F * Settings.GridOpacityMultiplier);
-            }
-        }
-    }
-
-    public void DrawLine(Vector2 point, float Length, float Angle, Color Color, float Thickness)
-    {
-        var Origin = new Vector2(0f, 0.5f);
-        var Scale = new Vector2(Length, Thickness);
-
-        SpriteBatch.Draw(Textures.White, point, null, Color, Angle, Origin, Scale, SpriteEffects.None, 0);
-    }
-
-    public void DrawRotatedTexture(
-        Vector2 Point,
-        Texture2D Texture,
-        float Width,
-        float Height,
-        float Angle,
-        bool Centered,
-        Color Color)
-    {
-        float AngleRadians = Utils.ToRadians(Angle);
-
-        var Origin = new Vector2(0f, 0.5f);
-        Vector2 Scale = new Vector2(Width, Height);
-
-        if (!Centered)
-        {
-            Point.Y -= Texture.Width * Scale.Y / 2 * MathF.Cos(AngleRadians);
-            Point.X += Texture.Height * Scale.Y / 2 * MathF.Sin(AngleRadians);
-        }
-
-        SpriteBatch.Draw(Texture, Point, null, Color, AngleRadians, Origin, Scale, SpriteEffects.None, 0);
-    }
-
-    #endregion
-
     #region Fundamentals
 
     protected override void Update(GameTime gameTime)
@@ -495,7 +402,7 @@ public sealed class BombarderGame : Game
             //Particles
             Particle.EnactDuration(Particles);
             Particle.Update(Particles, GameTick);
-            Particle.SpawnParticles(Particles, Player.Position, Graphics, GameTick);
+            Particle.SpawnParticles(Particles, Player.Position, GameTick);
 
             //Magic Functions
             MagicEffect.Update();
@@ -508,7 +415,9 @@ public sealed class BombarderGame : Game
     protected override void Draw(GameTime GameTime)
     {
         if (!Settings.TranceMode || Settings.TranceModeClearScreen)
+        {
             GraphicsDevice.Clear(Settings.BackgroundColor);
+        }
 
         // BEGIN Draw ----
         SpriteBatch.Begin(
@@ -521,16 +430,13 @@ public sealed class BombarderGame : Game
 
 
         // Particles
-        foreach (var Particle in Particles.Where(Particle => !Particle.DrawLater))
-        {
-            Particle.Draw();
-        }
+        Particles.Where(Particle => !Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
 
 
         // Grid
         if (GameState == "PlayPage" || Settings.TranceMode)
         {
-            DrawGrid();
+            RenderUtils.DrawGrid();
         }
 
         // Ingame
@@ -539,75 +445,17 @@ public sealed class BombarderGame : Game
             // Player
             Player.Draw();
 
-            // Entities
-            foreach (Entity Entity in Entities)
-            {
-                Entity.Draw();
-            }
-
-            // Magic
-            foreach (MagicEffect Effect in MagicEffects)
-            {
-                Effect.Draw();
-
-                if (!Settings.ShowDamageRadii)
-                {
-                    continue;
-                }
-
-                if (Effect.RadiusIsCircle)
-                {
-                    SpriteBatch.Draw(Textures.WhiteCircle, new Rectangle(
-                        (int)(Effect.Position.X - Effect.DamageRadius + Graphics.PreferredBackBufferWidth / 2F -
-                              Player.Position.X),
-                        (int)(Effect.Position.Y - Effect.DamageRadius + Graphics.PreferredBackBufferHeight / 2F -
-                              Player.Position.Y),
-                        (int)Effect.DamageRadius * 2, (int)Effect.DamageRadius * 2), Color.DarkRed);
-                }
-                else
-                {
-                    // Top Line
-                    SpriteBatch.Draw(Textures.White, new Rectangle(
-                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
-                              Player.Position.X),
-                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
-                              Player.Position.Y),
-                        Effect.RadiusSize.X * 2, 2), Color.White);
-                    // Bottom Line
-                    SpriteBatch.Draw(Textures.White, new Rectangle(
-                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
-                              Player.Position.X),
-                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Effect.RadiusSize.Y * 2 +
-                            Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
-                        Effect.RadiusSize.X * 2, 2), Color.White);
-                    // Left Line
-                    SpriteBatch.Draw(Textures.White, new Rectangle(
-                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Graphics.PreferredBackBufferWidth / 2F -
-                              Player.Position.X),
-                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
-                              Player.Position.Y),
-                        2, Effect.RadiusSize.Y * 2), Color.White);
-                    // Right Line
-                    SpriteBatch.Draw(Textures.White, new Rectangle(
-                        (int)(Effect.Position.X + Effect.RadiusOffset.X + Effect.RadiusSize.X * 2 +
-                            Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
-                        (int)(Effect.Position.Y + Effect.RadiusOffset.Y + Graphics.PreferredBackBufferHeight / 2F -
-                              Player.Position.Y),
-                        2, Effect.RadiusSize.Y * 2), Color.White);
-                }
-            }
+            Entities.ForEach(Entity => Entity.Draw());
+            MagicEffects.ForEach(Effect => Effect.Draw());
 
             Player.DrawBars();
         }
 
         // Later Particles
-        foreach (var Particle in Particles.Where(Particle => Particle.DrawLater))
-        {
-            Particle.Draw();
-        }
+        Particles.Where(Particle => Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
 
 
-        CurrentPage.RenderElements(SpriteBatch, Graphics, Textures);
+        CurrentPage.RenderElements(Textures);
 
         // Cursor
         SpriteBatch.Draw(Textures.Cursor,
