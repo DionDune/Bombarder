@@ -1,49 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Bombarder
+namespace Bombarder;
+
+public class Settings
 {
-    internal class Settings
-    {
-        public float CursorSizeMultiplier { get; set; }
-        public bool ShowGrid { get; set; }
-        public float GridOpacityMultiplier { get; set; }
-        public float GridSizeMultiplier { get; set; }
-        public Color GridColor { get; set; }
-        public Color BackgroundColor { get; set; }
-        public int GridLineSizeMult { get; set; }
+    public float CursorSizeMultiplier { get; set; } = 1.66F;
+    public bool ShowGrid { get; set; } = true;
+    public float GridOpacityMultiplier { get; set; } = 0.15F;
+    public float GridSizeMultiplier { get; set; } = 1;
+    public Color GridColor { get; set; } = Color.White;
+    public Color BackgroundColor { get; set; } = Color.Black;
+    public int GridLineSizeMult { get; set; } = 1;
 
-        public bool ShowDamageRadii { get; set; }
-        public bool ShowHitBoxes { get; set; }
+    public bool ShowDamageRadii { get; set; } = false;
+    public bool ShowHitBoxes { get; set; } = false;
 
-        public bool TranceMode { get; set; }
-        public Color TranceModeGridColor { get; set; }
-        public int TranceModeGridLineMult { get; set; }
-        public bool TranceModeClearScreen { get; set; }
+    public bool TranceMode { get; set; } = false;
+    public Color TranceModeGridColor { get; set; } = Color.Black;
+    public int TranceModeGridLineMult { get; set; } = 100;
+    public bool TranceModeClearScreen { get; set; } = false;
 
-        public bool RunEntityAI { get; set; }
-        public (int, int) EnemySpawnCountRange { get; set; }
-
-        public Settings()
-        {
-            CursorSizeMultiplier = 1.66F;
-
-            ShowGrid = true;
-            GridOpacityMultiplier = 0.15F;
-            GridLineSizeMult = 1;
-            GridSizeMultiplier = 1;
-            GridColor = Color.White;
-            BackgroundColor = Color.Black;
-
-            ShowDamageRadii = false;
-            ShowHitBoxes = false;
-
-            RunEntityAI = true;
-            EnemySpawnCountRange = (1, 3);
-
-            TranceMode = false;
-            TranceModeGridColor = Color.Black;
-            TranceModeGridLineMult = 100;
-            TranceModeClearScreen = false;
-        }
-    }
+    public bool RunEntityAI { get; set; } = true;
+    public (int, int) EnemySpawnCountRange { get; set; } = (1, 3);
 }
