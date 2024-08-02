@@ -379,7 +379,7 @@ public class Player
 
         IsDead = false;
         Health = HealthMax;
-        BombarderGame.Instance.UI_ChangePage("DeathPage");
+        BombarderGame.Instance.ChangePage("DeathPage");
     }
 
     public void ToggleInvincibility()

@@ -79,6 +79,16 @@ public abstract class UIItem
         Vector2 Offset
     );
 
+    public void Update()
+    {
+        SetHighlight(IsMouseOver());
+        
+        if (BombarderGame.Instance.MouseInput.HasJustPressed(MouseButtons.Left) && IsMouseOver())
+        {
+            Click();
+        }
+    }
+
     public static void RenderTextElements(
         SpriteBatch SpriteBatch,
         Textures Textures,

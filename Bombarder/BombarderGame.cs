@@ -22,7 +22,7 @@ public sealed class BombarderGame : Game
     public uint GameTick;
 
     List<UIPage> UIPages = new();
-    UIPage UIPage_Current;
+    UIPage CurrentPage;
     string GameState;
     string UIState;
 
@@ -62,7 +62,7 @@ public sealed class BombarderGame : Game
         GameTick = 0;
 
         UIPages = UIPage.GeneratePages();
-        UIPage_Current = UIPages[0];
+        CurrentPage = UIPages[0];
         GameState = "StartPage";
         UIState = "Default";
 
@@ -121,28 +121,18 @@ public sealed class BombarderGame : Game
 
         MouseInput.AddClickAction(MouseButtons.Left, () =>
         {
-            var Clicked = false;
-
-            if (UIPage_Current != null)
+            if (GameState != "PlayPage")
             {
-                foreach (UIItem Item in UIPage_Current.UIItems.Where(Item => Item.IsMouseOver()))
-                {
-                    Clicked = true;
-
-                    Item.Click();
-                }
+                return;
             }
 
-            if (!Clicked)
-            {
-                Player.CreateMagic<StaticOrb>(
-                    new Vector2(
-                        MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                        MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    )
-                );
-            }
-        }, "ClickUI");
+            Player.CreateMagic<StaticOrb>(
+                new Vector2(
+                    MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                    MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                )
+            );
+        }, "PrimaryAttack");
 
         MouseInput.AddClickAction(MouseButtons.Right, () =>
         {
@@ -247,18 +237,18 @@ public sealed class BombarderGame : Game
     {
         Player.SetDefaultStats();
         Player.SetRandomLocalPosition(500, 1000);
-        UI_ChangePage("PlayPage");
+        ChangePage("PlayPage");
     }
 
     public void ResumeGame()
     {
-        UI_ChangePage("PlayPage");
+        ChangePage("PlayPage");
     }
 
     public void StartNewGame()
     {
         ResetGame();
-        UI_ChangePage("PlayPage");
+        ChangePage("PlayPage");
     }
 
     private void TogglePause()
@@ -266,18 +256,18 @@ public sealed class BombarderGame : Game
         switch (GameState)
         {
             case "PlayPage":
-                UI_ChangePage("PausePage");
+                ChangePage("PausePage");
                 break;
             case "PausePage":
             case "SettingsPage":
-                UI_ChangePage("PlayPage");
+                ChangePage("PlayPage");
                 break;
         }
     }
 
     public void OpenSettings()
     {
-        UI_ChangePage("SettingsPage");
+        ChangePage("SettingsPage");
     }
 
     #endregion
@@ -290,31 +280,27 @@ public sealed class BombarderGame : Game
         {
             Graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width;
             Graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height;
-            Graphics.ApplyChanges();
         }
         else
         {
             Graphics.PreferredBackBufferWidth = GraphicsDevice.Adapter.CurrentDisplayMode.Width / 3 * 2;
             Graphics.PreferredBackBufferHeight = GraphicsDevice.Adapter.CurrentDisplayMode.Height / 3 * 2;
-            Graphics.ApplyChanges();
         }
 
+        Graphics.ApplyChanges();
         Graphics.ToggleFullScreen();
     }
 
-    public void UI_ChangePage(string PageType)
+    public void ChangePage(string PageType)
     {
         GameState = PageType;
 
-        if (UIPage_Current == null)
+        if (CurrentPage == null)
         {
             return;
         }
 
-        foreach (var Page in UIPages.Where(Page => Page.GetType().Name == GameState))
-        {
-            UIPage_Current = Page;
-        }
+        CurrentPage = UIPages.Find(Page => Page.GetType().Name == GameState);
     }
 
     #endregion
@@ -348,6 +334,7 @@ public sealed class BombarderGame : Game
             (int)(Graphics.PreferredBackBufferWidth * 0.6F),
             (int)(Graphics.PreferredBackBufferWidth * 1.2)
         );
+
         return new Vector2(
             Player.Position.X + SpawnDistance * MathF.Cos(SpawnAngle),
             Player.Position.Y + SpawnDistance * MathF.Sin(SpawnAngle)
@@ -489,11 +476,11 @@ public sealed class BombarderGame : Game
         KeyboardInput.Update();
         MouseInput.Update();
 
-        if (UIPage_Current != null)
+        if (CurrentPage != null)
         {
-            foreach (var Item in UIPage_Current.UIItems.Where(Item => Item is ButtonUIElement))
+            foreach (UIItem Item in CurrentPage.UIItems)
             {
-                Item.SetHighlight(Item.IsMouseOver());
+                Item.Update();
             }
         }
 
@@ -620,15 +607,18 @@ public sealed class BombarderGame : Game
         }
 
 
-        UIPage_Current.RenderElements(SpriteBatch, Graphics, Textures);
+        CurrentPage.RenderElements(SpriteBatch, Graphics, Textures);
 
         // Cursor
-        SpriteBatch.Draw(Textures.Cursor, new Rectangle(
-            (int)(MouseInput.Position.X - Textures.Cursor.Width / 2F * Settings.CursorSizeMultiplier),
-            (int)(MouseInput.Position.Y - Textures.Cursor.Height / 2F * Settings.CursorSizeMultiplier),
-            (int)(Textures.Cursor.Width * Settings.CursorSizeMultiplier),
-            (int)(Textures.Cursor.Height * Settings.CursorSizeMultiplier)), Color.White);
-
+        SpriteBatch.Draw(Textures.Cursor,
+            new Rectangle(
+                (int)(MouseInput.Position.X - Textures.Cursor.Width / 2F * Settings.CursorSizeMultiplier),
+                (int)(MouseInput.Position.Y - Textures.Cursor.Height / 2F * Settings.CursorSizeMultiplier),
+                (int)(Textures.Cursor.Width * Settings.CursorSizeMultiplier),
+                (int)(Textures.Cursor.Height * Settings.CursorSizeMultiplier)
+            ),
+            Color.White
+        );
 
         SpriteBatch.End();
         // END Draw ------
