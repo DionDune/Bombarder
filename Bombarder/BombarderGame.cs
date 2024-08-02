@@ -37,6 +37,9 @@ public sealed class BombarderGame : Game
     public readonly List<MagicEffect> MagicEffects = new();
     public readonly List<MagicEffect> SelectedEffects = new();
 
+    public Vector2 ScreenSize => new(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+    public Vector2 ScreenCenter => ScreenSize / 2F;
+
     public static readonly BombarderGame Instance = new();
 
     #region Initialization
@@ -92,17 +95,13 @@ public sealed class BombarderGame : Game
             "ForceWave"
         );
         KeyboardInput.AddKeyPressAction(Keys.Tab, () => Player.CreateMagic<ForceContainer>(
-                new Vector2(
-                    MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                    MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                )),
+                MouseInput.Position - ScreenCenter + Player.Position
+            ),
             "ForceContainer"
         );
         KeyboardInput.AddKeyPressAction(Keys.T, () => Player.CreateMagic<PlayerTeleport>(
-            new Vector2(
-                MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-            )), "PlayerTeleport");
+            MouseInput.Position - ScreenCenter + Player.Position
+        ), "PlayerTeleport");
         KeyboardInput.AddKeyPressAction(Keys.I, () => Settings.RunEntityAI = !Settings.RunEntityAI, "ToggleEntityAI");
         KeyboardInput.AddKeyPressAction(Keys.O, () =>
             {
@@ -124,34 +123,19 @@ public sealed class BombarderGame : Game
                 return;
             }
 
-            Player.CreateMagic<StaticOrb>(
-                new Vector2(
-                    MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                    MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                )
-            );
+            Player.CreateMagic<StaticOrb>(MouseInput.Position - ScreenCenter + Player.Position);
         }, "PrimaryAttack");
 
         MouseInput.AddClickAction(MouseButtons.Right, () =>
         {
             if (true)
             {
-                Player.CreateMagic<WideLaser>(
-                    new Vector2(
-                        MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                        MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    )
-                );
+                Player.CreateMagic<WideLaser>(MouseInput.Position - ScreenCenter + Player.Position);
                 SelectedEffects.Add(MagicEffects.Last());
             }
             else
             {
-                Player.CreateMagic<NonStaticOrb>(
-                    new Vector2(
-                        MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                        MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                    )
-                );
+                Player.CreateMagic<NonStaticOrb>(MouseInput.Position - ScreenCenter + Player.Position);
             }
         }, "FireLaser");
 
@@ -307,7 +291,8 @@ public sealed class BombarderGame : Game
 
     private void SpawnRandomEnemy()
     {
-        int SpawnCount = RngUtils.Random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
+        int SpawnCount =
+            RngUtils.Random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
 
         for (int i = 0; i < SpawnCount; i++)
         {
@@ -370,6 +355,7 @@ public sealed class BombarderGame : Game
                 EntitiesToAdd.ForEach(Entities.Add);
                 EntitiesToAdd.Clear();
             }
+
             Entity.PurgeDead(Entities, Player);
             //Particles
             Particles.ForEach(Particle => Particle.Update(GameTick));
@@ -430,11 +416,9 @@ public sealed class BombarderGame : Game
 
         // Cursor
         SpriteBatch.Draw(Textures.Cursor,
-            new Rectangle(
-                (int)(MouseInput.Position.X - Textures.Cursor.Width / 2F * Settings.CursorSizeMultiplier),
-                (int)(MouseInput.Position.Y - Textures.Cursor.Height / 2F * Settings.CursorSizeMultiplier),
-                (int)(Textures.Cursor.Width * Settings.CursorSizeMultiplier),
-                (int)(Textures.Cursor.Height * Settings.CursorSizeMultiplier)
+            MathUtils.CreateRectangle(
+                MouseInput.Position - Textures.Cursor.Bounds.Size.ToVector2() / 2F * Settings.CursorSizeMultiplier,
+                Textures.Cursor.Bounds.Size.ToVector2() * Settings.CursorSizeMultiplier
             ),
             Color.White
         );

@@ -118,23 +118,13 @@ public class Spider : Entity
 
     public override void DrawEntity()
     {
-        BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.White,
-            new Rectangle(
-                (int)(
-                    Position.X +
-                    Parts[0].Offset.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y +
-                    Parts[0].Offset.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                Parts[0].Width,
-                Parts[0].Height
+        var Game = BombarderGame.Instance;
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            MathUtils.CreateRectangle(
+                Position + Parts[0].Offset + Game.ScreenCenter - Game.Player.Position,
+                new Vector2(Parts[0].Width, Parts[0].Height)
             ),
             Color.MediumPurple
         );

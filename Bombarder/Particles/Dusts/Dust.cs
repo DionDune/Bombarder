@@ -14,6 +14,7 @@ public class Dust : Particle
 
     public int Width;
     public int Height;
+    public Vector2 Size => new(Width, Height);
 
     public Color Colour;
     public float Opacity;
@@ -38,19 +39,9 @@ public class Dust : Particle
     {
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.White,
-            new Rectangle(
-                (int)(
-                    Position.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                Width,
-                Height
+            MathUtils.CreateRectangle(
+                Position + BombarderGame.Instance.ScreenCenter - BombarderGame.Instance.Player.Position,
+                Size
             ),
             Colour * Opacity
         );
@@ -85,24 +76,21 @@ public class Dust : Particle
     }
 
 
-    public static void Spawn(List<Particle> Particles, Vector2 PlayerPos, int RangeX, int RangeY, uint Tick)
+    public static void Spawn(List<Particle> Particles, Vector2 PlayerPos, Vector2 Range, uint Tick)
     {
         if (Tick % SpawnInterval != 0) return;
         for (int i = 0; i < RngUtils.Random.Next(0, MaxSpawnCount); i++)
         {
-            int NewRangeX = RangeX * 2;
-            int NewRangeY = RangeY * 2;
+            Vector2 NewRange = Range * 2;
+            Vector2 DustPosition = RngUtils.GetRandomVector(PlayerPos - NewRange, PlayerPos + NewRange);
 
-            int DustX = RngUtils.Random.Next((int)PlayerPos.X - NewRangeX, (int)PlayerPos.X + NewRangeX);
-            int DustY = RngUtils.Random.Next((int)PlayerPos.Y - NewRangeY, (int)PlayerPos.Y + NewRangeY);
-
-            Particles.Add(GetRandom(new Vector2(DustX, DustY)));
+            Particles.Add(CreateRandomDust(DustPosition));
         }
     }
 
-    public static Dust GetRandom(Vector2 Position)
+    public static Dust CreateRandomDust(Vector2 Position)
     {
-        //Gets a random dust instance
+        // Creates a random dust instance
         const int chanceRange = 105;
         const int redChance = 35;
         const int purpleChance = 2;

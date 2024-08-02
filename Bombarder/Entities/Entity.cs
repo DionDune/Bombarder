@@ -26,6 +26,7 @@ public abstract class Entity
     public int KillHealthReward { get; protected set; }
     public int KillManaReward { get; protected set; }
     public Rectangle HitBox => new(Position.ToPoint() + HitBoxOffset, HitBoxSize);
+
     public static readonly Dictionary<string, Func<Vector2, Entity>> EntityFactories = new()
     {
         { "CubeMother", Position => new CubeMother(Position) },
@@ -145,20 +146,11 @@ public abstract class Entity
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.White,
             new Rectangle(
-                (int)(
-                    Position.X +
-                    HitBoxOffset.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y +
-                    HitBoxOffset.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                HitBoxSize.X,
-                2
+                Position.ToPoint() +
+                HitBoxOffset +
+                BombarderGame.Instance.ScreenCenter.ToPoint() -
+                BombarderGame.Instance.Player.Position.ToPoint(),
+                new Point(HitBoxSize.X, 2)
             ),
             Color.White
         );
@@ -167,21 +159,12 @@ public abstract class Entity
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.White,
             new Rectangle(
-                (int)(
-                    Position.X +
-                    HitBoxOffset.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y +
-                    HitBoxOffset.Y +
-                    HitBoxSize.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                HitBoxSize.X,
-                2
+                Position.ToPoint() +
+                HitBoxOffset +
+                BombarderGame.Instance.ScreenCenter.ToPoint() -
+                BombarderGame.Instance.Player.Position.ToPoint() +
+                new Point(0, HitBoxSize.Y),
+                new Point(HitBoxSize.X, 2)
             ),
             Color.White
         );
@@ -190,19 +173,11 @@ public abstract class Entity
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.White,
             new Rectangle(
-                (int)(
-                    Position.X +
-                    HitBoxOffset.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(Position.Y +
-                      HitBoxOffset.Y +
-                      BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                      BombarderGame.Instance.Player.Position.Y
-                ),
-                2,
-                HitBoxSize.Y
+                Position.ToPoint() +
+                HitBoxOffset +
+                BombarderGame.Instance.ScreenCenter.ToPoint() -
+                BombarderGame.Instance.Player.Position.ToPoint(),
+                new Point(2, HitBoxSize.Y)
             ),
             Color.White
         );
@@ -211,20 +186,12 @@ public abstract class Entity
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.White,
             new Rectangle(
-                (int)(
-                    Position.X +
-                    HitBoxOffset.X +
-                    HitBoxSize.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X),
-                (int)(
-                    Position.Y +
-                    HitBoxOffset.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                2,
-                HitBoxSize.Y
+                Position.ToPoint() +
+                HitBoxOffset +
+                BombarderGame.Instance.ScreenCenter.ToPoint() -
+                BombarderGame.Instance.Player.Position.ToPoint() +
+                new Point(HitBoxSize.X, 0),
+                new Point(2, HitBoxSize.Y)
             ),
             Color.White
         );
@@ -236,50 +203,29 @@ public abstract class Entity
         {
             return;
         }
+        
+        var Game = BombarderGame.Instance;
 
         // Empty Health Bar
-        BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.White,
-            new Rectangle(
-                (int)(
-                    Position.X +
-                    HealthBarOffset.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y +
-                    HealthBarOffset.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                HealthBarDimensions.X,
-                HealthBarDimensions.Y
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            MathUtils.CreateRectangle(
+                Position +
+                HealthBarOffset.ToVector2() +
+                Game.ScreenCenter -
+                Game.Player.Position,
+                HealthBarDimensions.ToVector2()
             ),
             Color.LightGray
         );
 
         // Filled Health Bar
-        BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.White,
-            new Rectangle(
-                (int)(
-                    Position.X +
-                    HealthBarOffset.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X + 2
+        Game.SpriteBatch.Draw(
+            Game.Textures.White,
+            MathUtils.CreateRectangle(
+                Position + HealthBarOffset.ToVector2() + Game.ScreenCenter - Game.Player.Position + new Vector2(2, 2),
+                new Vector2((HealthBarDimensions.X - 4) * (Health / HealthMax), HealthBarDimensions.Y - 4)
                 ),
-                (int)(
-                    Position.Y +
-                    HealthBarOffset.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y + 2
-                ),
-                (int)(
-                    (HealthBarDimensions.X - 4) * (Health / HealthMax)
-                ),
-                HealthBarDimensions.Y - 4
-            ),
             Color.Green);
     }
 }

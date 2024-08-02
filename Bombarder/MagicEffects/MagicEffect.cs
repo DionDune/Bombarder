@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Bombarder.Entities;
 using Microsoft.Xna.Framework;
 
@@ -58,6 +57,7 @@ public abstract class MagicEffect
             Duration--;
         }
     }
+
     public abstract void DrawEffect();
 
     public void DrawDamageRadius()
@@ -78,10 +78,10 @@ public abstract class MagicEffect
         {
             SpriteBatch.Draw(
                 Game.Textures.WhiteCircle,
-                new Rectangle(
-                    (int)(Position.X - DamageRadius + Graphics.PreferredBackBufferWidth / 2F - Player.Position.X),
-                    (int)(Position.Y - DamageRadius + Graphics.PreferredBackBufferHeight / 2F - Player.Position.Y),
-                    (int)DamageRadius * 2, (int)DamageRadius * 2),
+                MathUtils.CreateRectangle(
+                    Position - new Vector2(DamageRadius) + Game.ScreenCenter - Player.Position,
+                    new Vector2(DamageRadius) * 2
+                ),
                 Color.DarkRed
             );
         }
@@ -128,7 +128,7 @@ public abstract class MagicEffect
         DrawEffect();
         DrawDamageRadius();
     }
-    
+
     public bool ShouldDelete()
     {
         return HasDuration && Duration == 0;

@@ -91,7 +91,8 @@ public class CubeMother : Entity
         // Red Cube
         BombarderGame.Instance.EntitiesToAdd.Add(new RedCube(SpawnPoint.Copy()));
 
-        NextSpawnFrame = (uint)(BombarderGame.Instance.GameTick + RngUtils.Random.Next(SpawnIntervalMin, SpawnIntervalMax));
+        NextSpawnFrame =
+            (uint)(BombarderGame.Instance.GameTick + RngUtils.Random.Next(SpawnIntervalMin, SpawnIntervalMax));
     }
 
     public override void DrawEntity()
@@ -108,21 +109,12 @@ public class CubeMother : Entity
 
             BombarderGame.Instance.SpriteBatch.Draw(
                 BlockTexture,
-                new Rectangle(
-                    (int)(
-                        Position.X +
-                        Block.Offset.X +
-                        BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                        BombarderGame.Instance.Player.Position.X
-                    ),
-                    (int)(
-                        Position.Y +
-                        Block.Offset.Y +
-                        BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                        BombarderGame.Instance.Player.Position.Y
-                    ),
-                    Block.Width,
-                    Block.Height
+                MathUtils.CreateRectangle(
+                    Position +
+                    Block.Offset +
+                    BombarderGame.Instance.ScreenCenter -
+                    BombarderGame.Instance.Player.Position,
+                    Block.Size
                 ),
                 BlockColor
             );

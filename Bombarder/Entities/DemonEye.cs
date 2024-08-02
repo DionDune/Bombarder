@@ -62,24 +62,15 @@ public class DemonEye : Entity
 
     public override void DrawEntity()
     {
-        BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.DemonEye.Item1,
-            new Rectangle(
-                (int)(
-                    Position.X -
-                    BombarderGame.Instance.Textures.DemonEye.Item1.Width * 0.8 / 2 +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y -
-                    BombarderGame.Instance.Textures.DemonEye.Item1.Height * 0.8 / 2
-                    +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                (int)(BombarderGame.Instance.Textures.DemonEye.Item1.Width * 0.8),
-                (int)(BombarderGame.Instance.Textures.DemonEye.Item1.Height * 0.8)
+        var Game = BombarderGame.Instance;
+        var Texture = Game.Textures.DemonEye.Item1;
+        var TextureSize = new Vector2(Texture.Width, Texture.Height) * 0.8F;
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.DemonEye.Item1,
+            MathUtils.CreateRectangle(
+                Position - TextureSize / 2F + Game.ScreenCenter - Game.Player.Position,
+                TextureSize
             ),
             Color.White
         );

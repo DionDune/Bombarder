@@ -37,48 +37,24 @@ public class ForceWave : MagicEffect
 
     public override void DrawEffect()
     {
-        BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.WhiteCircle,
-            new Rectangle(
-                (int)(
-                    Position.X -
-                    Radius +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y -
-                    Radius +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                (int)Radius * 2,
-                (int)Radius * 2
+        var Game = BombarderGame.Instance;
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.WhiteCircle,
+            MathUtils.CreateRectangle(
+                Position - new Vector2(Radius) + Game.ScreenCenter - Game.Player.Position,
+                new Vector2(Radius) * 2
             ),
             Colour * 0.3F
         );
 
         for (int i = 0; i < BorderWidth; i++)
         {
-            BombarderGame.Instance.SpriteBatch.Draw(
-                BombarderGame.Instance.Textures.HollowCircle,
-                new Rectangle(
-                    (int)(
-                        Position.X -
-                        Radius +
-                        i +
-                        BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                        BombarderGame.Instance.Player.Position.X
-                    ),
-                    (int)(
-                        Position.Y -
-                        Radius +
-                        i +
-                        BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                        BombarderGame.Instance.Player.Position.Y
-                    ),
-                    (int)Radius * 2 - i * 2,
-                    (int)Radius * 2 - i * 2
+            Game.SpriteBatch.Draw(
+                Game.Textures.HollowCircle,
+                MathUtils.CreateRectangle(
+                    Position - new Vector2(Radius - i) + Game.ScreenCenter - Game.Player.Position,
+                    new Vector2(Radius - i) * 2
                 ),
                 Colour * 0.7F
             );

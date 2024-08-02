@@ -30,7 +30,6 @@ public static class MathUtils
     }
 
     public static Point ToPoint(this Orientation Orientation) => Orientation.ToPosition().ToPoint();
-
     public static Vector2 Copy(this Vector2 Vector) => new(Vector.X, Vector.Y);
     public static Point Copy(this Point Point) => new(Point.X, Point.Y);
     public static Vector2 Abs(Vector2 Vector2) => new(Math.Abs(Vector2.X), Math.Abs(Vector2.Y));
@@ -51,4 +50,5 @@ public static class MathUtils
     public static float ToRadians(float Degree) => Degree * (float)Radian;
     public static double ToDegrees(double Radians) => Radians / Radian;
     public static float ToDegrees(float Radians) => Radians / (float)Radian;
+    public static Rectangle CreateRectangle(Vector2 Position, Vector2 Size) => new(Position.ToPoint(), Size.ToPoint());
 }

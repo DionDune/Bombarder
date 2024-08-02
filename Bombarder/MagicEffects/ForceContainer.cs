@@ -52,23 +52,13 @@ public class ForceContainer : MagicEffect
 
     public override void DrawEffect()
     {
-        BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.WhiteCircle,
-            new Rectangle(
-                (int)(
-                    Position.X -
-                    CurrentRadius +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y -
-                    CurrentRadius +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                (int)CurrentRadius * 2,
-                (int)CurrentRadius * 2
+        var Game = BombarderGame.Instance;
+
+        Game.SpriteBatch.Draw(
+            Game.Textures.WhiteCircle,
+            MathUtils.CreateRectangle(
+                Position - new Vector2(CurrentRadius) + Game.ScreenCenter - Game.Player.Position,
+                new Vector2(CurrentRadius) * 2
             ),
             Colour * Opacity
         );

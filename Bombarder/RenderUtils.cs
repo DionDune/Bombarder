@@ -32,10 +32,7 @@ public static class RenderUtils
             GridColor = Settings.TranceModeGridColor;
         }
 
-        Point ScreenStart = new Point(
-            (int)(Player.Position.X - Graphics.PreferredBackBufferWidth / 2F),
-            (int)(Player.Position.Y - Graphics.PreferredBackBufferHeight / 2F)
-        );
+        Point ScreenStart = (Player.Position - Game.ScreenCenter).ToPoint();
 
         for (int y = 0; y < Graphics.PreferredBackBufferHeight; y++)
         {

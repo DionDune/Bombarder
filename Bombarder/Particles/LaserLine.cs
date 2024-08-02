@@ -46,14 +46,7 @@ public class LaserLine : Particle
 
     public override void Draw()
     {
-        Vector2 DrawPosition = new(
-            Position.X +
-            BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-            BombarderGame.Instance.Player.Position.X,
-            Position.Y +
-            BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-            BombarderGame.Instance.Player.Position.Y
-        );
+        Vector2 DrawPosition = Position + BombarderGame.Instance.ScreenCenter - BombarderGame.Instance.Player.Position;
         RenderUtils.DrawLine(DrawPosition, Length, Direction, Colour, Thickness);
     }
 

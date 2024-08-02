@@ -22,6 +22,8 @@ public class DissipationWave : MagicEffect
     public float Opacity { get; set; }
     private const float DefaultOpacity = 0.95F;
     private const float OpacityMultiplier = 0.98F;
+    
+    public Vector2 RadiusVector => Vector2.One * Radius;
 
     public DissipationWave(Vector2 Position) : base(Position)
     {
@@ -44,21 +46,12 @@ public class DissipationWave : MagicEffect
     {
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.WhiteCircle,
-            new Rectangle(
-                (int)(
-                    Position.X -
-                    Radius +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y -
-                    Radius +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                (int)Radius * 2,
-                (int)Radius * 2
+            MathUtils.CreateRectangle(
+                Position -
+                RadiusVector +
+                BombarderGame.Instance.ScreenCenter -
+                BombarderGame.Instance.Player.Position,
+                RadiusVector * 2
             ),
             Colour * Opacity
         );

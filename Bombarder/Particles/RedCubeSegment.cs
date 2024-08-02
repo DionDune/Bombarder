@@ -44,19 +44,9 @@ public class RedCubeSegment : Particle
     {
         BombarderGame.Instance.SpriteBatch.Draw(
             BombarderGame.Instance.Textures.White,
-            new Rectangle(
-                (int)(
-                    Position.X +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-                    BombarderGame.Instance.Player.Position.X
-                ),
-                (int)(
-                    Position.Y +
-                    BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-                    BombarderGame.Instance.Player.Position.Y
-                ),
-                Width,
-                Height
+            MathUtils.CreateRectangle(
+                Position + BombarderGame.Instance.ScreenCenter - BombarderGame.Instance.Player.Position,
+                new Vector2(Width, Height)
             ),
             Colour
         );

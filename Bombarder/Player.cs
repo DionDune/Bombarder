@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Bombarder.MagicEffects;
-using Bombarder.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,6 +12,7 @@ public class Player
 
     public int Width { get; set; }
     public int Height { get; set; }
+    public Vector2 Size => new(Width, Height);
 
     public Vector2 Momentum { get; set; }
     public float BaseSpeed { get; set; }
@@ -102,16 +101,11 @@ public class Player
 
         Game.SpriteBatch.Draw(
             Game.Textures.White,
-            new Rectangle(
-                Game.Graphics.PreferredBackBufferWidth / 2 - Width / 2,
-                Game.Graphics.PreferredBackBufferHeight / 2 - Height / 2,
-                Width,
-                Height
-            ),
+            MathUtils.CreateRectangle(Game.ScreenCenter - Size / 2F, Size),
             Color.Red
         );
     }
-    
+
     public void DrawBars()
     {
         DrawHealthBar();
@@ -142,7 +136,7 @@ public class Player
             HealthBarDimensions.X + 4,
             HealthBarDimensions.Y + 4
         );
-        
+
         Game.SpriteBatch.Draw(
             Game.Textures.White,
             new Rectangle(HealthBarContainerPos, HealthBarDimensionsWithOffset),

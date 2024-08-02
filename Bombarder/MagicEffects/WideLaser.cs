@@ -105,13 +105,8 @@ public class WideLaser : MagicEffect
         float AngleRadiansLeft = MathUtils.ToRadians(Angle - TrueSpread);
         float AngleRadiansRight = MathUtils.ToRadians(Angle + TrueSpread);
 
-        Vector2 Start = new(
-            Position.X + BombarderGame.Instance.Graphics.PreferredBackBufferWidth / 2F -
-            BombarderGame.Instance.Player.Position.X,
-            Position.Y + BombarderGame.Instance.Graphics.PreferredBackBufferHeight / 2F -
-            BombarderGame.Instance.Player.Position.Y
-        );
-
+        Vector2 Start = Position + BombarderGame.Instance.ScreenCenter - BombarderGame.Instance.Player.Position;
+            
         RenderUtils.DrawLine(Start, Range, AngleRadiansLeft, SecondaryColor, 10);
         RenderUtils.DrawLine(Start, Range, AngleRadians, MarkerColor, 10);
         RenderUtils.DrawLine(Start, Range, AngleRadiansRight, SecondaryColor, 10);
