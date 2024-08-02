@@ -51,8 +51,20 @@ public class WideLaser : MagicEffect
             return;
         }
 
+        UpdatePosition();
         EnactDamage(Player, Entities, GameTick);
         CreateParticles();
+    }
+
+    private void UpdatePosition()
+    {
+        var Game = BombarderGame.Instance;
+        var MousePosition = Game.MouseInput.Position;
+        
+        float XDiff = MousePosition.X - Game.Graphics.PreferredBackBufferWidth / 2F;
+        float YDiff = MousePosition.Y - Game.Graphics.PreferredBackBufferHeight / 2F;
+        Angle = MathUtils.ToDegrees(MathF.Atan2(YDiff, XDiff));
+        Position = Game.Player.Position.Copy();
     }
 
     public override void DrawEffect()
