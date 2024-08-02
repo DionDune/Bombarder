@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bombarder.MagicEffects;
 using Bombarder.UI;
 using Microsoft.Xna.Framework;
@@ -89,6 +90,7 @@ public class Player
     public void Update()
     {
         HandleKeypress();
+        HandleMousePress();
         Position += Momentum;
         UpdateMana();
         UpdateHealth();
@@ -222,6 +224,26 @@ public class Player
             ),
             Color.Blue
         );
+    }
+
+    public void HandleMousePress()
+    {
+        // TODO: move this logic inside the MagicEffect class
+        var Game = BombarderGame.Instance;
+        var MouseInput = Game.MouseInput;
+
+        if (Game.MagicEffects.Count <= 0)
+        {
+            return;
+        }
+
+        foreach (WideLaser Effect in Game.SelectedEffects.OfType<WideLaser>())
+        {
+            float XDiff = MouseInput.Position.X - Game.Graphics.PreferredBackBufferWidth / 2F;
+            float YDiff = MouseInput.Position.Y - Game.Graphics.PreferredBackBufferHeight / 2F;
+            Effect.Angle = Utils.ToDegrees(MathF.Atan2(YDiff, XDiff));
+            Effect.Position = Position.Copy();
+        }
     }
 
     public void HandleKeypress()

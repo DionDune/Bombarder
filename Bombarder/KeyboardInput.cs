@@ -44,7 +44,7 @@ public class KeyboardInput
     public void ExecuteKeyPressActions() =>
         CurrentKeys
             .Where(HasJustPressed)
-            .Where(Key => _keyPressActions.ContainsKey(Key)) 
+            .Where(_keyPressActions.ContainsKey) 
             .SelectMany(Key => _keyPressActions[Key].Values)
             .ToList()
             .ForEach(Action => Action.Invoke());
@@ -52,29 +52,30 @@ public class KeyboardInput
     public void ExecuteKeyReleaseActions() =>
         PreviousKeys
             .Where(HasJustReleased)
-            .Where(Key => _keyReleaseActions.ContainsKey(Key)) 
+            .Where(_keyReleaseActions.ContainsKey) 
             .SelectMany(Key => _keyReleaseActions[Key].Values)
             .ToList()
             .ForEach(Action => Action.Invoke());
     
-    public void RemoveKeyPressAction(Keys key, string name)
+    public void RemoveKeyPressAction(Keys Key, string Name)
     {
-        if (_keyPressActions.TryGetValue(key, out var Action))
+        if (_keyPressActions.TryGetValue(Key, out var Action))
         {
-            Action.Remove(name);
+            Action.Remove(Name);
         }
     }
     
-    public void RemoveKeyReleaseAction(Keys key, string name)
+    public void RemoveKeyReleaseAction(Keys Key, string Name)
     {
-        if (_keyReleaseActions.TryGetValue(key, out var Action))
+        if (_keyReleaseActions.TryGetValue(Key, out var Action))
         {
-            Action.Remove(name);
+            Action.Remove(Name);
         }
     }
 
     public bool IsKeyDown(Keys Key) => CurrentKeys.Contains(Key);
     public bool IsKeyUp(Keys Key) => !CurrentKeys.Contains(Key);
+    public bool IsHoldingKey(Keys Key) => IsKeyDown(Key) && PreviousKeys.Contains(Key);
     public bool HasJustPressed(Keys Key) => IsKeyDown(Key) && !PreviousKeys.Contains(Key);
     public bool HasJustReleased(Keys Key) => IsKeyUp(Key) && PreviousKeys.Contains(Key);
 }

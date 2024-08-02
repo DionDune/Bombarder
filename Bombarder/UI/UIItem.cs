@@ -50,12 +50,21 @@ public abstract class UIItem
         Highlighted = State;
     }
 
-    public Rectangle GetElementBounds(GraphicsDeviceManager Graphics)
+    public Rectangle GetElementBounds()
     {
-        Point OrientationPosition = Orientation.ToPoint(Graphics);
+        var Game = BombarderGame.Instance;
+        Point OrientationPosition = Orientation.ToPoint(Game.Graphics);
         Point StartPosition = OrientationPosition + Position.ToPoint();
         
         return new Rectangle(StartPosition, new Point(Width, Height));
+    }
+    
+    public bool IsMouseOver()
+    {
+        var Game = BombarderGame.Instance;
+        Rectangle ElementBounds = GetElementBounds();
+        var MousePosition = Game.MouseInput.Position;
+        return ElementBounds.Contains(MousePosition);
     }
 
     public virtual void Click()

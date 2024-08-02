@@ -29,7 +29,7 @@ public sealed class BombarderGame : Game
     Song BackgroundSong;
     public Textures Textures { get; private set; }
     public Settings Settings { get; private set; }
-    InputStates Input;
+    public readonly MouseInput MouseInput;
     public readonly KeyboardInput KeyboardInput;
     public Player Player { get; private set; }
 
@@ -37,7 +37,7 @@ public sealed class BombarderGame : Game
     public readonly List<Entity> EntitiesToAdd = new();
     public readonly List<Particle> Particles = new();
     public readonly List<MagicEffect> MagicEffects = new();
-    List<MagicEffect> SelectedEffects = new();
+    public readonly List<MagicEffect> SelectedEffects = new();
 
     public static readonly BombarderGame Instance = new();
 
@@ -52,14 +52,13 @@ public sealed class BombarderGame : Game
 
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        
+
         KeyboardInput = new KeyboardInput();
+        MouseInput = new MouseInput();
     }
 
     protected override void Initialize()
     {
-        base.Initialize();
-
         GameTick = 0;
 
         UIPages = UIPage.GeneratePages();
@@ -69,7 +68,6 @@ public sealed class BombarderGame : Game
 
         Textures = new Textures();
         Settings = new Settings();
-        Input = new InputStates();
         Player = new Player();
 
 
@@ -80,26 +78,116 @@ public sealed class BombarderGame : Game
 
         // TODO: Add check for GameState
         KeyboardInput.AddKeyPressAction(Keys.V, SpawnRandomEnemy, "SpawnRandomEnemy");
-        KeyboardInput.AddKeyPressAction(Keys.D1, () => SpawnEnemy<CubeMother>(Vector2.Zero), "SpawnCubeMother");
-        KeyboardInput.AddKeyPressAction(Keys.D2, () => SpawnEnemy<Spider>(Vector2.Zero), "SpawnSpider");
-        KeyboardInput.AddKeyPressAction(Keys.Q, () => Player.CreateMagic<ForceWave>(Player.Position.Copy()), "ForceWave");
+        KeyboardInput.AddKeyPressAction(
+            Keys.D1,
+            () => SpawnEnemy<CubeMother>(Vector2.Zero),
+            "SpawnCubeMother"
+        );
+        KeyboardInput.AddKeyPressAction(
+            Keys.D2,
+            () => SpawnEnemy<Spider>(Vector2.Zero),
+            "SpawnSpider"
+        );
+        KeyboardInput.AddKeyPressAction(
+            Keys.Q,
+            () => Player.CreateMagic<ForceWave>(Player.Position.Copy()),
+            "ForceWave"
+        );
         KeyboardInput.AddKeyPressAction(Keys.Tab, () => Player.CreateMagic<ForceContainer>(
-            new Vector2(
-                Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-            )), "ForceContainer");
+                new Vector2(
+                    MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                    MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                )),
+            "ForceContainer"
+        );
         KeyboardInput.AddKeyPressAction(Keys.T, () => Player.CreateMagic<PlayerTeleport>(
             new Vector2(
-                Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
             )), "PlayerTeleport");
         KeyboardInput.AddKeyPressAction(Keys.I, () => Settings.RunEntityAI = !Settings.RunEntityAI, "ToggleEntityAI");
         KeyboardInput.AddKeyPressAction(Keys.O, () =>
+            {
+                Settings.ShowHitBoxes = !Settings.ShowHitBoxes;
+                Settings.ShowDamageRadii = !Settings.ShowDamageRadii;
+            },
+            "ToggleHitboxes"
+        );
+        KeyboardInput.AddKeyPressAction(
+            Keys.Back,
+            () => Settings.TranceMode = !Settings.TranceMode,
+            "ToggleTranceMode"
+        );
+
+        MouseInput.AddClickAction(MouseButtons.Left, () =>
         {
-            Settings.ShowHitBoxes = !Settings.ShowHitBoxes;
-            Settings.ShowDamageRadii = !Settings.ShowDamageRadii;
-        }, "ToggleHitboxes");
-        KeyboardInput.AddKeyPressAction(Keys.Back, () => Settings.TranceMode = !Settings.TranceMode, "ToggleTranceMode");
+            var Clicked = false;
+
+            if (UIPage_Current != null)
+            {
+                foreach (UIItem Item in UIPage_Current.UIItems.Where(Item => Item.IsMouseOver()))
+                {
+                    Clicked = true;
+
+                    Item.Click();
+                }
+            }
+
+            if (!Clicked)
+            {
+                Player.CreateMagic<StaticOrb>(
+                    new Vector2(
+                        MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                        MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                    )
+                );
+            }
+        }, "ClickUI");
+
+        MouseInput.AddClickAction(MouseButtons.Right, () =>
+        {
+            if (true)
+            {
+                Player.CreateMagic<WideLaser>(
+                    new Vector2(
+                        MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                        MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                    )
+                );
+                SelectedEffects.Add(MagicEffects.Last());
+            }
+            else
+            {
+                Player.CreateMagic<NonStaticOrb>(
+                    new Vector2(
+                        MouseInput.Position.X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
+                        MouseInput.Position.Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
+                    )
+                );
+            }
+        }, "FireLaser");
+
+        MouseInput.AddClickAction(MouseButtons.Middle,
+            () => Player.CreateMagic<DissipationWave>(Player.Position.Copy()), "SpawnDissipationWave");
+
+        MouseInput.AddReleaseAction(MouseButtons.Right, () =>
+            {
+                if (SelectedEffects.Count <= 0)
+                {
+                    return;
+                }
+
+                List<MagicEffect> ToRemove = SelectedEffects.OfType<WideLaser>().Cast<MagicEffect>().ToList();
+
+                foreach (MagicEffect Effect in ToRemove)
+                {
+                    MagicEffects.Remove(Effect);
+                }
+            },
+            "StopFiringLasers"
+        );
+
+        base.Initialize();
     }
 
     protected override void LoadContent()
@@ -299,156 +387,6 @@ public sealed class BombarderGame : Game
 
     #endregion
 
-    #region UserInput
-
-    #region Mouse
-
-    private void MouseHandler()
-    {
-        CheckMouseMove();
-        CheckMouseClick();
-    }
-
-    private void CheckMouseMove()
-    {
-        if (UIPage_Current == null)
-        {
-            return;
-        }
-
-        foreach (UIItem Item in UIPage_Current.UIItems)
-        {
-            Rectangle ElementBounds = Item.GetElementBounds(Graphics);
-
-            if (Item is not ButtonUIElement)
-            {
-                continue;
-            }
-
-            Item.SetHighlight(ElementBounds.Contains(Mouse.GetState().Position));
-        }
-    }
-
-    public void CheckMouseClick()
-    {
-        //Left Click
-        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-        {
-            if (!Input.IsClickingLeft)
-            {
-                bool UIClicked = false;
-
-                if (UIPage_Current != null)
-                {
-                    foreach (UIItem Item in UIPage_Current.UIItems)
-                    {
-                        Rectangle ElementBounds = Item.GetElementBounds(Graphics);
-
-                        if (!ElementBounds.Contains(Mouse.GetState().Position))
-                        {
-                            continue;
-                        }
-
-                        UIClicked = true;
-
-                        Item.Click();
-                    }
-                }
-
-                if (!UIClicked)
-                {
-                    Player.CreateMagic<StaticOrb>(
-                        new Vector2(
-                            Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                            Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                        )
-                    );
-                }
-            }
-
-            Input.IsClickingLeft = true;
-        }
-        else
-        {
-            Input.IsClickingLeft = false;
-        }
-
-        //Right Click
-        if (Mouse.GetState().RightButton == ButtonState.Pressed)
-        {
-            if (!Input.IsClickingRight)
-            {
-                if (true)
-                {
-                    Player.CreateMagic<WideLaser>(
-                        new Vector2(
-                            Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                            Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                        )
-                    );
-                    SelectedEffects.Add(MagicEffects.Last());
-                }
-                else
-                {
-                    Player.CreateMagic<NonStaticOrb>(
-                        new Vector2(
-                            Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F + Player.Position.X,
-                            Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F + Player.Position.Y
-                        )
-                    );
-                }
-            }
-            else
-            {
-                if (MagicEffects.Count > 0)
-                {
-                    foreach (WideLaser Effect in SelectedEffects.OfType<WideLaser>())
-                    {
-                        float XDiff = Mouse.GetState().X - Graphics.PreferredBackBufferWidth / 2F;
-                        float YDiff = Mouse.GetState().Y - Graphics.PreferredBackBufferHeight / 2F;
-                        Effect.Angle = Utils.ToDegrees(MathF.Atan2(YDiff, XDiff));
-                        Effect.Position = Player.Position.Copy();
-                    }
-                }
-            }
-
-            Input.IsClickingRight = true;
-        }
-        else
-        {
-            if (SelectedEffects.Count > 0)
-            {
-                List<MagicEffect> ToRemove = SelectedEffects.OfType<WideLaser>().Cast<MagicEffect>().ToList();
-
-                foreach (MagicEffect Effect in ToRemove)
-                {
-                    MagicEffects.Remove(Effect);
-                }
-            }
-
-            Input.IsClickingRight = false;
-        }
-
-        // Middle Click
-        if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
-        {
-            if (!Input.IsClickingMiddle)
-            {
-                Player.CreateMagic<DissipationWave>(Player.Position.Copy());
-            }
-
-            Input.IsClickingMiddle = true;
-        }
-        else
-        {
-            Input.IsClickingMiddle = false;
-        }
-    }
-
-    #endregion
-
-    #endregion
-
     #region General Rendering Functions
 
     private void DrawGrid()
@@ -549,7 +487,15 @@ public sealed class BombarderGame : Game
         GameTick++;
 
         KeyboardInput.Update();
-        MouseHandler();
+        MouseInput.Update();
+
+        if (UIPage_Current != null)
+        {
+            foreach (var Item in UIPage_Current.UIItems.Where(Item => Item is ButtonUIElement))
+            {
+                Item.SetHighlight(Item.IsMouseOver());
+            }
+        }
 
         if (GameState == "PlayPage")
         {
@@ -678,8 +624,8 @@ public sealed class BombarderGame : Game
 
         // Cursor
         SpriteBatch.Draw(Textures.Cursor, new Rectangle(
-            Mouse.GetState().X - (int)(Textures.Cursor.Width / 2F * Settings.CursorSizeMultiplier),
-            Mouse.GetState().Y - (int)(Textures.Cursor.Height / 2F * Settings.CursorSizeMultiplier),
+            (int)(MouseInput.Position.X - Textures.Cursor.Width / 2F * Settings.CursorSizeMultiplier),
+            (int)(MouseInput.Position.Y - Textures.Cursor.Height / 2F * Settings.CursorSizeMultiplier),
             (int)(Textures.Cursor.Width * Settings.CursorSizeMultiplier),
             (int)(Textures.Cursor.Height * Settings.CursorSizeMultiplier)), Color.White);
 
