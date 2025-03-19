@@ -10,13 +10,14 @@ namespace Bombarder.Entities;
 public class RedCube : Entity
 {
     public const int Damage = 30;
-    public int SelfDamage => Damage / 2;
+    public const float FullHealth = 100;
+    public int SelfDamage => (int)(FullHealth / 2);
 
     public const float BaseSpeed = 5;
 
     public RedCube(Vector2 Position) : base(Position)
     {
-        HealthMax = 100;
+        HealthMax = FullHealth;
         Health = HealthMax;
         HealthBarVisible = true;
 
