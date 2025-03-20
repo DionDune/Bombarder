@@ -12,6 +12,7 @@ public class Spider : Entity
 
     public const int JumpIntervalMin = 60;
     public const int JumpIntervalMax = 250;
+    public const float AngleJumpChance = 0.3f;
     public const int JumpIntervalErraticMin = 60;
     public const int JumpIntervalErraticMax = 140;
     public const int ErraticDistanceThreshold = 800;
@@ -69,10 +70,26 @@ public class Spider : Entity
 
         float PlayerDistance = MathUtils.HypotF(Diff);
 
+
+        // Perform Angled Jump
+        if (RngUtils.Random.Next(new Vector2(0, 100)) < 100f * AngleJumpChance)
+        {
+            float PlayerReletiveAngle = (float)Math.Atan2(Position.Y - Player.Position.Y,
+                                                            Position.X - Player.Position.X) * (float)(180 / Math.PI);
+            PlayerReletiveAngle += (RngUtils.Random.Next(-22, 22) * 3);
+            Angle = PlayerReletiveAngle * ((float)Math.PI / 180f);
+            Velocity = JumpVelocityMax;
+            NextJumpFrame = BombarderGame.Instance.GameTick + (JumpIntervalMin / 2);
+
+            return;
+        }
+        
+
         Velocity = PlayerDistance > JumpVelocityFullThreshold
             ? JumpVelocityMax
             : RngUtils.Random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100F;
         Angle = MathF.Atan2(Diff.Y, Diff.X);
+
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
             ? BombarderGame.Instance.GameTick +

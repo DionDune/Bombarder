@@ -5,7 +5,7 @@ namespace Bombarder.Entities;
 
 public class DemonEye : Entity
 {
-    public const int Damage = 15;
+    public const int Damage = 18;
     public const int DamageInterval = 10;
     public uint LastDamageFrame;
 
