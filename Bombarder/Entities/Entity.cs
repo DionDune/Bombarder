@@ -40,7 +40,7 @@ public abstract class Entity
         this.Position = Position;
     }
 
-    public void MoveTowards(Vector2 Goal, float Speed)
+    public void MoveTowards(Vector2 Goal, float Distance)
     {
         float XDifference = Position.X - Goal.X;
         float YDifference = Position.Y - Goal.Y;
@@ -48,14 +48,14 @@ public abstract class Entity
 
         Direction = Angle;
         Vector2 PositionChange = new Vector2(
-            Speed * MathF.Cos(Angle),
-            Speed * MathF.Sin(Angle)
+            Distance * MathF.Cos(Angle),
+            Distance * MathF.Sin(Angle)
         );
 
         Position -= PositionChange;
     }
 
-    public void MoveAwayFrom(Vector2 TargetPosition, float Speed)
+    public void MoveAwayFrom(Vector2 TargetPosition, float Distance)
     {
         float XDifference = Position.X - TargetPosition.X;
         float YDifference = Position.Y - TargetPosition.Y;
@@ -63,8 +63,8 @@ public abstract class Entity
 
         Direction = Angle;
         Vector2 PositionChange = new Vector2(
-            Speed * MathF.Cos(Angle),
-            Speed * MathF.Sin(Angle)
+            Distance * MathF.Cos(Angle),
+            Distance * MathF.Sin(Angle)
         );
 
         Position += PositionChange;
