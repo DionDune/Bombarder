@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
 namespace Bombarder.Entities;
@@ -83,6 +84,9 @@ public class Spider : Entity
 
             return;
         }
+
+        // Create Jump Particles
+        CreateJumpParticles();
         
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
@@ -131,6 +135,40 @@ public class Spider : Entity
 
         Player.GiveDamage(Damage);
         LastDamageFrame = BombarderGame.Instance.GameTick;
+    }
+
+    private void CreateJumpParticles()
+    {
+        (int Min, int Max) ParticleCountRange = (3, 8);
+        (int Min, int Max) ParticleSpawnOffsetAllowance = (-10, 10);
+
+        int ParticleCount = RngUtils.Random.Next(ParticleCountRange.Min, ParticleCountRange.Max);
+        float ParticleMovementAngleStep = 360f / ParticleCount;
+        (int Left, int Right) ParticleMovementAngleOffsetAllowance = (
+                                                                        -((int)ParticleMovementAngleStep / 2),
+                                                                        (int)ParticleMovementAngleStep / 2
+                                                                        );
+
+        for (int i = 0; i < ParticleCount; i++)
+        {
+            float ParticleAngle = MathUtils.ToRadians((ParticleMovementAngleStep * i) + 
+                                                        RngUtils.Random.Next(ParticleMovementAngleOffsetAllowance.Left,
+                                                                                ParticleMovementAngleOffsetAllowance.Right));
+
+            Vector2 ParticlePosition = new Vector2(
+                                                    this.Position.X + RngUtils.Random.Next(ParticleSpawnOffsetAllowance.Min,
+                                                                                            ParticleSpawnOffsetAllowance.Max),
+                                                    this.Position.Y + RngUtils.Random.Next(ParticleSpawnOffsetAllowance.Min,
+                                                                                            ParticleSpawnOffsetAllowance.Max));
+
+            BombarderGame.Instance.Particles.Add(
+                    new SpiderJumpParticle(ParticlePosition, ParticleAngle)
+                    {
+                        HasDuration = true
+                    }
+                );
+        }
+
     }
 
     public override void DrawEntity()
