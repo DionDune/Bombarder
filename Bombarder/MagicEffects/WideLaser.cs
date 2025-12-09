@@ -52,7 +52,7 @@ public class WideLaser : MagicEffect
         }
 
         UpdatePosition();
-        EnactDamage(Player, Entities, GameTick);
+        HandleEntityCollision(Player, Entities, GameTick);
         CreateParticles();
     }
 
@@ -112,6 +112,12 @@ public class WideLaser : MagicEffect
         RenderUtils.DrawLine(Start, Range, AngleRadiansRight, SecondaryColor, 10);
     }
 
+    public override void HandleEntityCollision(Player Player, List<Entity> Entities, uint GameTick)
+    {
+        base.HandleEntityCollision(Player, Entities, GameTick);
+
+        EnactDamage(Player, Entities, GameTick);
+    }
     private void EnactDamage(Player Player, List<Entity> Entities, uint Tick)
     {
         float AngleRadians = MathUtils.ToRadians(Angle);

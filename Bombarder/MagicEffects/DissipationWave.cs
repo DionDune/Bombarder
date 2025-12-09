@@ -39,7 +39,7 @@ public class DissipationWave : MagicEffect
     {
         base.Update(Player, Entities, GameTick);
         EnactSpread();
-        EnactDamage(Entities);
+        HandleEntityCollision(Player, Entities, GameTick);
     }
 
     public override void DrawEffect()
@@ -57,6 +57,12 @@ public class DissipationWave : MagicEffect
         );
     }
 
+    public override void HandleEntityCollision(Player Player, List<Entity> Entities, uint GameTick)
+    {
+        base.HandleEntityCollision(Player, Entities, GameTick);
+
+        EnactDamage(Entities);
+    }
     private void EnactDamage(List<Entity> Entities)
     {
         foreach (Entity Entity in Entities)

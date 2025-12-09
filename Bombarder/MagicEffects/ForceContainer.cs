@@ -46,7 +46,7 @@ public class ForceContainer : MagicEffect
     {
         base.Update(Player, Entities, GameTick);
         EnactMovement();
-        EnactForce(Entities);
+        HandleEntityCollision(Player, Entities, GameTick);
         EnactDuration();
     }
 
@@ -99,6 +99,12 @@ public class ForceContainer : MagicEffect
         }
     }
 
+    public override void HandleEntityCollision(Player Player, List<Entity> Entities, uint GameTick)
+    {
+        base.HandleEntityCollision(Player, Entities, GameTick);
+
+        EnactForce(Entities);
+    }
     public void EnactForce(List<Entity> Entities)
     {
         if (!IsActive)

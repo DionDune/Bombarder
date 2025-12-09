@@ -58,6 +58,11 @@ public abstract class MagicEffect
         }
     }
 
+    public virtual void HandleEntityCollision(Player Player, List<Entity> Entities, uint GameTick)
+    {
+
+    }
+
     public abstract void DrawEffect();
 
     public void DrawDamageRadius()

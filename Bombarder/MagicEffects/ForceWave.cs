@@ -31,7 +31,7 @@ public class ForceWave : MagicEffect
     {
         base.Update(Player, Entities, GameTick);
         EnactSpread();
-        EnactForce(Entities);
+        HandleEntityCollision(Player, Entities, GameTick);
         EnactDuration();
     }
 
@@ -61,6 +61,13 @@ public class ForceWave : MagicEffect
         }
     }
 
+
+    public override void HandleEntityCollision(Player Player, List<Entity> Entities, uint GameTick)
+    {
+        base.HandleEntityCollision(Player, Entities, GameTick);
+
+        EnactForce(Entities);
+    }
     private void EnactForce(List<Entity> Entities)
     {
         foreach (Entity Entity in Entities)
@@ -97,7 +104,6 @@ public class ForceWave : MagicEffect
             Radius += RadiusSpread;
         }
     }
-
     private void EnactDuration()
     {
         if (Duration >= DurationSpreadCutoff)
