@@ -9,7 +9,8 @@ public abstract class MagicEffect
 {
     public Vector2 Position { get; set; }
 
-    public string? DamageTarget { get; set; }
+    public bool HostileToPlayer { get; set; }
+    public bool HostileToNPC { get; set; }
     public int Damage { get; set; }
     public abstract int ManaCost { get; protected set; }
 
@@ -39,7 +40,8 @@ public abstract class MagicEffect
     protected MagicEffect(Vector2 Position)
     {
         this.Position = Position;
-        DamageTarget = "Entities";
+        HostileToPlayer = true;
+        HostileToNPC = false;
         Damage = 4;
         DamageDuration = 150;
         RadiusIsCircle = false;
