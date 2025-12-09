@@ -26,15 +26,15 @@ public abstract class MagicEffect
 
     public List<MagicEffectPiece> Pieces { get; set; }
 
-    public static readonly Dictionary<string, Func<Vector2, Player, MagicEffect>> MagicEffectsFactories = new()
+    public static readonly Dictionary<string, Func<Vector2, Vector2, MagicEffect>> MagicEffectsFactories = new()
     {
-        { "DissipationWave", (Position, _) => new DissipationWave(Position) },
-        { "ForceContainer", (Position, Player) => new ForceContainer(Player.Position, Position) },
-        { "ForceWave", (Position, _) => new ForceWave(Position) },
-        { "NonStaticOrb", (Position, Player) => new NonStaticOrb(Player.Position, Position) },
-        { "PlayerTeleport", (Position, _) => new PlayerTeleport(Position) },
-        { "StaticOrb", (Position, _) => new StaticOrb(Position) },
-        { "WideLaser", (Position, Player) => new WideLaser(Player.Position, Position) },
+        { "DissipationWave", (Position, EntityPosition) => new DissipationWave(Position) },
+        { "ForceContainer", (Position, EntityPosition) => new ForceContainer(EntityPosition, Position) },
+        { "ForceWave", (Position, EntityPosition) => new ForceWave(Position) },
+        { "NonStaticOrb", (Position, EntityPosition) => new NonStaticOrb(EntityPosition, Position) },
+        { "PlayerTeleport", (Position, EntityPosition) => new PlayerTeleport(Position) },
+        { "StaticOrb", (Position, EntityPosition_) => new StaticOrb(Position) },
+        { "WideLaser", (Position, EntityPosition) => new WideLaser(EntityPosition, Position) },
     };
 
     protected MagicEffect(Vector2 Position)
@@ -52,6 +52,44 @@ public abstract class MagicEffect
         Pieces = new List<MagicEffectPiece> { new() { LifeSpan = DamageDuration } };
     }
 
+    public static void CreateMagic<T>(Vector2 SpawnPosition, Player? Player, Entity? Entity) where T : MagicEffect
+    {
+        var Factory = MagicEffectsFactories.GetValueOrDefault(typeof(T).Name);
+        MagicEffect MagicEffect = null;
+
+        if (Player != null)
+        {
+            MagicEffect = Factory?.Invoke(SpawnPosition, Player.Position);
+
+            if (MagicEffect == null || !Player.CheckUseMana(MagicEffect.ManaCost))
+            {
+                return;
+            }
+
+            MagicEffect.SetHostitily(false, true);
+        }
+        else if (Entity != null)
+        {
+            MagicEffect = Factory.Invoke(SpawnPosition, Entity.Position);
+
+            if (MagicEffect == null)
+            {
+                return;
+            }
+
+            MagicEffect.SetHostitily(true, false);
+        }
+        else return;
+        
+
+        BombarderGame.Instance.MagicEffects.Add(MagicEffect);
+    }
+    public void SetHostitily(bool hostileToPlayer, bool hostileToNPC)
+    {
+        HostileToPlayer = hostileToPlayer;
+        HostileToNPC = hostileToNPC;
+    }
+
     public virtual void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
         if (HasDuration)
@@ -59,14 +97,12 @@ public abstract class MagicEffect
             Duration--;
         }
     }
-
     public virtual void HandleEntityCollision(Player Player, List<Entity> Entities, uint GameTick)
     {
 
     }
 
     public abstract void DrawEffect();
-
     public void DrawDamageRadius()
     {
         var Game = BombarderGame.Instance;
@@ -129,7 +165,6 @@ public abstract class MagicEffect
             );
         }
     }
-
     public void Draw()
     {
         DrawEffect();

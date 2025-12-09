@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bombarder.MagicEffects;
 using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
@@ -54,7 +55,6 @@ public abstract class Entity
 
         Position -= PositionChange;
     }
-
     public void MoveAwayFrom(Vector2 TargetPosition, float Distance)
     {
         float XDifference = Position.X - TargetPosition.X;
@@ -76,7 +76,6 @@ public abstract class Entity
 
         ApplyHitMarker();
     }
-
     public void ApplyHitMarker()
     {
         if (Math.Abs(BombarderGame.Instance.GameTick - LastHitMarkerFrame) <= 20)
@@ -117,7 +116,6 @@ public abstract class Entity
             Entities.Remove(Entity);
         }
     }
-
     public void GiveKillReward(Player Player)
     {
         Player.GiveHealth(KillHealthReward);
@@ -126,15 +124,18 @@ public abstract class Entity
 
     public abstract void EnactAI(Player Player);
 
+    public void CreateMagic<T>(Vector2 SpawnPosition) where T : MagicEffect
+    {
+        MagicEffect.CreateMagic<T>(SpawnPosition, null, this);
+    }
+
     public void Draw()
     {
         DrawEntity();
         DrawHitBoxes();
         DrawHealthBar();
     }
-
     public abstract void DrawEntity();
-
     public void DrawHitBoxes()
     {
         if (!BombarderGame.Instance.Settings.ShowHitBoxes)
@@ -196,7 +197,6 @@ public abstract class Entity
             Color.White
         );
     }
-
     public void DrawHealthBar()
     {
         if (!HealthBarVisible)

@@ -480,15 +480,6 @@ public class Player
 
     public void CreateMagic<T>(Vector2 SpawnPosition) where T : MagicEffect
     {
-        var Factory = MagicEffects.MagicEffect.MagicEffectsFactories.GetValueOrDefault(typeof(T).Name);
-
-        MagicEffect MagicEffect = Factory?.Invoke(SpawnPosition, this);
-
-        if (MagicEffect == null || !CheckUseMana(MagicEffect.ManaCost))
-        {
-            return;
-        }
-
-        BombarderGame.Instance.MagicEffects.Add(MagicEffect);
+        MagicEffect.CreateMagic<T>(SpawnPosition, this, null);
     }
 }
