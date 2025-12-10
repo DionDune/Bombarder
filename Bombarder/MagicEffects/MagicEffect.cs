@@ -35,6 +35,7 @@ public abstract class MagicEffect
         { "PlayerTeleport", (Position, EntityPosition) => new PlayerTeleport(Position) },
         { "StaticOrb", (Position, EntityPosition_) => new StaticOrb(Position) },
         { "WideLaser", (Position, EntityPosition) => new WideLaser(EntityPosition, Position) },
+        { "SpiderWeb", (Position, EntityPosition) => new SpiderWeb(EntityPosition, Position)},
     };
 
     protected MagicEffect(Vector2 Position)
@@ -52,14 +53,14 @@ public abstract class MagicEffect
         Pieces = new List<MagicEffectPiece> { new() { LifeSpan = DamageDuration } };
     }
 
-    public static void CreateMagic<T>(Vector2 SpawnPosition, Player? Player, Entity? Entity) where T : MagicEffect
+    public static void CreateMagic<T>(Vector2 TargetPosition, Player? Player, Entity? Entity) where T : MagicEffect
     {
         var Factory = MagicEffectsFactories.GetValueOrDefault(typeof(T).Name);
         MagicEffect MagicEffect = null;
 
         if (Player != null)
         {
-            MagicEffect = Factory?.Invoke(SpawnPosition, Player.Position);
+            MagicEffect = Factory?.Invoke(TargetPosition, Player.Position);
 
             if (MagicEffect == null || !Player.CheckUseMana(MagicEffect.ManaCost))
             {
@@ -70,7 +71,7 @@ public abstract class MagicEffect
         }
         else if (Entity != null)
         {
-            MagicEffect = Factory.Invoke(SpawnPosition, Entity.Position);
+            MagicEffect = Factory.Invoke(TargetPosition, Entity.Position);
 
             if (MagicEffect == null)
             {

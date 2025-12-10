@@ -478,8 +478,8 @@ public class Player
         }
     }
 
-    public void CreateMagic<T>(Vector2 SpawnPosition) where T : MagicEffect
+    public void CreateMagic<T>(Vector2 TargetPosition) where T : MagicEffect
     {
-        MagicEffect.CreateMagic<T>(SpawnPosition, this, null);
+        MagicEffect.CreateMagic<T>(TargetPosition, this, null);
     }
 }
