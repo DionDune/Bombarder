@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bombarder.MagicEffects;
 using Bombarder.Particles;
 using Microsoft.Xna.Framework;
 
@@ -18,6 +19,11 @@ public class Spider : Entity
     public const int JumpIntervalErraticMax = 140;
     public const int ErraticDistanceThreshold = 800;
     public uint NextJumpFrame;
+
+    public uint NextAttackFrame;
+    public readonly (int Min, int Max) AttackInterval = (120, 180);
+    public (Vector2 Start, Vector2 End) TargetMonitoredPositions = (Vector2.Zero, Vector2.Zero);
+    public const int TargetMonitorDuration = 60; 
 
     public const float JumpVelocityMin = 20;
     public const float JumpVelocityMed = 40;
@@ -58,11 +64,13 @@ public class Spider : Entity
         EnactJump(Player);
         EnactVelocity(Player);
         EnactDamage(Player);
+        EnactAttack(Player);
     }
 
     private void EnactJump(Player Player)
     {
-        if (NextJumpFrame > BombarderGame.Instance.GameTick)
+        if (NextJumpFrame > BombarderGame.Instance.GameTick ||
+            (NextAttackFrame < BombarderGame.Instance.GameTick && NextAttackFrame + TargetMonitorDuration > BombarderGame.Instance.GameTick))
         {
             return;
         }
@@ -100,9 +108,12 @@ public class Spider : Entity
               (uint)RngUtils.Random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
             : BombarderGame.Instance.GameTick + (uint)RngUtils.Random.Next(JumpIntervalMin, JumpIntervalMax);
     }
-
     private void EnactVelocity(Player Player)
     {
+        if (NextAttackFrame < BombarderGame.Instance.GameTick && NextAttackFrame + TargetMonitorDuration > BombarderGame.Instance.GameTick)
+        {
+            Velocity = 0;
+        }
         if (Velocity <= 0)
         {
             return;
@@ -135,6 +146,44 @@ public class Spider : Entity
 
         Player.GiveDamage(Damage);
         LastDamageFrame = BombarderGame.Instance.GameTick;
+    }
+    private void EnactAttack(Player Player)
+    {
+        if (NextAttackFrame > BombarderGame.Instance.GameTick)
+        {
+            return;
+        }
+
+
+        if (NextAttackFrame + TargetMonitorDuration >= BombarderGame.Instance.GameTick)
+        {
+            if (TargetMonitoredPositions.Start == Vector2.Zero)
+                TargetMonitoredPositions.Start = Player.Position;
+
+            if (NextAttackFrame + TargetMonitorDuration == BombarderGame.Instance.GameTick)
+                TargetMonitoredPositions.End = Player.Position;
+        }
+        else
+        {
+            Vector2 Diff = Position - Player.Position;
+            float TargetDistance = MathUtils.HypotF(Diff);
+            float WebToTargetTime = TargetDistance / MagicEffects.SpiderWeb.MovingSpeed;
+            // Times the time with the distance the target traveled in the monitor time, predict location
+            // Spider should stop when monitoring
+
+
+            float DistanceMultiplier = WebToTargetTime / TargetMonitorDuration;
+            Vector2 TargetDistanceTraveled = new Vector2(TargetMonitoredPositions.End.X - TargetMonitoredPositions.Start.X,
+                                                            TargetMonitoredPositions.End.Y - TargetMonitoredPositions.Start.Y);
+            // Get PreddictedPosition
+            TargetDistanceTraveled *= DistanceMultiplier;
+            MagicEffect.CreateMagic<SpiderWeb>(Player.Position + TargetDistanceTraveled, null, this);
+
+            TargetMonitoredPositions.Start = Vector2.Zero;
+            TargetMonitoredPositions.End = Vector2.Zero;
+
+            NextAttackFrame = BombarderGame.Instance.GameTick + (uint)RngUtils.Random.Next(AttackInterval.Min, AttackInterval.Max);
+        }
     }
 
     private void CreateJumpParticles()
@@ -170,7 +219,6 @@ public class Spider : Entity
         }
 
     }
-
     public override void DrawEntity()
     {
         var Game = BombarderGame.Instance;
