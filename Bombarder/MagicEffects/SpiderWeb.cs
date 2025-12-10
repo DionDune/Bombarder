@@ -136,11 +136,11 @@ namespace Bombarder.MagicEffects
                 }
                 else if (HostileToNPC)
                 {
-                    Entity CollidedEntity = Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)).ToList().First();
+                    Entity CollidingEntity = Entities.Where(Entity => HitBox.Intersects(Entity.HitBox)).ToList().FirstOrDefault();
 
-                    if (CollidedEntity != null)
+                    if (CollidingEntity != null)
                     {
-                        TargetEntity = CollidedEntity;
+                        TargetEntity = CollidingEntity;
                         DestinationReached = true;
                         Destination = TargetEntity.Position;
                         TargetHoldPosition = TargetEntity.Position;
