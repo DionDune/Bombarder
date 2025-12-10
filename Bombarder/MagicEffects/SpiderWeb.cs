@@ -13,7 +13,7 @@ namespace Bombarder.MagicEffects
         public override int ManaCost { get; protected set; } = 150;
 
         public const int MovingDuration = 300;
-        public const int StaticDuration = 350;
+        public const int StaticDuration = 150;
         public const float MovingSpeed = 25;
         public const int WidthMoving = 50;
         public const int WidthStatic = 200;

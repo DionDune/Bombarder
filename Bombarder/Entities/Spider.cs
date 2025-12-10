@@ -8,7 +8,7 @@ namespace Bombarder.Entities;
 
 public class Spider : Entity
 {
-    public const int Damage = 125;
+    public const int Damage = 95;
     public uint LastDamageFrame;
     public const int DamageInterval = 40;
 
