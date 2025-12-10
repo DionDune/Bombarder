@@ -99,6 +99,11 @@ public sealed class BombarderGame : Game
             ),
             "ForceContainer"
         );
+        KeyboardInput.AddKeyPressAction(Keys.E, () => Player.CreateMagic<SpiderWeb>(
+                MouseInput.Position - ScreenCenter + Player.Position
+            ),
+            "SpiderWeb"
+        );
         KeyboardInput.AddKeyPressAction(Keys.T, () => Player.CreateMagic<PlayerTeleport>(
             MouseInput.Position - ScreenCenter + Player.Position
         ), "PlayerTeleport");
