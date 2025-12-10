@@ -10,7 +10,7 @@ public class ForceContainer : MagicEffect
 {
     public readonly Color Colour = Color.OrangeRed;
 
-    public override int ManaCost { get; protected set; } = 150;
+    public override int ManaCost { get; protected set; } = 250;
     public const int DurationDefault = 350;
     public const float Radius = 250;
     public const float RadiusMoving = 50;
