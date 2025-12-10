@@ -133,15 +133,9 @@ public sealed class BombarderGame : Game
 
         MouseInput.AddClickAction(MouseButtons.Right, () =>
         {
-            if (true)
-            {
-                Player.CreateMagic<WideLaser>(MouseInput.Position - ScreenCenter + Player.Position);
-                SelectedEffects.Add(MagicEffects.Last());
-            }
-            else
-            {
-                Player.CreateMagic<NonStaticOrb>(MouseInput.Position - ScreenCenter + Player.Position);
-            }
+            Player.CreateMagic<WideLaser>(MouseInput.Position - ScreenCenter + Player.Position);
+            SelectedEffects.Add(MagicEffects.Last());
+            
         }, "FireLaser");
 
         MouseInput.AddClickAction(MouseButtons.Middle,

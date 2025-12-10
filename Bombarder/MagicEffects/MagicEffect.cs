@@ -11,7 +11,6 @@ public abstract class MagicEffect
 
     public bool HostileToPlayer { get; set; }
     public bool HostileToNPC { get; set; }
-    public int Damage { get; set; }
     public abstract int ManaCost { get; protected set; }
 
     public bool RadiusIsCircle { get; set; }
@@ -43,7 +42,6 @@ public abstract class MagicEffect
         this.Position = Position;
         HostileToPlayer = true;
         HostileToNPC = false;
-        Damage = 4;
         DamageDuration = 150;
         RadiusIsCircle = false;
         DamageRadius = 0;
@@ -53,7 +51,7 @@ public abstract class MagicEffect
         Pieces = new List<MagicEffectPiece> { new() { LifeSpan = DamageDuration } };
     }
 
-    public static void CreateMagic<T>(Vector2 TargetPosition, Player? Player, Entity? Entity) where T : MagicEffect
+    public static void CreateMagic<T>(Vector2 TargetPosition, Player Player, Entity Entity) where T : MagicEffect
     {
         var Factory = MagicEffectsFactories.GetValueOrDefault(typeof(T).Name);
         MagicEffect MagicEffect = null;

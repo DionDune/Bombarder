@@ -8,6 +8,7 @@ namespace Bombarder.MagicEffects;
 
 public class NonStaticOrb : MagicEffect
 {
+    public const int Damage = 4;
     public override int ManaCost { get; protected set; } = 0;
     public const int DefaultDuration = 150;
     public float Angle { get; set; }

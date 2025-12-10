@@ -60,7 +60,7 @@ public class Spider : Entity
         EnactDamage(Player);
     }
 
-    public void EnactJump(Player Player)
+    private void EnactJump(Player Player)
     {
         if (NextJumpFrame > BombarderGame.Instance.GameTick)
         {
@@ -101,7 +101,7 @@ public class Spider : Entity
             : BombarderGame.Instance.GameTick + (uint)RngUtils.Random.Next(JumpIntervalMin, JumpIntervalMax);
     }
 
-    public void EnactVelocity(Player Player)
+    private void EnactVelocity(Player Player)
     {
         if (Velocity <= 0)
         {
@@ -121,7 +121,7 @@ public class Spider : Entity
         }
     }
 
-    public void EnactDamage(Player Player)
+    private void EnactDamage(Player Player)
     {
         if (BombarderGame.Instance.GameTick - LastDamageFrame < DamageInterval)
         {
