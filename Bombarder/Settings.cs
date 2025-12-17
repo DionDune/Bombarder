@@ -21,5 +21,4 @@ public class Settings
     public bool TranceModeClearScreen { get; set; } = false;
 
     public bool RunEntityAI { get; set; } = true;
-    public (int, int) EnemySpawnCountRange { get; set; } = (1, 3);
 }

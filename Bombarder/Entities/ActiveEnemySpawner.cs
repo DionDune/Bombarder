@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,21 +42,28 @@ namespace Bombarder.Entities
         }
         public void SpawnRandomEnemy()
         {
-            int SpawnCount =
-                RngUtils.Random.Next(BombarderGame.Instance.Settings.EnemySpawnCountRange.Item1, BombarderGame.Instance.Settings.EnemySpawnCountRange.Item2 + 1);
+            // Spawn Change Ranges:
+            // -  Red Cube: 00 - 59
+            // - Demon Eye: 60 - 94
+            // -    Spider: 95 - 100
 
-            for (int i = 0; i < SpawnCount; i++)
+
+            int EnemySpawnChange = RngUtils.Random.Next(0, 101);
+
+            if (EnemySpawnChange >= 0 && EnemySpawnChange <= 59)
             {
-                if (RngUtils.Random.Next(0, 4) == 0)
-                {
-                    // Demon Eye
-                    BombarderGame.Instance.World.SpawnEnemy<DemonEye>();
-                }
-                else
-                {
-                    // Red Cube
-                    BombarderGame.Instance.World.SpawnEnemy<RedCube>();
-                }
+                // Red Cube
+                BombarderGame.Instance.World.SpawnEnemy<RedCube>();
+            }
+            else if (EnemySpawnChange >= 60 && EnemySpawnChange <= 94)
+            {
+                // Demon Eye
+                BombarderGame.Instance.World.SpawnEnemy<DemonEye>();
+            }
+            else if (EnemySpawnChange >= 95 && EnemySpawnChange <= 100)
+            {
+                // Spider
+                BombarderGame.Instance.World.SpawnEnemy<Spider>();
             }
         }
     }
