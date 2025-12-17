@@ -35,7 +35,7 @@ public class Spider : Entity
 
     public Spider(Vector2 Position) : base(Position)
     {
-        HealthMax = 650;
+        HealthMax = 500;
         Health = HealthMax;
         HealthBarVisible = true;
 

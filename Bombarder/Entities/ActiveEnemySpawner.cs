@@ -11,8 +11,8 @@ namespace Bombarder.Entities
     public class ActiveEnemySpawner
     {
         private uint NextEnemySpawnFrame;
-        private (int Min, int Max) EnemySpawnDelay = (150, 600);
-        private int SpawnExtraEnemyChance = 40;
+        private (int Min, int Max) EnemySpawnDelay = (120, 400);
+        private int SpawnExtraEnemyChance = 50;
 
 
         public ActiveEnemySpawner()
@@ -45,7 +45,7 @@ namespace Bombarder.Entities
             // Spawn Change Ranges:
             // -  Red Cube: 00 - 59
             // - Demon Eye: 60 - 94
-            // -    Spider: 95 - 100
+            // -    Spider: 97 - 100
 
 
             int EnemySpawnChange = RngUtils.Random.Next(0, 101);
@@ -60,7 +60,7 @@ namespace Bombarder.Entities
                 // Demon Eye
                 BombarderGame.Instance.World.SpawnEnemy<DemonEye>();
             }
-            else if (EnemySpawnChange >= 95 && EnemySpawnChange <= 100)
+            else if (EnemySpawnChange >= 97 && EnemySpawnChange <= 100)
             {
                 // Spider
                 BombarderGame.Instance.World.SpawnEnemy<Spider>();
