@@ -92,7 +92,7 @@ public abstract class Entity
             (int)Position.Y + HitBoxOffset.Y + HitBoxSize.Y
         );
 
-        BombarderGame.Instance.Particles.Add(new HitMarker(new Vector2(x, y))
+        BombarderGame.Instance.World.Particles.Add(new HitMarker(new Vector2(x, y))
         {
             HasDuration = true,
             Duration = HitMarker.DefaultDuration

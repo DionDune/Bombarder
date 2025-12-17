@@ -211,7 +211,7 @@ public class Spider : Entity
                                                     this.Position.Y + RngUtils.Random.Next(ParticleSpawnOffsetAllowance.Min,
                                                                                             ParticleSpawnOffsetAllowance.Max));
 
-            BombarderGame.Instance.Particles.Add(
+            BombarderGame.Instance.World.Particles.Add(
                     new SpiderJumpParticle(ParticlePosition, ParticleAngle)
                     {
                         HasDuration = true

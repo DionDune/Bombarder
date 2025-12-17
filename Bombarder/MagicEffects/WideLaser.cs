@@ -180,7 +180,7 @@ public class WideLaser : MagicEffect
 
         // Central Laser
         AngleRadians = MathUtils.ToRadians(Angle + (float)RngUtils.Random.Next(-Spread * 10, Spread * 10) / 10);
-        BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
+        BombarderGame.Instance.World.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
         {
             HasDuration = true,
             Duration = LaserLine.DurationMin,
@@ -197,7 +197,7 @@ public class WideLaser : MagicEffect
                 Angle + RngUtils.Random.Next(-LaserLine.AngleSpreadRange, LaserLine.AngleSpreadRange)
             );
 
-            BombarderGame.Instance.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
+            BombarderGame.Instance.World.Particles.Add(new LaserLine(Position.Copy(), AngleRadians)
             {
                 HasDuration = true,
                 Duration = RngUtils.Random.Next(LaserLine.DurationMin, LaserLine.DurationMax)

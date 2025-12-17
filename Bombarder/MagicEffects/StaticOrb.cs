@@ -48,7 +48,7 @@ public class StaticOrb : MagicEffect
             return;
         }
 
-        BombarderGame.Instance.Particles.Add(new Impact(Position.Copy())
+        BombarderGame.Instance.World.Particles.Add(new Impact(Position.Copy())
         {
             HasDuration = true,
         });

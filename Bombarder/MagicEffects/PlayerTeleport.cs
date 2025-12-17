@@ -87,7 +87,7 @@ public class PlayerTeleport : MagicEffect
 
         for (int i = 0; i < RngUtils.Random.Next(ParticleCountMin, Count); i++)
         {
-            TeleportLine.SpawnBetween(BombarderGame.Instance.Particles, Player.Position.Copy(), Position.Copy());
+            TeleportLine.SpawnBetween(BombarderGame.Instance.World.Particles, Player.Position.Copy(), Position.Copy());
         }
     }
 }

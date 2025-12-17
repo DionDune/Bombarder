@@ -30,12 +30,7 @@ public sealed class BombarderGame : Game
     public readonly MouseInput MouseInput;
     public readonly KeyboardInput KeyboardInput;
     public Player Player { get; private set; }
-
-    public readonly List<Entity> Entities = new();
-    public readonly List<Entity> EntitiesToAdd = new();
-    public readonly List<Particle> Particles = new();
-    public readonly List<MagicEffect> MagicEffects = new();
-    public readonly List<MagicEffect> SelectedEffects = new();
+    public World World { get; private set; }
 
     public Vector2 ScreenSize => new(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
     public Vector2 ScreenCenter => ScreenSize / 2F;
@@ -70,6 +65,7 @@ public sealed class BombarderGame : Game
         Textures = new Textures();
         Settings = new Settings();
         Player = new Player();
+        World = new World();
 
 
         IsMouseVisible = false;
@@ -134,7 +130,7 @@ public sealed class BombarderGame : Game
         MouseInput.AddClickAction(MouseButtons.Right, () =>
         {
             Player.CreateMagic<WideLaser>(MouseInput.Position - ScreenCenter + Player.Position);
-            SelectedEffects.Add(MagicEffects.Last());
+            World.SelectedEffects.Add(World.MagicEffects.Last());
             
         }, "FireLaser");
 
@@ -143,16 +139,16 @@ public sealed class BombarderGame : Game
 
         MouseInput.AddReleaseAction(MouseButtons.Right, () =>
             {
-                if (SelectedEffects.Count <= 0)
+                if (World.SelectedEffects.Count <= 0)
                 {
                     return;
                 }
 
-                List<MagicEffect> ToRemove = SelectedEffects.OfType<WideLaser>().Cast<MagicEffect>().ToList();
+                List<MagicEffect> ToRemove = World.SelectedEffects.OfType<WideLaser>().Cast<MagicEffect>().ToList();
 
                 foreach (MagicEffect Effect in ToRemove)
                 {
-                    MagicEffects.Remove(Effect);
+                    World.MagicEffects.Remove(Effect);
                 }
             },
             "StopFiringLasers"
@@ -202,13 +198,7 @@ public sealed class BombarderGame : Game
 
     public void ResetGame()
     {
-        Entities.Clear();
-        EntitiesToAdd.Clear();
-
-        Particles.Clear();
-
-        MagicEffects.Clear();
-        SelectedEffects.Clear();
+        World.Reset();
 
         Player.SetDefaultStats();
         Player.ResetPosition();
@@ -320,7 +310,7 @@ public sealed class BombarderGame : Game
             return;
         }
 
-        EntitiesToAdd.Add(Enemy);
+        World.EntitiesToAdd.Add(Enemy);
     }
 
     #endregion
@@ -350,20 +340,20 @@ public sealed class BombarderGame : Game
             //Entity Functions
             if (Settings.RunEntityAI)
             {
-                Entities.ForEach(Entity => Entity.EnactAI(Player));
-                EntitiesToAdd.ForEach(Entities.Add);
-                EntitiesToAdd.Clear();
+                World.Entities.ForEach(Entity => Entity.EnactAI(Player));
+                World.EntitiesToAdd.ForEach(World.Entities.Add);
+                World.EntitiesToAdd.Clear();
             }
 
-            Entity.PurgeDead(Entities, Player);
+            Entity.PurgeDead(World.Entities, Player);
             //Particles
-            Particles.ForEach(Particle => Particle.Update(GameTick));
-            Particles.RemoveAll(Particle => Particle.ShouldDelete());
-            Particle.SpawnParticles(Particles, Player.Position, GameTick);
+            World.Particles.ForEach(Particle => Particle.Update(GameTick));
+            World.Particles.RemoveAll(Particle => Particle.ShouldDelete());
+            Particle.SpawnParticles(World.Particles, Player.Position, GameTick);
 
             //Magic Functions
-            MagicEffects.ForEach(Effect => Effect.Update(Player, Entities, GameTick));
-            MagicEffects.RemoveAll(MagicEffect => MagicEffect.ShouldDelete());
+            World.MagicEffects.ForEach(Effect => Effect.Update(Player, World.Entities, GameTick));
+            World.MagicEffects.RemoveAll(MagicEffect => MagicEffect.ShouldDelete());
         }
 
         base.Update(gameTime);
@@ -387,7 +377,7 @@ public sealed class BombarderGame : Game
 
 
         // Particles
-        Particles.Where(Particle => !Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
+        World.Particles.Where(Particle => !Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
 
         // Grid
         if (GameState == "PlayPage" || Settings.TranceMode)
@@ -401,14 +391,14 @@ public sealed class BombarderGame : Game
             // Player
             Player.Draw();
 
-            Entities.ForEach(Entity => Entity.Draw());
-            MagicEffects.ForEach(Effect => Effect.Draw());
+            World.Entities.ForEach(Entity => Entity.Draw());
+            World.MagicEffects.ForEach(Effect => Effect.Draw());
 
             Player.DrawBars();
         }
 
         // Later Particles
-        Particles.Where(Particle => Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
+        World.Particles.Where(Particle => Particle.DrawLater).ToList().ForEach(Particle => Particle.Draw());
 
 
         CurrentPage.RenderElements(Textures);

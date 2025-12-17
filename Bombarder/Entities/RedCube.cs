@@ -90,7 +90,7 @@ public class RedCube : Entity
                         / 10F
                     );
 
-                BombarderGame.Instance.Particles.Add(
+                BombarderGame.Instance.World.Particles.Add(
                     new RedCubeSegment(new Vector2(ParticleX, ParticleY), Angle)
                     {
                         HasDuration = true

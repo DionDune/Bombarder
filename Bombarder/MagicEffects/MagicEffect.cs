@@ -81,7 +81,7 @@ public abstract class MagicEffect
         else return;
         
 
-        BombarderGame.Instance.MagicEffects.Add(MagicEffect);
+        BombarderGame.Instance.World.MagicEffects.Add(MagicEffect);
     }
     public void SetHostitily(bool hostileToPlayer, bool hostileToNPC)
     {

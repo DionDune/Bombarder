@@ -89,7 +89,7 @@ public class CubeMother : Entity
         );
 
         // Red Cube
-        BombarderGame.Instance.EntitiesToAdd.Add(new RedCube(SpawnPoint.Copy()));
+        BombarderGame.Instance.World.EntitiesToAdd.Add(new RedCube(SpawnPoint.Copy()));
 
         NextSpawnFrame =
             (uint)(BombarderGame.Instance.GameTick + RngUtils.Random.Next(SpawnIntervalMin, SpawnIntervalMax));
