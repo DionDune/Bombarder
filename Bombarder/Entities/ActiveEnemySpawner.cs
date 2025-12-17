@@ -23,7 +23,7 @@ namespace Bombarder.Entities
         public void Update()
         {
             // Spawn Enemy
-            if (NextEnemySpawnFrame <= BombarderGame.Instance.GameTick)
+            if (NextEnemySpawnFrame <= BombarderGame.Instance.GameTick && BombarderGame.Instance.World.EnemySpawnerIsActive)
             {
                 SpawnRandomEnemy();
 

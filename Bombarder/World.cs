@@ -20,6 +20,7 @@ namespace Bombarder
         public readonly List<MagicEffect> SelectedEffects;
 
         public ActiveEnemySpawner EnemySpawner;
+        public bool EnemySpawnerIsActive = true;
 
 
         public World()
@@ -58,6 +59,10 @@ namespace Bombarder
             }
 
             EntitiesToAdd.Add(Enemy);
+        }
+        public void ToggleEnemySpawner()
+        {
+            EnemySpawnerIsActive = !EnemySpawnerIsActive;
         }
         
     }

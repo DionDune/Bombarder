@@ -66,6 +66,24 @@ public class SettingsPage : UIPage
                     Color = Color.Black
                 },
             },
+            new ButtonUIElement(() =>BombarderGame.Instance.World.ToggleEnemySpawner())
+            {
+                Orientation = Orientation.TOP_LEFT,
+                Position = new Vector2(875, 250),
+
+                Width = 400,
+                Height = 150,
+
+                BorderWidth = 4,
+                BorderColor = Color.Red,
+                BaseColor = Color.DarkRed,
+
+                Text = new TextElement("ENEMY SPAWNING")
+                {
+                    ElementSize = 6,
+                    Color = Color.Black
+                },
+            },
             // Title Message
             new TextUIElement
             {
