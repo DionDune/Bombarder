@@ -9,29 +9,25 @@ namespace Bombarder.Entities;
 public class Spider : Entity
 {
     public const int Damage = 95;
-    public uint LastDamageFrame;
-    public const int DamageInterval = 40;
+    private uint LastDamageFrame;
+    private const int DamageInterval = 40;
 
-    public const int JumpIntervalMin = 60;
-    public const int JumpIntervalMax = 250;
-    public const float AngleJumpChance = 0.6f;
-    public const int JumpIntervalErraticMin = 60;
-    public const int JumpIntervalErraticMax = 140;
-    public const int ErraticDistanceThreshold = 800;
-    public uint NextJumpFrame;
+    private readonly (uint Min, uint Max) JumpInterval = (60, 250);
+    private const float AngleJumpChance = 0.6f;
+    private readonly (int Min, int Max) JumpIntervalErratic = (60, 140);
+    private const int ErraticDistanceThreshold = 800;
+    private uint NextJumpFrame;
 
-    public uint NextAttackFrame;
-    public readonly (int Min, int Max) AttackInterval = (120, 180);
-    public (Vector2 Start, Vector2 End) TargetMonitoredPositions = (Vector2.Zero, Vector2.Zero);
-    public const int TargetMonitorDuration = 60; 
+    private uint NextAttackFrame;
+    private readonly (int Min, int Max) AttackInterval = (120, 180);
+    private (Vector2 Start, Vector2 End) TargetMonitoredPositions = (Vector2.Zero, Vector2.Zero);
+    private const int TargetMonitorDuration = 60;
 
-    public const float JumpVelocityMin = 20;
-    public const float JumpVelocityMed = 40;
-    public const float JumpVelocityMax = 55;
-    public const float JumpVelocityFullThreshold = 650;
-    public const float VelocityMultiplier = 0.95F;
-    public float Velocity;
-    public float Angle;
+    private readonly (int Min, int Med, int Max) JumpVelocity = (20, 40, 55);
+    private const float JumpVelocityFullThreshold = 650;
+    private const float VelocityMultiplier = 0.95F;
+    private float Velocity;
+    private float Angle;
 
     public Spider(Vector2 Position) : base(Position)
     {
@@ -87,8 +83,8 @@ public class Spider : Entity
                                                             Position.X - Player.Position.X) * (float)(180 / Math.PI);
             PlayerReletiveAngle += (RngUtils.Random.Next(-22, 22) * 3);
             Angle = PlayerReletiveAngle * ((float)Math.PI / 180f);
-            Velocity = JumpVelocityMax;
-            NextJumpFrame = BombarderGame.Instance.GameTick + (JumpIntervalMin / 2);
+            Velocity = JumpVelocity.Max;
+            NextJumpFrame = BombarderGame.Instance.GameTick + (JumpInterval.Min / 2);
             CreateJumpParticles();
 
             return;
@@ -99,15 +95,15 @@ public class Spider : Entity
         
 
         Velocity = PlayerDistance > JumpVelocityFullThreshold
-            ? JumpVelocityMax
-            : RngUtils.Random.Next((int)JumpVelocityMin * 100, (int)JumpVelocityMed * 100) / 100F;
+            ? JumpVelocity.Max
+            : RngUtils.Random.Next((int)JumpVelocity.Min * 100, (int)JumpVelocity.Med * 100) / 100F;
         Angle = MathF.Atan2(Diff.Y, Diff.X);
 
 
         NextJumpFrame = PlayerDistance > ErraticDistanceThreshold
             ? BombarderGame.Instance.GameTick +
-              (uint)RngUtils.Random.Next(JumpIntervalErraticMin, JumpIntervalErraticMax)
-            : BombarderGame.Instance.GameTick + (uint)RngUtils.Random.Next(JumpIntervalMin, JumpIntervalMax);
+              (uint)RngUtils.Random.Next(JumpIntervalErratic.Min, JumpIntervalErratic.Max)
+            : BombarderGame.Instance.GameTick + (uint)RngUtils.Random.Next((int)JumpInterval.Min, (int)JumpInterval.Max);
     }
     private void EnactVelocity(Player Player)
     {
