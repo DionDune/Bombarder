@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Bombarder.MagicEffects;
+using Bombarder.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 

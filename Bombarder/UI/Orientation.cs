@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Bombarder;
+namespace Bombarder.UI;
 
 public enum Orientation
 {
