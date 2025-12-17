@@ -19,16 +19,22 @@ namespace Bombarder
         public readonly List<MagicEffect> MagicEffects;
         public readonly List<MagicEffect> SelectedEffects;
 
+        public ActiveEnemySpawner EnemySpawner;
+
 
         public World()
         {
+            EnemySpawner = new ActiveEnemySpawner();
             Entities = new();
             EntitiesToAdd = new();
             Particles = new();
             MagicEffects = new();
             SelectedEffects = new();
         }
-
+        public void Update()
+        {
+            EnemySpawner.Update();
+        }
         public void Reset()
         {
             Entities.Clear();
@@ -53,24 +59,6 @@ namespace Bombarder
 
             EntitiesToAdd.Add(Enemy);
         }
-        public void SpawnRandomEnemy()
-        {
-            int SpawnCount =
-                RngUtils.Random.Next(BombarderGame.Instance.Settings.EnemySpawnCountRange.Item1, BombarderGame.Instance.Settings.EnemySpawnCountRange.Item2 + 1);
-
-            for (int i = 0; i < SpawnCount; i++)
-            {
-                if (RngUtils.Random.Next(0, 4) == 0)
-                {
-                    // Demon Eye
-                    SpawnEnemy<DemonEye>();
-                }
-                else
-                {
-                    // Red Cube
-                    SpawnEnemy<RedCube>();
-                }
-            }
-        }
+        
     }
 }

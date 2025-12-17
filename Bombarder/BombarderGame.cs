@@ -74,7 +74,7 @@ public sealed class BombarderGame : Game
         KeyboardInput.AddKeyPressAction(Keys.Escape, TogglePause, "TogglePause");
 
         // TODO: Add check for GameState
-        KeyboardInput.AddKeyPressAction(Keys.V, World.SpawnRandomEnemy, "SpawnRandomEnemy");
+        KeyboardInput.AddKeyPressAction(Keys.V, World.EnemySpawner.SpawnRandomEnemy, "SpawnRandomEnemy");
         KeyboardInput.AddKeyPressAction(
             Keys.D1,
             () => World.SpawnEnemy<CubeMother>(Vector2.Zero),
@@ -297,6 +297,7 @@ public sealed class BombarderGame : Game
             Player.Update();
 
             //Entity Functions
+            World.Update();
             if (Settings.RunEntityAI)
             {
                 World.Entities.ForEach(Entity => Entity.EnactAI(Player));
