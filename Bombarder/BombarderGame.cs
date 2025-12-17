@@ -74,15 +74,15 @@ public sealed class BombarderGame : Game
         KeyboardInput.AddKeyPressAction(Keys.Escape, TogglePause, "TogglePause");
 
         // TODO: Add check for GameState
-        KeyboardInput.AddKeyPressAction(Keys.V, SpawnRandomEnemy, "SpawnRandomEnemy");
+        KeyboardInput.AddKeyPressAction(Keys.V, World.SpawnRandomEnemy, "SpawnRandomEnemy");
         KeyboardInput.AddKeyPressAction(
             Keys.D1,
-            () => SpawnEnemy<CubeMother>(Vector2.Zero),
+            () => World.SpawnEnemy<CubeMother>(Vector2.Zero),
             "SpawnCubeMother"
         );
         KeyboardInput.AddKeyPressAction(
             Keys.D2,
-            () => SpawnEnemy<Spider>(Vector2.Zero),
+            () => World.SpawnEnemy<Spider>(Vector2.Zero),
             "SpawnSpider"
         );
         KeyboardInput.AddKeyPressAction(
@@ -192,8 +192,6 @@ public sealed class BombarderGame : Game
 
     #endregion
 
-    /////////////////////////////////////////
-
     #region GameState interaction
 
     public void ResetGame()
@@ -272,45 +270,6 @@ public sealed class BombarderGame : Game
         }
 
         CurrentPage = UIPages.Find(Page => Page.GetType().Name == GameState);
-    }
-
-    #endregion
-
-    #region Entity Interaction
-
-    private void SpawnRandomEnemy()
-    {
-        int SpawnCount =
-            RngUtils.Random.Next(Settings.EnemySpawnCountRange.Item1, Settings.EnemySpawnCountRange.Item2 + 1);
-
-        for (int i = 0; i < SpawnCount; i++)
-        {
-            if (RngUtils.Random.Next(0, 4) == 0)
-            {
-                // Demon Eye
-                SpawnEnemy<DemonEye>();
-            }
-            else
-            {
-                // Red Cube
-                SpawnEnemy<RedCube>();
-            }
-        }
-    }
-
-    private void SpawnEnemy<T>(Vector2? Location = null) where T : Entity
-    {
-        Vector2 SpawnPoint = Location ?? RngUtils.GetRandomSpawnPoint();
-
-        var Factory = Entity.EntityFactories[typeof(T).Name];
-        var Enemy = Factory?.Invoke(SpawnPoint);
-
-        if (Enemy == null)
-        {
-            return;
-        }
-
-        World.EntitiesToAdd.Add(Enemy);
     }
 
     #endregion
