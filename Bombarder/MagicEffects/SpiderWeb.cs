@@ -16,7 +16,7 @@ namespace Bombarder.MagicEffects
         public const int StaticDuration = 150;
         public const float MovingSpeed = 25;
         public const int WidthMoving = 50;
-        public const int WidthStatic = 200;
+        public const int WidthStatic = 130;
         public const int HitboxHalfSize = 20;
         public const float OpacityMoving = 1;
         public const float OpaictyStatic = 0.75f;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using Bombarder.Entities;
 using Bombarder.Particles;
 using Microsoft.Xna.Framework;
@@ -9,12 +10,11 @@ namespace Bombarder.MagicEffects;
 public class PlayerTeleport : MagicEffect
 {
     public override int ManaCost { get; protected set; } = 150;
-    public const int DefaultDuration = 2;
-    public const bool HasDurationWhenReached = true;
+    public const int DefaultDuration = 12;
 
-    public const float Speed = 80;
-    public bool GoalReacted = false;
-    public bool JustStarted = true;
+    public const float PlayerMovementSpeed = 80;
+    private float MovementAngle;
+    
 
     public const int ParticleCountMin = 65;
     public const int ParticleCountMed = 100;
@@ -24,59 +24,33 @@ public class PlayerTeleport : MagicEffect
     public PlayerTeleport(Vector2 Goal) : base(Goal)
     {
         Duration = DefaultDuration;
-        HasDuration = false;
+        HasDuration = true;
+
+        Vector2 PositionDifference = BombarderGame.Instance.Player.Position - Position;
+        MovementAngle = MathF.Atan2(PositionDifference.Y, PositionDifference.X);
     }
 
     public override void Update(Player Player, List<Entity> Entities, uint GameTick)
     {
         base.Update(Player, Entities, GameTick);
-        if (JustStarted)
-        {
-            CreateParticles(Player);
-        }
 
-        EnactMovement(Player);
-        EnactDuration(Player);
+        EnactMovement();
+        CreateParticles();
     }
 
     public override void DrawEffect()
     {
     }
 
-    public void EnactMovement(Player Player)
+    public void EnactMovement()
     {
-        Vector2 Diff = Player.Position - Position;
-        float Distance = MathUtils.HypotF(Diff);
-        float Angle = MathF.Atan2(Diff.Y, Diff.X);
-
-        float DistanceToMove = Speed;
-
-        if (Distance <= Speed)
-        {
-            DistanceToMove = Distance;
-            GoalReacted = true;
-        }
-
-        Player.Position -= new Vector2(DistanceToMove * MathF.Cos(Angle), DistanceToMove * MathF.Sin(Angle));
-        Player.IsInvincible = true;
-
-        JustStarted = false;
+        BombarderGame.Instance.Player.Position -= new Vector2(PlayerMovementSpeed * MathF.Cos(MovementAngle),
+                                                                PlayerMovementSpeed * MathF.Sin(MovementAngle));
     }
 
-    public void EnactDuration(Player Player)
+    public void CreateParticles()
     {
-        if (!GoalReacted)
-        {
-            return;
-        }
-
-        HasDuration = true;
-        Player.IsInvincible = false;
-    }
-
-    public void CreateParticles(Player Player)
-    {
-        Vector2 Diff = Player.Position - Position;
+        Vector2 Diff = BombarderGame.Instance.Player.Position - Position;
         float Distance = MathUtils.HypotF(Diff);
 
         int Count = ParticleCountMed;
@@ -87,7 +61,7 @@ public class PlayerTeleport : MagicEffect
 
         for (int i = 0; i < RngUtils.Random.Next(ParticleCountMin, Count); i++)
         {
-            TeleportLine.SpawnBetween(BombarderGame.Instance.World.Particles, Player.Position.Copy(), Position.Copy());
+            TeleportLine.SpawnBetween(BombarderGame.Instance.World.Particles, BombarderGame.Instance.Player.Position.Copy(), Position.Copy());
         }
     }
 }
