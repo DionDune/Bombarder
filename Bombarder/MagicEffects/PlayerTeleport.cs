@@ -39,14 +39,7 @@ public class PlayerTeleport : MagicEffect
 
         EnactMovement();
 
-        //CreateParticles();
-        for (int i = 0; i < RngUtils.Random.Next(ParticlesPerFrame.Min, ParticlesPerFrame.Max); i++)
-        {
-            Vector2 ParticleOffset = new Vector2(RngUtils.Random.Next(0, ParticleOffsetAllowance),
-                                                RngUtils.Random.Next(0, ParticleOffsetAllowance));
-            TeleportLine.Create(Player.Position + ParticleOffset, MovementAngle);
-        }
-            
+        CreateParticles();   
     }
 
     public override void DrawEffect()
@@ -61,18 +54,11 @@ public class PlayerTeleport : MagicEffect
 
     public void CreateParticles()
     {
-        Vector2 Diff = BombarderGame.Instance.Player.Position - Position;
-        float Distance = MathUtils.HypotF(Diff);
-
-        int Count = ParticleCountMed;
-        if (Distance > ParticleCountMaxDistanceThreshold)
+        for (int i = 0; i < RngUtils.Random.Next(ParticlesPerFrame.Min, ParticlesPerFrame.Max); i++)
         {
-            Count = ParticleCountMax;
-        }
-
-        for (int i = 0; i < RngUtils.Random.Next(ParticleCountMin, Count); i++)
-        {
-            TeleportLine.SpawnBetween(BombarderGame.Instance.World.Particles, BombarderGame.Instance.Player.Position.Copy(), Position.Copy());
+            Vector2 ParticleOffset = new Vector2(RngUtils.Random.Next(0, ParticleOffsetAllowance),
+                                                RngUtils.Random.Next(0, ParticleOffsetAllowance));
+            TeleportLine.Create(BombarderGame.Instance.Player.Position + ParticleOffset, MovementAngle);
         }
     }
 }
