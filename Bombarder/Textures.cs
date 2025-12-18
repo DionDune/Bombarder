@@ -10,6 +10,7 @@ public class Textures
     public Texture2D HollowCircle { get; set; }
     public Texture2D Cursor { get; set; }
     public (Texture2D, Texture2D) DemonEye { get; set; }
+    public Texture2D Web1 { get; set; }
 
     public Texture2D HitMarker { get; set; }
 }

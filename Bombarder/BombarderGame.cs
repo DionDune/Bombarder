@@ -179,8 +179,9 @@ public sealed class BombarderGame : Game
         Textures.Cursor = Content.Load<Texture2D>("Cursor");
         Textures.HitMarker = Content.Load<Texture2D>("HitMarker");
 
-        //Demon Eye Textures
+        
         Textures.DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
+        Textures.Web1 = Content.Load<Texture2D>("Web1");
     }
 
     private void MediaPlayer_MediaStateChanged(object Sender, EventArgs E)

@@ -171,13 +171,13 @@ namespace Bombarder.MagicEffects
             var Game = BombarderGame.Instance;
 
             Game.SpriteBatch.Draw(
-            Game.Textures.WhiteCircle,
-            MathUtils.CreateRectangle(
-                Position - new Vector2(WidthCurrent) + Game.ScreenCenter - Game.Player.Position,
-                new Vector2(WidthCurrent) * 2
-            ),
-            Colour * OpacityCurrent
-        );
+                                Game.Textures.Web1,
+                                MathUtils.CreateRectangle(
+                                    Position - new Vector2(WidthCurrent) + Game.ScreenCenter - Game.Player.Position,
+                                    new Vector2(WidthCurrent) * 2
+                                ),
+                Colour * OpacityCurrent
+            );
         }
         public void EnactDuration()
         {
