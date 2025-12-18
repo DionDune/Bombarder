@@ -21,6 +21,9 @@ public class PlayerTeleport : MagicEffect
     public const int ParticleCountMax = 150;
     public const int ParticleCountMaxDistanceThreshold = 400;
 
+    public readonly (int Min, int Max) ParticlesPerFrame = (5, 12);
+    public int ParticleOffsetAllowance = 30;
+
     public PlayerTeleport(Vector2 Goal) : base(Goal)
     {
         Duration = DefaultDuration;
@@ -35,7 +38,15 @@ public class PlayerTeleport : MagicEffect
         base.Update(Player, Entities, GameTick);
 
         EnactMovement();
-        CreateParticles();
+
+        //CreateParticles();
+        for (int i = 0; i < RngUtils.Random.Next(ParticlesPerFrame.Min, ParticlesPerFrame.Max); i++)
+        {
+            Vector2 ParticleOffset = new Vector2(RngUtils.Random.Next(0, ParticleOffsetAllowance),
+                                                RngUtils.Random.Next(0, ParticleOffsetAllowance));
+            TeleportLine.Create(Player.Position + ParticleOffset, MovementAngle);
+        }
+            
     }
 
     public override void DrawEffect()
