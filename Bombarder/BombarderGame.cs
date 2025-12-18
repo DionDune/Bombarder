@@ -182,6 +182,7 @@ public sealed class BombarderGame : Game
         
         Textures.DemonEye = (Content.Load<Texture2D>("DemonEye"), Content.Load<Texture2D>("DemonIris"));
         Textures.Web1 = Content.Load<Texture2D>("Web1");
+        Textures.WebParticle = Content.Load<Texture2D>("WebParticle");
     }
 
     private void MediaPlayer_MediaStateChanged(object Sender, EventArgs E)

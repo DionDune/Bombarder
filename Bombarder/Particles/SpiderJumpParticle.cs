@@ -8,7 +8,7 @@ public class SpiderJumpParticle : Particle
     public (int Min, int Max) DurationRange = (90, 155);
 
     public int Width;
-    public static (int Min, int Max) WidthRange = (15, 22);
+    public static (int Min, int Max) WidthRange = (18, 25);
 
     public float Velocity;
     public static (int Min, int Max) VelocityRange = (4, 5);
@@ -48,7 +48,7 @@ public class SpiderJumpParticle : Particle
     public override void Draw()
     {
         BombarderGame.Instance.SpriteBatch.Draw(
-            BombarderGame.Instance.Textures.White,
+            BombarderGame.Instance.Textures.WebParticle,
             MathUtils.CreateRectangle(
                 Position + BombarderGame.Instance.ScreenCenter - BombarderGame.Instance.Player.Position,
                 new Vector2(Width, Width)
