@@ -37,7 +37,7 @@ public class TeleportLine : Particle
     {
         DrawLater = true;
     }
-
+    
     public override void Update(uint Tick)
     {
         base.Update(Tick);

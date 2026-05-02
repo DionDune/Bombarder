@@ -21,4 +21,6 @@ public class Settings
     public bool TranceModeClearScreen { get; set; } = false;
 
     public bool RunEntityAI { get; set; } = true;
+    public bool LimitEnemyCount { get; set; } = true;
+    public int EnemyCountSpawnLimit { get; set; } = 15;
 }

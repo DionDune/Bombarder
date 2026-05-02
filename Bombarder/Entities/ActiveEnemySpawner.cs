@@ -22,6 +22,14 @@ namespace Bombarder.Entities
 
         public void Update()
         {
+            if (BombarderGame.Instance.Settings.LimitEnemyCount &&
+                BombarderGame.Instance.World.GetEnemyCount() >= BombarderGame.Instance.Settings.EnemyCountSpawnLimit)
+            {
+                // Set new spawn frame
+                NextEnemySpawnFrame = (uint)(BombarderGame.Instance.GameTick + RngUtils.Random.Next(EnemySpawnDelay.Min, EnemySpawnDelay.Max));
+                return;
+            }
+
             // Spawn Enemy
             if (NextEnemySpawnFrame <= BombarderGame.Instance.GameTick && BombarderGame.Instance.World.EnemySpawnerIsActive)
             {

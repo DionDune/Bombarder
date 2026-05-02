@@ -60,6 +60,10 @@ namespace Bombarder
 
             EntitiesToAdd.Add(Enemy);
         }
+        public int GetEnemyCount()
+        {
+            return Entities.Count;
+        }
         public void ToggleEnemySpawner()
         {
             EnemySpawnerIsActive = !EnemySpawnerIsActive;
